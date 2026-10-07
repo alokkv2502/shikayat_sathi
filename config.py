@@ -24,7 +24,7 @@ SERPAPI_MAX_CREDITS: int | None = None if _cap in ("", "0", "none") else int(_ca
 # LLM_PROVIDER=none, the agents run their rule-based fallbacks.
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "").lower()
 LITELLM_BASE_URL = os.getenv("LITELLM_BASE_URL", "http://imllm.intermesh.net/v1")
-LITELLM_API_KEY = os.getenv("LITELLM_API_KEY", "sk-P5wUAbkLiKxnxZ_5rk3z9w")
+LITELLM_API_KEY = os.getenv("LITELLM_API_KEY", "")
 LITELLM_MODEL = os.getenv("LITELLM_MODEL", "google/gemini-3.1-flash-lite")
 
 # Qdrant: local server (docker compose up -d). If unreachable, embedded on-disk mode is used (data/qdrant/).
