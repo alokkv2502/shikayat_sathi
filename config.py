@@ -23,7 +23,7 @@ SERPAPI_MAX_CREDITS: int | None = None if _cap in ("", "0", "none") else int(_ca
 # LLM: Gemini through a LiteLLM (OpenAI-compatible) endpoint. All three must be set; otherwise, or with
 # LLM_PROVIDER=none, the agents run their rule-based fallbacks.
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "").lower()
-LITELLM_BASE_URL = os.getenv("LITELLM_BASE_URL", "http://imllm.intermesh.net/v1")
+LITELLM_BASE_URL = os.getenv("LITELLM_BASE_URL", "")
 LITELLM_API_KEY = os.getenv("LITELLM_API_KEY", "")
 LITELLM_MODEL = os.getenv("LITELLM_MODEL", "google/gemini-3.1-flash-lite")
 
