@@ -1,0 +1,318 @@
+{
+ "run_at": "2026-10-07T11:05:52+00:00",
+ "complaints": {
+  "n": 14,
+  "sector_accuracy": 100.0,
+  "language_accuracy": 100.0,
+  "critic_pass_rate": 100.0,
+  "zero_uncited_rate": 100.0,
+  "rows": [
+   {
+    "id": 1,
+    "language": "en",
+    "expected_sector": "ecommerce",
+    "sector": "ecommerce",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 4
+   },
+   {
+    "id": 2,
+    "language": "hinglish",
+    "expected_sector": "ecommerce",
+    "sector": "ecommerce",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 4
+   },
+   {
+    "id": 3,
+    "language": "en",
+    "expected_sector": "ecommerce",
+    "sector": "ecommerce",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 4
+   },
+   {
+    "id": 4,
+    "language": "en",
+    "expected_sector": "ecommerce",
+    "sector": "ecommerce",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 4
+   },
+   {
+    "id": 5,
+    "language": "en",
+    "expected_sector": "bank",
+    "sector": "bank",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 2
+   },
+   {
+    "id": 6,
+    "language": "hi",
+    "expected_sector": "bank",
+    "sector": "bank",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 4
+   },
+   {
+    "id": 7,
+    "language": "en",
+    "expected_sector": "telecom",
+    "sector": "telecom",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 2
+   },
+   {
+    "id": 8,
+    "language": "en",
+    "expected_sector": "telecom",
+    "sector": "telecom",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 4
+   },
+   {
+    "id": 9,
+    "language": "en",
+    "expected_sector": "insurance",
+    "sector": "insurance",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 4
+   },
+   {
+    "id": 10,
+    "language": "hinglish",
+    "expected_sector": "insurance",
+    "sector": "insurance",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 4
+   },
+   {
+    "id": 11,
+    "language": "en",
+    "expected_sector": "loan_app",
+    "sector": "loan_app",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 1
+   },
+   {
+    "id": 12,
+    "language": "hi",
+    "expected_sector": "loan_app",
+    "sector": "loan_app",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 1
+   },
+   {
+    "id": 13,
+    "language": "en",
+    "expected_sector": "other",
+    "sector": "other",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 4
+   },
+   {
+    "id": 14,
+    "language": "en",
+    "expected_sector": "other",
+    "sector": "other",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 4
+   }
+  ]
+ },
+ "decoys": {
+  "decoys": 11,
+  "decoys_caught": 11,
+  "decoy_catch_rate": 100.0,
+  "genuine": 5,
+  "genuine_kept": 5,
+  "false_rejection_rate": 0.0,
+  "rows": [
+   {
+    "company": "Flipkart",
+    "value": "grievance.officer@flipkart.com",
+    "expected": "verified",
+    "got": "verified",
+    "pattern": null,
+    "ok": true
+   },
+   {
+    "company": "Flipkart",
+    "value": "9876500011",
+    "expected": "unverified",
+    "got": "unverified",
+    "pattern": "look-alike helpline domain",
+    "ok": true
+   },
+   {
+    "company": "Flipkart",
+    "value": "flipkart.refund.desk@gmail.com",
+    "expected": "unverified",
+    "got": "unverified",
+    "pattern": "webmail on look-alike domain",
+    "ok": true
+   },
+   {
+    "company": "Flipkart",
+    "value": "8800012345",
+    "expected": "unverified",
+    "got": "unverified",
+    "pattern": "single scraped directory",
+    "ok": true
+   },
+   {
+    "company": "Axis Bank",
+    "value": "pno@axis.bank.in",
+    "expected": "verified",
+    "got": "verified",
+    "pattern": null,
+    "ok": true
+   },
+   {
+    "company": "Axis Bank",
+    "value": "axisbank.kyc.update@outlook.com",
+    "expected": "unverified",
+    "got": "unverified",
+    "pattern": "KYC-update phishing",
+    "ok": true
+   },
+   {
+    "company": "Axis Bank",
+    "value": "7000098765",
+    "expected": "unverified",
+    "got": "unverified",
+    "pattern": "look-alike helpline domain",
+    "ok": true
+   },
+   {
+    "company": "ICICI Bank",
+    "value": "pno@icicibank.com",
+    "expected": "verified",
+    "got": "verified",
+    "pattern": null,
+    "ok": true
+   },
+   {
+    "company": "ICICI Bank",
+    "value": "9123400001",
+    "expected": "unverified",
+    "got": "unverified",
+    "pattern": "look-alike helpline domain",
+    "ok": true
+   },
+   {
+    "company": "ICICI Bank",
+    "value": "icici.grievance.cell@yahoo.co.in",
+    "expected": "unverified",
+    "got": "unverified",
+    "pattern": "webmail seen on two forums",
+    "ok": true
+   },
+   {
+    "company": "KreditBee",
+    "value": "help@kreditbee.in",
+    "expected": "verified",
+    "got": "verified",
+    "pattern": null,
+    "ok": true
+   },
+   {
+    "company": "KreditBee",
+    "value": "9988776655",
+    "expected": "unverified",
+    "got": "unverified",
+    "pattern": "fake loan-app helpline",
+    "ok": true
+   },
+   {
+    "company": "KreditBee",
+    "value": "kreditbee.recovery.team@gmail.com",
+    "expected": "unverified",
+    "got": "unverified",
+    "pattern": "fake recovery-team webmail",
+    "ok": true
+   },
+   {
+    "company": "Zomato",
+    "value": "grievance@zomato.com",
+    "expected": "verified",
+    "got": "verified",
+    "pattern": null,
+    "ok": true
+   },
+   {
+    "company": "Zomato",
+    "value": "9000011111",
+    "expected": "unverified",
+    "got": "unverified",
+    "pattern": "look-alike helpline domain",
+    "ok": true
+   },
+   {
+    "company": "Zomato",
+    "value": "help@zomato-support.example",
+    "expected": "unverified",
+    "got": "unverified",
+    "pattern": "single source, non-official email domain",
+    "ok": true
+   }
+  ]
+ }
+}

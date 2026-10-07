@@ -1,0 +1,201 @@
+{
+ "_about": "Synthetic red-team observations modelled on real fake-helpline patterns (look-alike domains, webmail, scraped directories, stale contacts). Each case mixes decoys with the genuine contact; the verifier must reject every decoy and keep the genuine one. All decoy domains are fictitious (.example / invented).",
+ "cases": [
+  {
+   "company": "Flipkart",
+   "official_domains": [
+    "flipkart.com"
+   ],
+   "observations": [
+    {
+     "type": "email",
+     "value": "grievance.officer@flipkart.com",
+     "source_url": "https://www.flipkart.com/pages/grievance-redressal-mechanism",
+     "via": "page",
+     "expect": "verified"
+    },
+    {
+     "type": "phone",
+     "value": "9876500011",
+     "source_url": "https://flipkart-customer-care-helpline.example/contact",
+     "via": "page",
+     "expect": "unverified",
+     "pattern": "look-alike helpline domain"
+    },
+    {
+     "type": "email",
+     "value": "flipkart.refund.desk@gmail.com",
+     "source_url": "https://flipkart-refund-support.example/",
+     "via": "page",
+     "expect": "unverified",
+     "pattern": "webmail on look-alike domain"
+    },
+    {
+     "type": "email",
+     "value": "flipkart.refund.desk@gmail.com",
+     "source_url": "https://tollfree-numbers-india.example/flipkart",
+     "via": "page",
+     "expect": "unverified",
+     "pattern": "webmail corroborated only by directories"
+    },
+    {
+     "type": "phone",
+     "value": "8800012345",
+     "source_url": "https://customer-care-directory.example/flipkart",
+     "via": "snippet",
+     "expect": "unverified",
+     "pattern": "single scraped directory"
+    }
+   ]
+  },
+  {
+   "company": "Axis Bank",
+   "official_domains": [
+    "axis.bank.in"
+   ],
+   "observations": [
+    {
+     "type": "email",
+     "value": "pno@axis.bank.in",
+     "source_url": "https://application.axis.bank.in/Webforms/axis-support/GRODetails.aspx",
+     "via": "page",
+     "expect": "verified"
+    },
+    {
+     "type": "email",
+     "value": "axisbank.kyc.update@outlook.com",
+     "source_url": "https://axis-bank-kyc-update.example/",
+     "via": "page",
+     "expect": "unverified",
+     "pattern": "KYC-update phishing"
+    },
+    {
+     "type": "phone",
+     "value": "7000098765",
+     "source_url": "https://axisbank-customercare.example/",
+     "via": "page",
+     "expect": "unverified",
+     "pattern": "look-alike helpline domain"
+    },
+    {
+     "type": "phone",
+     "value": "7000098765",
+     "source_url": "https://axis-helpline-number.example/",
+     "via": "page",
+     "expect": "unverified",
+     "pattern": "two look-alike domains corroborating each other"
+    }
+   ]
+  },
+  {
+   "company": "ICICI Bank",
+   "official_domains": [
+    "icici.bank.in",
+    "icicibank.com"
+   ],
+   "observations": [
+    {
+     "type": "email",
+     "value": "pno@icicibank.com",
+     "source_url": "https://www.icici.bank.in/personal-banking/loans/cardless-emi/grievance-redressal",
+     "via": "page",
+     "expect": "verified"
+    },
+    {
+     "type": "phone",
+     "value": "9123400001",
+     "source_url": "https://icici-credit-card-care.example/",
+     "via": "page",
+     "expect": "unverified",
+     "pattern": "look-alike helpline domain"
+    },
+    {
+     "type": "email",
+     "value": "icici.grievance.cell@yahoo.co.in",
+     "source_url": "https://forum-one.example/thread/1",
+     "via": "page",
+     "expect": "unverified",
+     "pattern": "webmail seen on two forums"
+    },
+    {
+     "type": "email",
+     "value": "icici.grievance.cell@yahoo.co.in",
+     "source_url": "https://forum-two.example/post/9",
+     "via": "page",
+     "expect": "unverified",
+     "pattern": "webmail seen on two forums"
+    }
+   ]
+  },
+  {
+   "company": "KreditBee",
+   "official_domains": [
+    "kreditbee.in"
+   ],
+   "observations": [
+    {
+     "type": "email",
+     "value": "help@kreditbee.in",
+     "source_url": "https://sachet.rbi.org.in/",
+     "source_domain": "RBI DLA directory",
+     "via": "registry",
+     "expect": "verified"
+    },
+    {
+     "type": "phone",
+     "value": "9988776655",
+     "source_url": "https://kreditbee-loan-help.example/",
+     "via": "page",
+     "expect": "unverified",
+     "pattern": "fake loan-app helpline"
+    },
+    {
+     "type": "email",
+     "value": "kreditbee.recovery.team@gmail.com",
+     "source_url": "https://complaint-board.example/kreditbee",
+     "via": "page",
+     "expect": "unverified",
+     "pattern": "fake recovery-team webmail"
+    }
+   ]
+  },
+  {
+   "company": "Zomato",
+   "official_domains": [
+    "zomato.com"
+   ],
+   "observations": [
+    {
+     "type": "email",
+     "value": "grievance@zomato.com",
+     "source_url": "https://www.zomato.com/policies/terms-of-service/",
+     "via": "page",
+     "expect": "verified"
+    },
+    {
+     "type": "email",
+     "value": "grievance@zomato.com",
+     "source_url": "https://news-site-a.example/zomato-grievance",
+     "via": "page",
+     "expect": "verified"
+    },
+    {
+     "type": "phone",
+     "value": "9000011111",
+     "source_url": "https://zomato-refund-care.example/",
+     "via": "page",
+     "expect": "unverified",
+     "pattern": "look-alike helpline domain"
+    },
+    {
+     "type": "email",
+     "value": "help@zomato-support.example",
+     "source_url": "https://news-site-a.example/x",
+     "via": "page",
+     "expect": "unverified",
+     "pattern": "single source, non-official email domain"
+    }
+   ]
+  }
+ ]
+}

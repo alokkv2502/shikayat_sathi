@@ -1,0 +1,21 @@
+company,sector,official_domain,grievance_email,grievance_phone,source_url,labelled_by
+Flipkart,ecommerce,flipkart.com,grievance.officer@flipkart.com,04445614700,https://www.flipkart.com/pages/grievance-redressal-mechanism,official page read 2026-10-07 - confirm
+Amazon India,ecommerce,amazon.in,,,,
+Myntra,ecommerce,myntra.com,,,,
+Meesho,ecommerce,meesho.com,,,,
+Swiggy,ecommerce,swiggy.com,,,,
+Zomato,ecommerce,zomato.com,grievance@zomato.com,,https://www.zomato.com/policies/terms-of-service/,official page read 2026-10-07 - confirm
+SBI,bank,sbi.bank.in,pno@sbi.co.in,02222741216,https://sbi.bank.in/web/customer-care/contact-us,official page read 2026-10-07 - confirm
+HDFC Bank,bank,hdfc.bank.in,,,,
+ICICI Bank,bank,icici.bank.in,pno@icicibank.com,02239337979,https://www.icici.bank.in/personal-banking/loans/cardless-emi/grievance-redressal,official page read 2026-10-07 - confirm
+Paytm,bank,paytm.com,,,,
+Jio,telecom,jio.com,,,,
+Airtel,telecom,airtel.in,appellate.del@in.airtel.com,,https://www.airtel.in/mobile-appellate,official page read 2026-10-07 (circle-wise appellate.*@in.airtel.com) - confirm
+Vi,telecom,myvi.in,grievanceofficer@vodafoneidea.com,,https://www.myvi.in/terms-of-use,official page read 2026-10-07 - confirm
+LIC,insurance,licindia.in,co_complaints@licindia.com,,https://licindia.in/grievance-redressal-officers,official page read 2026-10-07 - confirm
+Star Health,insurance,starhealth.in,,,,
+Ola,other,olacabs.com,,,,
+MakeMyTrip,other,makemytrip.com,,,,
+IRCTC,other,irctc.co.in,,,,
+KreditBee,loan_app,kreditbee.in,help@kreditbee.in,8044292200,RBI DLA directory (registry.db),RBI Digital Lending App directory (as on 30 June 2026)
+Moneyview,loan_app,moneyview.in,,,,

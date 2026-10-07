@@ -1,0 +1,14 @@
+{"id": 1, "complaint": "I ordered a Samsung phone on Flipkart (order OD123456789, Rs 18,999). It arrived with a cracked screen and they refused a refund.", "sector": "ecommerce", "language": "en"}
+{"id": 2, "complaint": "Flipkart ne damaged phone ka refund reject kar diya, order 15 Sep ko kiya tha", "sector": "ecommerce", "language": "hinglish"}
+{"id": 3, "complaint": "Amazon delivered a fake perfume and is refusing to take it back.", "sector": "ecommerce", "language": "en"}
+{"id": 4, "complaint": "Zomato charged me for an order that was never delivered and support closed my ticket.", "sector": "ecommerce", "language": "en"}
+{"id": 5, "complaint": "HDFC Bank debited Rs 2,500 from my account without my consent and has not reversed it after 3 weeks.", "sector": "bank", "language": "en"}
+{"id": 6, "complaint": "मेरे SBI खाते से 5000 रुपये काट लिए गए, बैंक जवाब नहीं दे रहा है।", "sector": "bank", "language": "hi"}
+{"id": 7, "complaint": "Jio charged me Rs 299 for a plan I never activated and customer care says nothing can be done.", "sector": "telecom", "language": "en"}
+{"id": 8, "complaint": "Airtel broadband has been down for 10 days and they keep closing my complaint.", "sector": "telecom", "language": "en"}
+{"id": 9, "complaint": "Star Health rejected my hospitalisation claim of Rs 85,000 saying it was a pre-existing disease.", "sector": "insurance", "language": "en"}
+{"id": 10, "complaint": "LIC ne mera claim reject kar diya, 2 mahine se koi jawab nahi mila", "sector": "insurance", "language": "hinglish"}
+{"id": 11, "complaint": "Recovery agents of the KreditBee app are calling my relatives and threatening me though my EMI is only 3 days late.", "sector": "loan_app", "language": "en"}
+{"id": 12, "complaint": "एक लोन ऐप वाले मुझे धमकी दे रहे हैं और मेरी फोटो मेरे दोस्तों को भेज रहे हैं।", "sector": "loan_app", "language": "hi"}
+{"id": 13, "complaint": "IndiGo cancelled my flight and has not refunded Rs 7,400 after 45 days.", "sector": "other", "language": "en"}
+{"id": 14, "complaint": "MakeMyTrip took Rs 12,000 for a hotel booking that the hotel says it never received.", "sector": "other", "language": "en"}
