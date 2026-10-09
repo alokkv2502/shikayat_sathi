@@ -1,4 +1,5 @@
 """Graph tests on a FICTIONAL company (Kartify, *.example domains) with SerpApi and page fetches mocked."""
+import json
 import types
 
 import pytest
@@ -200,35 +201,31 @@ def test_failed_request_is_not_charged(monkeypatch, tmp_path):
     assert client.live_calls == 0
 
 
-def test_llm_calls_litellm_endpoint(monkeypatch, tmp_path):
-    import openai
+def test_llm_calls_gemini_interactions(monkeypatch, tmp_path):
     calls = []
 
-    class FakeCompletions:
-        async def create(self, **kw):
+    class FakeInteractions:
+        def create(self, **kw):
             calls.append(kw)
-            if len(calls) == 1:
-                raise openai.APIConnectionError(request=None)
-            msg = types.SimpleNamespace(content='```json\n{"sector": "telecom"}\n```')
-            return types.SimpleNamespace(choices=[types.SimpleNamespace(message=msg)])
-
-    class FakeClient:
-        def __init__(self, base_url, api_key):
-            self.chat = types.SimpleNamespace(completions=FakeCompletions())
-
-        async def close(self):
-            pass
-
-    async def no_sleep(_):
-        return None
-    monkeypatch.setattr(openai, "AsyncOpenAI", FakeClient)
+            if len(calls) == 1:  # first attempt fails -> exercises the retry
+                raise RuntimeError("503 UNAVAILABLE")
+            return types.SimpleNamespace(status="completed", output_text='{"sector": "telecom"}')
+    monkeypatch.setattr(llm, "client", lambda: types.SimpleNamespace(interactions=FakeInteractions()))
     monkeypatch.setattr(llm, "LLM_PROVIDER", "")
-    monkeypatch.setattr(llm, "LITELLM_BASE_URL", "http://litellm.test/v1")
-    monkeypatch.setattr(llm, "LITELLM_API_KEY", "sk-test")
+    monkeypatch.setattr(llm, "GEMINI_API_KEY", "test-key")
     monkeypatch.setattr(llm, "LLM_CACHE", tmp_path)
-    monkeypatch.setattr(llm.asyncio, "sleep", no_sleep)
+    monkeypatch.setattr(llm.time, "sleep", lambda s: None)
     schema = {"type": "object", "properties": {"sector": {"type": "string"}}, "required": ["sector"]}
     assert llm.json_call("sys", "Jio charged me", schema) == {"sector": "telecom"} and len(calls) == 2
     kw = calls[-1]
-    assert kw["temperature"] == 0.1 and kw["response_format"] == {"type": "json_object"}
-    assert kw["extra_body"] == {"provider": {"only": ["google-ai-studio"], "allow_fallbacks": True}}
+    assert kw["model"] == llm.GEMINI_MODEL and kw["input"] == "Jio charged me" and kw["system_instruction"] == "sys"
+    assert kw["response_format"] == {"type": "text", "mime_type": "application/json", "schema": schema}
+    assert kw["generation_config"] == {"temperature": 0.1, "thinking_level": "low"}
+    assert llm.label().startswith("Gemini")
+
+
+def test_gemini_schema_inlines_pydantic_refs():
+    from saathi.state import IntakeOut, schema
+    g = llm.gemini_schema(schema(IntakeOut))
+    assert "$defs" not in json.dumps(g) and "$ref" not in json.dumps(g)
+    assert g["properties"]["facts"]["properties"]["order_id"]["type"] == "string"

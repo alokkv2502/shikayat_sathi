@@ -18,5 +18,5 @@ fastembed>=0.4
 # UI
 streamlit>=1.50
 # LLM agents (optional - every agent has a rule-based fallback)
-openai>=1.60             # client for the LiteLLM endpoint (Gemini)
+google-genai>=2.28       # Gemini (Interactions API)
 pytest>=8

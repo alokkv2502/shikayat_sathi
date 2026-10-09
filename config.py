@@ -20,12 +20,11 @@ SERPAPI_API_KEY = os.getenv("SERPAPI_API_KEY", "")
 _cap = os.getenv("SERPAPI_MAX_CREDITS", "12").strip().lower()
 SERPAPI_MAX_CREDITS: int | None = None if _cap in ("", "0", "none") else int(_cap)
 
-# LLM: Gemini through a LiteLLM (OpenAI-compatible) endpoint. All three must be set; otherwise, or with
-# LLM_PROVIDER=none, the agents run their rule-based fallbacks.
+# LLM: Gemini via the google-genai SDK (Interactions API). Without a key, or with LLM_PROVIDER=none, the agents run
+# their rule-based fallbacks.
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "").lower()
-LITELLM_BASE_URL = os.getenv("LITELLM_BASE_URL", "")
-LITELLM_API_KEY = os.getenv("LITELLM_API_KEY", "")
-LITELLM_MODEL = os.getenv("LITELLM_MODEL", "google/gemini-3.1-flash-lite")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or ""
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.1-flash-lite")
 
 # Qdrant: local server (docker compose up -d). If unreachable, embedded on-disk mode is used (data/qdrant/).
 QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")

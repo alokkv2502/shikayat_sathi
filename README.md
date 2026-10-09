@@ -23,7 +23,7 @@ _Information, not legal advice. Nothing is ever sent automatically._
 cd shikayat_saathi
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env              # SERPAPI_API_KEY; optional LITELLM_BASE_URL / LITELLM_API_KEY / LITELLM_MODEL
+cp .env.example .env              # SERPAPI_API_KEY; optional GEMINI_API_KEY (+ GEMINI_MODEL)
 docker compose up -d              # local Qdrant (recommended: lets the app and CLI share the index)
 python cli.py index               # index the legal corpus (first time only, ~2 min)
 streamlit run app.py
@@ -84,7 +84,7 @@ saathi/
   state.py         ComplaintState (TypedDict + reducers) and the pydantic models used for structured LLM output
   graph.py         StateGraph: Send fan-out, both loops, interrupt, SqliteSaver; contacts subgraph for the eval
   playbooks.py     sector → regulator escalation ladder, as data
-  llm.py           Gemini via a LiteLLM endpoint (OpenAI client, JSON mode, 1 retry); rule-based fallback
+  llm.py           Gemini via google-genai (Interactions API, JSON schema output, 1 retry); rule-based fallback
   nodes/           intake · grievance · precedents · local_forum · registry_worker · verifier · legal_rag ·
                    drafter · critic · review (human_review + finalize) · common (error/credit wrapper)
   tools/           serp.py (disk cache, credit cap) · fetch.py · domains.py (official-domain resolution)
@@ -142,7 +142,7 @@ The other 12 are left for hand labelling, as the brief asks.
 | Brief | This build | Why |
 |---|---|---|
 | chromadb / FAISS | **Local Qdrant**, with an embedded fallback | Qdrant was required. Run the server with `docker compose`: embedded mode lets only one process open the index, so the app and the CLI can't use it at the same time. |
-| `langchain-anthropic` | **Gemini via a LiteLLM endpoint** (OpenAI client, `google-ai-studio` provider) | This is the format the team uses. The model is set in `.env`. |
+| `langchain-anthropic` | **Gemini via the google-genai SDK** (`client.interactions.create`, default `gemini-3.8-flash`) | This is the API the team uses. The model is set in `.env` (`GEMINI_MODEL`). |
 | `registry/` copied into this repo | The **LoanLens** registry in the sibling folder (`LOANLENS_DIR`) | It keeps one source of RBI data. The worker imports the registry in isolation from this project's code. |
 | Legal PDFs downloaded by the user | Already in `raw/legal/` (`SOURCES.md` lists them; 3 come from mirrors) | They were collected earlier. They are unchanged. |
 
@@ -153,12 +153,12 @@ The other 12 are left for hand labelling, as the brief asks.
   return "not found".
 - "Two independent sources" could be gamed by coordinated spam. That is why phone numbers seen only on third-party
   sites always carry a warning.
-- Without an LLM endpoint the agents fall back to rules: a template letter and an English summary (Hindi for
+- Without a Gemini key the agents fall back to rules: a template letter and an English summary (Hindi for
   Hindi and Hinglish complaints).
 
 ## AI tools used
 
 - **Claude Code (Claude Opus 5.5)**: built the project.
-- **Gemini via LiteLLM**: runs the intake, extraction, precedent relevance, drafting and critic steps, using JSON
-  output that is validated with pydantic.
+- **Gemini (`gemini-3.8-flash`) via the google-genai Interactions API**: runs the intake, extraction, precedent
+  relevance, drafting and critic steps, with schema-constrained JSON output that is validated with pydantic.
 - **BAAI/bge-small-en-v1.5** (fastembed, runs locally): embeds the legal corpus, which is stored in local Qdrant.
