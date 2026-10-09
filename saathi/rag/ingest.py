@@ -7,6 +7,14 @@ Corpus (raw/legal/):
   trai   Telecom Consumers Complaint Redressal Regulations, 2012         (Regulation)
   ins    Insurance Ombudsman Rules, 2017 (as amended till 9.11.2023)     (Rule)
   dl     Reserve Bank of India (Digital Lending) Directions, 2025        (Para)
+  ccr    Consumer Protection (Consumer Disputes Redressal Commissions) Rules, 2020   (Rule)
+  gen    Consumer Protection (General) Rules, 2020                       (Rule)
+  ecom26 Consumer Protection (E-Commerce) (Amendment) Rules, 2026        (Rule)
+  ins23  Insurance Ombudsman (Amendment) Rules, 2023                     (Rule)
+
+Only English text is indexed: the gazette PDFs are bilingual, so each document starts at its English notification
+and any line containing Devanagari is dropped. (Hindi complaints are translated once, at intake - see store.py.)
+"Consumer Protection (E-Commerce) Rules, 2020.pdf" is a scan with no text layer; ecommerce_rules_2020.html covers it.
 
 Chunks keep their citation ("Consumer Protection Act, 2019, Section 35(1)–(2)"). Vectors go to a local
 Qdrant (QDRANT_URL); if no server is reachable, embedded on-disk Qdrant (data/qdrant/) is used.
@@ -44,7 +52,33 @@ DOCS: dict[str, dict] = {
            "unit": "Para", "start": "Chapter I: Preliminary", "start_occurrence": 2, "end": "Back to previous page",
            "parts": ["Para", "Annex"],
            "source_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12848"},
+    # One gazette PDF carries two notifications (G.S.R. 448(E) and 449(E)), each in Hindi then English.
+    "ccr": {"title": "Consumer Protection (Consumer Disputes Redressal Commissions) Rules, 2020",
+            "file": "Consumer Commission Rules & General Rules_1732703661.pdf", "unit": "Rule",
+            "start": "G.S.R. 448(E)", "end": "SCHEDULE-I",  # the schedule is a reporting form, not law
+            "source_url": "https://consumeraffairs.nic.in/acts-and-rules/consumer-protection"},
+    "gen": {"title": "Consumer Protection (General) Rules, 2020",
+            "file": "Consumer Commission Rules & General Rules_1732703661.pdf", "unit": "Rule",
+            "start": "G.S.R. 449 (E)", "end": "[F.No.J-10/6/2018-CPU]",
+            "source_url": "https://consumeraffairs.nic.in/acts-and-rules/consumer-protection"},
+    # Text extraction drops some digits in this PDF, so the amending rules (3.-6.) are renumbered. In amendments,
+    # "(4)" etc. inside a rule are the principal rules' sub-rules, so chunks are cited by the amending rule only.
+    "ecom26": {"title": "Consumer Protection (E-Commerce) (Amendment) Rules, 2026",
+               "file": "E Commerce Amendment Rules 2026_1789127949.pdf", "unit": "Rule",
+               "start": "NOTIFICATION", "end": "[F. No.",
+               "fix": lambda t: _renumber(t, r"(?m)^\.?\s*(?=In the princip ?al rules)", first=3),
+               "subrefs": False,
+               "source_url": "https://consumeraffairs.nic.in/acts-and-rules/consumer-protection"},
+    # OCR'd scan: rule 2 reads "Z."; the gazette's Hindi running header comes through as Latin junk.
+    "ins23": {"title": "Insurance Ombudsman (Amendment) Rules, 2023",
+              "file": "Insurance Ombudsman(Amendment) Rules, 2023.pdf", "unit": "Rule",
+              "start": "NOTIFICATION", "end": "[F. No.",
+              "fix": lambda t: re.sub(r"(?m)^\[inT .*$", "", re.sub(r"(?m)^Z\. In the", "2. In the", t)),
+              "subrefs": False,
+              "source_url": "https://cioins.co.in:8082/notification/"},
 }
+
+_DEVANAGARI = re.compile(r"[\u0900-\u097F]")
 
 # The CPA PDF loses its marginal headings in text extraction; these are the Act's own headings for the
 # sections consumer complaints most often engage.
@@ -81,7 +115,7 @@ def doc_text(doc_id: str) -> str:
     else:
         from bs4 import BeautifulSoup
 
-        soup = BeautifulSoup(path.read_text(errors="ignore"), "html.parser")
+        soup = BeautifulSoup(path.read_text(encoding="utf-8", errors="ignore"), "html.parser")
         for t in soup(["script", "style", "noscript"]):
             t.decompose()
         text = soup.get_text("\n")
@@ -94,9 +128,16 @@ def doc_text(doc_id: str) -> str:
         text = text[max(pos, 0):]
     if d.get("end") and d["end"] in text:
         text = text[: text.find(d["end"])]
-    # Drop footnote-marker-only lines and page numbers.
+    # English only; drop footnote-marker-only lines and page numbers.
     lines = [ln.strip() for ln in text.splitlines()]
-    return "\n".join(ln for ln in lines if ln and not re.fullmatch(r"\d{1,2}", ln))
+    text = "\n".join(ln for ln in lines if ln and not _DEVANAGARI.search(ln) and not re.fullmatch(r"\d{1,2}", ln))
+    return d["fix"](text) if d.get("fix") else text
+
+
+def _renumber(text: str, pattern: str, first: int) -> str:
+    """Prefix each heading line matched by `pattern` with consecutive numbers (for PDFs that lost them)."""
+    n = iter(range(first, 10_000))
+    return re.sub(pattern, lambda _: f"{next(n)}. ", text)
 
 
 def _title(rest: str) -> str:
@@ -104,6 +145,18 @@ def _title(rest: str) -> str:
     if m and not re.match(r"^\(", rest):
         return m.group(1).strip(" .:-—–")
     return re.sub(r"\s+", " ", rest)[:90].strip()
+
+
+def _split_long(text: str, max_chars: int) -> list[str]:
+    """Cut text with no sub-section markers to split on at sentence ends (or spaces), so nothing is truncated."""
+    out = []
+    while len(text) > max_chars:
+        cut = max(text.rfind(". ", 0, max_chars), text.rfind("; ", 0, max_chars))
+        cut = cut + 1 if cut > max_chars // 2 else (text.rfind(" ", 0, max_chars) if " " in text[:max_chars]
+                                                    else max_chars)
+        out.append(text[:cut].strip())
+        text = text[cut:].strip()
+    return out + [text] if text else out
 
 
 def chunk_doc(doc_id: str, max_chars: int = 1800) -> list[dict]:
@@ -142,21 +195,22 @@ def chunk_doc(doc_id: str, max_chars: int = 1800) -> list[dict]:
                 groups[-1] += p
             else:
                 groups.append(p)
+        groups = [piece for g in groups for piece in _split_long(g, max_chars)]
         prev_ref = None
         for g in groups:
             ref = label
             subs = [int(x) for x in re.findall(r"\((\d{1,3})\)\s", g)]
-            if len(groups) > 1 and subs:
+            if len(groups) > 1 and subs and d.get("subrefs", True):
                 seq = [subs[0]]  # top-level sub-sections run consecutively; inline cross-refs don't
                 for x in subs[1:]:
                     if x == seq[-1] + 1:
                         seq.append(x)
                 ref = f"{label}({seq[0]})" if len(seq) == 1 else f"{label}({seq[0]})–({seq[-1]})"
-            if ref == prev_ref or (len(groups) > 1 and not subs):
-                ref = f"{prev_ref or label} (contd.)"
+            if prev_ref and (ref == prev_ref or (len(groups) > 1 and (not subs or not d.get("subrefs", True)))):
+                ref = f"{prev_ref} (contd.)"
             prev_ref = ref.replace(" (contd.)", "")
             chunks.append({"doc_id": doc_id, "doc_title": d["title"], "ref": ref, "title": s["title"],
-                           "citation": f"{d['title']}, {ref}", "text": g[:3500],
+                           "citation": f"{d['title']}, {ref}", "text": g,
                            "source_url": d["source_url"]})
     return chunks
 
@@ -167,11 +221,23 @@ def chunk_doc(doc_id: str, max_chars: int = 1800) -> list[dict]:
 def embedder():
     from fastembed import TextEmbedding
 
-    return TextEmbedding(EMBED_MODEL)
+    from saathi import timing
+
+    with timing.span("init", f"load embedding model {EMBED_MODEL} (once per process)"):
+        return TextEmbedding(EMBED_MODEL)
 
 
 @lru_cache(maxsize=1)
 def client():
+    from saathi import timing
+
+    with timing.span("init", "connect to Qdrant (once per process)") as rec:
+        c = _client()
+        rec["label"] += f" → {client.mode}"
+        return c
+
+
+def _client():
     from qdrant_client import QdrantClient
 
     try:
@@ -246,7 +312,9 @@ def main() -> None:
             print(f"{c['ref']:<34} {len(c['text']):>5}  {c['title'][:70]}")
     else:
         docs = tuple(x for x in a.docs.split(",") if x)
-        for h in retrieve(" ".join(a.text), docs, a.k):
+        from saathi.rag.store import english_query
+
+        for h in retrieve(english_query(" ".join(a.text)), docs, a.k):
             print(f"[{h['score']}] {h['citation']} — {h['title']}\n{h['text'][:400]}\n")
 
 

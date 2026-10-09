@@ -1,13 +1,21 @@
 {
- "run_at": "2026-10-07T11:05:52+00:00",
+ "run_at": "2026-10-09T06:41:31+00:00",
  "complaints": {
-  "n": 14,
+  "n": 16,
   "sector_accuracy": 100.0,
   "language_accuracy": 100.0,
   "critic_pass_rate": 100.0,
   "zero_uncited_rate": 100.0,
+  "avg_facts_used": 0.7,
+  "avg_facts_available": 0.7,
+  "frame_ok_rate": 100.0,
+  "avg_max_overlap": 65.8,
   "rows": [
    {
+    "facts_available": 2,
+    "facts_used": 2,
+    "names_scheme": null,
+    "frame_ok": true,
     "id": 1,
     "language": "en",
     "expected_sector": "ecommerce",
@@ -17,9 +25,14 @@
     "critic_passed": true,
     "draft_attempts": 1,
     "uncited_in_final": 0,
-    "clauses": 4
+    "clauses": 4,
+    "max_overlap": 66.7
    },
    {
+    "facts_available": 1,
+    "facts_used": 1,
+    "names_scheme": null,
+    "frame_ok": true,
     "id": 2,
     "language": "hinglish",
     "expected_sector": "ecommerce",
@@ -29,9 +42,14 @@
     "critic_passed": true,
     "draft_attempts": 1,
     "uncited_in_final": 0,
-    "clauses": 4
+    "clauses": 4,
+    "max_overlap": 61.1
    },
    {
+    "facts_available": 0,
+    "facts_used": 0,
+    "names_scheme": null,
+    "frame_ok": true,
     "id": 3,
     "language": "en",
     "expected_sector": "ecommerce",
@@ -41,9 +59,14 @@
     "critic_passed": true,
     "draft_attempts": 1,
     "uncited_in_final": 0,
-    "clauses": 4
+    "clauses": 4,
+    "max_overlap": 83.2
    },
    {
+    "facts_available": 0,
+    "facts_used": 0,
+    "names_scheme": null,
+    "frame_ok": true,
     "id": 4,
     "language": "en",
     "expected_sector": "ecommerce",
@@ -53,9 +76,14 @@
     "critic_passed": true,
     "draft_attempts": 1,
     "uncited_in_final": 0,
-    "clauses": 4
+    "clauses": 4,
+    "max_overlap": 80.6
    },
    {
+    "facts_available": 1,
+    "facts_used": 1,
+    "names_scheme": null,
+    "frame_ok": true,
     "id": 5,
     "language": "en",
     "expected_sector": "bank",
@@ -65,9 +93,14 @@
     "critic_passed": true,
     "draft_attempts": 1,
     "uncited_in_final": 0,
-    "clauses": 2
+    "clauses": 2,
+    "max_overlap": 63.3
    },
    {
+    "facts_available": 0,
+    "facts_used": 0,
+    "names_scheme": null,
+    "frame_ok": true,
     "id": 6,
     "language": "hi",
     "expected_sector": "bank",
@@ -77,9 +110,14 @@
     "critic_passed": true,
     "draft_attempts": 1,
     "uncited_in_final": 0,
-    "clauses": 4
+    "clauses": 4,
+    "max_overlap": 57.6
    },
    {
+    "facts_available": 1,
+    "facts_used": 1,
+    "names_scheme": true,
+    "frame_ok": true,
     "id": 7,
     "language": "en",
     "expected_sector": "telecom",
@@ -89,9 +127,14 @@
     "critic_passed": true,
     "draft_attempts": 1,
     "uncited_in_final": 0,
-    "clauses": 2
+    "clauses": 2,
+    "max_overlap": 69.0
    },
    {
+    "facts_available": 0,
+    "facts_used": 0,
+    "names_scheme": null,
+    "frame_ok": true,
     "id": 8,
     "language": "en",
     "expected_sector": "telecom",
@@ -101,9 +144,14 @@
     "critic_passed": true,
     "draft_attempts": 1,
     "uncited_in_final": 0,
-    "clauses": 4
+    "clauses": 4,
+    "max_overlap": 69.7
    },
    {
+    "facts_available": 1,
+    "facts_used": 1,
+    "names_scheme": null,
+    "frame_ok": true,
     "id": 9,
     "language": "en",
     "expected_sector": "insurance",
@@ -113,9 +161,14 @@
     "critic_passed": true,
     "draft_attempts": 1,
     "uncited_in_final": 0,
-    "clauses": 4
+    "clauses": 4,
+    "max_overlap": 63.7
    },
    {
+    "facts_available": 1,
+    "facts_used": 1,
+    "names_scheme": null,
+    "frame_ok": true,
     "id": 10,
     "language": "hinglish",
     "expected_sector": "insurance",
@@ -125,9 +178,14 @@
     "critic_passed": true,
     "draft_attempts": 1,
     "uncited_in_final": 0,
-    "clauses": 4
+    "clauses": 4,
+    "max_overlap": 63.7
    },
    {
+    "facts_available": 0,
+    "facts_used": 0,
+    "names_scheme": null,
+    "frame_ok": true,
     "id": 11,
     "language": "en",
     "expected_sector": "loan_app",
@@ -137,9 +195,14 @@
     "critic_passed": true,
     "draft_attempts": 1,
     "uncited_in_final": 0,
-    "clauses": 1
+    "clauses": 1,
+    "max_overlap": 71.3
    },
    {
+    "facts_available": 0,
+    "facts_used": 0,
+    "names_scheme": null,
+    "frame_ok": true,
     "id": 12,
     "language": "hi",
     "expected_sector": "loan_app",
@@ -149,9 +212,14 @@
     "critic_passed": true,
     "draft_attempts": 1,
     "uncited_in_final": 0,
-    "clauses": 1
+    "clauses": 1,
+    "max_overlap": 66.7
    },
    {
+    "facts_available": 1,
+    "facts_used": 1,
+    "names_scheme": null,
+    "frame_ok": true,
     "id": 13,
     "language": "en",
     "expected_sector": "other",
@@ -161,9 +229,14 @@
     "critic_passed": true,
     "draft_attempts": 1,
     "uncited_in_final": 0,
-    "clauses": 4
+    "clauses": 4,
+    "max_overlap": 61.9
    },
    {
+    "facts_available": 1,
+    "facts_used": 1,
+    "names_scheme": null,
+    "frame_ok": true,
     "id": 14,
     "language": "en",
     "expected_sector": "other",
@@ -173,7 +246,42 @@
     "critic_passed": true,
     "draft_attempts": 1,
     "uncited_in_final": 0,
-    "clauses": 4
+    "clauses": 4,
+    "max_overlap": 68.2
+   },
+   {
+    "facts_available": 2,
+    "facts_used": 2,
+    "names_scheme": true,
+    "frame_ok": true,
+    "id": 15,
+    "language": "en",
+    "expected_sector": "govt_scheme",
+    "sector": "govt_scheme",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 0,
+    "max_overlap": 46.3
+   },
+   {
+    "facts_available": 0,
+    "facts_used": 0,
+    "names_scheme": true,
+    "frame_ok": true,
+    "id": 16,
+    "language": "hinglish",
+    "expected_sector": "govt_scheme",
+    "sector": "govt_scheme",
+    "sector_ok": true,
+    "language_ok": true,
+    "critic_passed": true,
+    "draft_attempts": 1,
+    "uncited_in_final": 0,
+    "clauses": 0,
+    "max_overlap": 60.6
    }
   ]
  },

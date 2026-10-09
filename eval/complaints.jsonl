@@ -12,3 +12,5 @@
 {"id": 12, "complaint": "एक लोन ऐप वाले मुझे धमकी दे रहे हैं और मेरी फोटो मेरे दोस्तों को भेज रहे हैं।", "sector": "loan_app", "language": "hi"}
 {"id": 13, "complaint": "IndiGo cancelled my flight and has not refunded Rs 7,400 after 45 days.", "sector": "other", "language": "en"}
 {"id": 14, "complaint": "MakeMyTrip took Rs 12,000 for a hotel booking that the hotel says it never received.", "sector": "other", "language": "en"}
+{"id": 15, "complaint": "I joined my first job as a new EPFO member on 1 August 2025 with gross wages of Rs 32,000 a month and completed six months on 1 February 2026, but the first instalment under the Pradhan Mantri Viksit Bharat Rozgar Yojana (PM-VBRY) has not been paid.", "sector": "govt_scheme", "language": "en"}
+{"id": 16, "complaint": "PM Kisan Samman Nidhi yojana ki pichli 2 kist mere account mein nahi aayi, eKYC bhi ho chuka hai", "sector": "govt_scheme", "language": "hinglish"}

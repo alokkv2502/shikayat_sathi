@@ -2,11 +2,13 @@
 from __future__ import annotations
 
 import sys
+import time
 import traceback
 from functools import wraps
 
 from langgraph.errors import GraphBubbleUp
 
+from saathi import timing
 from saathi.tools.serp import CreditLimitReached, NoApiKey, SerpApiError, serp
 
 
@@ -15,9 +17,13 @@ def node(label: str):
         @wraps(fn)
         def wrapper(state, *args, **kwargs):
             serp.thread_calls_reset()
+            since, t0 = timing.mark(), time.perf_counter()
             try:
-                out = fn(state, *args, **kwargs) or {}
+                with timing.span("node", fn.__name__):
+                    out = fn(state, *args, **kwargs) or {}
             except GraphBubbleUp:  # interrupt() / control flow must reach LangGraph
+                timing.log_node(fn.__name__, round((time.perf_counter() - t0) * 1000), since,
+                                " ⏸ waiting for review")
                 raise
             except (NoApiKey, CreditLimitReached) as e:
                 out = {"trace": [f"{label}: skipped — {e}"], "errors": [f"{fn.__name__}: {e}"]}
@@ -30,6 +36,8 @@ def node(label: str):
                        "errors": [f"{fn.__name__}: {type(e).__name__}: {e}"]}
             if isinstance(out, dict) and serp.thread_calls():
                 out["live_calls"] = serp.thread_calls()
+            timing.log_node(fn.__name__, round((time.perf_counter() - t0) * 1000), since,
+                            " ⚠ " + "; ".join(out["errors"])[:120] if out.get("errors") else "")
             return out
         return wrapper
     return deco

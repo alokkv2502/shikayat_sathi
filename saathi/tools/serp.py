@@ -23,6 +23,7 @@ from pathlib import Path
 import requests
 
 from config import CACHE_DIR, SERPAPI_API_KEY, SERPAPI_MAX_CREDITS
+from saathi import timing
 
 ENDPOINT = os.getenv("SERPAPI_ENDPOINT", "https://serpapi.com/search.json")  # override only for tests
 
@@ -66,25 +67,30 @@ class SerpClient:
         p = self._path(params)
         if p.exists():
             try:
-                return json.loads(p.read_text())["response"]
-            except (json.JSONDecodeError, KeyError):
+                return json.loads(p.read_text(encoding="utf-8"))["response"]
+            except (json.JSONDecodeError, KeyError, UnicodeDecodeError):
                 return None
         return None
 
     def _ledger(self, params: dict) -> None:
         path = self.cache_dir / "_ledger.json"
         try:
-            ledger = json.loads(path.read_text()) if path.exists() else {"total_live_calls": 0, "calls": []}
-        except json.JSONDecodeError:
+            ledger = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"total_live_calls": 0, "calls": []}
+        except (json.JSONDecodeError, UnicodeDecodeError):
             ledger = {"total_live_calls": 0, "calls": []}
         ledger["total_live_calls"] += 1
         ledger["calls"].append({"at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                                 "engine": params.get("engine"), "q": params.get("q")})
-        path.write_text(json.dumps(ledger, indent=1, ensure_ascii=False))
+        path.write_text(json.dumps(ledger, indent=1, ensure_ascii=False), encoding="utf-8")
 
     def search(self, params: dict, *, live: bool = True, retries: int = 2) -> dict:
         """Cached search. `live=False` returns {} on a cache miss instead of spending a credit."""
         params = {k: v for k, v in params.items() if v is not None}
+        with timing.span("serp", f"{params.get('engine')}: {params.get('q', '')}") as rec:
+            rec["cached"] = self.cached(params) is not None
+            return self._search(params, live=live, retries=retries)
+
+    def _search(self, params: dict, *, live: bool = True, retries: int = 2) -> dict:
         hit = self.cached(params)
         if hit is not None:
             self.cache_hits += 1
@@ -120,7 +126,8 @@ class SerpClient:
         if "error" in data and "hasn't returned any results" not in data["error"]:
             self._refund()
             raise SerpApiError(f"SerpApi error for {what}: {data['error']}")
-        self._path(params).write_text(json.dumps({"params": params, "response": data}, ensure_ascii=False))
+        self._path(params).write_text(json.dumps({"params": params, "response": data}, ensure_ascii=False),
+                          encoding="utf-8")
         with self._lock:
             self._ledger(params)
         self._tl.n = getattr(self._tl, "n", 0) + 1

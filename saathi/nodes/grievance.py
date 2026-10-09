@@ -10,7 +10,7 @@ from __future__ import annotations
 import re
 from concurrent.futures import ThreadPoolExecutor
 
-from saathi import llm
+from saathi import llm, timing
 from saathi.nodes.common import live, node
 from saathi.playbooks import SECTORS
 from saathi.state import ExtractOut, schema
@@ -35,7 +35,10 @@ EXTRACT_SYSTEM = (
     "Extract grievance-redressal contacts for the named company from the page text. Copy names, emails and phone "
     "numbers EXACTLY as written; never guess or complete them. Use '' when a field is absent. Include the "
     "grievance officer, nodal / principal nodal officer, appellate authority, and the customer-care contact. "
-    "Skip contacts that clearly belong to a different organisation."
+    "Pages on a company's own website often list OTHER organisations' contacts too - lending partners, banks, "
+    "NBFCs, sellers, insurers, group or parent companies (e.g. 'Lending partners: 1. Axis Bank … 3. EarlySalary: "
+    "GRO Mr. X'). List every contact on the page with the organisation it belongs to, and set "
+    "belongs_to_named_company to true ONLY for the named company's own contacts. When unsure, set it to false."
 )
 
 
@@ -86,14 +89,14 @@ def rule_contacts(text: str, mailtos: list[str] | None = None, tels: list[str] |
     return out
 
 
-def llm_contacts(company: str, page: dict) -> tuple[list[dict], int]:
-    """LLM extraction, then literal verification against the page. Returns (contacts, blocked_count)."""
+def llm_contacts(company: str, page: dict) -> tuple[list[dict], int, bool]:
+    """LLM extraction, then literal verification against the page. Returns (contacts, blocked_count, llm_ran)."""
     text = page.get("text") or ""
     win = _windows(text)
     res = llm.json_call(EXTRACT_SYSTEM, f"Company: {company}\nPage: {page.get('final_url')}\n\n{win}",
                         schema(ExtractOut))
     if not res:
-        return [], 0
+        return [], 0, False
     flat = re.sub(r"\s+", " ", deobfuscate(text)).lower()
     digits = re.sub(r"\D", "", flat)
     out, blocked = [], 0
@@ -112,42 +115,66 @@ def llm_contacts(company: str, page: dict) -> tuple[list[dict], int]:
                 continue
             out.append({"type": kind, "value": v, "role": c.get("role") or "other", "name": name,
                         "designation": c.get("designation", ""), "timeline": c.get("response_timeline", ""),
-                        "evidence": c.get("evidence_quote", "")[:400]})
-    return out, blocked
+                        "evidence": c.get("evidence_quote", "")[:400],
+                        "own": bool(c.get("belongs_to_named_company")),
+                        "organisation": (c.get("organisation") or "").strip()})
+    return out, blocked, True
 
 
 def extract_from_pages(company: str, results: list[dict], *, max_pages: int = 8) -> dict:
     """Fetch the most promising result pages and extract contact observations from pages + snippets."""
     ranked = sorted(results, key=lambda r: (not r["on_official"], r.get("position") or 99))[:max_pages]
     with ThreadPoolExecutor(max_workers=6) as ex:
-        pages = list(ex.map(lambda r: (r, fetch(r["url"])), ranked))
-    observations, page_log, blocked = [], [], 0
-    for r, page in pages:
+        pages = list(ex.map(timing.carry(lambda r: (r, fetch(r["url"]))), ranked))
+    # Rules first. The LLM only adds role / name context to values the page itself contains (anything else is
+    # blocked), so it runs only on pages where the rules found a contact AND the page is official or names the
+    # company - and those calls run in parallel.
+    rules = [rule_contacts(p["text"], p.get("mailtos"), p.get("tels")) if p.get("ok") else [] for _, p in pages]
+    brand = company.casefold().split()[0] if company.split() else ""
+    worth = [i for i, (r, p) in enumerate(pages)
+             if rules[i] and (r["on_official"] or (brand and brand in p["text"].casefold()))]
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        llm_res = dict(zip(worth, ex.map(timing.carry(lambda i: llm_contacts(company, pages[i][1])), worth)))
+    llm_out = {i: (r[0], r[1]) for i, r in llm_res.items()}
+    llm_ok = {i for i, r in llm_res.items() if r[2]}  # pages the LLM actually read (not a failed / disabled call)
+    observations, page_log, blocked, other_org = [], [], 0, []
+    for i, (r, page) in enumerate(pages):
         src = {"source_url": page.get("final_url") or r["url"], "source_domain": registrable(page.get("final_url")
                                                                                             or r["url"]),
                "page_title": page.get("title") or r["title"]}
-        found = []
+        found, foreign = [], set()
         if page.get("ok"):
-            found = rule_contacts(page["text"], page.get("mailtos"), page.get("tels"))
-            lc, b = llm_contacts(company, page)
+            found = rules[i]
+            lc, b = llm_out.get(i, ([], 0))
             blocked += b
             by_val = {(f["type"], f["value"]): f for f in found}
             for c in lc:  # LLM adds role/name/designation context for values the page really contains
                 k = (c["type"], c["value"])
                 by_val[k] = {**by_val.get(k, {}), **{x: y for x, y in c.items() if y}}
-            found = list(by_val.values())
+            # A company's own page can list partners' / lenders' / sellers' officers: drop every value the LLM
+            # attributes to another organisation (unless it also lists it as the company's own).
+            own = {(c["type"], c["value"]) for c in lc if c["own"]}
+            foreign = {(c["type"], c["value"]) for c in lc if not c["own"]} - own
+            other_org += [{"value": c["value"], "organisation": c["organisation"], "url": src["source_url"]}
+                          for c in lc if (c["type"], c["value"]) in foreign]
+            found = [f for k, f in by_val.items() if k not in foreign]
+            if i in llm_ok:  # the LLM read this page: what it did not call the company's own has an unknown owner
+                for f in found:
+                    f["owner"] = "company" if (f["type"], f["value"]) in own else "unknown"
         for f in found:
             observations.append({**f, **src, "via": "page"})
         # Search snippets are Google's excerpt of that page - weaker evidence, but still tied to its domain.
         for kind, vals in (("email", find_emails(deobfuscate(r["snippet"]))), ("phone", find_phones(r["snippet"]))):
             for v in vals:
+                if (kind, v) in foreign:
+                    continue
                 if not any(o["value"] == v and o["source_url"] == src["source_url"] for o in observations):
                     observations.append({"type": kind, "value": v, "role": _role(r["snippet"]), "name": "",
                                          "timeline": "", "evidence": r["snippet"], **src, "via": "snippet"})
         page_log.append({"url": r["url"], "final_url": page.get("final_url"), "ok": page.get("ok"),
                          "error": page.get("error"), "on_official": r["on_official"], "found": len(found)})
     return {"observations": observations, "pages": page_log, "blocked_hallucinations": blocked,
-            "method": llm.label()}
+            "other_org": other_org, "method": llm.label()}
 
 
 def is_free_mail(email: str) -> bool:
@@ -209,4 +236,7 @@ def grievance(state: dict) -> dict:
                       f"({n_off} on the official domain)"
                       + (f"; blocked {ext['blocked_hallucinations']} LLM values not on the page"
                          if ext["blocked_hallucinations"] else "")
+                      + (f"; dropped {len(ext['other_org'])} contact(s) of other organisations listed on the page ("
+                         + ", ".join(sorted({o['organisation'] or '?' for o in ext['other_org']}))[:120] + ")"
+                         if ext["other_org"] else "")
                       + (f"; {len(errors)} query(ies) failed" if errors else "")]}

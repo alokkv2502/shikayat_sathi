@@ -9,6 +9,7 @@ import re
 import requests
 
 from config import CACHE_DIR
+from saathi import timing
 
 WEB_CACHE = CACHE_DIR / "web"
 WEB_CACHE.mkdir(parents=True, exist_ok=True)
@@ -25,9 +26,18 @@ def fetch(url: str, *, max_bytes: int = 600_000) -> dict:
     """{url, final_url, ok, status, title, text, mailtos, tels, error}. Cached; never raises."""
     if not re.match(r"^https?://", url or ""):
         url = "https://" + (url or "")
+    with timing.span("fetch", url) as rec:
+        rec["cached"] = (WEB_CACHE / (hashlib.sha1(url.encode()).hexdigest() + ".json")).exists()
+        return _fetch(url, max_bytes=max_bytes)
+
+
+def _fetch(url: str, *, max_bytes: int = 600_000) -> dict:
     cache = WEB_CACHE / (hashlib.sha1(url.encode()).hexdigest() + ".json")
     if cache.exists():
-        return json.loads(cache.read_text())
+        try:
+            return json.loads(cache.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            pass
     out: dict = {"url": url, "final_url": url, "ok": False, "text": "", "mailtos": [], "tels": []}
     try:
         from bs4 import BeautifulSoup
@@ -45,7 +55,7 @@ def fetch(url: str, *, max_bytes: int = 600_000) -> dict:
             text = deobfuscate(re.sub(r"[ \t\xa0]+", " ", text))
             out.update(ok=r.ok and len(text) > 80, text=text[:60000], title="PDF document",
                        mailtos=[], tels=[])
-            cache.write_text(json.dumps(out, ensure_ascii=False))
+            cache.write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
             return out
         soup = BeautifulSoup(raw, "html.parser")
         out["mailtos"] = sorted({a["href"][7:].split("?")[0].strip() for a in soup.select("a[href^='mailto:']")})
@@ -60,7 +70,7 @@ def fetch(url: str, *, max_bytes: int = 600_000) -> dict:
             out["error"] = f"HTTP {r.status_code}"
     except Exception as e:  # DNS, TLS, timeout, decoding...
         out["error"] = f"{type(e).__name__}: {str(e)[:160]}"
-    cache.write_text(json.dumps(out, ensure_ascii=False))
+    cache.write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
     return out
 
 

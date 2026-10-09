@@ -6,7 +6,7 @@ import re
 
 from saathi.nodes.common import node
 from saathi.playbooks import ISSUE_QUERIES, SECTORS
-from saathi.rag.store import retrieve
+from saathi.rag.store import english_query, retrieve
 
 REF_RE = re.compile(r"\b(Section|Sec\.|Rule|Regulation|Clause|Para(?:graph)?)\s+(\d+[A-Z]?)(?:\s*\(\s*\w+\s*\))*", re.I)
 UNIT_ALIASES = {"sec.": "section", "paragraph": "para"}
@@ -14,8 +14,10 @@ UNIT_ALIASES = {"sec.": "section", "paragraph": "para"}
 
 def gather_clauses(sector: str, issue_types: list[str], issue: str, k_each: int = 3, limit: int = 4) -> list[dict]:
     """One query for the sector's grievance rule + one per issue type; clauses taken round-robin across queries
-    so one query can't crowd out the others; clauses far weaker than the best match are dropped."""
+    so one query can't crowd out the others; clauses far weaker than the best match are dropped. `issue` is
+    already English (intake translates once); english_query only drops stray Devanagari in rules-only mode."""
     cfg = SECTORS[sector]
+    issue = english_query(issue)
     queries = [cfg["basis_query"]] + [f"{ISSUE_QUERIES[i]} {issue[:160]}" for i in issue_types]
     ranked = [retrieve(q, tuple(cfg["law_docs"]), k_each) for q in queries]
     seen, pool = set(), []
@@ -60,7 +62,11 @@ def strip_unsupported(body: str, clauses: list[dict]) -> tuple[str, list[str]]:
 
 @node("📚 Legal RAG")
 def legal_rag(state: dict) -> dict:
+    if not SECTORS[state.get("sector") or "other"]["law_docs"]:
+        return {"clauses": [], "trace": [f"📚 Legal RAG: skipped — no indexed law applies to the "
+                                         f"{state.get('sector')} route (no citations will be made)"]}
     clauses = gather_clauses(state["sector"], state.get("issue_types") or ["other"],
-                             (state.get("facts") or {}).get("issue") or state["complaint"])
+                             (state.get("facts") or {}).get("issue") or state.get("complaint_en")
+                             or state["complaint"])
     return {"clauses": clauses,
             "trace": [f"📚 Legal RAG: {len(clauses)} clause(s) — " + "; ".join(c["citation"] for c in clauses)]}

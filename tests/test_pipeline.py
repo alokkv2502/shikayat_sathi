@@ -1,5 +1,6 @@
 """Graph tests on a FICTIONAL company (Kartify, *.example domains) with SerpApi and page fetches mocked."""
 import json
+import re
 import types
 
 import pytest
@@ -63,11 +64,15 @@ def mocked(monkeypatch):
     return monkeypatch
 
 
-def run_graph(text, **kw):
+def run_graph(text, details: dict | None = None, stop_at_form: bool = False, **kw):
+    """Run to the letter review. The details form (if any questions) is submitted with `details` (empty by default);
+    stop_at_form=True returns at the form instead."""
     app = G.build(InMemorySaver())
     t = G.new_thread()
     nodes = []
     s = G.run(G.initial_state(text, **kw), t, on_update=lambda n, u: nodes.append(n), app=app)
+    if not stop_at_form and (s.get("__interrupt__") or {}).get("stage") == "details":
+        s = G.resume(t, details or {}, on_update=lambda n, u: nodes.append(n), app=app)
     return app, t, s, nodes
 
 
@@ -106,11 +111,15 @@ def test_critic_loop_sends_bad_draft_back(mocked, monkeypatch):
     drafts = iter([
         {"subject": "Complaint", "body": "Under Section 999 and [C9] you owe me for order ZZ99999999.",
          "remedy": "refund", "reply_deadline_days": 30, "summary": "s"},
-        {"subject": "Complaint", "body": "Order KT12345678 [ORDER DATE] [C1]: please refund within 30 days.",
+        {"subject": "Complaint", "body": "Order KT12345678 [ORDER DATE] [C1]: please refund ₹500 by {by}.",
          "remedy": "refund", "reply_deadline_days": 30, "summary": "s"}])
 
     def fake_json_call(system, prompt, schema, **_):
-        return next(drafts) if "draft firm" in system else None
+        if "draft firm" not in system:
+            return None
+        d = next(drafts)
+        by = re.search(r"REPLY DEADLINE \(computed[^:]*\): (\d{1,2} \w+ \d{4})", prompt).group(1)  # the code's date
+        return {**d, "body": d["body"].replace("{by}", by)}
     monkeypatch.setattr(llm, "json_call", fake_json_call)
     monkeypatch.setattr(llm, "label", lambda: "fake-llm")
     _, _, s, nodes = run_graph("Kartify refused a refund for order KT12345678 Rs 500", company="Kartify")
@@ -140,12 +149,189 @@ def test_intake_rules(text, sector, lang):
     assert rule_intake(text, None)["sector"] == sector and detect_language(text) == lang
 
 
+def test_flipkart_hinglish_complaint_extracts_ecommerce_facts():
+    complaint = ("Flipkart ne damaged phone ka refund reject kar diya, order FK12345678, "
+                 "Rs 15,000, 15 Sep 2026 ko order kiya tha.")
+
+    result = rule_intake(complaint, None)
+
+    assert result["sector"] == "ecommerce"
+    assert result["company"] == "Flipkart"
+    assert result["language"] == "hinglish"
+    assert result["facts"]["order_id"] == "FK12345678"
+    assert result["facts"]["amount"] == "15000"
+    assert result["facts"]["date"] == "15 Sep 2026"
+
+
+# Scheme knowledge lives ONLY in these fixtures (mocked search results, pages and LLM output) - the code has none.
+SCHEMES = {
+    "pm-vbry": {
+        "entity": "PM-VBRY",
+        "complaint": ("I joined as a first-time EPFO member on 1 August 2025. My gross monthly wages were Rs 50,000. "
+                      "I completed six months of continuous employment on 1 February 2026, but have not received "
+                      "the PM-VBRY first instalment."),
+        "pages": {"https://pmvbry.epfindia.gov.in/first-time-employees/":
+                  "First-time employees with gross wages up to Rs 1 lakh per month receive one month's EPF wage up "
+                  "to Rs 15,000 in two instalments. UAN must be activated through face authentication on UMANG. "
+                  "Grievances: https://epfigms.gov.in/"},
+        "brief": {"subject": "PM Viksit Bharat Rozgar Yojana, Part A", "aliases": ["PM-VBRY", "ELI scheme"],
+                  "administering_body": "EPFO", "what_it_is": "Employment incentive for first-time employees.",
+                  "complaint_type": "govt_scheme", "entitlement": "One month's EPF wage up to Rs 15,000.",
+                  "conditions": ["First-time EPFO member.", "Gross wages up to Rs 1 lakh per month.",
+                                 "UAN activated through face authentication on UMANG."],
+                  "common_failure_reasons": ["UAN not activated."], "documents_needed": ["UAN"],
+                  "official_grievance_channel": "EPFiGMS: https://epfigms.gov.in/",
+                  "sources": ["https://pmvbry.epfindia.gov.in/first-time-employees/",
+                              "https://invented-by-the-model.example/"]},
+        "body": "EPFO", "portal": "EPFiGMS", "url": "https://epfigms.gov.in/",
+    },
+    "fictional": {  # a made-up state scheme on a made-up .gov.in host: proves nothing is scheme-specific
+        "entity": "Gramin Solar Pump Yojana",
+        "complaint": "My subsidy under the Gramin Solar Pump Yojana has not come for 8 months after installation.",
+        "pages": {"https://solarpump.agri.example.gov.in/guidelines":
+                  "Farmers with up to 5 acres get a 60% subsidy after the pump is inspected. Grievances: "
+                  "https://solarpump.agri.example.gov.in/grievance"},
+        "brief": {"subject": "Gramin Solar Pump Yojana", "aliases": ["GSPY"],
+                  "administering_body": "State Agriculture Department", "what_it_is": "Solar pump subsidy.",
+                  "complaint_type": "govt_scheme", "entitlement": "60% subsidy on the pump.",
+                  "conditions": ["Land holding up to 5 acres.", "Pump inspected after installation."],
+                  "common_failure_reasons": [], "documents_needed": [],
+                  "official_grievance_channel": "Scheme grievance cell: https://solarpump.agri.example.gov.in/grievance "
+                                                "or https://not-in-sources.example/form",
+                  "sources": ["https://solarpump.agri.example.gov.in/guidelines"]},
+        "body": "State Agriculture Department", "portal": "Scheme grievance cell",
+        "url": "https://solarpump.agri.example.gov.in/grievance",
+    },
+}
+
+
+def mock_research(monkeypatch, tmp_path, case, calls=None):
+    import saathi.nodes.case_research as research_mod
+
+    monkeypatch.setattr(research_mod, "BRIEF_CACHE", tmp_path)
+    url = next(iter(case["pages"]))
+    results = {"organic_results": [{"position": 1, "title": "Guidelines", "link": url}]}
+
+    def search(params, live=True, **_):
+        (calls if calls is not None else []).append(params["q"])
+        return results if case["entity"] in params["q"] else SERP.get(params.get("q"), {})
+    monkeypatch.setattr(serp, "search", search)
+    monkeypatch.setattr(research_mod, "fetch", lambda u, **_: {"url": u, "ok": True, "title": "Guidelines",
+                                                               "text": case["pages"].get(u, "")})
+    monkeypatch.setattr(llm, "json_call", lambda system, *a, **k: dict(case["brief"])
+                        if system == research_mod.RESEARCH_SYSTEM else None)
+
+
+@pytest.mark.parametrize("key", list(SCHEMES))
+def test_scheme_research_frames_letter_from_sources(mocked, monkeypatch, tmp_path, key):
+    case = SCHEMES[key]
+    mock_research(monkeypatch, tmp_path, case)
+    app, thread, state, nodes = run_graph(case["complaint"])
+
+    assert nodes.index("intake_planner") < nodes.index("case_research") < nodes.index("gap_check")
+    assert case["entity"] in state["case_entities"]
+    assert state["sector"] == "govt_scheme" and state["company"] == case["body"]
+    assert state["clauses"] == [] and not any(p["worker"] == "grievance" for p in state["search_plan"])
+    brief = state["case_brief"]
+    assert brief["sources"] == [next(iter(case["pages"]))]                  # unfetched URLs are dropped
+    assert "not-in-sources.example" not in brief["official_grievance_channel"]  # unsourced URLs are dropped
+    assert state["escalation"][0]["name"].startswith(case["portal"]) and state["escalation"][0]["url"] == case["url"]
+    assert len(state["gap_questions"]) == len(brief["conditions"])          # no LLM gap check: all unknown
+    draft = state["draft"].casefold()
+    assert "condition-by-condition review" in draft and case["brief"]["subject"].casefold() in draft
+    assert "consumer protection" not in draft and "national consumer helpline" not in draft
+
+    assert state["eligibility"]["status"] == "unconfirmed"
+    first = state["eligibility_checks"][0]["condition"]
+    # Answering a review question re-assesses the conditions and redrafts; the case pauses for review again.
+    state = G.resume(thread, {"case_answers": {first: "Yes, confirmed on 3 March 2026."}}, app=app)
+    assert "__interrupt__" in state and not state.get("final")
+    assert state["eligibility_checks"][0]["status"] == "met" and len(state["gap_questions"]) == len(brief["conditions"]) - 1
+    assert "confirmed on 3 march 2026" in state["draft"].casefold()          # written into the letter body
+    assert state["__interrupt__"]["review_round"] == 2
+    letter = G.resume(thread, {}, app=app)["final"]["letter"]                 # approve without new answers
+    assert letter.count("3 March 2026") == 1 and next(iter(case["pages"])) in letter
+
+
+def test_review_answer_that_fails_a_condition_is_flagged_not_claimed(mocked, monkeypatch, tmp_path):
+    case = SCHEMES["fictional"]
+    mock_research(monkeypatch, tmp_path, case)
+    app, thread, state, _ = run_graph(case["complaint"])
+    cond = state["eligibility_checks"][0]["condition"]
+    state = G.resume(thread, {"case_answers": {cond: "No, I have 8 acres."}}, app=app)
+    assert state["eligibility"]["status"] == "may_not_qualify" and cond.rstrip(".") in state["eligibility"]["message"]
+    assert "explain the decision" in state["draft"]
+
+
+def test_critic_blocks_unsupported_eligibility_claim():
+    from saathi.nodes.critic import eligibility_issues
+
+    checks = [{"condition": "Land holding up to 5 acres.", "status": "unknown"}]
+    assert eligibility_issues({"eligibility_checks": checks}, "I am eligible for this subsidy.")
+    assert not eligibility_issues({"eligibility_checks": checks}, "Please confirm whether I qualify.")
+    assert not eligibility_issues({"eligibility_checks": [{**checks[0], "status": "met"}]}, "I am eligible.")
+
+
+def test_case_brief_is_cached_under_every_name(monkeypatch, tmp_path):
+    import saathi.nodes.case_research as research_mod
+
+    case, calls = SCHEMES["pm-vbry"], []
+    mock_research(monkeypatch, tmp_path, case, calls)
+    state = {"case_entities": ["PM-VBRY"], "complaint": case["complaint"], "sector": "other", "live": True}
+    assert research_mod.case_research(state)["case_brief"]["administering_body"] == "EPFO"
+    n = len(calls)
+    for alias in ("pm vbry", "PM Viksit Bharat Rozgar Yojana, Part A", "ELI scheme"):
+        out = research_mod.case_research({**state, "case_entities": [alias]})
+        assert out["case_brief"]["subject"] == case["brief"]["subject"] and "cached" in out["trace"][0]
+    assert len(calls) == n                                                    # no further searches
+
+
+def test_case_research_without_llm_invents_nothing(monkeypatch, tmp_path):
+    import saathi.nodes.case_research as research_mod
+
+    case = SCHEMES["pm-vbry"]
+    mock_research(monkeypatch, tmp_path, case)
+    monkeypatch.setattr(llm, "json_call", lambda *a, **k: None)
+    brief = research_mod.case_research({"case_entities": ["PM-VBRY"], "complaint": case["complaint"],
+                                        "sector": "other", "live": True})["case_brief"]
+    assert brief["subject"] == "PM-VBRY" and not brief["conditions"] and not brief["entitlement"]
+    assert brief["sources"] == [next(iter(case["pages"]))] and not list(tmp_path.iterdir())  # not cached
+
+
+def test_named_insurance_policy_keeps_insurance_research_frame(mocked, monkeypatch, tmp_path):
+    import saathi.nodes.case_research as research_mod
+    from saathi.nodes.intake import case_entities
+
+    monkeypatch.setattr(research_mod, "BRIEF_CACHE", tmp_path)
+    monkeypatch.setattr(llm, "json_call", lambda *args, **kwargs: None)
+    entity = case_entities("Star Health rejected my Super Star policy claim")[0]
+    brief = research_mod.case_research({"case_entities": [entity], "complaint": "Claim rejected",
+                                        "sector": "insurance", "live": False})["case_brief"]
+
+    assert entity == "Super Star policy"
+    assert brief["complaint_type"] == "insurance"
+
+
+def test_critic_rejects_consumer_frame_for_government_scheme():
+    from saathi.nodes.critic import case_specific_issues
+
+    state = {"sector": "govt_scheme", "case_entities": ["PM-VBRY"],
+             "case_brief": {"subject": "PM-VBRY", "complaint_type": "govt_scheme",
+                            "official_grievance_channel": "EPFiGMS"},
+             "facts": {"date": "1 August 2025", "amount": "50000"}}
+    issues = case_specific_issues(
+        state, "I claim deficiency in service under consumer protection and will complain to the National Consumer Helpline.")
+
+    assert any("consumer-law/consumer-helpline frame" in issue for issue in issues)
+    assert any("Name the researched" in issue for issue in issues)
+
+
 def test_extraction_blocks_values_not_on_page(monkeypatch):
     page = {"final_url": "https://x.example/g", "text": "Grievance Officer Mr. Ravi Kumar email ravi@x.example"}
     monkeypatch.setattr(grievance_mod.llm, "json_call", lambda *a, **k: {"contacts": [
         {"role": "grievance_officer", "name": "Ravi Kumar", "email": "ravi@x.example", "phone": "9999988888"},
         {"role": "nodal_officer", "name": "Invented Person", "email": "nodal@x.example", "phone": ""}]})
-    out, blocked = grievance_mod.llm_contacts("X", page)
+    out, blocked, _ = grievance_mod.llm_contacts("X", page)
     assert [o["value"] for o in out] == ["ravi@x.example"] and blocked == 3
 
 
@@ -201,7 +387,50 @@ def test_failed_request_is_not_charged(monkeypatch, tmp_path):
     assert client.live_calls == 0
 
 
-def test_llm_calls_gemini_interactions(monkeypatch, tmp_path):
+def test_search_cache_writes_unicode_as_utf8(monkeypatch, tmp_path):
+    import saathi.tools.serp as serp_mod
+
+    unicode_title = "Consumer Commission\u202f\u0926\u093f\u0932\u094d\u0932\u0940"
+    response = {"local_results": [{"title": unicode_title}]}
+
+    class FakeResponse:
+        status_code = 200
+
+        def json(self):
+            return response
+
+    monkeypatch.setattr(serp_mod.requests, "get", lambda *args, **kwargs: FakeResponse())
+    client = serp_mod.SerpClient(api_key="test", cache_dir=tmp_path, verbose=False)
+    params = {"engine": "google_maps", "q": "Commission Delhi"}
+
+    assert client.search(params)["local_results"][0]["title"] == unicode_title
+    assert unicode_title in client._path(params).read_text(encoding="utf-8")
+
+
+def test_llm_calls_gemini_generate_content(monkeypatch, tmp_path):
+    calls = []
+
+    class FakeModels:
+        def generate_content(self, **kw):
+            calls.append(kw)
+            if len(calls) == 1:  # first attempt fails -> exercises the retry
+                raise RuntimeError("503 UNAVAILABLE")
+            return types.SimpleNamespace(text='{"sector": "telecom"}')
+    monkeypatch.setattr(llm, "client", lambda: types.SimpleNamespace(models=FakeModels(), interactions=object()))
+    monkeypatch.setattr(llm, "LLM_PROVIDER", "")
+    monkeypatch.setattr(llm, "GEMINI_API_KEY", "test-key")
+    monkeypatch.setattr(llm, "LLM_CACHE", tmp_path)
+    monkeypatch.setattr(llm.time, "sleep", lambda s: None)
+    schema = {"type": "object", "properties": {"sector": {"type": "string"}}, "required": ["sector"]}
+    assert llm.json_call("sys", "Jio charged me", schema) == {"sector": "telecom"}
+    assert len(calls) == 2 and llm.api() == "generate_content"
+    kw = calls[-1]
+    assert kw["model"] == llm.GEMINI_MODEL and kw["contents"] == "Jio charged me"
+    assert kw["config"]["system_instruction"] == "sys" and kw["config"]["response_json_schema"] == schema
+    assert kw["config"]["thinking_config"] == {"thinking_level": "low"}
+
+
+def test_llm_calls_gemini_interactions_when_opted_in(monkeypatch, tmp_path):
     calls = []
 
     class FakeInteractions:
@@ -209,14 +438,19 @@ def test_llm_calls_gemini_interactions(monkeypatch, tmp_path):
             calls.append(kw)
             if len(calls) == 1:  # first attempt fails -> exercises the retry
                 raise RuntimeError("503 UNAVAILABLE")
-            return types.SimpleNamespace(status="completed", output_text='{"sector": "telecom"}')
+            return types.SimpleNamespace(status="completed",
+                                         output_text='{"sector": "telecom", "label": "\\u0939\\u093f\\u0928\\u094d\\u0926\\u0940\\u202ftext"}')
+    monkeypatch.setattr(llm, "LLM_API", "interactions")
     monkeypatch.setattr(llm, "client", lambda: types.SimpleNamespace(interactions=FakeInteractions()))
     monkeypatch.setattr(llm, "LLM_PROVIDER", "")
     monkeypatch.setattr(llm, "GEMINI_API_KEY", "test-key")
     monkeypatch.setattr(llm, "LLM_CACHE", tmp_path)
     monkeypatch.setattr(llm.time, "sleep", lambda s: None)
     schema = {"type": "object", "properties": {"sector": {"type": "string"}}, "required": ["sector"]}
-    assert llm.json_call("sys", "Jio charged me", schema) == {"sector": "telecom"} and len(calls) == 2
+    assert llm.json_call("sys", "Jio charged me", schema) == {
+        "sector": "telecom", "label": "\u0939\u093f\u0928\u094d\u0926\u0940\u202ftext"}
+    assert len(calls) == 2
+    assert "\u0939\u093f\u0928\u094d\u0926\u0940\u202ftext" in next(tmp_path.glob("*.json")).read_text(encoding="utf-8")
     kw = calls[-1]
     assert kw["model"] == llm.GEMINI_MODEL and kw["input"] == "Jio charged me" and kw["system_instruction"] == "sys"
     assert kw["response_format"] == {"type": "text", "mime_type": "application/json", "schema": schema}
@@ -229,3 +463,269 @@ def test_gemini_schema_inlines_pydantic_refs():
     g = llm.gemini_schema(schema(IntakeOut))
     assert "$defs" not in json.dumps(g) and "$ref" not in json.dumps(g)
     assert g["properties"]["facts"]["properties"]["order_id"]["type"] == "string"
+
+
+# --------------------------------------------------------------------------- safety router, domains and tiers
+
+@pytest.mark.parametrize("text,cats", [
+    ("My husband beats me every night and threatened to kill me", ["violence"]),
+    ("मेरा बेटा कल से लापता है", ["missing_or_abducted"]),
+    ("I want to end my life, the bank took all my money", ["self_harm"]),
+    ("pati maarpeet karta hai", ["violence"]),
+    ("Zomato gave me food poisoning, I want a refund", []),          # a consumer complaint, not an emergency
+    ("The work has begun but the builder is late", []),
+    ("Recovery agents are threatening me over a late EMI", []),      # urgent, but routed, not an emergency
+])
+def test_safety_router(text, cats):
+    from saathi.nodes.safety import safety_check
+    r = safety_check(text)
+    assert r["categories"] == cats and (r["level"] == "emergency") == bool(cats)
+    assert not cats or "112" in r["numbers"] or "14416" in r["numbers"]
+
+
+@pytest.mark.parametrize("text,sector", [
+    ("Police at Kotwali thana refused to register my FIR for the theft of my bike", "police"),
+    ("Kisi ne fake customer care bankar OTP le liya aur mere account se 40,000 ki thagi ho gayi", "police"),
+    ("My property dispute case is pending in the civil court, what is the next hearing date?", "legal"),
+    ("The municipal corporation has not fixed the street light for 3 months", "public_service"),
+    ("Flipkart refused refund for damaged phone", "ecommerce"),
+])
+def test_domain_rules(text, sector):
+    from saathi.playbooks import tier_of
+    assert rule_intake(text, None)["sector"] == sector
+    assert tier_of(sector) == {"police": "B", "legal": "C"}.get(sector, "A")
+
+
+def test_tier_b_cyber_fraud_is_a_police_complaint_with_1930_first(mocked):
+    _, thread, s, nodes = run_graph("A fake customer care caller took my OTP and Rs 40,000 was stolen from my "
+                                    "account through UPI on 2 Oct 2026.", city="Pune")
+    assert s["sector"] == "police" and s["tier"] == "B" and s["company"] == ""
+    assert "grievance" not in nodes and s["clauses"] == []
+    assert s["escalation"][0]["phone"] == "1930" and "Station House Officer" in s["escalation"][1]["name"]
+    assert "FIR" in s["draft"] and "[POLICE STATION]" in s["draft"] and "consumer protection" not in s["draft"].lower()
+    assert s["urgent_note"] and "1930" in s["urgent_note"]
+
+
+def test_tier_b_letter_goes_to_the_sho(mocked):
+    app, thread, s, _ = run_graph("Police at the station refused to register my FIR for the theft of my bike "
+                                  "on 1 Oct 2026.")
+    f = G.resume(thread, {"fills": {"[POLICE STATION]": "Kotwali"}}, app=app)["final"]
+    assert f["tier"] == "B" and f["letter"].startswith("To,\nThe Station House Officer\nKotwali Police Station")
+    assert "signed, stamped receipt" in f["letter"] and not f["cited"]
+
+
+def test_tier_c_is_an_explainer_with_legal_aid_questions(mocked):
+    app, thread, s, _ = run_graph("My brother is refusing to partition our ancestral property and the case is in "
+                                  "civil court. Case CNR MHPU010012342021.", city="Pune")
+    assert s["sector"] == "legal" and s["tier"] == "C" and s["clauses"] == []
+    assert len(s["eligibility_checks"]) == 8 and s["eligibility"]["status"] == "unconfirmed"
+    assert "MHPU010012342021" in s["draft"] and "15100" in s["draft"]
+    woman = next(c["condition"] for c in s["eligibility_checks"] if "woman" in c["condition"])
+    s = G.resume(thread, {"case_answers": {woman: "Yes"}}, app=app)          # one criterion is enough
+    assert s["eligibility"]["status"] == "meets_listed" and "free legal aid" in s["eligibility"]["message"]
+    f = G.resume(thread, {}, app=app)["final"]
+    assert f["tier"] == "C" and "Dear Sir" not in f["letter"] and "not legal advice" in f["letter"]
+
+
+def test_emergency_numbers_come_first(mocked):
+    app, thread, s, nodes = run_graph("My husband beats me and threatened to kill me. Police did not register my "
+                                      "complaint.")
+    assert nodes.index("safety_router") < nodes.index("case_research") and s["safety"]["level"] == "emergency"
+    assert s["__interrupt__"]["safety"]["numbers"][:2] == ["112", "181"]
+    f = G.resume(thread, {}, app=app)["final"]
+    assert f["markdown"].startswith("## ⚠️ If anyone is in danger right now") and "112" in f["markdown"]
+
+
+def test_critic_rejects_court_drafting_for_tier_c():
+    from saathi.nodes.critic import tier_issues
+    issues = tier_issues({"sector": "legal"}, "IN THE COURT OF the Civil Judge. The petitioner humbly prays…")
+    assert any("court filing" in i for i in issues) and any("Legal Services" in i for i in issues)
+    assert not tier_issues({"sector": "legal"}, "Contact the District Legal Services Authority (15100).")
+
+
+# --------------------------------------------------------------------------- deadlines and consistency (code, not model)
+
+def _ladder(sector):
+    return [dict(s) for s in __import__("saathi.playbooks", fromlist=["SECTORS"]).SECTORS[sector]["escalation"]]
+
+
+def test_deadlines_are_computed_from_the_rules():
+    from datetime import date
+
+    from saathi import deadlines
+    start = date(2026, 10, 9)
+    steps = _ladder("ecommerce")
+    dl = deadlines.annotate(steps, start=start, incident=date(2026, 9, 15))
+    assert steps[0]["ack_by"] == "11 October 2026" and steps[0]["reply_by"] == "9 November 2026"   # 48 h, 1 month
+    assert dl["date"] == "9 November 2026" and "Rule 4(5)" in dl["source"] and dl["kind"] == "statutory"
+    assert steps[1]["from_date"] == "9 November 2026"
+    assert steps[2]["file_by"] == "15 September 2028"                                             # CPA s.69: 2 years
+    ins = _ladder("insurance")
+    deadlines.annotate(ins, start=start)
+    assert ins[0]["reply_by"] == "9 November 2026" and ins[2]["file_by"] == "9 November 2027"    # 1 month, then 1 year
+    tel = _ladder("telecom")
+    deadlines.annotate(tel, start=start)
+    assert tel[0]["reply_by"] == "12 October 2026" and tel[1]["file_by"] == "11 November 2026"   # 3 days, +30 days
+    assert deadlines.annotate(_ladder("police"), start=start) == {}                              # no rule, no date
+    assert deadlines.fmt(deadlines.add_months(date(2026, 1, 31), 1)) == "28 February 2026"
+
+
+def test_critic_flags_amounts_and_dates_that_do_not_match():
+    from datetime import date
+
+    from saathi.nodes.critic import consistency_issues
+    state = {"complaint": "Myntra order on 28 Sep 2026 for Rs 21,499 arrived broken.", "sector": "ecommerce",
+             "facts": {"amount": "21499", "date": "28 Sep 2026"},
+             "deadline": {"date": "9 November 2026", "basis": "one month", "kind": "statutory"}}
+    good = "I paid ₹21,499 on 28 September 2026. Please resolve it by 9 November 2026."
+    assert consistency_issues(state, good, today=date(2026, 10, 9)) == []
+    bad = consistency_issues(state, "I paid Rs. 25,000 on 30 Sep 2026. Please reply within 30 days.",
+                             today=date(2026, 10, 9))
+    assert any("25,000" in i for i in bad) and any("30 Sep 2026" in i for i in bad)
+    assert any("9 November 2026" in i for i in bad)                                              # deadline missing
+
+
+def test_template_letter_carries_the_computed_deadline(mocked):
+    _, _, s, _ = run_graph("Kartify refused a refund for my damaged phone, order KT12345678, Rs 15,000.",
+                           company="Kartify")
+    assert s["deadline"]["kind"] == "statutory" and s["deadline"]["date"] in s["draft"]
+    assert s["escalation"][0]["reply_by"] == s["deadline"]["date"] and "within 30 days" not in s["draft"]
+
+
+# --------------------------------------------------------------------------- other organisations on the company's page
+
+PARTNER_PAGE = ("Grievance Officer: Ms. Asha Rao, grievance@kartify.example. Lending partners of Kartify Pay: "
+                "1. Axis Bank: nodal.officer@axisbank.com. 3. EarlySalary Services Private Limited: GRO Name: Mr. Amit "
+                "Nosina, GRO Email: grievance@earlysalary.com, Customer care Number: 020-67639797.")
+
+
+def test_other_organisations_contacts_on_official_page_are_dropped(monkeypatch):
+    monkeypatch.setattr(grievance_mod, "fetch", lambda url, **_: {"url": url, "final_url": url, "ok": True,
+                                                                  "text": PARTNER_PAGE, "mailtos": [], "tels": [],
+                                                                  "title": "Partners"})
+    monkeypatch.setattr(grievance_mod.llm, "json_call", lambda *a, **k: {"contacts": [
+        {"organisation": "Kartify", "belongs_to_named_company": True, "role": "grievance_officer",
+         "name": "Asha Rao", "email": "grievance@kartify.example"},
+        {"organisation": "Axis Bank", "belongs_to_named_company": False, "role": "nodal_officer",
+         "email": "nodal.officer@axisbank.com"},
+        {"organisation": "EarlySalary Services Private Limited", "belongs_to_named_company": False,
+         "role": "grievance_officer", "name": "Amit Nosina", "email": "grievance@earlysalary.com",
+         "phone": "020-67639797"}]})
+    ext = grievance_mod.extract_from_pages("Kartify", [{"url": "https://www.kartify.example/partners", "title": "x",
+                                                        "snippet": "", "on_official": True, "position": 1}])
+    vals = {o["value"] for o in ext["observations"]}
+    assert "grievance@kartify.example" in vals
+    assert not vals & {"grievance@earlysalary.com", "nodal.officer@axisbank.com"}
+    assert not any("67639797" in v for v in vals) and len(ext["other_org"]) == 3
+
+
+def test_off_brand_email_is_warned_and_not_preferred():
+    obs = [{"type": "email", "value": v, "role": "grievance_officer", "name": "", "timeline": "", "evidence": "",
+            "source_url": "https://www.kartify.example/partners", "source_domain": "kartify.example", "via": "page",
+            "page_title": ""} for v in ("grievance@earlysalary.com", "care@kartify.example")]
+    out = {c["value"]: c for c in V.verify("Kartify", obs, ["kartify.example"])}
+    assert out["grievance@earlysalary.com"]["off_brand"] and out["grievance@earlysalary.com"]["warnings"]
+    assert V.recommended(list(out.values()))["value"] == "care@kartify.example"   # own domain wins
+
+
+# --------------------------------------------------------------------------- one details form, then one draft
+
+def test_details_form_comes_before_drafting_and_asks_everything(mocked, monkeypatch, tmp_path):
+    case = SCHEMES["fictional"]
+    mock_research(monkeypatch, tmp_path, case)
+    app, thread, s, nodes = run_graph(case["complaint"], stop_at_form=True)
+    form = s["__interrupt__"]
+    assert form["stage"] == "details" and "drafter" not in nodes                       # nothing drafted yet
+    assert [q["condition"] for q in form["questions"]] == case["brief"]["conditions"]    # every open condition
+    first = form["questions"][0]["key"]
+    nodes2 = []
+    s = G.resume(thread, {"case_answers": {first: "Yes, 3 acres."}}, app=app,
+                 on_update=lambda n, u: nodes2.append(n))
+    assert s["__interrupt__"]["stage"] == "review"
+    assert nodes2.index("reassess") < nodes2.index("drafter") and nodes2.count("drafter") == 1
+    assert s["eligibility_checks"][0]["status"] == "met" and "3 acres" in s["draft"]
+    f = G.resume(thread, {}, app=app)["final"]
+    assert f["letter"].count("3 acres") == 1                                             # not appended twice
+
+
+def test_details_form_fills_missing_facts_before_drafting(mocked):
+    app, thread, s, _ = run_graph("Kartify refused a refund for my damaged phone, order KT12345678, Rs 15,000.",
+                                  company="Kartify", stop_at_form=True)
+    form = s["__interrupt__"]
+    assert form["stage"] == "details" and "[ORDER DATE]" in {m["placeholder"] for m in form["missing_facts"]}
+    s = G.resume(thread, {"fills": {"[ORDER DATE]": "15 Sep 2026"}}, app=app)
+    assert s["__interrupt__"]["stage"] == "review" and "15 Sep 2026" in s["draft"] and "[ORDER DATE]" not in s["draft"]
+    assert not s["missing_facts"] and s["facts"]["date"] == "15 Sep 2026"
+
+
+def test_no_form_when_nothing_is_missing(mocked):
+    _, _, s, nodes = run_graph("Kartify refused a refund for my damaged phone, order KT12345678, Rs 15,000 on "
+                               "15 Sep 2026.", company="Kartify", stop_at_form=True)
+    assert s["__interrupt__"]["stage"] == "review" and "drafter" in nodes
+
+
+def test_contacts_the_llm_did_not_attribute_are_not_verified(monkeypatch):
+    text = ("Grievance Officer: grievance@kartify.example. Partner NBFC: help@smartcoin.co.in, 9380031807. "
+            "Infringement: legal@kartify.example")
+    monkeypatch.setattr(grievance_mod, "fetch", lambda url, **_: {"url": url, "final_url": url, "ok": True,
+                                                                  "text": text, "mailtos": [], "tels": [],
+                                                                  "title": "p"})
+    monkeypatch.setattr(grievance_mod.llm, "json_call", lambda *a, **k: {"contacts": [   # sees only its own GRO
+        {"organisation": "Kartify", "belongs_to_named_company": True, "role": "grievance_officer",
+         "email": "grievance@kartify.example"}]})
+    ext = grievance_mod.extract_from_pages("Kartify", [{"url": "https://www.kartify.example/p", "title": "x",
+                                                        "snippet": "", "on_official": True, "position": 1}])
+    out = {c["value"]: c for c in V.verify("Kartify", ext["observations"], ["kartify.example"])}
+    assert out["grievance@kartify.example"]["status"] == "verified"
+    assert out["legal@kartify.example"]["status"] == "verified"                  # unknown owner, but on-brand
+    assert out["help@smartcoin.co.in"]["status"] == "unverified"                 # unknown owner, off-brand
+    assert out["9380031807"]["status"] == "unverified"                           # unknown owner, bare number
+
+
+def test_translation_happens_once_at_intake(mocked, monkeypatch):
+    from saathi.nodes import intake as intake_mod
+    from saathi.nodes import legal_rag as rag_mod
+    calls, queries = [], []
+
+    def fake(system, prompt, schema, **_):
+        calls.append(system[:40])
+        if system == intake_mod.INTAKE_SYSTEM:
+            return {"language": "hi", "complaint_en": "Kartify did not refund Rs 15,000 for my damaged phone.",
+                    "sector": "ecommerce", "company": "Kartify", "issue_types": ["refund"],
+                    "facts": {"issue": "Refund refused for a damaged phone", "amount": "15000",
+                              "order_id": "KT12345678", "date": "15 Sep 2026"},
+                    "urgent_fraud_or_harassment": False, "search_keywords": "refund damaged phone",
+                    "case_entities": [], "follow_up_questions": ["क्या आपने कंपनी से पहले शिकायत की थी?"]}
+        return None
+    monkeypatch.setattr(llm, "json_call", fake)
+    real = rag_mod.retrieve
+    monkeypatch.setattr(rag_mod, "retrieve", lambda q, *a, **k: (queries.append(q), real(q, *a, **k))[1])
+    _, _, s, _ = run_graph("कार्टिफाई ने मेरे खराब फोन का 15,000 रुपये का रिफंड नहीं दिया। ऑर्डर KT12345678, 15 Sep 2026",
+                           company="Kartify", stop_at_form=True)
+    assert s["complaint_en"].startswith("Kartify did not refund")
+    assert s["__interrupt__"]["questions"][0]["question"] == "क्या आपने कंपनी से पहले शिकायत की थी?"
+    assert sum(c.startswith("You triage") for c in calls) == 1                   # the one translation
+    assert not any(c.startswith("Translate") or c.startswith("Compare every") for c in calls)  # no re-translation,
+    assert queries and all("Refund refused for a damaged phone" in q or not re.search("[ऀ-ॿ]", q)  # no gap LLM
+                           for q in queries)
+
+
+def test_intake_call_also_catches_danger_the_rules_missed(mocked, monkeypatch):
+    from saathi.nodes import intake as intake_mod
+    calls = []
+
+    def fake(system, prompt, schema, **_):
+        calls.append(system[:20])
+        if system == intake_mod.INTAKE_SYSTEM:
+            return {"language": "en", "complaint_en": prompt, "sector": "bank", "company": "", "issue_types": ["other"],
+                    "facts": {}, "urgent_fraud_or_harassment": False, "search_keywords": "lost savings",
+                    "danger": ["self_harm"]}
+        return None
+    monkeypatch.setattr(llm, "json_call", fake)
+    text = "The bank lost all my savings. I can't go on anymore and see no point in anything."
+    from saathi.nodes.safety import safety_check
+    assert safety_check(text)["level"] == "none"                                   # the rules miss it
+    _, _, s, _ = run_graph(text, stop_at_form=True)
+    assert s["safety"]["level"] == "emergency" and "14416" in s["safety"]["numbers"]
+    assert "rules + " in s["safety"]["method"] and calls.count(calls[0]) == 1 and calls[0] == "You triage Indian gr"
+    assert not any(c.startswith("Decide whether") for c in calls)                    # no separate safety LLM call

@@ -1,4 +1,4 @@
-# Shikayat Saathi — evaluation (2026-10-07T11:05:52+00:00)
+# Shikayat Saathi — evaluation (2026-10-09T06:41:31+00:00)
 
 ## A. Grievance contacts (grievance + verifier subgraph)
 
@@ -8,28 +8,33 @@ _Not run (no SerpApi key / cache, or --skip-contacts)._
 
 | Metric | Value |
 |---|---|
-| Complaints | 14 (incl. Hindi & Hinglish) |
+| Complaints | 16 (incl. Hindi & Hinglish) |
 | Sector accuracy | 100.0% |
 | Language detection | 100.0% |
 | Drafts passing the critic | 100.0% |
 | Final letters with zero uncited claims | 100.0% |
+| Specificity: case-specific facts used per letter | 0.7 of 0.7 available |
+| Correct legal frame (scheme → no consumer law; consumer → own sector's law) | 100.0% |
+| Template overlap: avg max share of 5-word phrases shared with another letter (lower is better) | 65.8% |
 
-| # | Lang | Expected | Got | Critic | Drafts |
-|---|---|---|---|---|---|
-| 1 | en | ecommerce | ecommerce ✔ | pass | 1 |
-| 2 | hinglish | ecommerce | ecommerce ✔ | pass | 1 |
-| 3 | en | ecommerce | ecommerce ✔ | pass | 1 |
-| 4 | en | ecommerce | ecommerce ✔ | pass | 1 |
-| 5 | en | bank | bank ✔ | pass | 1 |
-| 6 | hi | bank | bank ✔ | pass | 1 |
-| 7 | en | telecom | telecom ✔ | pass | 1 |
-| 8 | en | telecom | telecom ✔ | pass | 1 |
-| 9 | en | insurance | insurance ✔ | pass | 1 |
-| 10 | hinglish | insurance | insurance ✔ | pass | 1 |
-| 11 | en | loan_app | loan_app ✔ | pass | 1 |
-| 12 | hi | loan_app | loan_app ✔ | pass | 1 |
-| 13 | en | other | other ✔ | pass | 1 |
-| 14 | en | other | other ✔ | pass | 1 |
+| # | Lang | Expected | Got | Critic | Drafts | Facts used | Frame | Overlap |
+|---|---|---|---|---|---|---|---|---|
+| 1 | en | ecommerce | ecommerce ✔ | pass | 1 | 2/2 | ✔ | 66.7% |
+| 2 | hinglish | ecommerce | ecommerce ✔ | pass | 1 | 1/1 | ✔ | 61.1% |
+| 3 | en | ecommerce | ecommerce ✔ | pass | 1 | 0/0 | ✔ | 83.2% |
+| 4 | en | ecommerce | ecommerce ✔ | pass | 1 | 0/0 | ✔ | 80.6% |
+| 5 | en | bank | bank ✔ | pass | 1 | 1/1 | ✔ | 63.3% |
+| 6 | hi | bank | bank ✔ | pass | 1 | 0/0 | ✔ | 57.6% |
+| 7 | en | telecom | telecom ✔ | pass | 1 | 1/1 | ✔ | 69.0% |
+| 8 | en | telecom | telecom ✔ | pass | 1 | 0/0 | ✔ | 69.7% |
+| 9 | en | insurance | insurance ✔ | pass | 1 | 1/1 | ✔ | 63.7% |
+| 10 | hinglish | insurance | insurance ✔ | pass | 1 | 1/1 | ✔ | 63.7% |
+| 11 | en | loan_app | loan_app ✔ | pass | 1 | 0/0 | ✔ | 71.3% |
+| 12 | hi | loan_app | loan_app ✔ | pass | 1 | 0/0 | ✔ | 66.7% |
+| 13 | en | other | other ✔ | pass | 1 | 1/1 | ✔ | 61.9% |
+| 14 | en | other | other ✔ | pass | 1 | 1/1 | ✔ | 68.2% |
+| 15 | en | govt_scheme | govt_scheme ✔ | pass | 1 | 2/2 | ✔ | 46.3% |
+| 16 | hinglish | govt_scheme | govt_scheme ✔ | pass | 1 | 0/0 | ✔ | 60.6% |
 
 ## C. Decoy test (synthetic scam patterns)
 

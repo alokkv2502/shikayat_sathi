@@ -1,0 +1,448 @@
+{
+ "complaint": "I ordered a Samsung Galaxy phone from Myntra on 28 Sep 2026 (order MY88412093, Rs 21,499). It arrived with a cracked screen and the seller rejected my return request twice.",
+ "company": "Myntra",
+ "city": "Lucknow",
+ "runs": [
+  {
+   "run": "cold",
+   "total_s": 26.05,
+   "until_review_s": 26.05,
+   "sector": "ecommerce",
+   "live_serp_calls": 7,
+   "spans": [
+    {
+     "kind": "llm",
+     "label": "low · Decide whether this Indian complaint (English, Hindi or · 172 chars in",
+     "node": "safety_router",
+     "ms": 2138,
+     "start": 9
+    },
+    {
+     "kind": "node",
+     "label": "safety_router",
+     "node": "-",
+     "ms": 2140,
+     "start": 8
+    },
+    {
+     "kind": "llm",
+     "label": "low · You triage Indian grievances written in English, Hindi  · 244 chars in",
+     "node": "intake_planner",
+     "ms": 4193,
+     "start": 9
+    },
+    {
+     "kind": "serp",
+     "label": "google: Myntra official website",
+     "node": "intake_planner",
+     "cached": false,
+     "ms": 400,
+     "start": 4203
+    },
+    {
+     "kind": "fetch",
+     "label": "https://myntra.com",
+     "node": "intake_planner",
+     "cached": false,
+     "ms": 1897,
+     "start": 4690
+    },
+    {
+     "kind": "node",
+     "label": "intake_planner",
+     "node": "-",
+     "ms": 6581,
+     "start": 6
+    },
+    {
+     "kind": "node",
+     "label": "case_research",
+     "node": "-",
+     "ms": 0,
+     "start": 6588
+    },
+    {
+     "kind": "node",
+     "label": "frame",
+     "node": null,
+     "ms": 0,
+     "start": 6588
+    },
+    {
+     "kind": "serp",
+     "label": "google_forums: Myntra damaged phone refund complaint resolved",
+     "node": "precedents",
+     "cached": false,
+     "ms": 511,
+     "start": 6591
+    },
+    {
+     "kind": "serp",
+     "label": "google: site:myntra.com grievance officer",
+     "node": "grievance",
+     "cached": false,
+     "ms": 521,
+     "start": 6590
+    },
+    {
+     "kind": "serp",
+     "label": "google_news: Myntra damaged phone refund consumer court",
+     "node": "precedents",
+     "cached": false,
+     "ms": 527,
+     "start": 6593
+    },
+    {
+     "kind": "serp",
+     "label": "google_maps: District Consumer Disputes Redressal Commission Lucknow",
+     "node": "local_forum",
+     "cached": false,
+     "ms": 538,
+     "start": 6590
+    },
+    {
+     "kind": "node",
+     "label": "local_forum",
+     "node": "-",
+     "ms": 539,
+     "start": 6590
+    },
+    {
+     "kind": "serp",
+     "label": "google: site:myntra.com \"grievance redressal\"",
+     "node": "grievance",
+     "cached": false,
+     "ms": 393,
+     "start": 7112
+    },
+    {
+     "kind": "serp",
+     "label": "google: Myntra grievance officer email",
+     "node": "grievance",
+     "cached": false,
+     "ms": 391,
+     "start": 7505
+    },
+    {
+     "kind": "llm",
+     "label": "low · Compare every case condition with only the facts explic · 688 chars in",
+     "node": "gap_check",
+     "ms": 1639,
+     "start": 6592
+    },
+    {
+     "kind": "node",
+     "label": "gap_check",
+     "node": "-",
+     "ms": 1642,
+     "start": 6591
+    },
+    {
+     "kind": "fetch",
+     "label": "https://careers.myntra.com/",
+     "node": "grievance",
+     "cached": false,
+     "ms": 682,
+     "start": 7899
+    },
+    {
+     "kind": "fetch",
+     "label": "https://life.myntra.com/",
+     "node": "grievance",
+     "cached": false,
+     "ms": 685,
+     "start": 7897
+    },
+    {
+     "kind": "fetch",
+     "label": "https://www.myntra.com/contactus/generic/detailedfaqs?query=returns",
+     "node": "grievance",
+     "cached": false,
+     "ms": 946,
+     "start": 7897
+    },
+    {
+     "kind": "fetch",
+     "label": "https://www.myntra.com/recovery",
+     "node": "grievance",
+     "cached": false,
+     "ms": 1044,
+     "start": 7898
+    },
+    {
+     "kind": "llm",
+     "label": "low · You judge search results about Indian consumer complain · 302 chars in",
+     "node": "precedents",
+     "ms": 1892,
+     "start": 7121
+    },
+    {
+     "kind": "node",
+     "label": "precedents",
+     "node": "-",
+     "ms": 2424,
+     "start": 6590
+    },
+    {
+     "kind": "fetch",
+     "label": "https://www.myntra.com/termsofuse",
+     "node": "grievance",
+     "cached": false,
+     "ms": 1301,
+     "start": 7900
+    },
+    {
+     "kind": "fetch",
+     "label": "https://blog.myntra.com/",
+     "node": "grievance",
+     "cached": false,
+     "ms": 1671,
+     "start": 7896
+    },
+    {
+     "kind": "fetch",
+     "label": "https://life.myntra.com/about-us/",
+     "node": "grievance",
+     "cached": false,
+     "ms": 1180,
+     "start": 8582
+    },
+    {
+     "kind": "fetch",
+     "label": "https://www.myntra.com/handbags",
+     "node": "grievance",
+     "cached": false,
+     "ms": 1257,
+     "start": 8581
+    },
+    {
+     "kind": "node",
+     "label": "grievance",
+     "node": null,
+     "ms": 3268,
+     "start": 6590
+    },
+    {
+     "kind": "node",
+     "label": "verifier",
+     "node": null,
+     "ms": 0,
+     "start": 9859
+    },
+    {
+     "kind": "serp",
+     "label": "google: site:myntra.com nodal officer",
+     "node": "grievance",
+     "cached": false,
+     "ms": 458,
+     "start": 9860
+    },
+    {
+     "kind": "serp",
+     "label": "google: site:myntra.com customer care escalation",
+     "node": "grievance",
+     "cached": false,
+     "ms": 392,
+     "start": 10318
+    },
+    {
+     "kind": "fetch",
+     "label": "https://consumerhelpline.gov.in/user/",
+     "node": "grievance",
+     "cached": false,
+     "ms": 540,
+     "start": 10712
+    },
+    {
+     "kind": "fetch",
+     "label": "https://www.facebook.com/pages/Nodal-officer-govt-of-west-Bengal/108241997437953",
+     "node": "grievance",
+     "cached": false,
+     "ms": 768,
+     "start": 10711
+    },
+    {
+     "kind": "fetch",
+     "label": "https://wcd.delhi.gov.in/wcd/order-regarding-nodal-officerwebsite",
+     "node": "grievance",
+     "cached": false,
+     "ms": 888,
+     "start": 10710
+    },
+    {
+     "kind": "fetch",
+     "label": "https://mphc.gov.in/PDF/Nodal%20officer%20manual.pdf",
+     "node": "grievance",
+     "cached": false,
+     "ms": 473,
+     "start": 11252
+    },
+    {
+     "kind": "fetch",
+     "label": "https://s3.ap-south-1.amazonaws.com/rhfl-strapi/Customer_Grievance_Escalation_Matrix_204157be7b.pdf",
+     "node": "grievance",
+     "cached": false,
+     "ms": 1076,
+     "start": 10711
+    },
+    {
+     "kind": "fetch",
+     "label": "https://cdn.s3waas.gov.in/s31543843a4723ed2ab08e18053ae6dc5b/uploads/2025/02/2025022625.pdf",
+     "node": "grievance",
+     "cached": false,
+     "ms": 1362,
+     "start": 10713
+    },
+    {
+     "kind": "fetch",
+     "label": "https://deskmoz.com/blog/customer-complaint-handling/",
+     "node": "grievance",
+     "cached": false,
+     "ms": 1797,
+     "start": 10714
+    },
+    {
+     "kind": "fetch",
+     "label": "https://cdn.prod.website-files.com/679a606e403156a82f920650/69858067f324f893ed1f7cf1_Grievance%20Redressal%20Matrix.pdf",
+     "node": "grievance",
+     "cached": false,
+     "ms": 1062,
+     "start": 11479
+    },
+    {
+     "kind": "node",
+     "label": "grievance",
+     "node": null,
+     "ms": 2697,
+     "start": 9860
+    },
+    {
+     "kind": "node",
+     "label": "verifier",
+     "node": null,
+     "ms": 0,
+     "start": 12558
+    },
+    {
+     "kind": "rag",
+     "label": "connect to Qdrant (once per process) → server http://localhost:6333",
+     "node": "legal_rag",
+     "ms": 231,
+     "start": 13416
+    },
+    {
+     "kind": "rag",
+     "label": "load embedding model BAAI/bge-small-en-v1.5 (once per process)",
+     "node": "legal_rag",
+     "ms": 356,
+     "start": 13731
+    },
+    {
+     "kind": "rag",
+     "label": "retrieve [ecom,ecom26,cpa,ccr,gen] e-commerce grievance officer acknowledge 48 hours redress on",
+     "node": "legal_rag",
+     "ms": 1558,
+     "start": 12559
+    },
+    {
+     "kind": "rag",
+     "label": "retrieve [ecom,ecom26,cpa,ccr,gen] defective goods replacement refund; product liability; defic",
+     "node": "legal_rag",
+     "ms": 61,
+     "start": 14118
+    },
+    {
+     "kind": "rag",
+     "label": "retrieve [ecom,ecom26,cpa,ccr,gen] refund of consideration within time; consumer right to seek ",
+     "node": "legal_rag",
+     "ms": 88,
+     "start": 14178
+    },
+    {
+     "kind": "node",
+     "label": "legal_rag",
+     "node": null,
+     "ms": 1707,
+     "start": 12559
+    },
+    {
+     "kind": "llm",
+     "label": "medium · You draft firm, respectful and case-specific grievances · 6342 chars in",
+     "node": "drafter",
+     "ms": 4097,
+     "start": 14269
+    },
+    {
+     "kind": "node",
+     "label": "drafter",
+     "node": null,
+     "ms": 4099,
+     "start": 14268
+    },
+    {
+     "kind": "llm",
+     "label": "low · You review a personalized grievance before it is sent.  · 4544 chars in",
+     "node": "critic",
+     "ms": 1553,
+     "start": 18368
+    },
+    {
+     "kind": "node",
+     "label": "critic",
+     "node": null,
+     "ms": 1555,
+     "start": 18367
+    },
+    {
+     "kind": "llm",
+     "label": "medium · You draft firm, respectful and case-specific grievances · 7672 chars in",
+     "node": "drafter",
+     "ms": 4639,
+     "start": 19924
+    },
+    {
+     "kind": "node",
+     "label": "drafter",
+     "node": null,
+     "ms": 4641,
+     "start": 19923
+    },
+    {
+     "kind": "llm",
+     "label": "low · You review a personalized grievance before it is sent.  · 4396 chars in",
+     "node": "critic",
+     "ms": 1479,
+     "start": 24565
+    },
+    {
+     "kind": "node",
+     "label": "critic",
+     "node": null,
+     "ms": 1481,
+     "start": 24564
+    },
+    {
+     "kind": "node",
+     "label": "human_review",
+     "node": null,
+     "ms": 0,
+     "start": 26046
+    },
+    {
+     "kind": "node",
+     "label": "human_review",
+     "node": null,
+     "ms": 0,
+     "start": 26049
+    },
+    {
+     "kind": "node",
+     "label": "finalize",
+     "node": null,
+     "ms": 2,
+     "start": 26050
+    }
+   ]
+  }
+ ]
+}

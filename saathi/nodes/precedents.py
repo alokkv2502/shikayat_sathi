@@ -2,12 +2,14 @@
 from __future__ import annotations
 
 import re
+from concurrent.futures import ThreadPoolExecutor, wait
 
-from saathi import llm
+from saathi import llm, timing
 from saathi.nodes.common import live, node
 from saathi.state import PrecedentsOut, schema
 from saathi.tools.serp import CreditLimitReached, SerpApiError, serp
 
+PRECEDENTS_BUDGET_S = 8
 RELEVANCE_SYSTEM = (
     "You judge search results about Indian consumer complaints. A result is relevant only if it is about this "
     "company and a similar problem. For relevant ones, say in a short phrase which channel resolved it (grievance "
@@ -21,12 +23,23 @@ def _compact(s: str) -> str:
 
 @node("📰 Precedents")
 def precedents(state: dict) -> dict:
-    company, kw = state["company"], state.get("search_keywords") or "complaint"
+    company = state["company"]
+    kw = re.sub(rf"\b{re.escape(company)}\b", "", state.get("search_keywords") or "complaint", flags=re.I).strip()
     items, errors = [], []
-    for engine, q in (("google_forums", f"{company} {kw} complaint resolved"),
-                      ("google_news", f"{company} {kw} consumer court")):
+    searches = [("google_forums", f"{company} {kw or 'complaint'} complaint resolved"),
+                ("google_news", f"{company} {kw or 'complaint'} consumer court")]
+    # Nice-to-have, so time-boxed: both searches run in parallel and anything slower than PRECEDENTS_BUDGET_S is
+    # skipped (google_forums measured 10-40s). A late result still lands in the cache for the next complaint.
+    ex = ThreadPoolExecutor(max_workers=len(searches))
+    futures = {ex.submit(timing.carry(serp.search), {"engine": e, "q": q, "gl": "in", "hl": "en"},
+                         live=live(state)): (e, q) for e, q in searches}
+    done, late = wait(futures, timeout=PRECEDENTS_BUDGET_S)
+    ex.shutdown(wait=False)
+    errors += [f"precedents: {futures[f][1]}: skipped after {PRECEDENTS_BUDGET_S}s" for f in late]
+    for fut in [f for f in futures if f in done]:
+        engine, q = futures[fut]
         try:
-            data = serp.search({"engine": engine, "q": q, "gl": "in", "hl": "en"}, live=live(state))
+            data = fut.result()
         except (SerpApiError, CreditLimitReached) as e:
             errors.append(f"precedents: {q}: {e}")
             continue

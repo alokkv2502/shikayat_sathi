@@ -13,6 +13,7 @@ import json
 import sys
 
 from saathi import llm
+from saathi.deadlines import step_dates
 from saathi.tools.serp import serp
 
 
@@ -21,27 +22,68 @@ def print_update(node: str, update: dict) -> None:
         print(line, flush=True)
 
 
+def print_safety(safety: dict) -> None:
+    if (safety or {}).get("level") == "emergency":
+        print("\n" + "!" * 80 + "\n🆘 IF ANYONE IS IN DANGER RIGHT NOW, CALL FOR HELP FIRST")
+        for m in safety.get("messages") or []:
+            print("   " + m)
+        for h in safety.get("helplines") or []:
+            print("   ☎ " + h)
+        print("!" * 80)
+
+
+def ask_details(payload: dict, interactive: bool) -> dict:
+    """Stage 1: every missing fact and question at once, before the letter is written."""
+    print_safety(payload.get("safety") or {})
+    print("\n" + "─" * 80 + "\n📝 A FEW DETAILS FIRST — the letter is written with your answers\n" + "─" * 80)
+    elig = payload.get("eligibility") or {}
+    if elig.get("message"):
+        print(f"{'⚠️' if elig['status'] == 'may_not_qualify' else 'ℹ️'}  Eligibility: {elig['message']}")
+    for c in payload.get("eligibility_checks") or []:
+        if c["status"] != "unknown":
+            print(f"   {'✅' if c['status'] == 'met' else '⚠️'} {c['condition']}")
+    fills, answers = {}, {}
+    for m in payload.get("missing_facts") or []:
+        v = input(f"   {m['fact'].replace('_', ' ')} {m['placeholder']} (Enter to skip): ").strip() if interactive \
+            else ""
+        if v:
+            fills[m["placeholder"]] = v
+        elif not interactive:
+            print(f"   · {m['placeholder']}")
+    for q in payload.get("questions") or []:
+        v = input(f"   {q['question']} (Enter to skip): ").strip() if interactive else ""
+        if v:
+            answers[q["key"]] = v
+        elif not interactive:
+            print(f"   ? {q['question']}")
+    if not interactive:
+        print("(skipped - run without --yes in a terminal to answer)")
+    return {"fills": fills, "case_answers": answers}
+
+
 def ask_review(payload: dict, auto: bool) -> dict:
+    interactive = not auto and sys.stdin.isatty()
+    if payload.get("stage") == "details":
+        return ask_details(payload, interactive)
+    print_safety(payload.get("safety") or {})
     print("\n" + "─" * 80 + f"\n🙋 HUMAN REVIEW — draft subject: {payload.get('subject')}\n" + "─" * 80)
     print(payload.get("draft", ""))
+    if (payload.get("deadline") or {}).get("date"):
+        dl = payload["deadline"]
+        print(f"\n📅 Reply due by {dl['date']} — {dl['basis']}" + (f" ({dl['source']})" if dl.get("source") else ""))
     if payload.get("critic_notes"):
         print("\nCritic notes still open:\n  - " + "\n  - ".join(payload["critic_notes"]))
-    fills = {}
-    if payload.get("missing_facts"):
-        print("\nMissing facts: " + ", ".join(m["placeholder"] for m in payload["missing_facts"]))
-        if not auto and sys.stdin.isatty():
-            for m in payload["missing_facts"]:
-                v = input(f"  {m['placeholder']} (Enter to keep the placeholder): ").strip()
-                if v:
-                    fills[m["placeholder"]] = v
-    if auto or not sys.stdin.isatty():
+    if interactive:
+        input("\nPress Enter to approve (edit the final letter afterwards if needed) ")
+    else:
         print("(auto-approved)")
-    return {"fills": fills}
+    return {}
 
 
 def print_final(s: dict) -> None:
     f = s.get("final") or {}
     rec = s.get("recommended")
+    print_safety(s.get("safety") or {})
     print("\n" + "═" * 80)
     print(f"Sector: {s.get('sector')} · Company: {s.get('company')} · Language: {s.get('language')} · "
           f"Official domain: {s.get('company_domain') or 'not resolved'}")
@@ -66,7 +108,8 @@ def print_final(s: dict) -> None:
     print("\n🪜 Escalation:")
     for i, st in enumerate(s.get("escalation") or [], 1):
         print(f"   {i}. {st['name']} ({st['channel']}) — {st['when_to_use']}"
-              + (f" {st['url']}" if st.get("url") else "") + (f" · {st['phone']}" if st.get("phone") else ""))
+              + (f" {st['url']}" if st.get("url") else "") + (f" · {st['phone']}" if st.get("phone") else "")
+              + (f"\n      📅 {step_dates(st)}" if step_dates(st) else ""))
     if s.get("summary"):
         print(f"\n💬 {s['summary']}")
     print(f"\nLive SerpApi calls this complaint: {s.get('live_calls', 0)} · {serp.summary()} · LLM: {llm.label()}")
@@ -110,13 +153,15 @@ def main() -> None:
 
         state = dict(G.graph().get_state({"configurable": {"thread_id": thread}}).values)
         state = G.resume(thread, ask_review(review_payload(state), a.yes), on_update=print_update)
+        while "__interrupt__" in state:  # answers trigger a redraft and another review round
+            state = G.resume(thread, ask_review(state["__interrupt__"], a.yes), on_update=print_update)
     else:
         thread = G.new_thread()
         print(f"thread_id: {thread}")
         state = G.run(G.initial_state(a.complaint, company=a.company, city=a.city,
                                       complainant={"name": a.name} if a.name else None, live=not a.offline),
                       thread, on_update=print_update)
-        if "__interrupt__" in state:
+        while "__interrupt__" in state:  # answers trigger a redraft and another review round
             state = G.resume(thread, ask_review(state["__interrupt__"], a.yes), on_update=print_update)
     if a.json:
         print(json.dumps({k: v for k, v in state.items() if k != "pages"}, indent=1, ensure_ascii=False,

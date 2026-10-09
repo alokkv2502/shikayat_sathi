@@ -17,14 +17,19 @@ SECTORS: dict[str, dict] = {
         "regulator": "Department of Consumer Affairs (National Consumer Helpline) · Consumer Commissions",
         "officer_terms": ["grievance officer", "\"grievance redressal\""],
         "retry_terms": ["nodal officer", "customer care escalation", "contact us"],
-        "law_docs": ["ecom", "cpa"],
+        "law_docs": ["ecom", "ecom26", "cpa", "ccr", "gen"],
         "basis_query": "e-commerce grievance officer acknowledge 48 hours redress one month",
         "escalation": [
             {"name": "Company grievance officer", "channel": "email / grievance page",
              "url": None, "phone": None,
              "when_to_use": "First. E-commerce entities must display their grievance officer; the officer must "
                             "acknowledge within 48 hours and redress within one month.",
-             "typical_wait": "48 h acknowledgement, 1 month resolution"},
+             "typical_wait": "48 h acknowledgement, 1 month resolution",
+             "ack_within": {"n": 48, "unit": "hours"},
+             "reply_within": {"n": 1, "unit": "months", "kind": "statutory",
+                              "basis": "the grievance officer must acknowledge your complaint within 48 hours and "
+                                       "resolve it within one month of receiving it",
+                              "source": "Consumer Protection (E-Commerce) Rules, 2020, Rule 4(5)"}},
             {"name": "National Consumer Helpline (NCH)", "channel": "portal / phone / WhatsApp",
              "url": "https://consumerhelpline.gov.in", "phone": "1915 (toll-free) · WhatsApp 8800001915",
              "when_to_use": "If the company does not resolve it in a month. NCH forwards the docket to the company.",
@@ -32,7 +37,8 @@ SECTORS: dict[str, dict] = {
             {"name": "District Consumer Disputes Redressal Commission", "channel": "online filing (e-Jagriti)",
              "url": "https://e-jagriti.gov.in", "phone": None,
              "when_to_use": "Still unresolved: file a consumer complaint (claims up to ₹50 lakh) within two years "
-                            "of the cause of action. e-Jagriti replaced e-Daakhil.", "typical_wait": "months"},
+                            "of the cause of action. e-Jagriti replaced e-Daakhil.", "typical_wait": "months",
+             "file_within": {"n": 2, "unit": "years", "from": "incident", "basis": "a consumer complaint must be filed within two years of the cause of action", "source": "Consumer Protection Act, 2019, Section 69(1)"}},
         ],
     },
     "bank": {
@@ -43,20 +49,22 @@ SECTORS: dict[str, dict] = {
         "regulator": "Reserve Bank of India - RB-Integrated Ombudsman Scheme, 2026",
         "officer_terms": ["principal nodal officer", "nodal officer"],
         "retry_terms": ["grievance redressal officer", "escalation matrix", "contact us"],
-        "law_docs": ["ios", "cpa"],
+        "law_docs": ["ios", "cpa", "ccr"],
         "basis_query": "grounds of complaint act or omission of bank resulting in deficiency in service",
         "escalation": [
             {"name": "Bank grievance cell → Principal Nodal Officer", "channel": "email / bank complaint portal",
              "url": None, "phone": None,
              "when_to_use": "First. Complain in writing and keep the complaint number; escalate to the Principal "
-                            "Nodal Officer if unresolved.", "typical_wait": "30 days"},
+                            "Nodal Officer if unresolved.", "typical_wait": "30 days",
+             "reply_within": {"n": 30, "unit": "days", "kind": "statutory", "basis": "if the bank does not reply within 30 days of receiving your complaint, you can go to the RBI Ombudsman", "source": "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 10(1)"}},
             {"name": "RBI Ombudsman (RB-IOS, 2026)", "channel": "RBI CMS portal / email",
              "url": "https://cms.rbi.org.in", "phone": "14448 (RBI contact centre)",
              "when_to_use": "No reply within 30 days, or the reply is unsatisfactory. Also crpc@rbi.org.in. No fee.",
              "typical_wait": "weeks"},
             {"name": "District Consumer Commission", "channel": "online filing (e-Jagriti)",
              "url": "https://e-jagriti.gov.in", "phone": None,
-             "when_to_use": "Deficiency in banking service is also a consumer dispute.", "typical_wait": "months"},
+             "when_to_use": "Deficiency in banking service is also a consumer dispute.", "typical_wait": "months",
+             "file_within": {"n": 2, "unit": "years", "from": "incident", "basis": "a consumer complaint must be filed within two years of the cause of action", "source": "Consumer Protection Act, 2019, Section 69(1)"}},
         ],
         "urgent": "For an unauthorised or fraudulent debit, tell the bank immediately and call the National Cyber "
                   "Crime Helpline 1930 (cybercrime.gov.in) - reporting quickly limits your liability.",
@@ -69,17 +77,19 @@ SECTORS: dict[str, dict] = {
         "regulator": "TRAI - Telecom Consumers Complaint Redressal Regulations, 2012 · DoT",
         "officer_terms": ["appellate authority", "nodal officer"],
         "retry_terms": ["grievance officer", "customer care escalation", "contact us"],
-        "law_docs": ["trai", "cpa"],
+        "law_docs": ["trai", "cpa", "ccr", "gen"],
         "basis_query": "complaint centre docket number time limit three days",
         "escalation": [
             {"name": "Operator complaint centre", "channel": "consumer care number / app",
              "url": None, "phone": "198 (complaints)",
              "when_to_use": "First. Note the docket number you are given.",
-             "typical_wait": "TRAI QoS time limit (3 days where none is specified)"},
+             "typical_wait": "TRAI QoS time limit (3 days where none is specified)",
+             "reply_within": {"n": 3, "unit": "days", "kind": "statutory", "basis": "where TRAI's quality-of-service rules set no other time limit, a complaint must be addressed within three days", "source": "Telecom Consumers Complaint Redressal Regulations, 2012, Regulation 8"}},
             {"name": "Operator's Appellate Authority", "channel": "email / post / online",
              "url": None, "phone": None,
              "when_to_use": "Not satisfied: appeal within 30 days after the complaint-centre time limit expires.",
-             "typical_wait": "per TRAI regulations"},
+             "typical_wait": "per TRAI regulations",
+             "file_within": {"n": 30, "unit": "days", "from": "first_reply", "basis": "an appeal must be filed within 30 days after the complaint centre's time limit ends", "source": "Telecom Consumers Complaint Redressal Regulations, 2012, Regulation 9(3)"}},
             {"name": "DoT CPGRAMS / Consumer Commission", "channel": "pgportal.gov.in / e-Jagriti",
              "url": "https://pgportal.gov.in", "phone": None,
              "when_to_use": "TRAI does not resolve individual complaints; escalate to DoT or file a consumer "
@@ -93,12 +103,13 @@ SECTORS: dict[str, dict] = {
         "regulator": "IRDAI (Bima Bharosa) · Insurance Ombudsman (Insurance Ombudsman Rules, 2017)",
         "officer_terms": ["grievance redressal officer", "grievance officer"],
         "retry_terms": ["grievance cell", "customer care escalation", "contact us"],
-        "law_docs": ["ins", "cpa"],
+        "law_docs": ["ins", "ins23", "cpa", "ccr"],
         "basis_query": "complaint to insurer representation rejected or no reply within one month",
         "escalation": [
             {"name": "Insurer's Grievance Redressal Officer", "channel": "email / grievance portal",
              "url": None, "phone": None,
-             "when_to_use": "First. Quote policy and claim numbers.", "typical_wait": "1 month"},
+             "when_to_use": "First. Quote policy and claim numbers.", "typical_wait": "1 month",
+             "reply_within": {"n": 1, "unit": "months", "kind": "statutory", "basis": "if the insurer does not reply within one month of receiving your complaint, you can go to the Insurance Ombudsman", "source": "Insurance Ombudsman Rules, 2017, Rule 14(3)"}},
             {"name": "IRDAI Bima Bharosa", "channel": "portal / email / phone",
              "url": "https://bimabharosa.irdai.gov.in", "phone": "155255 / 1800 4254 732",
              "when_to_use": "Unresolved or unsatisfactory: register on Bima Bharosa (complaints@irdai.gov.in).",
@@ -106,7 +117,8 @@ SECTORS: dict[str, dict] = {
             {"name": "Insurance Ombudsman", "channel": "Council for Insurance Ombudsmen",
              "url": "https://www.cioins.co.in", "phone": None,
              "when_to_use": "Insurer rejected your complaint or did not reply within one month: complain within one "
-                            "year (awards up to ₹50 lakh).", "typical_wait": "about 3 months"},
+                            "year (awards up to ₹50 lakh).", "typical_wait": "about 3 months",
+             "file_within": {"n": 1, "unit": "years", "from": "first_reply", "basis": "complain to the Ombudsman within one year of the insurer's rejection or of its one-month reply period ending", "source": "Insurance Ombudsman Rules, 2017, Rule 14(3)(b)"}},
         ],
     },
     "loan_app": {
@@ -123,7 +135,8 @@ SECTORS: dict[str, dict] = {
             {"name": "Lender's Grievance Redressal Officer (from RBI's DLA directory)", "channel": "email / phone",
              "url": None, "phone": None,
              "when_to_use": "If the app is in RBI's Digital Lending App directory, write to the GRO the lender "
-                            "declared to RBI.", "typical_wait": "30 days"},
+                            "declared to RBI.", "typical_wait": "30 days",
+             "reply_within": {"n": 30, "unit": "days", "kind": "statutory", "basis": "if the lender does not reply within 30 days of receiving your complaint, you can go to the RBI Ombudsman", "source": "RBI (Digital Lending) Directions, 2025, Para 11"}},
             {"name": "RBI Ombudsman (RB-IOS, 2026)", "channel": "RBI CMS portal",
              "url": "https://cms.rbi.org.in", "phone": "14448",
              "when_to_use": "For apps of RBI-regulated lenders, after 30 days without resolution.",
@@ -135,33 +148,183 @@ SECTORS: dict[str, dict] = {
         ],
         "urgent": "Harassment, threats or misuse of photos/contacts is a crime: report on cybercrime.gov.in / 1930.",
     },
+    "govt_scheme": {
+        "label": "Government scheme or public benefit",
+        # Generic markers only: which scheme it is, and its rules, come from case_research.
+        "keywords": r"yojana|abhiyan|government (?:welfare )?scheme|govt\.? scheme|sarkari yojana|central sector "
+                    r"scheme|centrally sponsored scheme|state (?:welfare )?scheme|government benefit|public benefit|"
+                    r"scholarship scheme|direct benefit transfer|योजना",
+        "regulator": "The scheme's administering department",
+        "officer_terms": [],
+        "retry_terms": [],
+        "law_docs": [],
+        "basis_query": "",
+        "escalation": [
+            {"name": "Scheme grievance portal", "channel": "Official portal listed in the case brief",
+             "url": None, "phone": None,
+             "when_to_use": "First. Use the administering department's official scheme or service grievance portal.",
+             "typical_wait": "Follow the portal's acknowledgement and resolution timeline."},
+            {"name": "Centralized Public Grievance Redress and Monitoring System (CPGRAMS)",
+             "channel": "Department of Administrative Reforms and Public Grievances",
+             "url": "https://pgportal.gov.in", "phone": None,
+             "when_to_use": "Escalate an unresolved grievance about a central government department or scheme.",
+             "typical_wait": "Use the timeline shown on CPGRAMS."},
+        ],
+    },
+    "public_service": {
+        "label": "Government department / municipal service / public utility",
+        "keywords": r"municipal|nagar (?:nigam|palika|panchayat)|corporation office|gram panchayat|ration card|"
+                    r"electricity (?:bill|board|connection|supply)|power cut|bijli|water supply|pani (?:nahi|ki)|"
+                    r"sewage|garbage|street ?light|pothole|property tax|birth certificate|death certificate|"
+                    r"caste certificate|income certificate|passport|driving licen[cs]e|\brto\b|land record|"
+                    r"mutation|tehsil|collector office|government office|sarkari daftar|बिजली|पानी|राशन कार्ड|नगर निगम",
+        "regulator": "The responsible department · CPGRAMS / state public grievance portal",
+        "officer_terms": ["public grievance officer", "grievance redressal officer"],
+        "retry_terms": ["nodal officer", "citizen charter", "contact us"],
+        "law_docs": [],
+        "basis_query": "",
+        "escalation": [
+            {"name": "Department's public grievance officer / portal", "channel": "official portal / office",
+             "url": None, "phone": None,
+             "when_to_use": "First. Complain in writing to the office responsible and keep the acknowledgement "
+                            "or registration number.", "typical_wait": "per the department's citizen charter"},
+            {"name": "CPGRAMS or your state's public grievance portal",
+             "channel": "pgportal.gov.in (central and many state departments) / state CM helpline",
+             "url": "https://pgportal.gov.in", "phone": None,
+             "when_to_use": "No action in the charter's time, or an unsatisfactory reply. Quote your first "
+                            "complaint number.", "typical_wait": "Use the timeline shown on the portal."},
+        ],
+    },
+    "police": {
+        "label": "Police / crime / cyber fraud",
+        "keywords": r"police|\bfir\b|thana|thane|थाना|पुलिस|एफआईआर|cyber ?(?:crime|fraud|cell)|scam(?:mer)?|"
+                    r"fraudster|\botp\b|fake (?:call|caller|link|website|app|customer care)|phishing|blackmail|"
+                    r"extort|stalk|molest|theft|stolen|chori|चोरी|robbery|snatch|cheated|dhokha|धोखा|ठगी|thagi|"
+                    r"sextortion|digital arrest",
+        "regulator": "Police (Bharatiya Nagarik Suraksha Sanhita, 2023) · National Cyber Crime Reporting Portal",
+        "tier": "B",
+        "officer_terms": [],
+        "retry_terms": [],
+        "law_docs": [],
+        "basis_query": "",
+        # Routing facts (not cited in letters): BNSS 2023 s.173 - information of a cognizable offence, at any police
+        # station (zero FIR) or electronically, free copy to the informant; s.173(4) - on refusal, send the
+        # substance in writing to the Superintendent of Police; s.175(3) - application to the Magistrate.
+        "escalation": [
+            {"name": "Station House Officer (SHO), [POLICE STATION]", "channel": "written complaint at the police "
+             "station · e-FIR on your state police citizen portal where available", "url": None, "phone": "112",
+             "when_to_use": "Give your written complaint at the police station. For a cognizable offence the police "
+                            "must register an FIR; you can report at any "
+                            "police station (zero FIR) and you are entitled to a free copy. Get a signed and stamped "
+                            "receipt for your written complaint.", "typical_wait": "same day"},
+            {"name": "Superintendent of Police / Deputy Commissioner of Police", "channel": "complaint in writing "
+             "by registered post or in person", "url": None, "phone": None,
+             "when_to_use": "If the SHO refuses to register an FIR: send the substance of your complaint in writing "
+                            "to the SP/DCP (BNSS, 2023, s.173(4)). Keep the postal receipt.",
+             "typical_wait": "about 2 weeks"},
+            {"name": "Judicial Magistrate", "channel": "application through a lawyer or the District Legal Services "
+             "Authority (free if eligible)", "url": "https://nalsa.gov.in", "phone": "15100",
+             "when_to_use": "If the police still do not act: apply to the Magistrate to direct registration and "
+                            "investigation (BNSS, 2023, s.175(3)).", "typical_wait": "weeks"},
+        ],
+        "cyber_step": {"name": "National Cyber Crime Helpline 1930 / cybercrime.gov.in",
+                       "channel": "call 1930 · report on cybercrime.gov.in · call your bank to block the account/card",
+                       "url": "https://cybercrime.gov.in", "phone": "1930",
+                       "when_to_use": "Immediately — within hours if possible, so the money can be traced and frozen. "
+                                      "Note the acknowledgement number and quote it in your police complaint.",
+                       "typical_wait": "immediate"},
+        "urgent": "Money lost to fraud? Call 1930 and your bank right now - the first hours matter most for "
+                  "freezing the money.",
+    },
+    "legal": {
+        "label": "Court case / property / family matter",
+        "keywords": r"court|judge|hearing|next date|lawyer|advocate|vakil|वकील|अदालत|कोर्ट|petition|summons|"
+                    r"\bbail\b|divorce|talaq|custody|maintenance|alimony|property dispute|partition|inheritance|"
+                    r"succession|ancestral|will deed|eviction|landlord|tenant|\bcnr\b|lok adalat|case number|"
+                    r"case status|mukadma|मुकदमा|तलाक|ज़मीन विवाद|जमीन",
+        "regulator": "Courts · District Legal Services Authority (free legal aid)",
+        "tier": "C",
+        "officer_terms": [],
+        "retry_terms": [],
+        "law_docs": [],
+        "basis_query": "",
+        "escalation": [
+            {"name": "District Legal Services Authority (DLSA)", "channel": "DLSA office at your district court · "
+             "NALSA legal-aid helpline", "url": "https://nalsa.gov.in", "phone": "15100",
+             "when_to_use": "First. Free legal advice, and a free lawyer if you are eligible; DLSA also runs Lok "
+                            "Adalats for settling disputes without a trial.", "typical_wait": "a few days"},
+            {"name": "eCourts case status", "channel": "eCourts Services website / app",
+             "url": "https://services.ecourts.gov.in", "phone": None,
+             "when_to_use": "If you already have a case: check its status, next hearing date and orders with the "
+                            "16-character CNR number, or with the court, case type, number and year.",
+             "typical_wait": "instant"},
+        ],
+        # Legal Services Authorities Act, 1987, s.12: entitled to free legal services if ANY one applies.
+        "eligibility": {"mode": "any", "label": "free legal aid", "conditions": [
+            "You are a woman or a child.",
+            "You belong to a Scheduled Caste or Scheduled Tribe.",
+            "You are a person with a disability.",
+            "You are an industrial workman.",
+            "You are a victim of trafficking or forced labour (begar).",
+            "You are a victim of a mass disaster, ethnic or caste violence, flood, drought, earthquake or industrial "
+            "disaster.",
+            "You are in custody (including a protective home, juvenile home or psychiatric hospital).",
+            "Your annual income is below the limit your state has set for free legal aid.",
+        ]},
+    },
     "other": {
-        "label": "Other consumer services (travel, edtech, real estate, utilities…)",
+        "label": "Other consumer services (travel, edtech, real estate…)",
         "keywords": r"flight|airline|indigo|air india|spicejet|akasa|irctc|train|ticket|hotel|booking|ola|uber|"
-                    r"cab|makemytrip|edtech|course|coaching|builder|flat|possession|electricity|gym|subscription|"
+                    r"cab|makemytrip|edtech|course|coaching|builder|flat|possession|gym|subscription|"
                     r"warranty|service centre|repair|courier",
         "regulator": "Department of Consumer Affairs (National Consumer Helpline) · Consumer Commissions",
         "officer_terms": ["grievance officer", "customer care"],
         "retry_terms": ["nodal officer", "escalation", "contact us"],
-        "law_docs": ["cpa"],
+        "law_docs": ["cpa", "ccr", "gen"],
         "basis_query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and "
                        "manner of performance of service",
         "escalation": [
             {"name": "Company grievance contact", "channel": "email / grievance page", "url": None, "phone": None,
-             "when_to_use": "First. Complain in writing and keep proof.", "typical_wait": "30 days"},
+             "when_to_use": "First. Complain in writing and keep proof.", "typical_wait": "30 days",
+             "reply_within": {"n": 30, "unit": "days", "kind": "requested", "basis": "a reasonable time to resolve it (no rule fixes one for this service)"}},
             {"name": "National Consumer Helpline (NCH)", "channel": "portal / phone / WhatsApp",
              "url": "https://consumerhelpline.gov.in", "phone": "1915 · WhatsApp 8800001915",
              "when_to_use": "If the company does not resolve it.", "typical_wait": "about 30-45 days"},
             {"name": "District Consumer Disputes Redressal Commission", "channel": "online filing (e-Jagriti)",
              "url": "https://e-jagriti.gov.in", "phone": None,
-             "when_to_use": "File within two years of the cause of action.", "typical_wait": "months"},
+             "when_to_use": "File within two years of the cause of action.", "typical_wait": "months",
+             "file_within": {"n": 2, "unit": "years", "from": "incident", "basis": "a consumer complaint must be filed within two years of the cause of action", "source": "Consumer Protection Act, 2019, Section 69(1)"}},
         ],
     },
 }
 
 # Public helplines/portals named in playbooks - allowed in drafts without being "verified company contacts".
 PUBLIC_CONTACTS = {"1915", "8800001915", "14448", "155255", "18004254732", "1930", "198", "crpc@rbi.org.in",
-                   "complaints@irdai.gov.in"}
+                   "complaints@irdai.gov.in", "112", "108", "1098", "181", "14416", "18008914416", "15100"}
+
+# Tier A: draft and escalate · B: safety first, police complaint + urgent routing · C: explain and refer (no drafting
+# of court documents).
+TIERS = {"A": "Draft and escalate", "B": "Draft and route urgently", "C": "Explain and refer"}
+CYBER_RE = re.compile(r"cyber|fraud|scam|otp|phishing|fake (?:call|link|website|app|customer care)|upi|online|"
+                      r"sextortion|digital arrest|hack|ठगी|धोखा|thagi", re.I)
+
+
+def tier_of(sector: str) -> str:
+    return SECTORS.get(sector, SECTORS["other"]).get("tier", "A")
+
+
+def forum_query(sector: str, city: str, complaint: str = "") -> tuple[str, str, str] | None:
+    """(Google Maps query, title pattern, label) for the local office that matters for this domain, or None."""
+    if sector == "police":
+        if CYBER_RE.search(complaint):
+            return f"Cyber Crime Police Station {city}", r"cyber|police", "Cyber crime police station"
+        return f"Superintendent of Police office {city}", r"police|commissioner|superintendent|SP office", \
+            "Senior police office"
+    if sector == "legal":
+        return f"District Legal Services Authority {city}", r"legal services|DLSA|legal aid", "Free legal aid (DLSA)"
+    if sector in ("govt_scheme", "public_service"):
+        return None
+    return f"District Consumer Disputes Redressal Commission {city}", r"consumer|forum|commission", "Consumer commission"
 
 ISSUE_QUERIES = {
     "refund": "refund of consideration within time; consumer right to seek redressal; unfair trade practice",
@@ -172,6 +335,7 @@ ISSUE_QUERIES = {
     "claim_rejection": "claim rejected repudiated by insurer; complaint to ombudsman",
     "misleading": "misleading advertisement unfair trade practice false representation",
     "data_privacy": "collection and sharing of personal data without consent; privacy",
+    "cyber_fraud": "fraudulent electronic banking transaction reported by customer; limited liability; reversal",
     "other": "consumer rights to be heard and seek redressal against unfair trade practice",
 }
 ISSUE_KEYWORDS = {
@@ -185,6 +349,8 @@ ISSUE_KEYWORDS = {
     "misleading": r"mislead|false (claim|promise|ad)|advertis",
     "data_privacy": r"privacy|personal data|contacts? access|leak",
     "deficiency": r"deficien|poor service|not (resolved|delivered)|delay|no response|ignored",
+    "cyber_fraud": r"cyber|scam|fraudster|\botp\b|phishing|fake (call|link|website|app|customer care)|sextortion|"
+                   r"digital arrest|hack(ed|er)|ठगी|thagi",
 }
 
 # Facts each sector's complaint needs; missing ones become placeholders in the draft.
@@ -195,16 +361,33 @@ REQUIRED_FACTS = {
     "telecom": [("reference_id", "[MOBILE NUMBER / ACCOUNT ID]"), ("date", "[DATE]")],
     "insurance": [("reference_id", "[POLICY / CLAIM NUMBER]"), ("amount", "[CLAIM AMOUNT]")],
     "loan_app": [("reference_id", "[LOAN ACCOUNT NUMBER]"), ("date", "[DATE OF CALLS]")],
+    "govt_scheme": [],
+    "public_service": [("reference_id", "[APPLICATION / COMPLAINT NUMBER]"), ("date", "[DATE]")],
+    "police": [("date", "[DATE AND TIME OF INCIDENT]"), ("place", "[PLACE OF INCIDENT]"),
+               ("police_station", "[POLICE STATION]")],
+    "legal": [],
     "other": [("reference_id", "[BOOKING / REFERENCE NUMBER]"), ("date", "[DATE]"), ("amount", "[AMOUNT]")],
 }
+
+
+def missing_facts_for(sector: str, facts: dict) -> list[dict]:
+    """Required facts for the sector that the complaint doesn't state; they become [PLACEHOLDERS] in the draft."""
+    return [{"fact": f, "placeholder": ph} for f, ph in REQUIRED_FACTS[sector]
+            if not (facts.get(f) or (f == "reference_id" and facts.get("order_id")))]
 
 
 def classify_rules(text: str) -> tuple[str, list[str]]:
     """Keyword sector + issue types (English, Hindi, Hinglish); the fallback when no LLM is configured."""
     t = text.lower()
-    scores = {s: len(re.findall(cfg["keywords"], t)) for s, cfg in SECTORS.items()}
+    scheme_match = re.search(SECTORS["govt_scheme"]["keywords"], t)
+    scores = {s: len(re.findall(cfg["keywords"], t)) for s, cfg in SECTORS.items() if s != "govt_scheme"}
+    scores["govt_scheme"] = 10 if scheme_match else 0
     if scores["loan_app"] and re.search(r"loan app|lending app|recovery agent|harass|लोन", t):
         scores["loan_app"] += 3  # a loan *app* complaint beats generic banking words
+    if scores["police"] and re.search(r"police|\bfir\b|thana|पुलिस|थाना|cyber|scam|fraudster|\botp\b|ठगी", t):
+        scores["police"] += 2  # a crime / police-inaction complaint beats the bank or shop it involves
+    if scores["legal"] and re.search(r"court|\bcnr\b|case (?:number|status)|hearing|vakil|lawyer|अदालत|कोर्ट", t):
+        scores["legal"] += 2
     sector = max(scores, key=scores.get) if max(scores.values()) else "other"
     issues = [k for k, pat in ISSUE_KEYWORDS.items() if re.search(pat, t)] or ["other"]
     return sector, issues
