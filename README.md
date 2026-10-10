@@ -310,7 +310,7 @@ line per node and a summary table at each pause.
 ## AI tools used
 
 - **Claude Code**: built the project.
-- **Gemini (`gemini-3.1-flash-lite`) via google-genai `generate_content`**: intake, case research, condition checks,
+- **Gemini (`gemini-3.1/3.5-flash-lite`) via google-genai `generate_content for speed`**: intake, case research, condition checks,
   escalation planning, contact extraction, precedent relevance, drafting and review — all with schema-constrained
   JSON validated by pydantic, and checked by the code guards above.
 - **BAAI/bge-small-en-v1.5** (fastembed, local): embeds the legal corpus in Qdrant.
