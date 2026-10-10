@@ -302,13 +302,9 @@ line per node and a summary table at each pause.
 - Many state government sites are JavaScript-heavy or poorly indexed, so official evidence is sometimes missing; the
   ladder then stays thin (or uses the labelled general route) rather than citing an unofficial page. In the test set
   this happened for Delhi Jal Board before official-page re-sourcing was added.
-- Code cannot yet tell which state an official page belongs to: a Bihar complaint once cited a West Bengal page as a
-  source. A law **named** in the letter text (rather than cited as a `[C#]` clause or "Section N") is not yet checked
-  against the retrieved law.
 - The seed ladders are traceable only to the playbook, not to a clause or URL per step.
 - "Two independent sources" could be gamed by coordinated spam — phone numbers seen only on third-party sites always
   carry a warning.
-- Loan-app registry checks need the LoanLens project installed alongside.
 - The agents need the AI: without a Gemini key, or if Gemini fails after its retry, nothing is drafted.
 
 ## AI tools used
