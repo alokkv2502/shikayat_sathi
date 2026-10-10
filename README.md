@@ -21,7 +21,7 @@ in SQLite. Search uses SerpApi (Google, Forums, News, Maps); the law is retrieve
 
 _Information, not legal advice. Nothing is ever sent automatically._
 
-## Quick start
+## Quick start and Installation Steps
 
 ```bash
 cd shikayat_sathi
