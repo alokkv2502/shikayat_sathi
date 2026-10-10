@@ -95,8 +95,7 @@ def llm_contacts(company: str, page: dict) -> tuple[list[dict], int, bool]:
     win = _windows(text)
     res = llm.json_call(EXTRACT_SYSTEM, f"Company: {company}\nPage: {page.get('final_url')}\n\n{win}",
                         schema(ExtractOut))
-    if not res:
-        return [], 0, False
+    llm.validated(ExtractOut, res)
     flat = re.sub(r"\s+", " ", deobfuscate(text)).lower()
     digits = re.sub(r"\D", "", flat)
     out, blocked = [], 0

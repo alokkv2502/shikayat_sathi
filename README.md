@@ -76,6 +76,23 @@ flowchart TD
 - **Streaming.** The UI uses `stream_mode="updates"` to drive a live agent timeline that shows each node and
   every retry.
 
+### Routing: the LLM is the brain, the code is the seatbelt
+
+The LLM handles any complaint; verified routes are cached and reused; code-level guards make sure no unverified
+recipient reaches a letter.
+
+| Job | Who does it |
+|---|---|
+| Understand the complaint: company, issue, kind of problem (`domain_free_text`) | LLM (intake) |
+| Pick a verified playbook - only if one genuinely fits (`matched_playbook`, `match_confidence`) | LLM, matching a live menu; code trusts it only above 0.6 |
+| Find the authority when nothing fits | LLM + search (route research: official pages only) |
+| Very unclear complaint | One clarifying question, then intake runs again |
+| Confirm every step and recipient is real | Code: a step needs an official source page we fetched (`*.gov.in`, `*.nic.in` or the company's own domain); a link must be official and appear in that evidence; the recipient must be a verified contact with a source; cited rules must come from retrieved clauses |
+
+A route that passes the checks is saved to `data/playbooks/<key>.json` with its sources and joins intake's menu, so
+the playbooks are a verified cache of what the system has learned (e.g. an airline refund learns the AirSewa route
+once), not hardcoded knowledge.
+
 ## Code layout
 
 ```
@@ -84,7 +101,7 @@ saathi/
   state.py         ComplaintState (TypedDict + reducers) and the pydantic models used for structured LLM output
   graph.py         StateGraph: Send fan-out, both loops, interrupt, SqliteSaver; contacts subgraph for the eval
   playbooks.py     sector → regulator escalation ladder, as data
-  llm.py           Gemini via google-genai (Interactions API, JSON schema output, 1 retry); rule-based fallback
+  llm.py           Gemini via google-genai (generate_content, JSON schema output, 1 retry); raises AIUnavailable
   nodes/           intake · grievance · precedents · local_forum · registry_worker · verifier · legal_rag ·
                    drafter · critic · review (human_review + finalize) · common (error/credit wrapper)
   tools/           serp.py (disk cache, credit cap) · fetch.py · domains.py (official-domain resolution)
@@ -128,7 +145,7 @@ Run `python eval/run_eval.py`. It writes `eval/REPORT.md` and `eval/report.json`
 | Part | What it measures | Result |
 |---|---|---|
 | **A. Contacts** (`companies.csv`, 20 companies) | Runs the grievance + verifier subgraph on each company and measures: contact found rate, exact-email accuracy against hand-labelled ground truth, verifier precision, unverified contacts caught, average SerpApi calls and latency | _Run with a SerpApi key. Hand-label the empty rows first._ |
-| **B. Complaints** (`complaints.jsonl`, 14 complaints including 3 Hindi and 2 Hinglish) | Sector and language accuracy; whether each draft passes the critic; uncited claims in the final letter | sector 100% · language 100% · critic pass 100% · zero uncited 100% (rule-based run, search off) |
+| **B. Complaints** (`complaints.jsonl`, 14 complaints including 3 Hindi and 2 Hinglish) | Sector and language accuracy; whether each draft passes the critic; uncited claims in the final letter | sector 100% · language 100% · critic pass 100% · zero uncited 100% (earlier rule-based run, search off - re-run with the AI) |
 | **C. Decoys** (`decoys.json`) | Synthetic scam-pattern contacts (look-alike helplines, webmail refund desks, KYC phishing) mixed in with genuine ones | 11/11 decoys rejected · 5/5 genuine contacts kept |
 
 `companies.csv` has official domains prefilled for all 20 companies. Contacts are filled in for only 8 of them:
@@ -153,8 +170,9 @@ The other 12 are left for hand labelling, as the brief asks.
   return "not found".
 - "Two independent sources" could be gamed by coordinated spam. That is why phone numbers seen only on third-party
   sites always carry a warning.
-- Without a Gemini key the agents fall back to rules: a template letter and an English summary (Hindi for
-  Hindi and Hinglish complaints).
+- The agents need the AI. Without a Gemini key, or if Gemini fails after its retry, the app and CLI say the AI is
+  unavailable and nothing is drafted - there is no rule-based stand-in that would quietly write a worse letter.
+  (Code still guards every AI answer: verified contacts, sourced routes, retrieved citations, computed deadlines.)
 
 ## AI tools used
 

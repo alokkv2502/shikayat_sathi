@@ -220,12 +220,8 @@ def critic(state: dict) -> dict:
                      + (GOVT_FRAME_RULE + "\n" if state.get("sector") == "govt_scheme" else ""))
     res = llm.json_call(CRITIC_SYSTEM, f"{frame_context}\nCOMPLAINT:\n{state['complaint']}\n\nCLAUSES:\n{clause_block}\n\n"
                                        f"LETTER:\n{state.get('draft', '')}", schema(CriticOut))
-    if res:
-        try:
-            issues += [f"Reviewer: {i}" for i in CriticOut.model_validate(res).issues]
-            method = f"rules + {llm.label()}"
-        except Exception:
-            pass
+    issues += [f"Reviewer: {i}" for i in llm.validated(CriticOut, res).issues]
+    method = f"rules + {llm.label()}"
     attempts = state.get("draft_attempts", 0)
     if issues and attempts < 2:
         verdict = f"{len(issues)} issue(s) → back to drafter"

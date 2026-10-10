@@ -7,10 +7,9 @@ hosts the brief was read from as its domains.
 reassess: after human review, re-run the same assessment with the complainant's answers (and filled placeholders),
 so the redraft is written from the updated facts.
 
-Nothing here is specific to a scheme: without an LLM, conditions are only settled by a plain yes / no answer."""
+Nothing here is specific to a scheme, and nothing stands in for the LLM: conditions are judged by it or stay
+unknown."""
 from __future__ import annotations
-
-import re
 
 from saathi import llm
 from saathi.nodes.common import node
@@ -29,35 +28,10 @@ GAP_SYSTEM = (
 )
 TYPE_SECTOR = {"govt_scheme": "govt_scheme", "banking": "bank", "insurance": "insurance", "telecom": "telecom",
                "loan_app": "loan_app"}
-YES = re.compile(r"^\s*(?:yes|y|yeah|yep|haan|ha|han|ji|ji haan|done|completed|correct|हाँ|हां|जी)\b", re.I)
-NO = re.compile(r"^\s*(?:no|n|nope|not yet|nahi|nahin|na|haven'?t|have not|didn'?t|did not|नहीं|ना)\b", re.I)
 
 
 def generic_question(condition: str) -> str:
     return f"Does this apply to you? “{condition.rstrip('.')}” — please add the date or detail if you have it."
-
-
-def answer_for(item: dict, answers: dict) -> str:
-    return (answers.get(item["condition"]) or answers.get(item.get("question") or "") or "").strip()
-
-
-def rule_checks(conditions: list[str], answers: dict, previous: list[dict] | None = None) -> list[dict]:
-    """No LLM: keep earlier statuses; a plain yes / no answer settles a condition, anything else stays unknown."""
-    before = {c["condition"]: c for c in previous or []}
-    out = []
-    for cond in conditions:
-        item = dict(before.get(cond) or {"condition": cond, "status": "unknown", "evidence": "",
-                                         "question": generic_question(cond)})
-        ans = answer_for(item, answers)
-        if ans and item["status"] == "unknown":
-            if YES.match(ans):
-                item.update(status="met", evidence=f"You confirmed: {ans}", question="")
-            elif NO.match(ans):
-                item.update(status="not_met", evidence=f"You said: {ans}", question="")
-            else:
-                item["evidence"] = f"You said: {ans}"
-        out.append(item)
-    return out
 
 
 def conditions_for(state: dict) -> tuple[list[str], str, str]:
@@ -97,7 +71,7 @@ def eligibility_of(checks: list[dict], mode: str = "all", label: str = "this") -
                                                  "found. The office may still check its own records."}
 
 
-def assess(state: dict, conditions: list[str], answers: dict, previous: list[dict] | None = None) -> dict:
+def assess(state: dict, conditions: list[str], answers: dict) -> dict:
     """{checks, extra_questions, method}. The follow-up questions come from intake's single LLM call; an LLM call
     here is needed only to assess published conditions (none -> no call)."""
     facts = state.get("facts") or {}
@@ -108,24 +82,17 @@ def assess(state: dict, conditions: list[str], answers: dict, previous: list[dic
     prompt = (f"CASE CONDITIONS:\n{conditions}\n\nCOMPLAINT:\n{state.get('complaint_en') or state.get('complaint', '')}\n\n"
               f"FACTS EXPLICITLY EXTRACTED:\n{facts}\n\nCOMPLAINANT'S ANSWERS:\n{answers or 'none yet'}\n\n"
               f"PLACEHOLDERS ALREADY ASKED FOR: {placeholders}\nQUESTIONS ALREADY ASKED: {asked}")
-    result = llm.json_call(GAP_SYSTEM, prompt, schema(GapCheckOut))
-    if result:
-        try:
-            parsed = GapCheckOut.model_validate(result)
-            by_condition = {a.condition: a.model_dump() for a in parsed.assessments}
-            fallback = {c["condition"]: c for c in rule_checks(conditions, answers, previous)}
-            checks = [by_condition.get(c) or fallback[c] for c in conditions]
-            for item in checks:
-                if item["status"] == "unknown" and not item.get("question"):
-                    item["question"] = generic_question(item["condition"])
-                if item["status"] != "unknown":
-                    item["question"] = ""
-            extra = list(dict.fromkeys(q for q in asked + parsed.other_questions if q.strip() and q not in answers))
-            return {"checks": checks, "extra_questions": extra[:4], "method": llm.label()}
-        except ValueError:
-            pass
-    extra = [q for q in state.get("extra_questions") or [] if q not in answers]
-    return {"checks": rule_checks(conditions, answers, previous), "extra_questions": extra, "method": "rules"}
+    parsed = llm.validated(GapCheckOut, llm.json_call(GAP_SYSTEM, prompt, schema(GapCheckOut)))
+    by_condition = {a.condition: a.model_dump() for a in parsed.assessments}
+    unknown = {"status": "unknown", "evidence": ""}  # a condition the model skipped is simply not settled
+    checks = [by_condition.get(c) or {"condition": c, **unknown} for c in conditions]
+    for item in checks:
+        if item["status"] == "unknown" and not item.get("question"):
+            item["question"] = generic_question(item["condition"])
+        if item["status"] != "unknown":
+            item["question"] = ""
+    extra = list(dict.fromkeys(q for q in asked + parsed.other_questions if q.strip() and q not in answers))
+    return {"checks": checks, "extra_questions": extra[:4], "method": llm.label()}
 
 
 def framed_sector(state: dict, brief: dict) -> str:
@@ -201,7 +168,7 @@ def reassess(state: dict) -> dict:
         else:
             missing.append(m)
     conditions, mode, label = conditions_for(state)
-    res = assess({**state, "facts": facts}, conditions, answers, state.get("eligibility_checks"))
+    res = assess({**state, "facts": facts}, conditions, answers)
     checks = res["checks"]
     elig = eligibility_of(checks, mode, label)
     return {"facts": facts, "missing_facts": missing, "eligibility_checks": checks,

@@ -1,30 +1,29 @@
-"""intake_planner: detect language, classify sector, extract company + facts, list missing facts, resolve the
-official domain and plan the searches. The regulator route itself comes from playbooks.py, not the model."""
+"""intake_planner: ONE LLM call understands the complaint - language, English translation, company, facts, the kind
+of problem, the matching verified playbook (or none), follow-up questions and any danger - then code resolves the
+official domain and plans the searches. There is no rule-based stand-in: without the LLM the run stops."""
 from __future__ import annotations
-
-import re
 
 from langgraph.types import Send
 
 from saathi import llm
 from saathi.nodes.common import live, node
 from saathi.nodes.safety import merge_llm, trace_line
-from saathi.playbooks import (CYBER_RE, ISSUE_QUERIES, SECTORS, TIERS, classify_rules, detect_language,
-                               forum_query, missing_facts_for, tier_of)
+from saathi.playbooks import (CYBER_RE, ISSUE_QUERIES, SECTORS, TIERS, forum_query, missing_facts_for, playbook_menu,
+                               tier_of)
 from saathi.state import IntakeOut, schema
 from saathi.tools.domains import resolve_official
 from saathi.tools.serp import CreditLimitReached, NoApiKey, SerpApiError, serp
 
 INTAKE_SYSTEM = (
     "You triage Indian grievances written in English, Hindi or Hinglish. Extract facts exactly as stated - "
-    "never invent order IDs, dates or amounts (use '' if absent). Domains (sector): ecommerce (online shopping, food "
-    "delivery, quick commerce), bank (banks, NBFCs, UPI/wallets, cards - service failures and disputed debits), "
-    "telecom (mobile, broadband, DTH), insurance, loan_app (digital lending apps, recovery harassment), govt_scheme "
-    "(public schemes, benefits, pensions, scholarships), public_service (municipal services, utilities, certificates, "
-    "passports, government offices), police (a crime: cyber fraud or scams, theft, threats, stalking, assault, "
-    "blackmail, or police refusing to register a complaint), legal (court cases and case status, property, family, "
-    "tenancy and other civil disputes), other (travel, cabs, edtech, real estate…). For police, company is ''. For "
-    "legal, company is the court or ''. Flag named schemes, policies, plans or products whose rules are "
+    "never invent order IDs, dates or amounts (use '' if absent). ROUTING: first describe the kind of problem in "
+    "your own words (domain_free_text). Then pick matched_playbook from the PLAYBOOKS list ONLY if one genuinely "
+    "covers this complaint; if none does, set it to null and match_confidence to 0 - never force the nearest one "
+    "(an airline refund is not a government scheme). 'other' is only for consumer services with no closer fit. "
+    "police = a crime (cyber fraud or scams, theft, threats, stalking, assault, blackmail) or police refusing to "
+    "register a complaint; legal = court cases, property, family, tenancy and other civil disputes. For police, "
+    "company is ''. For legal, company is the court or ''. Set needs_clarification only if you cannot tell what or "
+    "whom the complaint is about. Flag named schemes, policies, plans or products whose rules are "
     "not clear from the complaint in case_entities. Extract additional case-specific details into facts.details; "
     "never infer missing eligibility facts. Translate once: complaint_en is the whole complaint in plain English, "
     "and every facts field is written in English - the rest of the pipeline works from these, not the original. "
@@ -33,63 +32,21 @@ INTAKE_SYSTEM = (
     "IMMEDIATE risk to someone's life or safety the complaint describes; leave it empty otherwise."
 )
 
-BRANDS = ["Flipkart", "Amazon", "Myntra", "Meesho", "Ajio", "Nykaa", "Snapdeal", "Swiggy", "Zomato", "Blinkit",
-          "Zepto", "BigBasket", "JioMart", "Tata CLiQ", "Jio", "Airtel", "Vodafone Idea", "Vi", "BSNL", "Tata Play",
-          "HDFC Bank", "ICICI Bank", "SBI", "State Bank of India", "Axis Bank", "Kotak Mahindra Bank", "Yes Bank",
-          "Punjab National Bank", "Bank of Baroda", "Canara Bank", "IDFC First Bank", "Bajaj Finance", "Paytm",
-          "PhonePe", "Google Pay", "LIC", "Star Health", "HDFC ERGO", "ICICI Lombard", "Bajaj Allianz", "Niva Bupa",
-          "Care Health", "KreditBee", "Moneyview", "Navi", "Fibe", "Kissht", "IndiGo", "Air India", "MakeMyTrip",
-          "IRCTC", "Ola", "Uber", "Rapido", "Urban Company"]
-
-# Rule-based fallback for spotting things worth researching (the LLM intake lists them itself): a few words before
-# a marker noun ("… Super Star policy", "… Awas Yojana"), and hyphenated acronyms ("AB-XYZ", "PM-ABC").
-ENTITY_MARKER_RE = re.compile(r"\b(scheme|yojana|abhiyan|mission|policy|plan)\b", re.I)
-ACRONYM_RE = re.compile(r"\b[A-Z]{2,}(?:-[A-Z]{2,})+\b")
-ENTITY_NOISE = {"my", "the", "a", "an", "this", "that", "for", "about", "under", "rejected", "denied",
-                "claim", "payment", "benefit", "not", "received", "missing", "of", "in", "on", "to", "from"}
+MATCH_MIN = 0.6  # below this the playbook match is not trusted: research the route instead
 
 
-def case_entities(text: str) -> list[str]:
-    found = list(dict.fromkeys(ACRONYM_RE.findall(text)))[:3]
-    for match in ENTITY_MARKER_RE.finditer(text):
-        start = max(text.rfind(mark, 0, match.start()) for mark in (".", "!", "?", ";", "\n")) + 1
-        words = re.findall(r"[A-Za-z0-9][A-Za-z0-9&/'-]*", text[start:match.start()])[-4:]
-        while words and words[0].casefold() in ENTITY_NOISE:
-            words.pop(0)
-        if words:
-            entity = " ".join(words + [match.group(1)])
-            if entity.casefold() not in {item.casefold() for item in found}:
-                found.append(entity)
-        if len(found) == 3:
-            break
-    return found
-
-
-def rule_intake(text: str, company: str | None) -> dict:
-    sector, issues = classify_rules(text + " " + (company or ""))
-    if not company:
-        hits = [b for b in BRANDS if re.search(rf"\b{re.escape(b)}\b", text, re.I)]
-        company = max(hits, key=len) if hits else ""
-    amt = re.search(r"(?:₹|rs\.?|inr|rupees?)\s?([\d,]+)", text, re.I)
-    oid = re.search(r"\border\s*(?:id|no\.?|number|#)?\s*[:#-]?\s*([A-Z]{1,4}\d[A-Z0-9-]{5,})", text, re.I)
-    ref = re.search(r"\b(?:ref(?:erence)?|txn|transaction|utr|policy|claim|complaint)\s*(?:id|no\.?|number|#)?"
-                    r"\s*[:#-]?\s*([A-Z0-9][A-Z0-9-]{5,})", text, re.I)
-    date = re.search(r"\b\d{1,2}(?:st|nd|rd|th)?\s+(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*"
-                     r"(?:\s+\d{4})?|\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b", text, re.I)
-    ps = re.search(r"([A-Z][A-Za-z]+(?: [A-Z][A-Za-z]+){0,2}) (?:police station|thana|PS)\b", text)
-    kw = {"refund": "refund", "defective": "defective product", "unauthorised_charge": "unauthorised charge",
-          "harassment": "harassment", "claim_rejection": "claim rejected"}
-    entities = case_entities(text)
-    return {"language": detect_language(text), "sector": sector, "company": company, "issue_types": issues,
-            "case_entities": entities,
-            "facts": {"product_or_service": "", "issue": re.sub(r"\s+", " ", text)[:200], "what_user_wants": "",
-                      "order_id": oid.group(1) if oid else "", "reference_id": ref.group(1) if ref else "",
-                      "amount": amt.group(1).replace(",", "") if amt else "", "date": date.group(0) if date else "",
-                      "city": "", "place": "", "police_station": ps.group(1).strip() if ps else "", "details": {}},
-            "urgent_fraud_or_harassment": "harassment" in issues or bool(re.search(r"fraud|scam|threat|धमकी", text,
-                                                                                   re.I)),
-            "search_keywords": kw.get(issues[0], "complaint"), "method": "rules",
-            "complaint_en": text, "follow_up_questions": []}  # no LLM: no translation (RAG drops Devanagari)
+def route_of(out: dict) -> dict:
+    """Code decides what to do with the LLM's routing answer: use a verified playbook only on a confident match to
+    a key that exists; otherwise research the route (provisionally on the generic consumer playbook)."""
+    key = out.get("matched_playbook")
+    conf = float(out.get("match_confidence") or 0)
+    matched = key in SECTORS and conf >= MATCH_MIN
+    out["sector"] = key if matched else "other"
+    out["route"] = {"domain_free_text": out.get("domain_free_text") or "", "matched_playbook": key if matched else None,
+                    "confidence": conf, "reason": out.get("route_reason") or "",
+                    "mode": "matched" if matched else "research",
+                    "question": out.get("clarifying_question") if out.get("needs_clarification") else ""}
+    return out
 
 
 @node("🧭 Intake")
@@ -97,18 +54,14 @@ def intake_planner(state: dict) -> dict:
     serp.new_budget()  # each complaint gets its own SERPAPI_MAX_CREDITS budget
     text, hint, city = state["complaint"], state.get("company_hint"), state.get("city")
     out = llm.json_call(INTAKE_SYSTEM, f"Complaint:\n{text}\n\nCompany (if given by user): {hint or ''}\n"
-                                       f"City (if given): {city or ''}", schema(IntakeOut))
-    if out:
-        try:
-            out = IntakeOut.model_validate(out).model_dump() | {"method": llm.label()}
-        except Exception:
-            out = None
-    out = out or rule_intake(text, hint)
+                                       f"City (if given): {city or ''}\n\nPLAYBOOKS:\n{playbook_menu()}",
+                        schema(IntakeOut))
+    out = route_of(llm.validated(IntakeOut, out).model_dump() | {"method": llm.label()})
     if hint:
         out["company"] = hint
-    entities = list(dict.fromkeys(e.strip() for e in (out.get("case_entities") or []) + case_entities(text)
-                                  if e.strip()))
-    sector = out["sector"]  # may be re-framed by gap_check from the researched case brief
+    entities = list(dict.fromkeys(e.strip() for e in out.get("case_entities") or [] if e.strip()))
+    route = out["route"]
+    sector = out["sector"]  # a verified playbook, or provisional "other" until route research finds the real one
     facts = out["facts"]
     facts.setdefault("details", {})
     if city:
@@ -122,6 +75,8 @@ def intake_planner(state: dict) -> dict:
              f"(tier {tier}: {TIERS[tier].lower()}), "
              f"company={company or '?'}, issues={', '.join(issues)}"
              + (f"; to research: {', '.join(entities)}" if entities else "")
+             + (f"; route: {route['mode']} ({route['confidence']:.1f})"
+                + (f" — no playbook fits “{route['domain_free_text']}”" if route["mode"] == "research" else ""))
              + (f"; missing: {', '.join(m['fact'] for m in missing)}" if missing else "")]
 
     official = {"domain": None, "domains": [], "basis": None}
@@ -150,7 +105,7 @@ def intake_planner(state: dict) -> dict:
     safety = merge_llm(state.get("safety") or {}, out.get("danger") or [], llm.label())  # same LLM call
     if safety:
         trace.insert(0, trace_line(safety))
-    return {"language": out["language"], "complaint_en": (out.get("complaint_en") or "").strip() or text,
+    return {"route": route, "language": out["language"], "complaint_en": (out.get("complaint_en") or "").strip() or text,
             "extra_questions": [q.strip() for q in out.get("follow_up_questions") or [] if q.strip()][:3],
             "sector": sector, "tier": tier, "company": company, "facts": facts,
             "issue_types": issues, "case_entities": entities, "missing_facts": missing, "search_plan": plan,
@@ -168,3 +123,20 @@ def fan_out(state: dict) -> list[Send]:
     sends.append(Send("local_forum", state))  # always runs (notes a skip without a city), so fan-in is never empty
     sends.append(Send("gap_check", state))    # the eligibility / questions LLM call overlaps the searches
     return sends
+
+
+@node("❓ Clarify")
+def clarify(state: dict) -> dict:
+    """Very unclear complaints: ask ONE question (from intake's LLM), add the answer, and run intake again.
+    Resume with Command(resume={"answer": "..."}). Asked at most once."""
+    from langgraph.types import interrupt
+
+    q = (state.get("route") or {}).get("question") or "What is the complaint about, and against which organisation?"
+    edits = interrupt({"stage": "clarify", "question": q, "safety": state.get("safety") or {}}) or {}
+    answer = (edits.get("answer") or "").strip() if isinstance(edits.get("answer"), str) else ""
+    return {"complaint": state["complaint"] + (f"\n\n{answer}" if answer else ""), "clarified": True,
+            "trace": [f"❓ Clarify: asked “{q}”" + (f" → “{answer[:80]}”" if answer else " → no answer")]}
+
+
+def route_after_intake(state: dict) -> str:
+    return "clarify" if (state.get("route") or {}).get("question") and not state.get("clarified") else "case_research"

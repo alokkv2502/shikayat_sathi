@@ -29,6 +29,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from saathi import graph as G  # noqa: E402
+from saathi import llm  # noqa: E402
 from saathi.nodes import verifier as V  # noqa: E402
 from saathi.nodes.critic import case_fact_values, facts_used  # noqa: E402
 from saathi.playbooks import SECTORS  # noqa: E402
@@ -257,6 +258,8 @@ def main() -> dict:
         if a.max_credits == 0:
             serp.max_credits = None
         rep["contacts"] = contacts_eval(rows, live=not a.offline and bool(serp.api_key))
+    if not llm.enabled():  # the complaint part measures the AI pipeline; there is no rule-based stand-in to score
+        raise SystemExit("The complaints evaluation needs the AI service: set GEMINI_API_KEY (and LLM_PROVIDER).")
     rep["complaints"] = complaints_eval()
     rep["decoys"] = decoy_eval()
     (EVAL_DIR / "report.json").write_text(json.dumps(rep, indent=1, ensure_ascii=False), encoding="utf-8")

@@ -10,8 +10,9 @@ All calls use the Gemini API through the google-genai SDK's models.generate_cont
 
 LLM_API=interactions switches to the Interactions API (client.interactions.create), measured ~3x slower per call.
 
-Without GEMINI_API_KEY (or with LLM_PROVIDER=none) json_call returns None and every agent runs its deterministic
-rule-based fallback. Responses are cached on disk.
+The agents need the LLM - there is no silent rule-based fallback that would quietly write a worse letter. Without
+GEMINI_API_KEY (or with LLM_PROVIDER=none), or when Gemini fails after its retry, json_call raises AIUnavailable;
+the node wrapper lets it through, so the UI / CLI say the AI is unavailable instead. Responses are cached on disk.
 """
 from __future__ import annotations
 
@@ -35,13 +36,17 @@ THINKING_LEVEL = "low"  # every Gemini call, every agent - one setting, no per-c
 _DROP = {"$defs", "$schema", "title", "default", "additionalProperties", "examples"}
 
 
+class AIUnavailable(RuntimeError):
+    """The LLM is not configured, failed after its retry, or returned output that does not match the schema."""
+
+
 def enabled() -> bool:
     return LLM_PROVIDER != "none" and bool(GEMINI_API_KEY)
 
 
 def label() -> str:
     if not enabled():
-        return "rule-based (no Gemini key)"
+        return "AI unavailable (no Gemini key)"
     try:
         return f"Gemini ({GEMINI_MODEL}, {api()})"
     except Exception:
@@ -133,10 +138,10 @@ def call_gemini(system: str, prompt: str, schema: dict) -> dict:
     raise last or RuntimeError("Gemini call failed")
 
 
-def json_call(system: str, prompt: str, schema: dict) -> dict | None:
-    """A dict matching `schema`, or None when Gemini isn't configured or the call fails (callers fall back)."""
+def json_call(system: str, prompt: str, schema: dict) -> dict:
+    """A dict matching `schema`. Raises AIUnavailable when Gemini isn't configured or the call fails."""
     if not enabled():
-        return None
+        raise AIUnavailable("the AI service is not configured (set GEMINI_API_KEY)")
     key = hashlib.sha1(json.dumps([GEMINI_MODEL, THINKING_LEVEL, system, prompt, schema], sort_keys=True).encode()).hexdigest()
     path = LLM_CACHE / f"{key}.json"
     if path.exists():
@@ -148,9 +153,17 @@ def json_call(system: str, prompt: str, schema: dict) -> dict | None:
     try:
         with timing.span("llm", f"{system[:60]} · {len(prompt)} chars in"):
             out = call_gemini(system, prompt, schema)
-    except Exception as e:  # never fail a complaint on an LLM error; the agent's rule-based path takes over
+    except Exception as e:
         print(f"  [llm] {GEMINI_MODEL} failed after {ATTEMPTS} attempts: {type(e).__name__}: {str(e)[:200]}",
               file=sys.stderr)
-        return None
+        raise AIUnavailable(f"the AI service failed ({type(e).__name__}: {str(e)[:120]})") from e
     path.write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
     return out
+
+
+def validated(model, out: dict):
+    """Parse an LLM answer into `model`, or raise AIUnavailable - an answer we can't use is not silently replaced."""
+    try:
+        return model.model_validate(out)
+    except Exception as e:
+        raise AIUnavailable(f"the AI returned an unusable {model.__name__} ({type(e).__name__})") from e

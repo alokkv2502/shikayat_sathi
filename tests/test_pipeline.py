@@ -11,10 +11,9 @@ import saathi.tools.domains as domains_mod
 from saathi import graph as G
 from saathi import llm
 from saathi.nodes import verifier as V
-from saathi.nodes.intake import rule_intake
 from saathi.nodes.legal_rag import strip_unsupported
-from saathi.playbooks import detect_language
 from saathi.tools.serp import serp
+from tests import fake_llm
 
 SERP = {
     "Kartify official website": {
@@ -116,7 +115,7 @@ def test_critic_loop_sends_bad_draft_back(mocked, monkeypatch):
 
     def fake_json_call(system, prompt, schema, **_):
         if "draft firm" not in system:
-            return None
+            return fake_llm.answer(system, prompt, schema)
         d = next(drafts)
         by = re.search(r"REPLY DEADLINE \(computed[^:]*\): (\d{1,2} \w+ \d{4})", prompt).group(1)  # the code's date
         return {**d, "body": d["body"].replace("{by}", by)}
@@ -134,33 +133,6 @@ def test_finalize_strips_unretrieved_citations():
     body, removed = strip_unsupported("Under Rule 4 [C1] and Section 999 of the Act [C7] you must refund.", clauses)
     assert "[C7]" not in body and "Section 999" not in body and "Rule 4 [C1]" in body
     assert set(removed) == {"[C7]", "Section 999"}
-
-
-@pytest.mark.parametrize("text,sector,lang", [
-    ("Flipkart refused refund for damaged phone", "ecommerce", "en"),
-    ("Flipkart ne damaged phone ka refund reject kar diya, order 15 Sep ko kiya tha", "ecommerce", "hinglish"),
-    ("Jio charged me for a plan I didn't activate", "telecom", "en"),
-    ("मेरे SBI खाते से 5000 रुपये काट लिए गए", "bank", "hi"),
-    ("Star Health rejected my claim", "insurance", "en"),
-    ("Loan app recovery agents are harassing my contacts", "loan_app", "en"),
-    ("IndiGo cancelled my flight and has not refunded me", "other", "en"),
-])
-def test_intake_rules(text, sector, lang):
-    assert rule_intake(text, None)["sector"] == sector and detect_language(text) == lang
-
-
-def test_flipkart_hinglish_complaint_extracts_ecommerce_facts():
-    complaint = ("Flipkart ne damaged phone ka refund reject kar diya, order FK12345678, "
-                 "Rs 15,000, 15 Sep 2026 ko order kiya tha.")
-
-    result = rule_intake(complaint, None)
-
-    assert result["sector"] == "ecommerce"
-    assert result["company"] == "Flipkart"
-    assert result["language"] == "hinglish"
-    assert result["facts"]["order_id"] == "FK12345678"
-    assert result["facts"]["amount"] == "15000"
-    assert result["facts"]["date"] == "15 Sep 2026"
 
 
 # Scheme knowledge lives ONLY in these fixtures (mocked search results, pages and LLM output) - the code has none.
@@ -219,7 +191,7 @@ def mock_research(monkeypatch, tmp_path, case, calls=None):
     monkeypatch.setattr(research_mod, "fetch", lambda u, **_: {"url": u, "ok": True, "title": "Guidelines",
                                                                "text": case["pages"].get(u, "")})
     monkeypatch.setattr(llm, "json_call", lambda system, *a, **k: dict(case["brief"])
-                        if system == research_mod.RESEARCH_SYSTEM else None)
+                        if system == research_mod.RESEARCH_SYSTEM else fake_llm.answer(system, *a, **k))
 
 
 @pytest.mark.parametrize("key", list(SCHEMES))
@@ -286,30 +258,21 @@ def test_case_brief_is_cached_under_every_name(monkeypatch, tmp_path):
     assert len(calls) == n                                                    # no further searches
 
 
-def test_case_research_without_llm_invents_nothing(monkeypatch, tmp_path):
+def test_ai_unavailable_stops_the_run_instead_of_falling_back(mocked, monkeypatch):
+    def down(*a, **k):
+        raise llm.AIUnavailable("the AI service is not configured")
+    monkeypatch.setattr(llm, "json_call", down)
+    with pytest.raises(llm.AIUnavailable):
+        run_graph("Kartify refused a refund for my damaged phone", company="Kartify")
+
+
+def test_case_research_without_sources_assumes_nothing(monkeypatch, tmp_path):
     import saathi.nodes.case_research as research_mod
-
-    case = SCHEMES["pm-vbry"]
-    mock_research(monkeypatch, tmp_path, case)
-    monkeypatch.setattr(llm, "json_call", lambda *a, **k: None)
-    brief = research_mod.case_research({"case_entities": ["PM-VBRY"], "complaint": case["complaint"],
-                                        "sector": "other", "live": True})["case_brief"]
-    assert brief["subject"] == "PM-VBRY" and not brief["conditions"] and not brief["entitlement"]
-    assert brief["sources"] == [next(iter(case["pages"]))] and not list(tmp_path.iterdir())  # not cached
-
-
-def test_named_insurance_policy_keeps_insurance_research_frame(mocked, monkeypatch, tmp_path):
-    import saathi.nodes.case_research as research_mod
-    from saathi.nodes.intake import case_entities
-
     monkeypatch.setattr(research_mod, "BRIEF_CACHE", tmp_path)
-    monkeypatch.setattr(llm, "json_call", lambda *args, **kwargs: None)
-    entity = case_entities("Star Health rejected my Super Star policy claim")[0]
-    brief = research_mod.case_research({"case_entities": [entity], "complaint": "Claim rejected",
-                                        "sector": "insurance", "live": False})["case_brief"]
-
-    assert entity == "Super Star policy"
-    assert brief["complaint_type"] == "insurance"
+    monkeypatch.setattr(research_mod.serp, "search", lambda *a, **k: {})
+    out = research_mod.case_research({"case_entities": ["PM-VBRY"], "complaint": "x", "sector": "other",
+                                      "live": True})
+    assert out["case_brief"] == {} and "nothing assumed" in out["trace"][0]
 
 
 def test_critic_rejects_consumer_frame_for_government_scheme():
@@ -329,8 +292,10 @@ def test_critic_rejects_consumer_frame_for_government_scheme():
 def test_extraction_blocks_values_not_on_page(monkeypatch):
     page = {"final_url": "https://x.example/g", "text": "Grievance Officer Mr. Ravi Kumar email ravi@x.example"}
     monkeypatch.setattr(grievance_mod.llm, "json_call", lambda *a, **k: {"contacts": [
-        {"role": "grievance_officer", "name": "Ravi Kumar", "email": "ravi@x.example", "phone": "9999988888"},
-        {"role": "nodal_officer", "name": "Invented Person", "email": "nodal@x.example", "phone": ""}]})
+        {"organisation": "X", "belongs_to_named_company": True, "role": "grievance_officer", "name": "Ravi Kumar",
+         "email": "ravi@x.example", "phone": "9999988888"},
+        {"organisation": "X", "belongs_to_named_company": True, "role": "nodal_officer", "name": "Invented Person",
+         "email": "nodal@x.example", "phone": ""}]})
     out, blocked, _ = grievance_mod.llm_contacts("X", page)
     assert [o["value"] for o in out] == ["ravi@x.example"] and blocked == 3
 
@@ -422,7 +387,7 @@ def test_llm_calls_gemini_generate_content(monkeypatch, tmp_path):
     monkeypatch.setattr(llm, "LLM_CACHE", tmp_path)
     monkeypatch.setattr(llm.time, "sleep", lambda s: None)
     schema = {"type": "object", "properties": {"sector": {"type": "string"}}, "required": ["sector"]}
-    assert llm.json_call("sys", "Jio charged me", schema) == {"sector": "telecom"}
+    assert llm._real_json_call("sys", "Jio charged me", schema) == {"sector": "telecom"}
     assert len(calls) == 2 and llm.api() == "generate_content"
     kw = calls[-1]
     assert kw["model"] == llm.GEMINI_MODEL and kw["contents"] == "Jio charged me"
@@ -447,7 +412,7 @@ def test_llm_calls_gemini_interactions_when_opted_in(monkeypatch, tmp_path):
     monkeypatch.setattr(llm, "LLM_CACHE", tmp_path)
     monkeypatch.setattr(llm.time, "sleep", lambda s: None)
     schema = {"type": "object", "properties": {"sector": {"type": "string"}}, "required": ["sector"]}
-    assert llm.json_call("sys", "Jio charged me", schema) == {
+    assert llm._real_json_call("sys", "Jio charged me", schema) == {
         "sector": "telecom", "label": "\u0939\u093f\u0928\u094d\u0926\u0940\u202ftext"}
     assert len(calls) == 2
     assert "\u0939\u093f\u0928\u094d\u0926\u0940\u202ftext" in next(tmp_path.glob("*.json")).read_text(encoding="utf-8")
@@ -455,7 +420,6 @@ def test_llm_calls_gemini_interactions_when_opted_in(monkeypatch, tmp_path):
     assert kw["model"] == llm.GEMINI_MODEL and kw["input"] == "Jio charged me" and kw["system_instruction"] == "sys"
     assert kw["response_format"] == {"type": "text", "mime_type": "application/json", "schema": schema}
     assert kw["generation_config"] == {"temperature": 0.1, "thinking_level": "low"}
-    assert llm.label().startswith("Gemini")
 
 
 def test_gemini_schema_inlines_pydantic_refs():
@@ -483,17 +447,9 @@ def test_safety_router(text, cats):
     assert not cats or "112" in r["numbers"] or "14416" in r["numbers"]
 
 
-@pytest.mark.parametrize("text,sector", [
-    ("Police at Kotwali thana refused to register my FIR for the theft of my bike", "police"),
-    ("Kisi ne fake customer care bankar OTP le liya aur mere account se 40,000 ki thagi ho gayi", "police"),
-    ("My property dispute case is pending in the civil court, what is the next hearing date?", "legal"),
-    ("The municipal corporation has not fixed the street light for 3 months", "public_service"),
-    ("Flipkart refused refund for damaged phone", "ecommerce"),
-])
-def test_domain_rules(text, sector):
+def test_tiers_follow_the_playbook():
     from saathi.playbooks import tier_of
-    assert rule_intake(text, None)["sector"] == sector
-    assert tier_of(sector) == {"police": "B", "legal": "C"}.get(sector, "A")
+    assert (tier_of("police"), tier_of("legal"), tier_of("ecommerce"), tier_of("unknown_key")) == ("B", "C", "A", "A")
 
 
 def test_tier_b_cyber_fraud_is_a_police_complaint_with_1930_first(mocked):
@@ -691,12 +647,13 @@ def test_translation_happens_once_at_intake(mocked, monkeypatch):
         calls.append(system[:40])
         if system == intake_mod.INTAKE_SYSTEM:
             return {"language": "hi", "complaint_en": "Kartify did not refund Rs 15,000 for my damaged phone.",
-                    "sector": "ecommerce", "company": "Kartify", "issue_types": ["refund"],
+                    "domain_free_text": "online shopping refund", "matched_playbook": "ecommerce",
+                    "match_confidence": 0.9, "company": "Kartify", "issue_types": ["refund"],
                     "facts": {"issue": "Refund refused for a damaged phone", "amount": "15000",
                               "order_id": "KT12345678", "date": "15 Sep 2026"},
                     "urgent_fraud_or_harassment": False, "search_keywords": "refund damaged phone",
                     "case_entities": [], "follow_up_questions": ["क्या आपने कंपनी से पहले शिकायत की थी?"]}
-        return None
+        return fake_llm.answer(system, prompt, schema)
     monkeypatch.setattr(llm, "json_call", fake)
     real = rag_mod.retrieve
     monkeypatch.setattr(rag_mod, "retrieve", lambda q, *a, **k: (queries.append(q), real(q, *a, **k))[1])
@@ -717,10 +674,11 @@ def test_intake_call_also_catches_danger_the_rules_missed(mocked, monkeypatch):
     def fake(system, prompt, schema, **_):
         calls.append(system[:20])
         if system == intake_mod.INTAKE_SYSTEM:
-            return {"language": "en", "complaint_en": prompt, "sector": "bank", "company": "", "issue_types": ["other"],
+            return {"language": "en", "complaint_en": prompt, "domain_free_text": "bank lost savings",
+                    "matched_playbook": "bank", "match_confidence": 0.8, "company": "", "issue_types": ["other"],
                     "facts": {}, "urgent_fraud_or_harassment": False, "search_keywords": "lost savings",
                     "danger": ["self_harm"]}
-        return None
+        return fake_llm.answer(system, prompt, schema)
     monkeypatch.setattr(llm, "json_call", fake)
     text = "The bank lost all my savings. I can't go on anymore and see no point in anything."
     from saathi.nodes.safety import safety_check
@@ -729,3 +687,92 @@ def test_intake_call_also_catches_danger_the_rules_missed(mocked, monkeypatch):
     assert s["safety"]["level"] == "emergency" and "14416" in s["safety"]["numbers"]
     assert "rules + " in s["safety"]["method"] and calls.count(calls[0]) == 1 and calls[0] == "You triage Indian gr"
     assert not any(c.startswith("Decide whether") for c in calls)                    # no separate safety LLM call
+
+
+# --------------------------------------------------------------------------- routing: match, research, learn, clarify
+
+FLIGHT = "IndiGo cancelled my flight 6E-2143 on 2 Oct 2026 and has not refunded Rs 7,400 after 30 days."
+ROUTE_PAGES = {
+    "https://www.airsewa.gov.in/grievance": ("AirSewa - grievance redressal for air passengers, Ministry of Civil "
+                                             "Aviation. If the airline does not resolve your complaint, file it on "
+                                             "AirSewa at https://www.airsewa.gov.in . DGCA oversees airlines."),
+    "https://flight-refund-help.example/blog": "Call FlightRefundHelp at our hotline for quick refunds!",
+}
+
+
+def fake_intake(**over):
+    base = {"language": "en", "complaint_en": FLIGHT, "domain_free_text": "air travel - flight cancellation refund",
+            "matched_playbook": "govt_scheme", "match_confidence": 0.3, "route_reason": "nearest bucket",
+            "company": "IndiGo", "issue_types": ["refund"],
+            "facts": {"issue": "Flight cancelled, refund not paid", "amount": "7400", "date": "2 Oct 2026"},
+            "urgent_fraud_or_harassment": False, "search_keywords": "flight refund"}
+    return base | over
+
+
+def mock_route(monkeypatch, tmp_path, intake_outputs, calls):
+    import saathi.nodes.route_research as rr
+    from saathi import playbooks
+    from saathi.nodes import intake as intake_mod
+    monkeypatch.setattr(playbooks, "PLAYBOOK_DIR", tmp_path)
+    outs = iter(intake_outputs)
+
+    def fake(system, prompt, schema, **_):
+        calls.append(system[:25])
+        if system == intake_mod.INTAKE_SYSTEM:
+            return next(outs)
+        if system == rr.ROUTE_SYSTEM:
+            return {"playbook_key": "air travel", "label": "Air travel (airlines)", "covers": "flight cancellation, "
+                    "refund, baggage complaints against airlines", "regulator": "DGCA / Ministry of Civil Aviation",
+                    "complaint_type": "consumer_service", "law_docs": ["cpa", "not_a_doc"], "steps": [
+                        {"name": "AirSewa", "channel": "portal", "url": "https://www.airsewa.gov.in",
+                         "when_to_use": "If the airline does not resolve it", "source_url":
+                             "https://www.airsewa.gov.in/grievance"},
+                        {"name": "DGCA", "channel": "portal", "url": "https://dgca.gov.in/complaints",
+                         "when_to_use": "Regulator", "source_url": "https://www.airsewa.gov.in/grievance"},
+                        {"name": "FlightRefundHelp", "channel": "phone", "url": "https://flight-refund-help.example",
+                         "when_to_use": "Anytime", "source_url": "https://flight-refund-help.example/blog"}]}
+        return fake_llm.answer(system, prompt, schema)
+    monkeypatch.setattr(llm, "json_call", fake)
+    monkeypatch.setattr(llm, "enabled", lambda: True)
+    monkeypatch.setattr(serp, "search", lambda params, live=True, **_: {"organic_results": [
+        {"link": u, "title": "t"} for u in ROUTE_PAGES]} if "complaint" in params.get("q", "") else {})
+    monkeypatch.setattr(rr, "fetch", lambda u, **_: {"url": u, "ok": True, "title": "t",
+                                                     "text": ROUTE_PAGES.get(u, "")})
+
+
+def test_unmatched_domain_researches_and_learns_a_verified_route(mocked, monkeypatch, tmp_path):
+    from saathi import playbooks
+    calls = []
+    mock_route(monkeypatch, tmp_path, [fake_intake(), fake_intake(matched_playbook="air_travel",
+                                                                  match_confidence=0.9)], calls)
+    try:
+        _, _, s, _ = run_graph(FLIGHT)
+        assert s["route"]["mode"] == "learned" and s["sector"] == "air_travel"           # not govt_scheme
+        names = [x["name"] for x in s["escalation"]]
+        assert names[:2] == ["Company grievance officer", "AirSewa"] and "FlightRefundHelp" not in names
+        dgca = next(x for x in s["escalation"] if x["name"] == "DGCA")
+        assert dgca["url"] is None                                     # its link is not in the evidence: dropped
+        assert all(x.get("source") for x in s["escalation"])           # no source, no step
+        assert any("dropped" in t for t in s["trace"]) and (tmp_path / "air_travel.json").exists()
+        assert playbooks.SECTORS["air_travel"]["law_docs"] == ["cpa"]  # unknown law keys filtered out
+        assert "air_travel" in playbooks.playbook_menu()
+        # Second complaint of this kind: matched from the menu directly - no route research call.
+        n = calls.count("From the SOURCE pages only,"[:25])
+        _, _, s2, _ = run_graph(FLIGHT)
+        assert s2["route"]["mode"] == "matched" and s2["sector"] == "air_travel"
+        assert calls.count("From the SOURCE pages only,"[:25]) == n
+    finally:
+        playbooks.SECTORS.pop("air_travel", None)
+
+
+def test_very_unclear_complaint_gets_one_question(mocked, monkeypatch, tmp_path):
+    calls = []
+    unclear = fake_intake(matched_playbook=None, match_confidence=0, company="", needs_clarification=True,
+                          clarifying_question="Which company or office is this about?")
+    clear = fake_intake(matched_playbook="other", match_confidence=0.8)
+    mock_route(monkeypatch, tmp_path, [unclear, clear], calls)
+    app, thread, s, nodes = run_graph("They did not give my money back.", stop_at_form=True)
+    assert s["__interrupt__"]["stage"] == "clarify" and "Which company" in s["__interrupt__"]["question"]
+    s = G.resume(thread, {"answer": "IndiGo, a cancelled flight"}, app=app)
+    assert "IndiGo, a cancelled flight" in s["complaint"] and s["clarified"]
+    assert (s.get("__interrupt__") or {}).get("stage") != "clarify"                  # asked only once

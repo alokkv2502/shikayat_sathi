@@ -11,6 +11,8 @@ Corpus (raw/legal/):
   gen    Consumer Protection (General) Rules, 2020                       (Rule)
   ecom26 Consumer Protection (E-Commerce) (Amendment) Rules, 2026        (Rule)
   ins23  Insurance Ombudsman (Amendment) Rules, 2023                     (Rule)
+  rbc    RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025   (Para)
+  rbc26  RBI (Commercial Banks - Responsible Business Conduct) Third Amendment Directions, 2026   (Para)
 
 Only English text is indexed: the gazette PDFs are bilingual, so each document starts at its English notification
 and any line containing Devanagari is dropped. (Hindi complaints are translated once, at intake - see store.py.)
@@ -76,6 +78,17 @@ DOCS: dict[str, dict] = {
               "fix": lambda t: re.sub(r"(?m)^\[inT .*$", "", re.sub(r"(?m)^Z\. In the", "2. In the", t)),
               "subrefs": False,
               "source_url": "https://cioins.co.in:8082/notification/"},
+    # RBI master direction for commercial banks: customer service, grievance redressal, customer liability in
+    # unauthorised electronic banking transactions. Running paragraph numbers across chapters; the body starts at
+    # the 2nd "Chapter I – Preliminary" (the 1st is the table of contents); the annexes are forms, not law.
+    "rbc": {"title": "RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025",
+            "file": "Consumer_liability.pdf", "unit": "Para",
+            "start": "Chapter I – Preliminary", "start_occurrence": 2, "end": "Annex I - Format of Comprehensive",
+            "source_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx"},
+    # Revised customer-liability rules for unauthorised electronic banking (transactions from 1 January 2027).
+    "rbc26": {"title": "RBI (Commercial Banks - Responsible Business Conduct) Third Amendment Directions, 2026",
+              "file": "Commercial_bank_conduct.pdf", "unit": "Para", "subrefs": False,
+              "source_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx"},
 }
 
 _DEVANAGARI = re.compile(r"[\u0900-\u097F]")
@@ -312,9 +325,7 @@ def main() -> None:
             print(f"{c['ref']:<34} {len(c['text']):>5}  {c['title'][:70]}")
     else:
         docs = tuple(x for x in a.docs.split(",") if x)
-        from saathi.rag.store import english_query
-
-        for h in retrieve(english_query(" ".join(a.text)), docs, a.k):
+        for h in retrieve(" ".join(a.text), docs, a.k):
             print(f"[{h['score']}] {h['citation']} — {h['title']}\n{h['text'][:400]}\n")
 
 

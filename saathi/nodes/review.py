@@ -14,7 +14,7 @@ from saathi.nodes.drafter import escalation_for, reply_deadline
 from saathi.nodes.legal_rag import strip_unsupported
 from saathi.playbooks import tier_of
 
-MAX_REVIEW_ROUNDS = 3  # answering questions redrafts the letter; the last round finalizes
+MAX_REVIEW_ROUNDS = 2  # answering questions redrafts the letter; the last round finalizes
 
 
 def details_payload(state: dict) -> dict:
@@ -125,6 +125,8 @@ def finalize(state: dict, config: RunnableConfig | None = None) -> dict:
     used = [t for t in by_tag if f"[{t}]" in body]
     tier = tier_of(state.get("sector") or "other")
     rec = state.get("recommended") if tier == "A" else None
+    if rec and not (rec.get("verified") and rec.get("source_url")):  # guard: no source, no recipient
+        rec = None
     me = {**(state.get("complainant") or {}), **(edits.get("complainant") or {})}
     to_name = (rec or {}).get("name") or (state.get("escalation") or [{}])[0].get("name", "Grievance Officer")
     if tier == "B":  # always the police station, even when 1930 is the first step on the ladder

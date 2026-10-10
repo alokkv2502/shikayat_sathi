@@ -10,6 +10,7 @@ import streamlit as st
 
 from config import CASES_DIR, SERPAPI_API_KEY
 from saathi.deadlines import step_dates
+from saathi.llm import AIUnavailable
 from saathi.tools.serp import serp
 
 LOGGER = logging.getLogger(__name__)
@@ -246,6 +247,15 @@ def contacts_section(s: dict) -> None:
             st.dataframe(pd.DataFrame(r["lenders"]), hide_index=True, width="stretch")
 
 
+def resume_or_fail(graph_module, edits: dict) -> None:
+    """Continue the paused graph; if the AI is unavailable, stop and say so (no fallback letter)."""
+    try:
+        st.session_state["state"] = graph_module.resume(st.session_state["thread"], edits)
+    except AIUnavailable as e:
+        st.session_state["workflow_failed"] = f"ai:{e}"
+        st.session_state.pop("state", None)
+
+
 def safety_banner(safety: dict) -> None:
     """Emergency numbers first, whenever the safety router saw immediate danger."""
     if (safety or {}).get("level") != "emergency":
@@ -286,6 +296,22 @@ def eligibility_box(payload: dict, *, show_checks: bool) -> None:
                 icon = {"met": "✅", "not_met": "⚠️"}.get(check["status"], "❔")
                 st.markdown(f"{icon} {E(check['condition'])}" + (f" — _{E(check['evidence'])}_"
                                                                   if check.get("evidence") else ""))
+
+
+@st.dialog("One quick question", width="large")
+def clarify_dialog(s: dict, graph_module) -> None:
+    """Very unclear complaint: one question, then we continue."""
+    payload = s.get("__interrupt__") or {}
+    safety_banner(payload.get("safety") or {})
+    st.markdown('<div class="eyebrow">Step 2 of 3</div><h2 class="section-title">One quick question</h2>',
+                unsafe_allow_html=True)
+    with st.form("clarify_form"):
+        answer = st.text_area(payload.get("question") or "What is the complaint about, and against whom?", height=90)
+        go = st.form_submit_button("Continue", type="primary", width="stretch")
+    if go:
+        with st.spinner("Finding the right complaint route…"):
+            resume_or_fail(graph_module, {"answer": answer})
+        st.rerun()
 
 
 @st.dialog("A few details first", width="large")
@@ -331,7 +357,7 @@ def details_dialog(s: dict, graph_module) -> None:
                  "case_answers": {k: v for k, v in answers.items() if v.strip()},
                  "complainant": {k: v for k, v in me.items() if v.strip()}}
         with st.spinner("Writing your letter with your answers…"):
-            st.session_state["state"] = graph_module.resume(st.session_state["thread"], edits)
+            resume_or_fail(graph_module, edits)
         st.rerun()
     if st.button("Back to complaint details", key="details_back"):
         st.session_state.pop("state", None)
@@ -374,7 +400,7 @@ def review_dialog(s: dict, graph_module) -> None:
     if approved:
         edits = {"draft": draft, "subject": subject, "complainant": {k: v for k, v in me.items() if v}}
         with st.spinner("Preparing your final complaint…"):
-            st.session_state["state"] = graph_module.resume(st.session_state["thread"], edits)
+            resume_or_fail(graph_module, edits)
         st.rerun()
     if st.button("Back to complaint details", key="review_back"):
         st.session_state.pop("state", None)
@@ -468,7 +494,10 @@ if page == "New complaint":
         st.markdown('<div class="eyebrow">Step 2 of 3</div><h2 class="section-title">'
                     + ("A few details first" if form_stage else "Your draft is ready") + "</h2>",
                     unsafe_allow_html=True)
-        if form_stage:
+        if (s["__interrupt__"] or {}).get("stage") == "clarify":
+            st.caption("We need one detail to find the right authority.")
+            clarify_dialog(s, G)
+        elif form_stage:
             st.caption("Answer a few questions so the letter can be written in one go.")
             details_dialog(s, G)
         else:
@@ -476,7 +505,12 @@ if page == "New complaint":
             review_dialog(s, G)
     elif st.session_state.get("workflow_failed"):
         journey_step(1)
-        st.error("We couldn't prepare your complaint this time. Your information has not been sent.")
+        failed = st.session_state.get("workflow_failed")
+        if isinstance(failed, str) and failed.startswith("ai:"):
+            st.error(f"The AI service is unavailable right now ({failed[3:]}). Nothing was drafted or sent - "
+                     "please try again in a minute.")
+        else:
+            st.error("We couldn't prepare your complaint this time. Your information has not been sent.")
         if st.button("Edit details and try again", type="primary"):
             st.session_state.pop("workflow_failed", None)
             st.rerun()
@@ -525,6 +559,9 @@ if page == "New complaint":
                     if "__interrupt__" not in state and not state.get("final"):
                         raise RuntimeError("workflow ended before review")
                     st.session_state.update(thread=thread, state=state)
+                    st.rerun()
+                except AIUnavailable as e:  # no silent fallback letter: say so plainly
+                    st.session_state["workflow_failed"] = f"ai:{e}"
                     st.rerun()
                 except Exception:
                     LOGGER.exception("Complaint workflow failed before review")

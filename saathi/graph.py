@@ -2,7 +2,9 @@
 
 START → safety_router (rules, instant: emergency numbers first) → intake_planner (ONE LLM call: domain + tier,
         facts, English translation, follow-up questions, and the LLM's danger check)
-→ case_research → frame (brief decides sector / tier / addressee, no LLM)
+→ (very unclear: clarify - ONE question, then intake again)
+→ case_research (route research if no verified playbook fits; scheme / product research)
+→ frame (brief decides sector / tier / addressee, no LLM)
 frame ─[Send]→ grievance · precedents · local_forum · gap_check · (registry if loan_app)   (parallel fan-out)
 all of them → verifier                                                                      (fan-in via reducers)
 verifier ── no verified contact & verify_attempts < 2 ──→ grievance (alternative phrasing)  (self-correcting loop 1)
@@ -35,7 +37,7 @@ from saathi.nodes.critic import critic, route_after_critic
 from saathi.nodes.drafter import drafter
 from saathi.nodes.gap_check import frame, gap_check, reassess
 from saathi.nodes.grievance import grievance
-from saathi.nodes.intake import fan_out, intake_planner
+from saathi.nodes.intake import clarify, fan_out, intake_planner, route_after_intake
 from saathi.nodes.legal_rag import legal_rag
 from saathi.nodes.local_forum import local_forum
 from saathi.nodes.precedents import precedents
@@ -52,6 +54,7 @@ def build(checkpointer=None):
     g = StateGraph(ComplaintState)
     g.add_node("safety_router", safety_router)
     g.add_node("intake_planner", intake_planner)
+    g.add_node("clarify", clarify)
     g.add_node("case_research", case_research)
     g.add_node("frame", frame)
     g.add_node("gap_check", gap_check)
@@ -70,7 +73,8 @@ def build(checkpointer=None):
 
     g.add_edge(START, "safety_router")                 # rules only: instant
     g.add_edge("safety_router", "intake_planner")      # one LLM call: domain, facts, translation, danger, questions
-    g.add_edge("intake_planner", "case_research")
+    g.add_conditional_edges("intake_planner", route_after_intake, ["clarify", "case_research"])
+    g.add_edge("clarify", "intake_planner")  # once: very unclear complaints get ONE question
     g.add_edge("case_research", "frame")
     g.add_conditional_edges("frame", fan_out, WORKERS)
     for w in WORKERS:

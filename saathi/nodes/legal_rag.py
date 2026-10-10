@@ -6,7 +6,7 @@ import re
 
 from saathi.nodes.common import node
 from saathi.playbooks import ISSUE_QUERIES, SECTORS
-from saathi.rag.store import english_query, retrieve
+from saathi.rag.store import retrieve
 
 REF_RE = re.compile(r"\b(Section|Sec\.|Rule|Regulation|Clause|Para(?:graph)?)\s+(\d+[A-Z]?)(?:\s*\(\s*\w+\s*\))*", re.I)
 UNIT_ALIASES = {"sec.": "section", "paragraph": "para"}
@@ -15,9 +15,8 @@ UNIT_ALIASES = {"sec.": "section", "paragraph": "para"}
 def gather_clauses(sector: str, issue_types: list[str], issue: str, k_each: int = 3, limit: int = 4) -> list[dict]:
     """One query for the sector's grievance rule + one per issue type; clauses taken round-robin across queries
     so one query can't crowd out the others; clauses far weaker than the best match are dropped. `issue` is
-    already English (intake translates once); english_query only drops stray Devanagari in rules-only mode."""
+    already English (intake translates the complaint once)."""
     cfg = SECTORS[sector]
-    issue = english_query(issue)
     queries = [cfg["basis_query"]] + [f"{ISSUE_QUERIES[i]} {issue[:160]}" for i in issue_types]
     ranked = [retrieve(q, tuple(cfg["law_docs"]), k_each) for q in queries]
     seen, pool = set(), []

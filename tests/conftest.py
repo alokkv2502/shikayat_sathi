@@ -14,3 +14,18 @@ if (ROOT / "data" / "qdrant").exists():
     shutil.copytree(ROOT / "data" / "qdrant", _tmp / "qdrant", ignore=shutil.ignore_patterns(".lock"))
 os.environ["SAATHI_DATA_DIR"] = str(_tmp)
 sys.path.insert(0, str(ROOT))
+
+import pytest  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def fake_llm(monkeypatch):
+    """Every test gets the deterministic LLM double (tests/fake_llm.py); production has no rule-based fallback."""
+    from saathi import llm
+    from tests import fake_llm as fake
+    if not hasattr(llm, "_real_json_call"):
+        llm._real_json_call = llm.json_call
+    monkeypatch.setattr(llm, "json_call", fake.answer)
+    monkeypatch.setattr(llm, "enabled", lambda: True)
+    monkeypatch.setattr(llm, "label", lambda: "fake-llm")
+    return fake

@@ -52,19 +52,15 @@ def precedents(state: dict) -> dict:
                           "snippet": r.get("snippet") or ""})
     first = _compact(company.split()[0]) if company.split() else ""
     items = [i for i in items if i["url"] and first and first in _compact(f"{i['title']} {i['snippet']}")]
-    method = "rules"
+    method = "nothing to judge"
     if items:
         listing = "\n".join(f"[{n}] {i['title']} — {i['snippet'][:250]}" for n, i in enumerate(items))
         res = llm.json_call(RELEVANCE_SYSTEM, f"Company: {company}\nProblem: {state['facts'].get('issue')}\n\n"
                                               f"{listing}", schema(PrecedentsOut))
-        if res:
-            try:
-                judged = {r.index: r for r in PrecedentsOut.model_validate(res).results}
-                items = [i | {"how_resolved": judged[n].how_resolved} for n, i in enumerate(items)
-                         if n in judged and judged[n].relevant]
-                method = llm.label()
-            except Exception:
-                pass
+        judged = {r.index: r for r in llm.validated(PrecedentsOut, res).results}
+        items = [i | {"how_resolved": judged[n].how_resolved} for n, i in enumerate(items)
+                 if n in judged and judged[n].relevant]
+        method = llm.label()
     return {"precedents": items, "errors": errors,
             "trace": [f"📰 Precedents: {len(items)} relevant forum/news item(s) ({method})"
                       + (f"; {len(errors)} search(es) failed" if errors else "")]}

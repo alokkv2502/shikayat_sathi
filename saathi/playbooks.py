@@ -1,19 +1,28 @@
-"""Sector -> regulator playbooks, encoded as data (not prompts).
+"""Domain playbooks: a VERIFIED CACHE of complaint routes, not a closed list.
 
-Each escalation step: {name, channel, url, phone, when_to_use, typical_wait}. Channels, numbers and waiting periods
-were checked against the regulators' own texts (raw/legal/) and portals on 2026-10-07; they change, so re-check
-before relying on them. Legal citations in a draft never come from here - only from retrieved clauses.
+Seed playbooks below were checked against the regulators' own texts (raw/legal/) and portals on 2026-10-07. When a
+complaint fits none of them, research mode (nodes/route_research.py) finds the official route from sources and,
+once its code-level checks pass, saves it to data/playbooks/<key>.json - from then on it is matched like a seed one.
+
+Each escalation step: {name, channel, url, phone, when_to_use, typical_wait, source}. Every step must carry a
+source (seed steps: this file; learned steps: the official page that states them). Legal citations in a draft
+never come from here - only from retrieved clauses.
 """
 from __future__ import annotations
 
+import json
 import re
+from datetime import date
+
+from config import DATA_DIR
+
+PLAYBOOK_DIR = DATA_DIR / "playbooks"
+PLAYBOOK_DIR.mkdir(parents=True, exist_ok=True)
+SEED_SOURCE = "Shikayat Saathi verified playbook (checked against the regulators' texts, 2026-10-07)"
 
 SECTORS: dict[str, dict] = {
     "ecommerce": {
         "label": "E-commerce / online shopping",
-        "keywords": r"order(ed)?|delivery|delivered|replacement|seller|flipkart|amazon|myntra|meesho|ajio|nykaa|"
-                    r"snapdeal|swiggy|zomato|blinkit|zepto|bigbasket|tata cliq|jiomart|damaged|defective|"
-                    r"fake product|wrong item|cash on delivery|online purchase|e-?commerce|app order|ऑर्डर|डिलीवरी",
         "regulator": "Department of Consumer Affairs (National Consumer Helpline) · Consumer Commissions",
         "officer_terms": ["grievance officer", "\"grievance redressal\""],
         "retry_terms": ["nodal officer", "customer care escalation", "contact us"],
@@ -43,13 +52,10 @@ SECTORS: dict[str, dict] = {
     },
     "bank": {
         "label": "Bank / NBFC / UPI / credit card",
-        "keywords": r"bank|account|upi|debit card|credit card|atm|neft|imps|rtgs|cheque|loan emi|nbfc|kyc|"
-                    r"net ?banking|wallet|paytm|phonepe|gpay|google pay|unauthori[sz]ed (debit|transaction)|"
-                    r"hdfc|icici|sbi|axis|kotak|yes bank|pnb|bank of baroda|canara|idfc|bajaj finance|बैंक|खाता",
         "regulator": "Reserve Bank of India - RB-Integrated Ombudsman Scheme, 2026",
         "officer_terms": ["principal nodal officer", "nodal officer"],
         "retry_terms": ["grievance redressal officer", "escalation matrix", "contact us"],
-        "law_docs": ["ios", "cpa", "ccr"],
+        "law_docs": ["ios", "rbc", "rbc26", "cpa", "ccr"],
         "basis_query": "grounds of complaint act or omission of bank resulting in deficiency in service",
         "escalation": [
             {"name": "Bank grievance cell → Principal Nodal Officer", "channel": "email / bank complaint portal",
@@ -71,9 +77,6 @@ SECTORS: dict[str, dict] = {
     },
     "telecom": {
         "label": "Mobile / broadband / DTH",
-        "keywords": r"jio|airtel|vodafone|\bvi\b|bsnl|mtnl|sim|recharge|prepaid|postpaid|mobile plan|data pack|"
-                    r"network|broadband|fiber|fibre|dth|tata play|call drop|port(ing)?|mnp|value added service|vas|"
-                    r"\bplan\b|caller tune|\bdata\b|रिचार्ज|सिम",
         "regulator": "TRAI - Telecom Consumers Complaint Redressal Regulations, 2012 · DoT",
         "officer_terms": ["appellate authority", "nodal officer"],
         "retry_terms": ["grievance officer", "customer care escalation", "contact us"],
@@ -98,8 +101,6 @@ SECTORS: dict[str, dict] = {
     },
     "insurance": {
         "label": "Insurance",
-        "keywords": r"insurance|insurer|policy|claim|premium|health cover|mediclaim|cashless|tpa|lic\b|star health|"
-                    r"hdfc ergo|icici lombard|bajaj allianz|niva bupa|care health|term plan|motor claim|बीमा|क्लेम",
         "regulator": "IRDAI (Bima Bharosa) · Insurance Ombudsman (Insurance Ombudsman Rules, 2017)",
         "officer_terms": ["grievance redressal officer", "grievance officer"],
         "retry_terms": ["grievance cell", "customer care escalation", "contact us"],
@@ -123,13 +124,10 @@ SECTORS: dict[str, dict] = {
     },
     "loan_app": {
         "label": "Loan app / digital lending",
-        "keywords": r"loan app|instant loan|digital loan|recovery agent|harass|morphed|contacts? (list )?access|"
-                    r"threat|abusive call|lending app|cash ?advance app|kreditbee|moneyview|navi|fibe|kissht|slice|"
-                    r"truebalance|mpokket|pocketly|stashfin|लोन|ऋण|धमकी",
         "regulator": "Reserve Bank of India (Digital Lending Directions, 2025; RB-IOS, 2026) · Cyber Crime",
         "officer_terms": ["grievance redressal officer", "nodal officer"],
         "retry_terms": ["grievance officer", "contact us"],
-        "law_docs": ["dl", "ios"],
+        "law_docs": ["dl", "ios", "rbc"],
         "basis_query": "nodal grievance redressal officer digital lending complaints",
         "escalation": [
             {"name": "Lender's Grievance Redressal Officer (from RBI's DLA directory)", "channel": "email / phone",
@@ -150,10 +148,6 @@ SECTORS: dict[str, dict] = {
     },
     "govt_scheme": {
         "label": "Government scheme or public benefit",
-        # Generic markers only: which scheme it is, and its rules, come from case_research.
-        "keywords": r"yojana|abhiyan|government (?:welfare )?scheme|govt\.? scheme|sarkari yojana|central sector "
-                    r"scheme|centrally sponsored scheme|state (?:welfare )?scheme|government benefit|public benefit|"
-                    r"scholarship scheme|direct benefit transfer|योजना",
         "regulator": "The scheme's administering department",
         "officer_terms": [],
         "retry_terms": [],
@@ -173,11 +167,6 @@ SECTORS: dict[str, dict] = {
     },
     "public_service": {
         "label": "Government department / municipal service / public utility",
-        "keywords": r"municipal|nagar (?:nigam|palika|panchayat)|corporation office|gram panchayat|ration card|"
-                    r"electricity (?:bill|board|connection|supply)|power cut|bijli|water supply|pani (?:nahi|ki)|"
-                    r"sewage|garbage|street ?light|pothole|property tax|birth certificate|death certificate|"
-                    r"caste certificate|income certificate|passport|driving licen[cs]e|\brto\b|land record|"
-                    r"mutation|tehsil|collector office|government office|sarkari daftar|बिजली|पानी|राशन कार्ड|नगर निगम",
         "regulator": "The responsible department · CPGRAMS / state public grievance portal",
         "officer_terms": ["public grievance officer", "grievance redressal officer"],
         "retry_terms": ["nodal officer", "citizen charter", "contact us"],
@@ -197,10 +186,6 @@ SECTORS: dict[str, dict] = {
     },
     "police": {
         "label": "Police / crime / cyber fraud",
-        "keywords": r"police|\bfir\b|thana|thane|थाना|पुलिस|एफआईआर|cyber ?(?:crime|fraud|cell)|scam(?:mer)?|"
-                    r"fraudster|\botp\b|fake (?:call|caller|link|website|app|customer care)|phishing|blackmail|"
-                    r"extort|stalk|molest|theft|stolen|chori|चोरी|robbery|snatch|cheated|dhokha|धोखा|ठगी|thagi|"
-                    r"sextortion|digital arrest",
         "regulator": "Police (Bharatiya Nagarik Suraksha Sanhita, 2023) · National Cyber Crime Reporting Portal",
         "tier": "B",
         "officer_terms": [],
@@ -238,10 +223,6 @@ SECTORS: dict[str, dict] = {
     },
     "legal": {
         "label": "Court case / property / family matter",
-        "keywords": r"court|judge|hearing|next date|lawyer|advocate|vakil|वकील|अदालत|कोर्ट|petition|summons|"
-                    r"\bbail\b|divorce|talaq|custody|maintenance|alimony|property dispute|partition|inheritance|"
-                    r"succession|ancestral|will deed|eviction|landlord|tenant|\bcnr\b|lok adalat|case number|"
-                    r"case status|mukadma|मुकदमा|तलाक|ज़मीन विवाद|जमीन",
         "regulator": "Courts · District Legal Services Authority (free legal aid)",
         "tier": "C",
         "officer_terms": [],
@@ -274,9 +255,6 @@ SECTORS: dict[str, dict] = {
     },
     "other": {
         "label": "Other consumer services (travel, edtech, real estate…)",
-        "keywords": r"flight|airline|indigo|air india|spicejet|akasa|irctc|train|ticket|hotel|booking|ola|uber|"
-                    r"cab|makemytrip|edtech|course|coaching|builder|flat|possession|gym|subscription|"
-                    r"warranty|service centre|repair|courier",
         "regulator": "Department of Consumer Affairs (National Consumer Helpline) · Consumer Commissions",
         "officer_terms": ["grievance officer", "customer care"],
         "retry_terms": ["nodal officer", "escalation", "contact us"],
@@ -338,20 +316,6 @@ ISSUE_QUERIES = {
     "cyber_fraud": "fraudulent electronic banking transaction reported by customer; limited liability; reversal",
     "other": "consumer rights to be heard and seek redressal against unfair trade practice",
 }
-ISSUE_KEYWORDS = {
-    "refund": r"refund|money back|return(ed)?|not credited|reversal|रिफंड|पैसे वापस",
-    "defective": r"defect|damaged|broken|not working|faulty|fake|counterfeit|wrong (item|product)|खराब|टूटा",
-    "unauthorised_charge": r"unauthori[sz]ed|without (my )?consent|deducted|charged .* (didn.?t|did not|never)|"
-                           r"didn.?t activate|fraudulent (debit|transaction)|kaat liya|काट लिया",
-    "harassment": r"harass|threat|abus|morph|recovery agent|calling my (contacts|family|relatives)|dhamki|धमकी|"
-                  r"परेशान",
-    "claim_rejection": r"claim (was )?(rejected|repudiated|denied)|rejected (my )?claim|claim reject|क्लेम .*रिजेक्ट",
-    "misleading": r"mislead|false (claim|promise|ad)|advertis",
-    "data_privacy": r"privacy|personal data|contacts? access|leak",
-    "deficiency": r"deficien|poor service|not (resolved|delivered)|delay|no response|ignored",
-    "cyber_fraud": r"cyber|scam|fraudster|\botp\b|phishing|fake (call|link|website|app|customer care)|sextortion|"
-                   r"digital arrest|hack(ed|er)|ठगी|thagi",
-}
 
 # Facts each sector's complaint needs; missing ones become placeholders in the draft.
 REQUIRED_FACTS = {
@@ -372,32 +336,54 @@ REQUIRED_FACTS = {
 
 def missing_facts_for(sector: str, facts: dict) -> list[dict]:
     """Required facts for the sector that the complaint doesn't state; they become [PLACEHOLDERS] in the draft."""
-    return [{"fact": f, "placeholder": ph} for f, ph in REQUIRED_FACTS[sector]
+    return [{"fact": f, "placeholder": ph} for f, ph in REQUIRED_FACTS.get(sector, REQUIRED_FACTS["other"])
             if not (facts.get(f) or (f == "reference_id" and facts.get("order_id")))]
 
 
-def classify_rules(text: str) -> tuple[str, list[str]]:
-    """Keyword sector + issue types (English, Hindi, Hinglish); the fallback when no LLM is configured."""
-    t = text.lower()
-    scheme_match = re.search(SECTORS["govt_scheme"]["keywords"], t)
-    scores = {s: len(re.findall(cfg["keywords"], t)) for s, cfg in SECTORS.items() if s != "govt_scheme"}
-    scores["govt_scheme"] = 10 if scheme_match else 0
-    if scores["loan_app"] and re.search(r"loan app|lending app|recovery agent|harass|लोन", t):
-        scores["loan_app"] += 3  # a loan *app* complaint beats generic banking words
-    if scores["police"] and re.search(r"police|\bfir\b|thana|पुलिस|थाना|cyber|scam|fraudster|\botp\b|ठगी", t):
-        scores["police"] += 2  # a crime / police-inaction complaint beats the bank or shop it involves
-    if scores["legal"] and re.search(r"court|\bcnr\b|case (?:number|status)|hearing|vakil|lawyer|अदालत|कोर्ट", t):
-        scores["legal"] += 2
-    sector = max(scores, key=scores.get) if max(scores.values()) else "other"
-    issues = [k for k, pat in ISSUE_KEYWORDS.items() if re.search(pat, t)] or ["other"]
-    return sector, issues
+# --------------------------------------------------------------------------- the menu and learned playbooks
+
+for _cfg in SECTORS.values():  # every seed step carries its source
+    for _s in _cfg["escalation"] + ([_cfg["cyber_step"]] if _cfg.get("cyber_step") else []):
+        _s.setdefault("source", SEED_SOURCE)
 
 
-HINGLISH = re.compile(r"\b(ne|ka|ki|ke|ko|kar|kiya|diya|liya|hai|hain|tha|nahi|nahin|mera|meri|mujhe|paisa|paise|"
-                      r"wapas|kab|kyun|abhi|bhi|raha|rahi|gaya|gayi|bola|bol)\b", re.I)
+def playbook_menu() -> str:
+    """What intake's LLM may match against: seed + learned playbooks (key, label, what it covers, regulator)."""
+    return "\n".join(f"- {k}: {c['label']}" + (f" - {c['covers']}" if c.get("covers") else "")
+                     + f" [regulator: {c['regulator']}]" + (" (learned from official sources)" if c.get("learned")
+                                                             else "")
+                     for k, c in SECTORS.items())
 
 
-def detect_language(text: str) -> str:
-    if re.search(r"[ऀ-ॿ]", text):
-        return "hi"
-    return "hinglish" if len(HINGLISH.findall(text)) >= 2 else "en"
+def slug(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "_", (text or "").lower()).strip("_")[:40] or "route"
+
+
+def register_playbook(key: str, entry: dict, *, save: bool = True) -> str:
+    """Add a learned playbook (already checked by route_research's guards). Never overwrites a seed playbook."""
+    key = slug(key)
+    if key in SECTORS and not SECTORS[key].get("learned"):
+        key = f"{key}_learned"
+    entry = {"officer_terms": ["grievance officer", "nodal officer"],
+             "retry_terms": ["appellate authority", "contact us"], "law_docs": [], "basis_query": "",
+             "tier": "A", "learned": True, "learned_at": date.today().isoformat(), **entry}
+    SECTORS[key] = entry
+    if save:
+        (PLAYBOOK_DIR / f"{key}.json").write_text(json.dumps(entry, ensure_ascii=False, indent=1), encoding="utf-8")
+    return key
+
+
+def load_learned() -> int:
+    n = 0
+    for path in sorted(PLAYBOOK_DIR.glob("*.json")):
+        try:
+            entry = json.loads(path.read_text(encoding="utf-8"))
+        except (ValueError, UnicodeDecodeError):
+            continue
+        if entry.get("escalation") and path.stem not in SECTORS:
+            SECTORS[path.stem] = entry
+            n += 1
+    return n
+
+
+load_learned()

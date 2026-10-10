@@ -11,6 +11,8 @@
 | Consumer Commission Rules & General Rules_1732703661.pdf | Consumer Protection (Consumer Disputes Redressal Commissions) Rules, 2020 (G.S.R. 448(E)) and Consumer Protection (General) Rules, 2020 (G.S.R. 449(E)); bilingual gazette, English text indexed | added 2026-10-09 |
 | E Commerce Amendment Rules 2026_1789127949.pdf | Consumer Protection (E-Commerce) (Amendment) Rules, 2026; bilingual gazette, English text indexed | added 2026-10-09 |
 | Insurance Ombudsman(Amendment) Rules, 2023.pdf | Insurance Ombudsman (Amendment) Rules, 2023 (G.S.R. 828(E)) | added 2026-10-09 |
+| Consumer_liability.pdf | RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025 (updated as on 1 Oct 2026): customer service, grievance redressal, customer liability in unauthorised electronic banking (indexed as `rbc`) | added 2026-10-09 |
+| Commercial_bank_conduct.pdf | RBI (Commercial Banks - Responsible Business Conduct) Third Amendment Directions, 2026: revised customer-liability rules for unauthorised electronic banking transactions from 1 Jan 2027 (indexed as `rbc26`) | added 2026-10-09 |
 | Consumer Protection (E-Commerce) Rules, 2020.pdf | Scanned copy with no text layer; not indexed (ecommerce_rules_2020.html covers the same rules) | added 2026-10-09 |
 
 Mirrors were used where the official host was unreachable; replace them with official copies before relying on

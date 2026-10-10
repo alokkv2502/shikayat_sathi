@@ -63,6 +63,13 @@ def ask_details(payload: dict, interactive: bool) -> dict:
 
 def ask_review(payload: dict, auto: bool) -> dict:
     interactive = not auto and sys.stdin.isatty()
+    if payload.get("stage") == "clarify":
+        print_safety(payload.get("safety") or {})
+        q = payload.get("question") or "What is the complaint about, and against whom?"
+        answer = input(f"\n❓ {q}\n> ").strip() if interactive else ""
+        if not interactive:
+            print(f"\n❓ {q} (skipped - non-interactive)")
+        return {"answer": answer}
     if payload.get("stage") == "details":
         return ask_details(payload, interactive)
     print_safety(payload.get("safety") or {})
@@ -171,4 +178,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except llm.AIUnavailable as e:  # no silent rule-based fallback: say so and stop
+        print(f"\n❌ The AI service is unavailable ({e}). Nothing was drafted or sent - try again shortly.",
+              file=sys.stderr)
+        sys.exit(2)

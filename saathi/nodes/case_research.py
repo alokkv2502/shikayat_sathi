@@ -16,6 +16,7 @@ from pathlib import Path
 from config import CACHE_DIR
 from saathi import llm
 from saathi.nodes.common import live, node
+from saathi.nodes.route_research import research_route
 from saathi.state import CaseBrief, schema
 from saathi.tools.domains import NOT_OFFICIAL, host, registrable
 from saathi.tools.fetch import fetch
@@ -25,8 +26,6 @@ BRIEF_CACHE = CACHE_DIR / "case_research"
 BRIEF_CACHE.mkdir(parents=True, exist_ok=True)
 GOVT_SUFFIXES = (".gov.in", ".nic.in")
 MAX_ENTITIES, MAX_OFFICIAL_PAGES, MAX_OTHER_PAGES = 2, 6, 2
-SECTOR_TYPE = {"bank": "banking", "insurance": "insurance", "telecom": "telecom", "loan_app": "loan_app",
-               "govt_scheme": "govt_scheme"}
 
 RESEARCH_SYSTEM = (
     "You build a source-grounded case brief about a named scheme, policy, plan or product from Indian official "
@@ -128,17 +127,19 @@ def grounded(brief: dict, evidence: list[dict]) -> dict:
     return brief
 
 
-def fallback_brief(entity: str, evidence: list[dict], sector: str) -> dict:
-    """Without an LLM (or without evidence) nothing can be extracted honestly: name the entity, keep the sources."""
-    return CaseBrief(
-        subject=entity, what_it_is="", complaint_type=SECTOR_TYPE.get(sector, "consumer_service"), entitlement="",
-        conditions=[], common_failure_reasons=[], official_grievance_channel="", documents_needed=[],
-        sources=[e["url"] for e in evidence if e.get("official")] or [e["url"] for e in evidence],
-    ).model_dump()
-
-
 @node("🔎 Case research")
 def case_research(state: dict) -> dict:
+    """Route research first (when intake found no verified playbook that fits), then the named scheme / policy /
+    product research."""
+    route_updates = {}
+    if (state.get("route") or {}).get("mode") == "research":
+        route_updates = research_route(state)
+        state = {**state, **{k: v for k, v in route_updates.items() if k != "trace"}}
+    out = entity_research(state)
+    return route_updates | out | {"trace": route_updates.get("trace", []) + out.get("trace", [])}
+
+
+def entity_research(state: dict) -> dict:
     entities = list(dict.fromkeys(x.strip() for x in state.get("case_entities") or [] if x and x.strip()))
     if not entities:
         return {"case_brief": {}, "trace": ["🔎 Case research: no named scheme, policy or product to research"]}
@@ -149,25 +150,19 @@ def case_research(state: dict) -> dict:
                                                f"({len(brief['sources'])} source(s), no searches)"]}
 
     evidence = research_sources(state, entities)
-    result = None
-    if evidence:
-        sources = "\n\n".join(f"SOURCE: {e['url']} ({'official' if e['official'] else 'secondary'})\n"
-                              f"{e['title']}\n{e['text']}" for e in evidence)
-        prompt = (f"ENTITIES NAMED IN THE COMPLAINT: {entities}\nCOMPANY / BODY NAMED: {state.get('company') or ''}\n"
-                  f"COMPLAINT: {state['complaint']}\n\nSOURCES:\n{sources}")
-        result = llm.json_call(RESEARCH_SYSTEM, prompt, schema(CaseBrief))
-    brief = None
-    if result:
-        try:
-            brief = grounded(CaseBrief.model_validate(result).model_dump(), evidence)
-        except ValueError:
-            brief = None
-    if brief and brief["sources"]:
+    if not evidence:  # nothing is assumed about the entity without a source
+        return {"case_brief": {}, "trace": [f"🔎 Case research: {entities[0]} — no sources found; nothing assumed"]}
+    sources = "\n\n".join(f"SOURCE: {e['url']} ({'official' if e['official'] else 'secondary'})\n"
+                          f"{e['title']}\n{e['text']}" for e in evidence)
+    prompt = (f"ENTITIES NAMED IN THE COMPLAINT: {entities}\nCOMPANY / BODY NAMED: {state.get('company') or ''}\n"
+              f"COMPLAINT: {state.get('complaint_en') or state['complaint']}\n\nSOURCES:\n{sources}")
+    brief = grounded(llm.validated(CaseBrief, llm.json_call(RESEARCH_SYSTEM, prompt, schema(CaseBrief))).model_dump(),
+                     evidence)
+    if brief["sources"]:
         store_brief(entities, brief)
         n_off = sum(e["official"] for e in evidence)
         return {"case_brief": brief,
                 "trace": [f"🔎 Case research: {brief['subject']} — {len(brief['conditions'])} condition(s) from "
                           f"{len(brief['sources'])} source(s) ({n_off} official page(s) read)"]}
-    brief = fallback_brief(entities[0], evidence, state.get("sector", "other"))  # not cached: retry next time
-    why = "no LLM to extract the brief" if evidence else "no sources found"
-    return {"case_brief": brief, "trace": [f"🔎 Case research: {entities[0]} — {why}; conditions not established"]}
+    return {"case_brief": {}, "trace": [f"🔎 Case research: {entities[0]} — the fetched pages did not support a "
+                                        f"brief; nothing assumed"]}

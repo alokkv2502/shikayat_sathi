@@ -25,6 +25,8 @@ class ComplaintState(TypedDict, total=False):
     complaint_en: str                                # the complaint in English - translated ONCE, at intake
     sector: str                                      # the domain: a key of playbooks.SECTORS
     tier: str                                        # A draft & escalate · B route urgently · C explain & refer
+    route: dict                                      # {domain_free_text, matched_playbook, confidence, reason, mode}
+    clarified: bool                                  # the one clarifying question was asked already
     safety: dict                                     # safety_router: {level, categories, helplines, messages}
     case_entities: list[str]
     case_brief: dict
@@ -81,8 +83,6 @@ class ComplaintState(TypedDict, total=False):
 
 # --------------------------------------------------------------------------- structured LLM outputs
 
-SectorT = Literal["ecommerce", "bank", "telecom", "insurance", "loan_app", "govt_scheme", "public_service",
-                  "police", "legal", "other"]
 IssueT = Literal["refund", "defective", "deficiency", "unauthorised_charge", "harassment", "claim_rejection",
                  "misleading", "data_privacy", "cyber_fraud", "other"]
 
@@ -106,8 +106,18 @@ class IntakeOut(BaseModel):
     language: Literal["en", "hi", "hinglish"]
     complaint_en: str = Field(description="The complaint translated faithfully into plain English (the same text if "
                                           "it is already English). Keep names, numbers, IDs and dates as written.")
-    sector: SectorT
-    company: str = Field(description="Company / app / bank / insurer the complaint is against")
+    # Route: the LLM understands the complaint freely, then matches a verified playbook ONLY if one truly fits.
+    domain_free_text: str = Field(description="What kind of problem this is, in your own words, e.g. 'air travel - "
+                                              "flight cancellation refund'")
+    matched_playbook: str | None = Field(None, description="Key of the playbook from the PLAYBOOKS list that fits "
+                                                           "this complaint, or null if none of them really fits")
+    match_confidence: float = Field(description="0-1: how well the matched playbook fits (0 if none)")
+    route_reason: str = Field("", description="One line: why this playbook, or why none fits")
+    needs_clarification: bool = Field(False, description="True only if it is impossible to tell what or whom the "
+                                                         "complaint is about")
+    clarifying_question: str = Field("", description="If needs_clarification: ONE short question, in the "
+                                                     "complainant's language")
+    company: str = Field(description="Company / app / bank / insurer / department the complaint is against")
     issue_types: list[IssueT]
     facts: Facts
     urgent_fraud_or_harassment: bool
@@ -145,6 +155,26 @@ class CaseBrief(BaseModel):
                                                         "with its URL only if the URL appears in the sources")
     documents_needed: list[str]
     sources: list[str] = Field(description="URLs (from the SOURCE lines) that support the facts above")
+
+
+class RouteStep(BaseModel):
+    name: str = Field(description="The authority / portal / office, as the source names it")
+    channel: str = Field(description="How to reach it: portal, email, phone, office")
+    url: str = Field("", description="Its official URL, ONLY if that URL appears in the sources")
+    when_to_use: str = Field(description="When to go here, per the sources (e.g. after the airline's 30 days)")
+    typical_wait: str = ""
+    source_url: str = Field(description="The SOURCE URL that states this step")
+
+
+class RouteResearch(BaseModel):
+    playbook_key: str = Field(description="snake_case name for this kind of complaint, 1-3 words, e.g. air_travel")
+    label: str = Field(description="Short label, e.g. 'Air travel (airlines and airports)'")
+    covers: str = Field(description="One line on which complaints this route covers - used to match future ones")
+    regulator: str = Field(description="The regulator / authority over this sector, as the sources name it")
+    complaint_type: Literal["consumer_service", "govt_scheme", "banking", "insurance", "telecom", "loan_app"]
+    steps: list[RouteStep] = Field(description="Escalation steps AFTER the company's own grievance officer, in "
+                                               "order, each stated by a source")
+    law_docs: list[str] = Field(default_factory=list, description="Keys from INDEXED LAW that apply, else []")
 
 
 class ConditionAssessment(BaseModel):
