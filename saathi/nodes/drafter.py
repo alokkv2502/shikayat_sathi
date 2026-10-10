@@ -7,14 +7,19 @@ import re
 
 from saathi import deadlines, llm
 from saathi.nodes.common import node
-from saathi.playbooks import CYBER_RE, SECTORS, tier_of
+from saathi.letter import LANGS
+from saathi.nodes.escalation import CPGRAMS, STATE_SIDE, general_route, merge_with_seed, seeded
+from saathi.playbooks import SECTORS, tier_of
 from saathi.state import DraftOut, schema
 
 DRAFT_SYSTEM = (
     "You draft firm, respectful and case-specific grievances for Indian members or consumers. First plan: fill "
     "`outline` with the ordered points of THIS case's document and choose the correct complaint frame; then write "
     "the body from that outline, using only facts supported by the complaint, extracted facts, case brief, or "
-    "reviewer answers. Never invent dates, eligibility, IDs, amounts, names, contacts or actions already taken. Do not reuse a generic "
+    "reviewer answers. Never invent dates, eligibility, IDs, amounts, names, contacts or actions already taken. "
+    "The case brief's conditions are the RULES, not facts about the complainant: never state that they meet, did, "
+    "did not do, or will do anything a condition mentions unless the ELIGIBILITY CHECKS mark it met with the "
+    "complainant's own evidence - otherwise ask the office to check that condition. Do not reuse a generic "
     "letter template. Cite consumer-law clauses only through supplied [C#] tags and only when applicable. For a "
     "government-scheme case, name the scheme and relevant part, use its supplied official conditions and channel, "
     "and do not cite consumer-protection law or describe it as a deficiency in consumer service. If eligibility is "
@@ -63,11 +68,29 @@ def addressee(state: dict, esc: list[dict]) -> str:
 def escalation_for(state: dict) -> list[dict]:
     # Guard: a step without a source (seed playbook or the official page that states it) never reaches a letter.
     cfg = SECTORS.get(state["sector"]) or SECTORS["other"]
-    steps = [dict(s) for s in cfg["escalation"] if s.get("source")] or \
-        [dict(s) for s in SECTORS["other"]["escalation"]]
+    lad = (state.get("ladder") or {}) if tier_of(state["sector"]) == "A" else {}
+    planned = [] if lad.get("fallback") else [s for s in lad.get("steps") or [] if s.get("source")]
+    ladder = None
+    if seeded(state["sector"]):  # hand-checked seed stays the base; the planner may only add official steps
+        steps, _ = merge_with_seed([s for s in cfg["escalation"] if s.get("source")], planned)
+    elif planned:
+        ladder = planned
+    elif lad.get("fallback") and lad.get("steps") and state["sector"] == "public_service":
+        ladder = lad["steps"]  # the labelled general government route
+    if ladder:  # planned from evidence and validated (escalation_planner)
+        steps = [dict(s) for s in ladder if s.get("source")]
+        seed = cfg["escalation"]
+        if steps and steps[0].get("level") == "company" and seed and seed[0].get("reply_within"):
+            steps[0]["reply_within"] = seed[0]["reply_within"]  # e.g. the reasonable 30 days the letter asks for
+        cpa = SECTORS["other"]["escalation"][-1].get("file_within")  # CPA s.69: two years
+        for s in steps:
+            if s.get("level") == "court_or_commission" and "consumer" in s["name"].lower() and cpa:
+                s["file_within"] = cpa
+    elif not seeded(state["sector"]):  # the planner failed or timed out: the seed playbook
+        steps = [dict(s) for s in cfg["escalation"] if s.get("source")] or \
+            [dict(s) for s in SECTORS["other"]["escalation"]]
     brief = state.get("case_brief") or {}
-    if state["sector"] == "police" and (CYBER_RE.search(state.get("complaint") or "")
-                                        or "cyber_fraud" in (state.get("issue_types") or [])):
+    if state["sector"] == "police" and "cyber_fraud" in (state.get("issue_types") or []):
         steps.insert(0, dict(SECTORS["police"]["cyber_step"]))  # money lost online: 1930 before anything else
     if state.get("sector") in ("govt_scheme", "public_service") and brief.get("official_grievance_channel"):
         channel = brief["official_grievance_channel"]  # from the researched sources (URL checked against them)
@@ -91,6 +114,14 @@ def escalation_for(state: dict) -> list[dict]:
         steps = [steps[2]] + steps[:2]  # unlisted / lookalike app: cyber-crime reporting comes first
         steps[0]["when_to_use"] = "Now: the app is not in RBI's Digital Lending App directory (or imitates a listed " \
                                   "app), so report it rather than writing to it. " + steps[0]["when_to_use"]
+    if (state.get("route") or {}).get("authority_type") in STATE_SIDE:  # guard on the FINAL ladder, seed included
+        kept = [s for s in steps if not CPGRAMS.search(f"{s['name']} {s.get('channel') or ''} {s.get('url') or ''}")]
+        if len(kept) < len(steps):
+            if len(kept) >= 2:
+                steps = kept
+            else:  # the labelled general state route: the office's own cell, then the state's grievance portal
+                gr = [dict(s) for s in general_route(state)]
+                steps = (kept or gr[:1]) + [s for s in gr if s["level"] != "company"]
     deadlines.annotate(steps, incident=deadlines.to_date((state.get("facts") or {}).get("date") or ""))
     return steps
 
@@ -146,7 +177,12 @@ def drafter(state: dict) -> dict:
                        f"OFFICIAL SOURCES: {(state.get('case_brief') or {}).get('sources') or []}\n")
     # One call: the model writes its own case-specific outline (the `outline` field) and then the body from it.
     # (A separate planning call cost a full LLM round-trip; eval/latency.py.)
-    prompt = (f"LANGUAGE OF THE CONSUMER: {state.get('language', 'en')}\n"
+    lang = state.get("letter_language") or "en"
+    prompt = (f"LETTER LANGUAGE: {LANGS[lang]}. Write the subject, the addressee_lines and the WHOLE body in "
+              f"{LANGS[lang]} only - do not mix languages, and do not add English glosses in brackets such as "
+              f"'(pending)'. Keep [PLACEHOLDERS], [C#] tags, IDs, amounts, emails "
+              f"and links exactly as given; write company / scheme names as the complainant wrote them.\n"
+              f"LANGUAGE OF THE CONSUMER (for the summary): {state.get('language', 'en')}\n"
               f"{outline_context}"
               f"{PLAN_TIER.get(tier, '')}\n"
               f"REMEDY REQUESTED: {facts.get('what_user_wants') or 'not stated'}\n"
@@ -160,9 +196,10 @@ def drafter(state: dict) -> dict:
                  else "") +
               f"MISSING FACTS - use these placeholders:\n{placeholders or '- none'}\n\n"
               f"ADDRESSED TO: {addressee(state, esc)}\n"
-              f"NEXT FORUM IF UNRESOLVED: {esc[1]['name']} — {esc[1]['when_to_use']}\n"
+              f"NEXT FORUM IF UNRESOLVED: {esc[-1]['name'] if len(esc) < 2 else esc[1]['name']} — "
+              f"{(esc[1] if len(esc) > 1 else esc[-1])['when_to_use']}\n"
               + (f"REPLY DEADLINE (computed in code from the rules - write exactly this date, and no other "
-                 f"deadline): {dl['date']} — {dl['basis']}"
+                 f"deadline): {deadlines.localize(dl['date'], lang)} — {dl['basis']}"
                  + (" (a statutory time limit; you may mention the rule only via a [C#] clause that states it)"
                     if dl["kind"] == "statutory" else " (a reasonable time we ask for; no rule fixes one)") + "\n"
                  if dl else "") + "\n"
@@ -173,6 +210,7 @@ def drafter(state: dict) -> dict:
                   + "\n- ".join(notes) + f"\n\nPREVIOUS DRAFT:\n{state.get('draft', '')}") if notes else ""))
     out = llm.validated(DraftOut, llm.json_call(DRAFT_SYSTEM, prompt, schema(DraftOut))).model_dump() |         {"method": llm.label()}
     return {"draft": out["body"], "subject": out["subject"], "summary": out["summary"], "escalation": esc,
+            "addressee_lines": [x.strip() for x in out.get("addressee_lines") or [] if x.strip()][:3],
             "draft_attempts": attempt, "draft_method": out["method"], "deadline": dl,
             "drafted_answers": dict(state.get("case_answers") or {}),
             "trace": [f"✍️ Drafter #{attempt} ({out['method']})" + (f": revising for {len(notes)} critic note(s)"

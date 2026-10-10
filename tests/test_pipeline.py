@@ -689,7 +689,7 @@ def test_intake_call_also_catches_danger_the_rules_missed(mocked, monkeypatch):
     assert not any(c.startswith("Decide whether") for c in calls)                    # no separate safety LLM call
 
 
-# --------------------------------------------------------------------------- routing: match, research, learn, clarify
+# --------------------------------------------------------------------------- routing and the escalation planner
 
 FLIGHT = "IndiGo cancelled my flight 6E-2143 on 2 Oct 2026 and has not refunded Rs 7,400 after 30 days."
 ROUTE_PAGES = {
@@ -703,66 +703,117 @@ ROUTE_PAGES = {
 def fake_intake(**over):
     base = {"language": "en", "complaint_en": FLIGHT, "domain_free_text": "air travel - flight cancellation refund",
             "matched_playbook": "govt_scheme", "match_confidence": 0.3, "route_reason": "nearest bucket",
-            "company": "IndiGo", "issue_types": ["refund"],
+            "company": "IndiGo", "issue_types": ["refund"], "route_key": "airline", "state": "Maharashtra",
+            "authority_type": "private_company", "route_queries": ["IndiGo refund complaint AirSewa"],
             "facts": {"issue": "Flight cancelled, refund not paid", "amount": "7400", "date": "2 Oct 2026"},
             "urgent_fraud_or_harassment": False, "search_keywords": "flight refund"}
     return base | over
 
 
-def mock_route(monkeypatch, tmp_path, intake_outputs, calls):
-    import saathi.nodes.route_research as rr
-    from saathi import playbooks
+def plan_answer(**over):
+    steps = [
+        {"order": 1, "authority": "AirSewa", "level": "sector_regulator_or_ombudsman", "channel": "portal",
+         "url": "https://www.airsewa.gov.in", "when_to_use": "If the airline does not resolve it",
+         "source_url_or_clause": "https://www.airsewa.gov.in/grievance"},
+        {"order": 2, "authority": "DGCA", "level": "sector_regulator_or_ombudsman", "channel": "portal",
+         "url": "https://dgca.gov.in/complaints", "when_to_use": "Regulator", "timeline": "15 days",
+         "source_url_or_clause": "https://www.airsewa.gov.in/grievance"},
+        {"order": 3, "authority": "FlightRefundHelp", "level": "sector_regulator_or_ombudsman", "channel": "phone",
+         "when_to_use": "Anytime", "source_url_or_clause": "https://flight-refund-help.example/blog"}]
+    return {"steps": steps, "notes": ""} | over
+
+
+def mock_planner(monkeypatch, tmp_path, intake_outputs, calls, plan=None):
+    from saathi.nodes import escalation
     from saathi.nodes import intake as intake_mod
-    monkeypatch.setattr(playbooks, "PLAYBOOK_DIR", tmp_path)
+    monkeypatch.setattr(escalation, "LADDER_DIR", tmp_path)
     outs = iter(intake_outputs)
 
     def fake(system, prompt, schema, **_):
         calls.append(system[:25])
         if system == intake_mod.INTAKE_SYSTEM:
             return next(outs)
-        if system == rr.ROUTE_SYSTEM:
-            return {"playbook_key": "air travel", "label": "Air travel (airlines)", "covers": "flight cancellation, "
-                    "refund, baggage complaints against airlines", "regulator": "DGCA / Ministry of Civil Aviation",
-                    "complaint_type": "consumer_service", "law_docs": ["cpa", "not_a_doc"], "steps": [
-                        {"name": "AirSewa", "channel": "portal", "url": "https://www.airsewa.gov.in",
-                         "when_to_use": "If the airline does not resolve it", "source_url":
-                             "https://www.airsewa.gov.in/grievance"},
-                        {"name": "DGCA", "channel": "portal", "url": "https://dgca.gov.in/complaints",
-                         "when_to_use": "Regulator", "source_url": "https://www.airsewa.gov.in/grievance"},
-                        {"name": "FlightRefundHelp", "channel": "phone", "url": "https://flight-refund-help.example",
-                         "when_to_use": "Anytime", "source_url": "https://flight-refund-help.example/blog"}]}
+        if system == escalation.PLAN_SYSTEM:
+            return plan or plan_answer()
         return fake_llm.answer(system, prompt, schema)
     monkeypatch.setattr(llm, "json_call", fake)
-    monkeypatch.setattr(llm, "enabled", lambda: True)
     monkeypatch.setattr(serp, "search", lambda params, live=True, **_: {"organic_results": [
-        {"link": u, "title": "t"} for u in ROUTE_PAGES]} if "complaint" in params.get("q", "") else {})
-    monkeypatch.setattr(rr, "fetch", lambda u, **_: {"url": u, "ok": True, "title": "t",
-                                                     "text": ROUTE_PAGES.get(u, "")})
+        {"link": u, "title": "t"} for u in ROUTE_PAGES]} if "AirSewa" in params.get("q", "") else {})
+    monkeypatch.setattr(escalation, "fetch", lambda u, **_: {"url": u, "ok": True, "title": "t",
+                                                             "text": ROUTE_PAGES.get(u, "")})
 
 
-def test_unmatched_domain_researches_and_learns_a_verified_route(mocked, monkeypatch, tmp_path):
-    from saathi import playbooks
+def test_unmatched_domain_gets_a_validated_ladder_from_evidence(mocked, monkeypatch, tmp_path):
+    from saathi.nodes import escalation
     calls = []
-    mock_route(monkeypatch, tmp_path, [fake_intake(), fake_intake(matched_playbook="air_travel",
-                                                                  match_confidence=0.9)], calls)
-    try:
-        _, _, s, _ = run_graph(FLIGHT)
-        assert s["route"]["mode"] == "learned" and s["sector"] == "air_travel"           # not govt_scheme
-        names = [x["name"] for x in s["escalation"]]
-        assert names[:2] == ["Company grievance officer", "AirSewa"] and "FlightRefundHelp" not in names
-        dgca = next(x for x in s["escalation"] if x["name"] == "DGCA")
-        assert dgca["url"] is None                                     # its link is not in the evidence: dropped
-        assert all(x.get("source") for x in s["escalation"])           # no source, no step
-        assert any("dropped" in t for t in s["trace"]) and (tmp_path / "air_travel.json").exists()
-        assert playbooks.SECTORS["air_travel"]["law_docs"] == ["cpa"]  # unknown law keys filtered out
-        assert "air_travel" in playbooks.playbook_menu()
-        # Second complaint of this kind: matched from the menu directly - no route research call.
-        n = calls.count("From the SOURCE pages only,"[:25])
-        _, _, s2, _ = run_graph(FLIGHT)
-        assert s2["route"]["mode"] == "matched" and s2["sector"] == "air_travel"
-        assert calls.count("From the SOURCE pages only,"[:25]) == n
-    finally:
-        playbooks.SECTORS.pop("air_travel", None)
+    mock_planner(monkeypatch, tmp_path, [fake_intake(), fake_intake()], calls)
+    _, _, s, nodes = run_graph(FLIGHT)
+    assert s["route"]["mode"] == "research" and s["sector"] == "other"             # the forced match is not trusted
+    assert "escalation_planner" in nodes and nodes.index("escalation_planner") < nodes.index("drafter")
+    names = [x["name"] for x in s["escalation"]]
+    assert names[0] == escalation.COMPANY_STEP["name"] and "AirSewa" in names
+    assert "FlightRefundHelp" not in names                                         # non-official source: dropped
+    dgca = next(x for x in s["escalation"] if x["name"] == "DGCA")
+    assert dgca["url"] is None and dgca["timeline"].startswith("check the timeline in")  # no invented link / time
+    assert all(x.get("source") for x in s["escalation"])
+    assert s["escalation"][0].get("reply_by")                  # the company step keeps the requested reply deadline
+    # Same kind of complaint again: the verified ladder comes from the cache - no planning call.
+    n = calls.count(escalation.PLAN_SYSTEM[:25])
+    _, _, s2, _ = run_graph(FLIGHT)
+    assert calls.count(escalation.PLAN_SYSTEM[:25]) == n and s2["ladder"]["cached"]
+
+
+def test_seed_ladder_survives_when_the_planner_finds_nothing(mocked):
+    from saathi.playbooks import SECTORS
+    _, _, s, nodes = run_graph("Kartify refused a refund for my damaged phone, order KT12345678, Rs 15,000.",
+                               company="Kartify")
+    assert s["sector"] == "ecommerce" and "escalation_planner" in nodes          # planner ran for a seeded sector
+    assert [x["name"] for x in s["escalation"]] == [x["name"] for x in SECTORS["ecommerce"]["escalation"]]
+    assert s["escalation"][0]["reply_by"]                                       # statutory deadline kept
+
+
+def test_planner_only_adds_to_a_seed_ladder():
+    from saathi.nodes.escalation import merge_with_seed
+    from saathi.playbooks import SECTORS
+    seed = SECTORS["bank"]["escalation"]
+    planned = [{"name": "HDFC dispute desk", "level": "company", "source": "x"},
+               {"name": "Reserve Bank Integrated Ombudsman", "level": "sector_regulator_or_ombudsman", "source": "y"},
+               {"name": "Banking Codes and Standards Board", "level": "other", "source": "https://x.gov.in"}]
+    merged, added = merge_with_seed(seed, planned)
+    names = [x["name"] for x in merged]
+    assert added == ["Banking Codes and Standards Board"]                       # company / duplicate steps skipped
+    assert names[: len(seed) - 1] == [x["name"] for x in seed[:-1]]            # every seed step kept, in order
+    assert names.index("Banking Codes and Standards Board") < names.index("District Consumer Commission")
+
+
+def test_ladder_validation_rules():
+    from saathi.nodes.escalation import validate
+    ev = [{"url": "https://power.example.gov.in/cgrf", "official": True, "text": "CGRF decides within 45 days. "
+           "Grievances may also go to the CM helpline. See the e-seva portal www.gas-seva.in"},
+          {"url": "https://www.gas-seva.in/help", "official": False, "text": "e-Seva grievance portal"}]
+    plan = {"steps": [
+        {"order": 1, "authority": "CPGRAMS", "level": "central_portal", "channel": "pgportal.gov.in",
+         "when_to_use": "x", "source_url_or_clause": "https://power.example.gov.in/cgrf"},
+        {"order": 2, "authority": "CGRF", "level": "sector_forum", "channel": "office", "when_to_use": "x",
+         "timeline": "45 days", "source_url_or_clause": "https://power.example.gov.in/cgrf"},
+        {"order": 3, "authority": "Gas e-Seva", "level": "central_portal", "channel": "portal", "when_to_use": "x",
+         "source_url_or_clause": "https://www.gas-seva.in/help"}]}
+    state_steps, notes, _ = validate(plan, [dict(e) for e in ev], [], [], "state_utility_or_psu")
+    assert "CPGRAMS" not in [x["name"] for x in state_steps] and any("CPGRAMS" in n for n in notes)
+    assert state_steps[0]["name"] == "CGRF" and state_steps[0]["timeline"] == "45 days"   # sector forum first
+    assert "Gas e-Seva" in [x["name"] for x in state_steps]          # vouched for by an official page
+    central, _, _ = validate(plan, [dict(e) for e in ev], [], [], "central_government")
+    assert "CPGRAMS" in [x["name"] for x in central]                 # fine for a central body
+
+
+def test_general_route_is_labelled_when_nothing_is_sourced(mocked, monkeypatch, tmp_path):
+    from saathi.nodes import escalation
+    calls = []
+    only_blog = {"steps": [plan_answer()["steps"][2]], "notes": ""}
+    mock_planner(monkeypatch, tmp_path, [fake_intake(authority_type="central_government")], calls, plan=only_blog)
+    _, _, s, _ = run_graph(FLIGHT)
+    assert s["ladder"]["fallback"] and s["ladder"]["note"] == escalation.FALLBACK_NOTE
+    assert not list(tmp_path.iterdir())                               # a fallback is never cached as "verified"
 
 
 def test_very_unclear_complaint_gets_one_question(mocked, monkeypatch, tmp_path):
@@ -770,9 +821,50 @@ def test_very_unclear_complaint_gets_one_question(mocked, monkeypatch, tmp_path)
     unclear = fake_intake(matched_playbook=None, match_confidence=0, company="", needs_clarification=True,
                           clarifying_question="Which company or office is this about?")
     clear = fake_intake(matched_playbook="other", match_confidence=0.8)
-    mock_route(monkeypatch, tmp_path, [unclear, clear], calls)
+    mock_planner(monkeypatch, tmp_path, [unclear, clear], calls)
     app, thread, s, nodes = run_graph("They did not give my money back.", stop_at_form=True)
     assert s["__interrupt__"]["stage"] == "clarify" and "Which company" in s["__interrupt__"]["question"]
     s = G.resume(thread, {"answer": "IndiGo, a cancelled flight"}, app=app)
     assert "IndiGo, a cancelled flight" in s["complaint"] and s["clarified"]
     assert (s.get("__interrupt__") or {}).get("stage") != "clarify"                  # asked only once
+
+
+def test_missing_facts_merge_case_specific_with_the_domain_minimum():
+    from saathi.playbooks import merge_missing
+    extra = [{"fact": "pnr", "placeholder": "[PNR / BOOKING NUMBER]"},
+             {"fact": "date", "placeholder": "[FLIGHT DATE]"},                   # already in the minimum: skipped
+             {"fact": "flight_number", "placeholder": "flight number"}]          # normalised to a [PLACEHOLDER]
+    out = merge_missing("other", {"amount": "7400", "flight_number": ""}, extra)
+    # overlapping wording upgrades the generic placeholder (same fact key, so the critic's check still holds)
+    assert [(m["fact"], m["placeholder"]) for m in out] == [("reference_id", "[PNR / BOOKING NUMBER]"),
+                                                            ("date", "[FLIGHT DATE]"), ("flight_number", "[FLIGHT NUMBER]")]
+    assert all(m["fact"] != "amount" for m in out)                               # a fact the complaint gives
+
+
+# --------------------------------------------------------------------------- one language per letter
+
+def test_language_check_allows_placeholders_ids_and_names_only():
+    from saathi.letter import language_issue
+    hi = "मेरा आवेदन [APPLICATION REFERENCE NUMBER] (ID BR1234567) चार महीने से लंबित है। कृपया Kartify इसे देखें।"
+    assert language_issue(hi, "hi", ["Kartify"]) == ""
+    assert language_issue("मेरा आवेदन pending है and nobody replies to my emails at all", "hi")
+    assert language_issue("My application is pending. मेरा आवेदन लंबित है।", "en")
+    assert language_issue("My application [आवेदन संख्या] is pending.", "en") == ""
+
+
+def test_hindi_letter_is_hindi_end_to_end(mocked):
+    from saathi.nodes.review import addressee_block
+    from saathi.letter import labels
+    app, thread, s, _ = run_graph("Kartify refused a refund for my damaged phone, order KT12345678, Rs 15,000.",
+                                  company="Kartify", letter_language="hi")
+    assert s["letter_language"] == "hi"
+    letter = G.resume(thread, {}, app=app)["final"]["letter"]
+    for label in ("सेवा में,", "दिनांक:", "विषय:", "महोदय/महोदया,", "भवदीय,"):
+        assert label in letter
+    for english in ("To,", "Date:", "Subject:", "Dear Sir/Madam", "Yours faithfully"):
+        assert english not in letter
+    L = labels("en")
+    block = addressee_block({"company": "Food and Civil Supplies Department", "route": {"state": "Bihar"},
+                             "addressee_lines": ["State-specific Food and Civil Supplies Department portals"]},
+                            None, "A", L)
+    assert block == ["The Grievance Redressal Officer", "Food and Civil Supplies Department, Bihar"]  # no portal

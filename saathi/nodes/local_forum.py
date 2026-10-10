@@ -15,7 +15,7 @@ def local_forum(state: dict) -> dict:
     city = state.get("city") or (state.get("facts") or {}).get("city")
     if not city:
         return {"local_forum": None, "trace": ["📍 Local forum: skipped — no city given"]}
-    q = forum_query(state.get("sector") or "other", city, state.get("complaint") or "")
+    q = forum_query(state.get("sector") or "other", city, "cyber_fraud" in (state.get("issue_types") or []))
     if not q:
         return {"local_forum": None, "trace": ["📍 Local forum: not needed for this domain"]}
     query, pattern, label = q

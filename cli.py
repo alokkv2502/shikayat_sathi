@@ -32,6 +32,9 @@ def print_safety(safety: dict) -> None:
         print("!" * 80)
 
 
+LETTER_LANGUAGE = [""]  # --letter-language (en / hi); default: Hindi for Hindi complaints, else English
+
+
 def ask_details(payload: dict, interactive: bool) -> dict:
     """Stage 1: every missing fact and question at once, before the letter is written."""
     print_safety(payload.get("safety") or {})
@@ -58,7 +61,8 @@ def ask_details(payload: dict, interactive: bool) -> dict:
             print(f"   ? {q['question']}")
     if not interactive:
         print("(skipped - run without --yes in a terminal to answer)")
-    return {"fills": fills, "case_answers": answers}
+    return {"fills": fills, "case_answers": answers, "letter_language": LETTER_LANGUAGE[0] or
+            payload.get("letter_language") or "en"}
 
 
 def ask_review(payload: dict, auto: bool) -> dict:
@@ -116,7 +120,8 @@ def print_final(s: dict) -> None:
     for i, st in enumerate(s.get("escalation") or [], 1):
         print(f"   {i}. {st['name']} ({st['channel']}) — {st['when_to_use']}"
               + (f" {st['url']}" if st.get("url") else "") + (f" · {st['phone']}" if st.get("phone") else "")
-              + (f"\n      📅 {step_dates(st)}" if step_dates(st) else ""))
+              + (f"\n      📅 {step_dates(st)}" if step_dates(st) else "")
+              + (f"\n      🔗 source: {st['source']}" if st.get("source") else ""))
     if s.get("summary"):
         print(f"\n💬 {s['summary']}")
     print(f"\nLive SerpApi calls this complaint: {s.get('live_calls', 0)} · {serp.summary()} · LLM: {llm.label()}")
@@ -140,12 +145,14 @@ def main() -> None:
     ap.add_argument("--company")
     ap.add_argument("--city")
     ap.add_argument("--name")
+    ap.add_argument("--letter-language", choices=["en", "hi"], help="write the whole letter in English or Hindi")
     ap.add_argument("--offline", action="store_true", help="cache only - no live SerpApi calls")
     ap.add_argument("--max-credits", type=int, help="live SerpApi calls for this complaint (0 = no cap)")
     ap.add_argument("--yes", action="store_true", help="approve the human-review step without prompting")
     ap.add_argument("--resume", metavar="THREAD_ID", help="resume a paused complaint")
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args()
+    LETTER_LANGUAGE[0] = a.letter_language or ""
     if not a.complaint and not a.resume:
         ap.error("give a complaint text or --resume THREAD_ID")
 
@@ -166,7 +173,8 @@ def main() -> None:
         thread = G.new_thread()
         print(f"thread_id: {thread}")
         state = G.run(G.initial_state(a.complaint, company=a.company, city=a.city,
-                                      complainant={"name": a.name} if a.name else None, live=not a.offline),
+                                      complainant={"name": a.name} if a.name else None, live=not a.offline,
+                                      letter_language=a.letter_language),
                       thread, on_update=print_update)
         while "__interrupt__" in state:  # answers trigger a redraft and another review round
             state = G.resume(thread, ask_review(state["__interrupt__"], a.yes), on_update=print_update)

@@ -16,7 +16,6 @@ from pathlib import Path
 from config import CACHE_DIR
 from saathi import llm
 from saathi.nodes.common import live, node
-from saathi.nodes.route_research import research_route
 from saathi.state import CaseBrief, schema
 from saathi.tools.domains import NOT_OFFICIAL, host, registrable
 from saathi.tools.fetch import fetch
@@ -59,9 +58,10 @@ def cached_brief(entities: list[str]) -> dict | None:
     return None
 
 
-def store_brief(entities: list[str], brief: dict) -> None:
+def store_brief(entities: list[str], brief: dict, where: str = "") -> None:
     text = json.dumps(brief, ensure_ascii=False, indent=1)
-    for name in {*entities, brief.get("subject") or "", *(brief.get("aliases") or [])}:
+    for name in {*entities, *(f"{n}|{where}" for n in [brief.get("subject") or "", *(brief.get("aliases") or [])]
+                              if n)}:
         if normalise(name):
             _cache_file(name).write_text(text, encoding="utf-8")
 
@@ -71,11 +71,13 @@ def is_official(url: str, company_domains: list[str]) -> bool:
     return h.endswith(GOVT_SUFFIXES) or registrable(url) in company_domains
 
 
-def research_queries(entity: str, company_domains: list[str]) -> list[str]:
-    """Official hosts first, then the open web (secondary sources are used only to fill gaps)."""
+def research_queries(entity: str, company_domains: list[str], state_name: str = "") -> list[str]:
+    """Official hosts first, then the open web (secondary sources are used only to fill gaps). The complainant's
+    state goes into the searches, so a state scheme is researched for THAT state, not another one."""
+    where = f" {state_name}" if state_name else ""
     queries = [f'site:{d} "{entity}"' for d in company_domains[:1]]
-    queries.append(f'"{entity}" eligibility benefits grievance site:gov.in')
-    queries.append(f'"{entity}" eligibility conditions how to claim grievance')
+    queries.append(f'"{entity}"{where} eligibility benefits grievance site:gov.in')
+    queries.append(f'"{entity}"{where} eligibility conditions how to claim grievance')
     return queries
 
 
@@ -86,7 +88,7 @@ def research_sources(state: dict, entities: list[str]) -> list[dict]:
     other: list[dict] = []
     seen: set[str] = set()
     for entity in entities[:MAX_ENTITIES]:
-        for query in research_queries(entity, company_domains):
+        for query in research_queries(entity, company_domains, (state.get("route") or {}).get("state") or ""):
             if len(official) >= MAX_OFFICIAL_PAGES:
                 break
             try:
@@ -129,14 +131,9 @@ def grounded(brief: dict, evidence: list[dict]) -> dict:
 
 @node("🔎 Case research")
 def case_research(state: dict) -> dict:
-    """Route research first (when intake found no verified playbook that fits), then the named scheme / policy /
-    product research."""
-    route_updates = {}
-    if (state.get("route") or {}).get("mode") == "research":
-        route_updates = research_route(state)
-        state = {**state, **{k: v for k, v in route_updates.items() if k != "trace"}}
-    out = entity_research(state)
-    return route_updates | out | {"trace": route_updates.get("trace", []) + out.get("trace", [])}
+    """Research the named scheme / policy / product. (When no verified playbook fits, the escalation route is
+    planned by escalation_planner, alongside the search workers.)"""
+    return entity_research(state)
 
 
 def entity_research(state: dict) -> dict:
@@ -144,7 +141,8 @@ def entity_research(state: dict) -> dict:
     if not entities:
         return {"case_brief": {}, "trace": ["🔎 Case research: no named scheme, policy or product to research"]}
 
-    brief = cached_brief(entities)
+    where = (state.get("route") or {}).get("state") or ""  # state schemes differ by state
+    brief = cached_brief([f"{e}|{where}" for e in entities])
     if brief:
         return {"case_brief": brief, "trace": [f"🔎 Case research: cached brief for {brief['subject']} "
                                                f"({len(brief['sources'])} source(s), no searches)"]}
@@ -159,7 +157,7 @@ def entity_research(state: dict) -> dict:
     brief = grounded(llm.validated(CaseBrief, llm.json_call(RESEARCH_SYSTEM, prompt, schema(CaseBrief))).model_dump(),
                      evidence)
     if brief["sources"]:
-        store_brief(entities, brief)
+        store_brief([f"{e}|{where}" for e in entities], brief, where)
         n_off = sum(e["official"] for e in evidence)
         return {"case_brief": brief,
                 "trace": [f"🔎 Case research: {brief['subject']} — {len(brief['conditions'])} condition(s) from "

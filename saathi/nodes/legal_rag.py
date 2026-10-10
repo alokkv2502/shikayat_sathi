@@ -5,19 +5,20 @@ from __future__ import annotations
 import re
 
 from saathi.nodes.common import node
-from saathi.playbooks import ISSUE_QUERIES, SECTORS
+from saathi.playbooks import SECTORS
 from saathi.rag.store import retrieve
 
 REF_RE = re.compile(r"\b(Section|Sec\.|Rule|Regulation|Clause|Para(?:graph)?)\s+(\d+[A-Z]?)(?:\s*\(\s*\w+\s*\))*", re.I)
 UNIT_ALIASES = {"sec.": "section", "paragraph": "para"}
 
 
-def gather_clauses(sector: str, issue_types: list[str], issue: str, k_each: int = 3, limit: int = 4) -> list[dict]:
-    """One query for the sector's grievance rule + one per issue type; clauses taken round-robin across queries
-    so one query can't crowd out the others; clauses far weaker than the best match are dropped. `issue` is
-    already English (intake translates the complaint once)."""
+def gather_clauses(sector: str, legal_query: str, issue: str = "", k_each: int = 3, limit: int = 4) -> list[dict]:
+    """One query for the sector's grievance rule (if the playbook has one) + intake's own English legal query for
+    THIS complaint (+ the issue sentence); clauses taken round-robin across queries so one can't crowd out the
+    others; clauses far weaker than the best match are dropped."""
     cfg = SECTORS[sector]
-    queries = [cfg["basis_query"]] + [f"{ISSUE_QUERIES[i]} {issue[:160]}" for i in issue_types]
+    queries = [q for q in [cfg.get("basis_query"), legal_query, issue[:200] if issue != legal_query else ""]
+               if q and q.strip()]
     ranked = [retrieve(q, tuple(cfg["law_docs"]), k_each) for q in queries]
     seen, pool = set(), []
     for rank in range(k_each):
@@ -64,8 +65,7 @@ def legal_rag(state: dict) -> dict:
     if not SECTORS[state.get("sector") or "other"]["law_docs"]:
         return {"clauses": [], "trace": [f"📚 Legal RAG: skipped — no indexed law applies to the "
                                          f"{state.get('sector')} route (no citations will be made)"]}
-    clauses = gather_clauses(state["sector"], state.get("issue_types") or ["other"],
-                             (state.get("facts") or {}).get("issue") or state.get("complaint_en")
-                             or state["complaint"])
+    issue = (state.get("facts") or {}).get("issue") or state.get("complaint_en") or state["complaint"]
+    clauses = gather_clauses(state["sector"], state.get("legal_query") or issue, issue)
     return {"clauses": clauses,
             "trace": [f"📚 Legal RAG: {len(clauses)} clause(s) — " + "; ".join(c["citation"] for c in clauses)]}

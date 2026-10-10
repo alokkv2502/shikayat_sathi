@@ -1,0 +1,551 @@
+{
+ "summary": {
+  "cases": 7,
+  "passed": 7,
+  "expected_authority_found": 7,
+  "forbidden_used": 0,
+  "all_steps_sourced": 7,
+  "general_route_used": 0,
+  "avg_seconds": 0.3,
+  "avg_searches": 0.0
+ },
+ "rows": [
+  {
+   "id": 1,
+   "company": "JVVNL",
+   "route": {
+    "domain_free_text": "electricity bill dispute",
+    "matched_playbook": "public_service",
+    "confidence": 1.0,
+    "reason": "JVVNL is a state-owned public utility provider.",
+    "mode": "matched",
+    "question": "",
+    "route_key": "electricity",
+    "state": "Rajasthan",
+    "authority_type": "state_utility_or_psu",
+    "queries": [
+     "JVVNL consumer grievance redressal forum",
+     "Rajasthan electricity ombudsman",
+     "JVVNL complaint portal"
+    ]
+   },
+   "expect_hit": true,
+   "forbid_hit": [],
+   "all_sourced": true,
+   "fallback": false,
+   "steps": [
+    {
+     "name": "JVVNL (Jaipur Vidyut Vitran Nigam Ltd)",
+     "level": "company",
+     "channel": "Toll-free number 18001806507 or SMS/WhatsApp to 9414037085",
+     "url": null,
+     "phone": null,
+     "when_to_use": "Initial complaint for electricity bill dispute",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://rerc.rajasthan.gov.in/rerc-user-files/Archives"
+    },
+    {
+     "name": "Consumer Grievance Redressal Forum (CGRF), JVVNL",
+     "level": "sector_forum",
+     "channel": "Not specified",
+     "url": "https://rerc.rajasthan.gov.in/rerc-user-files/Archives",
+     "phone": null,
+     "when_to_use": "If the complaint remains unresolved by the company grievance cell",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://rerc.rajasthan.gov.in/rerc-user-files/Archives"
+    },
+    {
+     "name": "Electricity Ombudsman, Rajasthan",
+     "level": "sector_regulator_or_ombudsman",
+     "channel": "Not specified",
+     "url": null,
+     "phone": null,
+     "when_to_use": "If dissatisfied with the decision of the CGRF",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://rerc.rajasthan.gov.in/rerc-user-files/Archives"
+    },
+    {
+     "name": "District Consumer Commission",
+     "level": "court_or_commission",
+     "channel": "Not specified",
+     "url": null,
+     "phone": null,
+     "when_to_use": "For unresolved disputes or unfair trade practices regarding services",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "Consumer Protection Act, 2019, Section 39(1)"
+    }
+   ],
+   "notes": [
+    "re-sourced “JVVNL (Jaipur Vidyut Vitran Nigam Ltd)” to the official page rajasthan.gov.in that names it",
+    "removed link https://www.pinkcitypost.com/jaipur-jvvnl-launches-mobile-number-registering-electricity-complaints/ from “JVVNL (Jaipur Vidyut Vitran Nigam Ltd)”: not an official link found in the sources",
+    "re-sourced “Electricity Ombudsman, Rajasthan” to the official page rajasthan.gov.in that names it",
+    "removed link https://www.yumpu.com/en/document/view/36635516/rajasthan-electricity-regulatory-commission-jaipur from “Electricity Ombudsman, Rajasthan”: not an official link found in the sources"
+   ],
+   "note": "The CGRF and Electricity Ombudsman are established under RERC regulations. If the company's internal grievance mechanism fails, you may approach the CGRF, followed by the Electricity Ombudsman, and finally the District Consumer Commission for legal redressal.",
+   "official_pages": 2,
+   "clauses": [
+    "RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025, Para 81",
+    "Consumer Protection Act, 2019, Section 2(46)–(47) (contd.)",
+    "Consumer Protection Act, 2019, Section 39(1)",
+    "Reserve Bank – Integrated Ombudsman Scheme, 2026, Salient features, para 6"
+   ],
+   "seconds": 1.7,
+   "intake_s": 0.0,
+   "serp_calls": 0,
+   "control": false,
+   "pass": true
+  },
+  {
+   "id": 2,
+   "company": "Delhi Jal Board",
+   "route": {
+    "domain_free_text": "municipal service - sewer overflow",
+    "matched_playbook": "public_service",
+    "confidence": 1.0,
+    "reason": "This is a complaint regarding a municipal utility service (sewerage) provided by a state government body.",
+    "mode": "matched",
+    "question": "",
+    "route_key": "municipal_services",
+    "state": "Delhi",
+    "authority_type": "state_utility_or_psu",
+    "queries": [
+     "Delhi Jal Board grievance redressal",
+     "Delhi Jal Board complaint status",
+     "Delhi PGMS portal"
+    ]
+   },
+   "expect_hit": true,
+   "forbid_hit": [],
+   "all_sourced": true,
+   "fallback": false,
+   "steps": [
+    {
+     "name": "DJB Helpline / Complaint Centre",
+     "level": "company",
+     "channel": "Call 1916 (Toll-free) or SMS 'DJB (space) B' to 53030",
+     "url": null,
+     "phone": null,
+     "when_to_use": "For immediate reporting of sewer blockage",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://delhijalboard.delhi.gov.in/jalboard/about-us"
+    },
+    {
+     "name": "District Consumer Disputes Redressal Commission",
+     "level": "court_or_commission",
+     "channel": "Formal legal complaint filing",
+     "url": null,
+     "phone": null,
+     "when_to_use": "If the complaint remains unresolved and you wish to seek legal redressal within two years of the cause of action",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "Consumer Protection Act, 2019, Section 69"
+    }
+   ],
+   "notes": [
+    "re-sourced “DJB Helpline / Complaint Centre” to the official page delhi.gov.in that names it"
+   ],
+   "note": "The provided sources do not specify a formal internal appellate authority or a sector-specific ombudsman for the Delhi Jal Board. You may escalate to the District Consumer Commission if the service deficiency persists.",
+   "official_pages": 6,
+   "clauses": [
+    "Consumer Protection Act, 2019, Section 69",
+    "Telecom Consumers Complaint Redressal Regulations, 2012, Regulation 8",
+    "Insurance Ombudsman Rules, 2017, Rule 14(4)–(6)",
+    "Telecom Consumers Complaint Redressal Regulations, 2012, Regulation 9"
+   ],
+   "seconds": 0.1,
+   "intake_s": 0.0,
+   "serp_calls": 0,
+   "control": false,
+   "pass": true
+  },
+  {
+   "id": 3,
+   "company": "IGL",
+   "route": {
+    "domain_free_text": "piped gas utility billing dispute",
+    "matched_playbook": "public_service",
+    "confidence": 0.9,
+    "reason": "IGL is a public utility provider, and billing disputes fall under public service grievances.",
+    "mode": "matched",
+    "question": "",
+    "route_key": "piped_gas",
+    "state": "Uttar Pradesh",
+    "authority_type": "state_utility_or_psu",
+    "queries": [
+     "Indraprastha Gas Limited grievance redressal",
+     "IGL customer care complaint",
+     "PNGRB grievance redressal piped gas"
+    ]
+   },
+   "expect_hit": true,
+   "forbid_hit": [],
+   "all_sourced": true,
+   "fallback": false,
+   "steps": [
+    {
+     "name": "IGL Customer Care",
+     "level": "company",
+     "channel": "Call 1800-102-5109 (24x7 Toll free) or 011-41387000",
+     "url": "https://webonline.igl.co.in:8077/sap/bc/ui5_ui5/sap/zumcui5/index.html?installmentPlan&_ga=2.5668855",
+     "phone": null,
+     "when_to_use": "For initial billing disputes and grievances.",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://webonline.igl.co.in:8077/sap/bc/ui5_ui5/sap/zumcui5/index.html?installmentPlan&_ga=2.5668855"
+    },
+    {
+     "name": "MoPNG e-SEVA",
+     "level": "sector_regulator_or_ombudsman",
+     "channel": "Email support@mopnge-seva.in or contact via social media @MoPNGeSeva",
+     "url": null,
+     "phone": null,
+     "when_to_use": "If the grievance remains unresolved after contacting the service provider.",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://mopng.gov.in/en/home/whatsnew"
+    },
+    {
+     "name": "District Consumer Commission",
+     "level": "court_or_commission",
+     "channel": "File a formal complaint under the Consumer Protection Act, 2019",
+     "url": null,
+     "phone": null,
+     "when_to_use": "If the dispute is not settled through previous channels.",
+     "timeline": "check the timeline in Consumer Protection Act, 2019, Section 38(3)–(5)",
+     "typical_wait": "check the timeline in Consumer Protection Act, 2019, Section 38(3)–(5)",
+     "source": "Consumer Protection Act, 2019, Section 38(3)–(5)"
+    }
+   ],
+   "notes": [
+    "removed link https://www.mopnge-seva.in/ from “MoPNG e-SEVA”: not an official link found in the sources",
+    "replaced timeline “30 days (plus up to 15 days extension for the opposite party to respond)” of “District Consumer Commission”: its source does not state it",
+    "verified “MoPNG e-SEVA” on mopng.gov.in by a direct search"
+   ],
+   "note": "The MoPNG e-SEVA platform is the official grievance redressal platform for the Oil & Gas sector. For the District Consumer Commission, the timeline provided refers to the period granted to the opposite party to respond to the complaint.",
+   "official_pages": 8,
+   "clauses": [
+    "Reserve Bank – Integrated Ombudsman Scheme, 2026, Salient features, para 2",
+    "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 10(1)",
+    "Consumer Protection Act, 2019, Section 38(3)–(5)",
+    "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 14(1)–(5)"
+   ],
+   "seconds": 0.1,
+   "intake_s": 0.0,
+   "serp_calls": 0,
+   "control": false,
+   "pass": true
+  },
+  {
+   "id": 4,
+   "company": "Delhi University",
+   "route": {
+    "domain_free_text": "University examination result delay",
+    "matched_playbook": "public_service",
+    "confidence": 0.8,
+    "reason": "Delhi University is a public central university; grievances regarding academic administration fall under public service/educational institution grievance redressal.",
+    "mode": "matched",
+    "question": "",
+    "route_key": "university",
+    "state": "Delhi",
+    "authority_type": "central_government",
+    "queries": [
+     "Delhi University examination grievance portal",
+     "University Grants Commission grievance redressal",
+     "CPGRAMS Delhi University"
+    ]
+   },
+   "expect_hit": true,
+   "forbid_hit": [],
+   "all_sourced": true,
+   "fallback": false,
+   "steps": [
+    {
+     "name": "University Grievances Committee",
+     "level": "company",
+     "channel": "Online form: https://forms.gle/5X4fjkkMnp6ch6Qi9",
+     "url": null,
+     "phone": null,
+     "when_to_use": "If the grievance is not resolved at the college level, or for general grievances regarding university processes.",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://www.ugc.gov.in/Bureaus/bureaus_details?bRZ8RcXF7AVRJ8UJQcqpqNJXos5IzLQ1oBedOdGaMux5aKVUVeKWPvF%2FfNzLoKWf8QPVPy%2FFWb6iZacrcR%2FJHiSfkTqAdxjOPPMZ27G4ivPKvW%2Fow3wZU2WcI0MnmE9q"
+    },
+    {
+     "name": "University Grants Commission (UGC)",
+     "level": "sector_regulator_or_ombudsman",
+     "channel": "Email: contact.ugc@nic.in; Phone: 011-23604446, 011-23604200",
+     "url": null,
+     "phone": null,
+     "when_to_use": "For matters related to university administration and academic grievances.",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://www.ugc.gov.in/Bureaus/bureaus_details?bRZ8RcXF7AVRJ8UJQcqpqNJXos5IzLQ1oBedOdGaMux5aKVUVeKWPvF%2FfNzLoKWf8QPVPy%2FFWb6iZacrcR%2FJHiSfkTqAdxjOPPMZ27G4ivPKvW%2Fow3wZU2WcI0MnmE9q"
+    }
+   ],
+   "notes": [
+    "re-sourced “University Grievances Committee” to the official page ugc.gov.in that names it",
+    "removed link https://forms.gle/5X4fjkkMnp6ch6Qi9 from “University Grievances Committee”: not an official link found in the sources"
+   ],
+   "note": "The provided sources for Delhi University are specific to admission-related grievances. While no specific 'Examination Branch' grievance portal is listed in the provided text, the University Grievances Committee is the designated escalation point for university-level issues. For non-admission matters, you may also contact the UGC as the central regulatory body for universities.",
+   "official_pages": 1,
+   "clauses": [
+    "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 14(1)–(5)",
+    "Reserve Bank – Integrated Ombudsman Scheme, 2026, Salient features, para 2",
+    "RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025, Para 358",
+    "Insurance Ombudsman Rules, 2017, Rule 14(4)–(6)"
+   ],
+   "seconds": 0.1,
+   "intake_s": 0.0,
+   "serp_calls": 0,
+   "control": false,
+   "pass": true
+  },
+  {
+   "id": 5,
+   "company": "IndiGo",
+   "route": {
+    "domain_free_text": "airline flight cancellation refund",
+    "matched_playbook": "other",
+    "confidence": 0.8,
+    "reason": "Airline services fall under general consumer services, which is covered by the 'other' playbook.",
+    "mode": "matched",
+    "question": "",
+    "route_key": "airline",
+    "state": "Maharashtra",
+    "authority_type": "private_company",
+    "queries": [
+     "IndiGo grievance redressal officer",
+     "DGCA air passenger grievance portal",
+     "Air Sewa portal complaint"
+    ]
+   },
+   "expect_hit": true,
+   "forbid_hit": [],
+   "all_sourced": true,
+   "fallback": false,
+   "steps": [
+    {
+     "name": "Nodal Officer, IndiGo",
+     "level": "company",
+     "channel": "Email: nodalofficer@goindigo.in",
+     "url": null,
+     "phone": null,
+     "when_to_use": "If customer relations does not resolve your complaint within the stated period.",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://www.civilaviation.gov.in/rti/public-grievance"
+    },
+    {
+     "name": "Appellate Authority, IndiGo",
+     "level": "company",
+     "channel": "Email: appellateauthority@goindigo.in",
+     "url": null,
+     "phone": null,
+     "when_to_use": "If your query is still not resolved after contacting the Nodal Officer.",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://www.civilaviation.gov.in/rti/public-grievance"
+    },
+    {
+     "name": "DGCA (via AirSewa)",
+     "level": "sector_regulator_or_ombudsman",
+     "channel": "Portal: https://airsewa.gov.in",
+     "url": "https://airsewa.gov.in",
+     "phone": null,
+     "when_to_use": "If unresolved within the time set out in the source of the airline complaint; mandatory for flight-related complaints.",
+     "timeline": "check the timeline in https://www.civilaviation.gov.in/rti/public-grievance",
+     "typical_wait": "check the timeline in https://www.civilaviation.gov.in/rti/public-grievance",
+     "source": "https://www.civilaviation.gov.in/rti/public-grievance"
+    }
+   ],
+   "notes": [
+    "dropped “IndiGo Customer Care”: its source is stated only by a non-official page (getnyay.in)",
+    "re-sourced “Nodal Officer, IndiGo” to the official page civilaviation.gov.in that names it",
+    "re-sourced “Appellate Authority, IndiGo” to the official page civilaviation.gov.in that names it",
+    "re-sourced “DGCA (via AirSewa)” to the official page civilaviation.gov.in that names it",
+    "replaced timeline “15 days” of “DGCA (via AirSewa)”: its source does not state it",
+    "removed “15 days” from “DGCA (via AirSewa)”: its source does not state it",
+    "dropped “Consumer Commission”: its source is stated only by a non-official page (getnyay.in)"
+   ],
+   "note": "Under DGCA regulations, airlines are expected to refund within 7 working days for cancelled flights. Keep your original ticket, boarding pass, and all communication records as evidence for your complaint.",
+   "official_pages": 5,
+   "clauses": [
+    "Reserve Bank – Integrated Ombudsman Scheme, 2026, Salient features, para 2",
+    "Insurance Ombudsman Rules, 2017, Rule 14(4)–(6)",
+    "Telecom Consumers Complaint Redressal Regulations, 2012, Regulation 9",
+    "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 20"
+   ],
+   "seconds": 0.1,
+   "intake_s": 0.0,
+   "serp_calls": 0,
+   "control": false,
+   "pass": true
+  },
+  {
+   "id": 6,
+   "company": "BBMP",
+   "route": {
+    "domain_free_text": "municipal services - road maintenance and street lighting",
+    "matched_playbook": "public_service",
+    "confidence": 1.0,
+    "reason": "The complaint is about municipal infrastructure maintenance (street lights and roads) which falls under the jurisdiction of the local municipal body (BBMP).",
+    "mode": "matched",
+    "question": "",
+    "route_key": "municipal_services",
+    "state": "Karnataka",
+    "authority_type": "state_government",
+    "queries": [
+     "BBMP grievance portal",
+     "how to file complaint with BBMP for road repair",
+     "Karnataka public grievance portal"
+    ]
+   },
+   "expect_hit": true,
+   "forbid_hit": [],
+   "all_sourced": true,
+   "fallback": false,
+   "steps": [
+    {
+     "name": "BBMP Grievance Cell (GPMS)",
+     "level": "company",
+     "channel": "GPMS Online Complaint Monitoring System or BBMP Control Room (080-22221286)",
+     "url": null,
+     "phone": null,
+     "when_to_use": "For initial reporting of municipal service issues like potholes and street lights.",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://bbmptax.karnataka.gov.in/login.aspx"
+    },
+    {
+     "name": "Karnataka State Public Grievance Redressal System (PGRS)",
+     "level": "state_portal",
+     "channel": "https://ipgrs.karnataka.gov.in/",
+     "url": null,
+     "phone": null,
+     "when_to_use": "If the complaint remains unresolved after reporting to the BBMP.",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://ipgrs.karnataka.gov.in/Reports/grievance_dist_summaryReport"
+    },
+    {
+     "name": "Karnataka Government Grievance Helpline",
+     "level": "state_portal",
+     "channel": "Call 1902",
+     "url": null,
+     "phone": null,
+     "when_to_use": "For grievances regarding any scheme or service delivery of the Government of Karnataka.",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://ksp.karnataka.gov.in/english"
+    },
+    {
+     "name": "District Consumer Disputes Redressal Commission",
+     "level": "court_or_commission",
+     "channel": "File a formal complaint with the District Commission",
+     "url": null,
+     "phone": null,
+     "when_to_use": "If the grievance remains unresolved and constitutes a deficiency in service.",
+     "timeline": "Within 2 years from the date on which the cause of action has arisen",
+     "typical_wait": "Within 2 years from the date on which the cause of action has arisen",
+     "source": "Consumer Protection Act, 2019, Section 69"
+    }
+   ],
+   "notes": [
+    "re-sourced “BBMP Grievance Cell (GPMS)” to the official page karnataka.gov.in that names it"
+   ],
+   "note": "The BBMP website also provides a 'Raise Ticket' option for grievances. For potholes specifically, you may also attempt to email comm@bbmp.gov.in as noted in secondary sources.",
+   "official_pages": 5,
+   "clauses": [
+    "RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025, Para 359",
+    "Reserve Bank – Integrated Ombudsman Scheme, 2026, Salient features, para 2",
+    "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 10(1)",
+    "Consumer Protection Act, 2019, Section 69"
+   ],
+   "seconds": 0.1,
+   "intake_s": 0.0,
+   "serp_calls": 0,
+   "control": false,
+   "pass": true
+  },
+  {
+   "id": 7,
+   "company": "Flipkart",
+   "route": {
+    "domain_free_text": "e-commerce - refund denied for damaged product",
+    "matched_playbook": "ecommerce",
+    "confidence": 1.0,
+    "reason": "The complaint is about a refund denial for a product purchased on an e-commerce platform (Flipkart).",
+    "mode": "matched",
+    "question": "",
+    "route_key": "ecommerce",
+    "state": "Maharashtra",
+    "authority_type": "private_company",
+    "queries": [
+     "Flipkart grievance redressal officer",
+     "National Consumer Helpline e-commerce complaint",
+     "how to file consumer complaint against Flipkart"
+    ]
+   },
+   "expect_hit": true,
+   "forbid_hit": [],
+   "all_sourced": true,
+   "fallback": false,
+   "steps": [
+    {
+     "name": "Flipkart Customer Support / Grievance Officer",
+     "level": "company",
+     "channel": "Email: cs@flipkart.com, CC: grievance.officer@flipkart.com",
+     "url": null,
+     "phone": null,
+     "when_to_use": "Initial step to report the damaged product and request a refund.",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://www.flipkart.com/pages/vas-new-tnc"
+    },
+    {
+     "name": "National Consumer Helpline (NCH)",
+     "level": "other",
+     "channel": "Call 1915, SMS 8800001915, NCH App, UMANG App, or Web Portal",
+     "url": "https://consumerhelpline.gov.in",
+     "phone": null,
+     "when_to_use": "If the company fails to resolve the issue or you are unsatisfied with the response.",
+     "timeline": "30 days",
+     "typical_wait": "30 days",
+     "source": "https://consumerhelpline.gov.in/public/about"
+    },
+    {
+     "name": "District Consumer Commission",
+     "level": "court_or_commission",
+     "channel": "File a formal complaint at the appropriate District Consumer Commission.",
+     "url": null,
+     "phone": null,
+     "when_to_use": "If the grievance remains unresolved after pre-litigation efforts.",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://consumerhelpline.gov.in/public/about"
+    }
+   ],
+   "notes": [
+    "re-sourced “Flipkart Customer Support / Grievance Officer” to the official page flipkart.com that names it"
+   ],
+   "note": "Under the Consumer Protection (E-Commerce) Rules, 2020, inventory e-commerce entities are prohibited from refusing refunds for defective or deficient goods. The National Consumer Helpline acts as a pre-litigation stage; if the issue is not resolved here, you may proceed to the District Consumer Commission as per the Consumer Protection Act, 2019.",
+   "official_pages": 5,
+   "clauses": [
+    "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 16",
+    "Consumer Protection (E-Commerce) Rules, 2020, Rule 7(4)–(5)",
+    "Consumer Protection Act, 2019, Section 39(1)",
+    "RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025, Para 442(6)–(7)"
+   ],
+   "seconds": 0.1,
+   "intake_s": 0.0,
+   "serp_calls": 0,
+   "control": true,
+   "pass": true
+  }
+ ]
+}

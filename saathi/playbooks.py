@@ -1,23 +1,16 @@
-"""Domain playbooks: a VERIFIED CACHE of complaint routes, not a closed list.
+"""Seed playbooks: VERIFIED complaint routes for the domains we checked by hand, not a closed list.
 
-Seed playbooks below were checked against the regulators' own texts (raw/legal/) and portals on 2026-10-07. When a
-complaint fits none of them, research mode (nodes/route_research.py) finds the official route from sources and,
-once its code-level checks pass, saves it to data/playbooks/<key>.json - from then on it is matched like a seed one.
+They were checked against the regulators' own texts (raw/legal/) and portals on 2026-10-07. When a complaint has no
+specific playbook, escalation_planner (nodes/escalation.py) builds the ladder from evidence and validates it in code;
+verified ladders are cached in data/ladders/ by sector + state (+ company).
 
 Each escalation step: {name, channel, url, phone, when_to_use, typical_wait, source}. Every step must carry a
-source (seed steps: this file; learned steps: the official page that states them). Legal citations in a draft
-never come from here - only from retrieved clauses.
+source. Legal citations in a draft never come from here - only from retrieved clauses.
 """
 from __future__ import annotations
 
-import json
 import re
-from datetime import date
 
-from config import DATA_DIR
-
-PLAYBOOK_DIR = DATA_DIR / "playbooks"
-PLAYBOOK_DIR.mkdir(parents=True, exist_ok=True)
 SEED_SOURCE = "Shikayat Saathi verified playbook (checked against the regulators' texts, 2026-10-07)"
 
 SECTORS: dict[str, dict] = {
@@ -283,18 +276,17 @@ PUBLIC_CONTACTS = {"1915", "8800001915", "14448", "155255", "18004254732", "1930
 # Tier A: draft and escalate · B: safety first, police complaint + urgent routing · C: explain and refer (no drafting
 # of court documents).
 TIERS = {"A": "Draft and escalate", "B": "Draft and route urgently", "C": "Explain and refer"}
-CYBER_RE = re.compile(r"cyber|fraud|scam|otp|phishing|fake (?:call|link|website|app|customer care)|upi|online|"
-                      r"sextortion|digital arrest|hack|ठगी|धोखा|thagi", re.I)
 
 
 def tier_of(sector: str) -> str:
     return SECTORS.get(sector, SECTORS["other"]).get("tier", "A")
 
 
-def forum_query(sector: str, city: str, complaint: str = "") -> tuple[str, str, str] | None:
-    """(Google Maps query, title pattern, label) for the local office that matters for this domain, or None."""
+def forum_query(sector: str, city: str, cyber: bool = False) -> tuple[str, str, str] | None:
+    """(Google Maps query, title pattern, label) for the local office that matters for this domain, or None.
+    `cyber` comes from intake's issue types (cyber_fraud), not from keywords."""
     if sector == "police":
-        if CYBER_RE.search(complaint):
+        if cyber:
             return f"Cyber Crime Police Station {city}", r"cyber|police", "Cyber crime police station"
         return f"Superintendent of Police office {city}", r"police|commissioner|superintendent|SP office", \
             "Senior police office"
@@ -304,18 +296,6 @@ def forum_query(sector: str, city: str, complaint: str = "") -> tuple[str, str, 
         return None
     return f"District Consumer Disputes Redressal Commission {city}", r"consumer|forum|commission", "Consumer commission"
 
-ISSUE_QUERIES = {
-    "refund": "refund of consideration within time; consumer right to seek redressal; unfair trade practice",
-    "defective": "defective goods replacement refund; product liability; deficiency",
-    "deficiency": "deficiency in service fault imperfection shortcoming inadequacy in quality of performance",
-    "unauthorised_charge": "unauthorised charges deducted from account without consent; deficiency in service",
-    "harassment": "recovery agents harassment intimidation; grievance redressal; data access contacts",
-    "claim_rejection": "claim rejected repudiated by insurer; complaint to ombudsman",
-    "misleading": "misleading advertisement unfair trade practice false representation",
-    "data_privacy": "collection and sharing of personal data without consent; privacy",
-    "cyber_fraud": "fraudulent electronic banking transaction reported by customer; limited liability; reversal",
-    "other": "consumer rights to be heard and seek redressal against unfair trade practice",
-}
 
 # Facts each sector's complaint needs; missing ones become placeholders in the draft.
 REQUIRED_FACTS = {
@@ -340,6 +320,32 @@ def missing_facts_for(sector: str, facts: dict) -> list[dict]:
             if not (facts.get(f) or (f == "reference_id" and facts.get("order_id")))]
 
 
+def merge_missing(sector: str, facts: dict, extra: list[dict] | None) -> list[dict]:
+    """The domain's fixed minimum (the critic checks these placeholders) + the facts intake's LLM said THIS case
+    still needs. Deduplicated by fact key and by placeholder; facts the complaint already gives are not asked."""
+    def words(ph: str) -> set[str]:
+        return {w for w in re.findall(r"[A-Z]{4,}", ph.upper()) if w not in {"NUMBER", "DETAILS", "DATE"}}
+
+    base = missing_facts_for(sector, facts)
+    out = [dict(m) for m in base]
+    upgraded: set[int] = set()
+    for m in extra or []:
+        f, ph = (m.get("fact") or "").strip(), (m.get("placeholder") or "").strip()
+        if not f or not ph or facts.get(f):
+            continue
+        ph = ph if ph.startswith("[") else f"[{ph.strip('[]').upper()}]"
+        if any(o["fact"] == f or o["placeholder"].upper() == ph.upper() for o in out[len(base):]):
+            continue  # already added
+        same = next((i for i, o in enumerate(base) if o["fact"] == f or (words(o["placeholder"]) & words(ph))
+                     or ("DATE" in o["placeholder"].upper() and "DATE" in ph.upper())), None)
+        if same is None:
+            out.append({"fact": f, "placeholder": ph})
+        elif same not in upgraded:
+            out[same]["placeholder"] = ph  # the case-specific wording replaces the generic one (same fact key)
+            upgraded.add(same)
+    return out
+
+
 # --------------------------------------------------------------------------- the menu and learned playbooks
 
 for _cfg in SECTORS.values():  # every seed step carries its source
@@ -348,42 +354,7 @@ for _cfg in SECTORS.values():  # every seed step carries its source
 
 
 def playbook_menu() -> str:
-    """What intake's LLM may match against: seed + learned playbooks (key, label, what it covers, regulator)."""
+    """What intake's LLM may match against: the verified seed playbooks (key, label, regulator)."""
     return "\n".join(f"- {k}: {c['label']}" + (f" - {c['covers']}" if c.get("covers") else "")
-                     + f" [regulator: {c['regulator']}]" + (" (learned from official sources)" if c.get("learned")
-                                                             else "")
+                     + f" [regulator: {c['regulator']}]"
                      for k, c in SECTORS.items())
-
-
-def slug(text: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "_", (text or "").lower()).strip("_")[:40] or "route"
-
-
-def register_playbook(key: str, entry: dict, *, save: bool = True) -> str:
-    """Add a learned playbook (already checked by route_research's guards). Never overwrites a seed playbook."""
-    key = slug(key)
-    if key in SECTORS and not SECTORS[key].get("learned"):
-        key = f"{key}_learned"
-    entry = {"officer_terms": ["grievance officer", "nodal officer"],
-             "retry_terms": ["appellate authority", "contact us"], "law_docs": [], "basis_query": "",
-             "tier": "A", "learned": True, "learned_at": date.today().isoformat(), **entry}
-    SECTORS[key] = entry
-    if save:
-        (PLAYBOOK_DIR / f"{key}.json").write_text(json.dumps(entry, ensure_ascii=False, indent=1), encoding="utf-8")
-    return key
-
-
-def load_learned() -> int:
-    n = 0
-    for path in sorted(PLAYBOOK_DIR.glob("*.json")):
-        try:
-            entry = json.loads(path.read_text(encoding="utf-8"))
-        except (ValueError, UnicodeDecodeError):
-            continue
-        if entry.get("escalation") and path.stem not in SECTORS:
-            SECTORS[path.stem] = entry
-            n += 1
-    return n
-
-
-load_learned()

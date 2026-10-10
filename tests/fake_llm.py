@@ -61,7 +61,8 @@ def intake(prompt: str) -> dict:
             "facts": {"issue": re.sub(r"\s+", " ", text)[:200], "amount": amt.group(1).replace(",", "") if amt else "",
                       "order_id": oid.group(1) if oid else "", "date": date.group(0) if date else "",
                       "police_station": ps.group(1) if ps else ""},
-            "follow_up_questions": [], "danger": []}
+            "follow_up_questions": [], "danger": [], "legal_query": f"{' '.join(issues)} consumer complaint",
+            "missing_facts": []}
 
 
 def gap(prompt: str) -> dict:
@@ -80,7 +81,6 @@ def gap(prompt: str) -> dict:
 
 
 def extract(prompt: str) -> dict:
-    from saathi.nodes.grievance import _role
     from saathi.tools.fetch import find_emails, find_phones
     company = _between(prompt, "Company:", "\n").strip()
     page = prompt.split("\n\n", 1)[-1]
@@ -90,8 +90,13 @@ def extract(prompt: str) -> dict:
                  for p in find_phones(page)]
     for c in contacts:
         v = c.get("email") or c.get("phone")
-        i = page.lower().find(v[:6].lower())
-        c["role"] = _role(page[max(0, i - 200): i + 50]) if i >= 0 else "other"
+        i = page.lower().find(v.lower() if "@" in v else v[:6])
+        ctx = page[max(0, i - 200): i + 50].lower() if i >= 0 else ""
+        c["role"] = next((r for r, k in (("appellate_authority", "appellate"), ("principal_nodal_officer", "principal "
+                          "nodal"), ("nodal_officer", "nodal"), ("grievance_officer", "grievance officer"),
+                          ("grievance_cell", "grievance"), ("customer_care", "customer")) if k in ctx), "other")
+        name = re.search(r"(?:Name\s*:\s*|M[rs]s?\.?\s+)([A-Z][a-z]+(?: [A-Z][a-z]+)?)", page[max(0, i - 200): i])
+        c["name"] = name.group(1) if name else ""
     return {"contacts": contacts}
 
 
@@ -147,6 +152,9 @@ def answer(system: str, prompt: str, schema: dict, **_) -> dict:
         return draft(prompt)
     if system == CRITIC_SYSTEM:
         return {"issues": []}
+    from saathi.nodes.escalation import PLAN_SYSTEM
+    if system == PLAN_SYSTEM:  # no route found by default: the seed / labelled general route is used
+        return {"steps": [], "notes": ""}
     if system == RELEVANCE_SYSTEM:
         n = len(re.findall(r"^\[\d+\]", prompt, re.M))
         return {"results": [{"index": i, "relevant": True, "how_resolved": ""} for i in range(n)]}

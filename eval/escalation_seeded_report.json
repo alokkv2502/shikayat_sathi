@@ -1,0 +1,256 @@
+{
+ "summary": {
+  "cases": 3,
+  "passed": 3,
+  "expected_authority_found": 3,
+  "forbidden_used": 0,
+  "all_steps_sourced": 3,
+  "general_route_used": 0,
+  "avg_seconds": 0.7,
+  "avg_searches": 0.0
+ },
+ "rows": [
+  {
+   "id": 11,
+   "company": "HDFC Bank",
+   "route": {
+    "domain_free_text": "banking - unauthorized UPI transaction and lack of response to grievance",
+    "matched_playbook": "bank",
+    "confidence": 1.0,
+    "reason": "The complaint is about an unauthorized transaction in a bank account, which falls directly under the RBI-Integrated Ombudsman Scheme for banking services.",
+    "mode": "matched",
+    "question": "",
+    "route_key": "banking",
+    "state": "Maharashtra",
+    "authority_type": "private_company",
+    "queries": [
+     "HDFC Bank grievance redressal process",
+     "RBI Integrated Ombudsman Scheme complaint",
+     "how to file complaint against HDFC Bank with banking ombudsman"
+    ]
+   },
+   "expect_hit": true,
+   "forbid_hit": [],
+   "all_sourced": true,
+   "fallback": false,
+   "steps": [
+    {
+     "name": "HDFC Bank Internal Grievance Redressal",
+     "level": "company",
+     "channel": "HDFC Bank App or NetBanking (Menu > 'Raise Dispute & Report Fraud')",
+     "url": null,
+     "phone": null,
+     "when_to_use": "For reporting unauthorized transactions or disputes; the bank is expected to resolve issues through its internal machinery.",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://www.hdfc.bank.in/content/dam/hdfcbankpws/in/en/personal-banking/discover-products/need-help/mobile-banking-faqs/online-dispute-resolution-faqs.pdf"
+    },
+    {
+     "name": "Reserve Bank of India (Integrated Ombudsman Scheme)",
+     "level": "sector_regulator_or_ombudsman",
+     "channel": "RBI Complaint Management System (CMS)",
+     "url": null,
+     "phone": null,
+     "when_to_use": "If the bank fails to credit the unauthorized transaction within 10 working days or fails to resolve the grievance after exhausting the bank's internal mechanism.",
+     "timeline": "10 working days",
+     "typical_wait": "10 working days",
+     "source": "RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025, Para 72"
+    },
+    {
+     "name": "Consumer Commission",
+     "level": "court_or_commission",
+     "channel": "District or State Consumer Disputes Redressal Commission",
+     "url": null,
+     "phone": null,
+     "when_to_use": "If the grievance remains unresolved after exhausting internal bank remedies and regulatory intervention.",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://www.hdfc.bank.in/content/dam/hdfcbankpws/in/en/personal-banking/discover-products/our-corporate-commitment/customer-rights-policy.pdf"
+    }
+   ],
+   "notes": [
+    "removed link https://cms.rbi.org.in/ from “Reserve Bank of India (Integrated Ombudsman Scheme)”: not an official link found in the sources"
+   ],
+   "note": "Since you have already waited 35 days, you have effectively exhausted the bank's internal grievance mechanism. You should proceed directly to the RBI Ombudsman via the CMS portal. Per Clause [C2], the bank was required to credit the unauthorized transaction within 10 working days.",
+   "official_pages": 6,
+   "clauses": [
+    "RBI (Commercial Banks - Responsible Business Conduct) Third Amendment Directions, 2026, Para 5",
+    "RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025, Para 72",
+    "RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025, Para 63",
+    "RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025, Para 212"
+   ],
+   "seconds": 1.8,
+   "intake_s": 0.0,
+   "serp_calls": 0,
+   "control": false,
+   "pass": true,
+   "seed": [
+    "Bank grievance cell → Principal Nodal Officer",
+    "RBI Ombudsman (RB-IOS, 2026)",
+    "District Consumer Commission"
+   ],
+   "would_fall_back_to_seed": false
+  },
+  {
+   "id": 12,
+   "company": "Star Health",
+   "route": {
+    "domain_free_text": "Health insurance claim rejection due to alleged pre-existing disease",
+    "matched_playbook": "insurance",
+    "confidence": 1.0,
+    "reason": "The complaint is about a health insurance claim rejection, which falls directly under the insurance playbook.",
+    "mode": "matched",
+    "question": "",
+    "route_key": "insurance",
+    "state": "Tamil Nadu",
+    "authority_type": "private_company",
+    "queries": [
+     "Star Health grievance redressal process",
+     "Insurance Ombudsman Chennai",
+     "IRDAI Bima Bharosa portal"
+    ]
+   },
+   "expect_hit": true,
+   "forbid_hit": [],
+   "all_sourced": true,
+   "fallback": false,
+   "steps": [
+    {
+     "name": "Star Health Grievance Redressal",
+     "level": "company",
+     "channel": "Customer Care Helpline: 044 6900 6900; Email: info@starhealth.in; Visit the designated Grievance Officer at your nearest Star Health branch.",
+     "url": "https://www.starhealth.in/grievance-redressal/",
+     "phone": null,
+     "when_to_use": "For initial complaints regarding claim rejection.",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://www.starhealth.in/grievance-redressal/"
+    },
+    {
+     "name": "Insurance Ombudsman",
+     "level": "sector_regulator_or_ombudsman",
+     "channel": "Refer to the Office of Insurance Ombudsman (details available via IRDAI).",
+     "url": null,
+     "phone": null,
+     "when_to_use": "If the grievance is not addressed within the time set out in the source or not resolved to your satisfaction.",
+     "timeline": "check the timeline in https://www.starhealth.in/help/internal/health-claim-cashless/",
+     "typical_wait": "check the timeline in https://www.starhealth.in/help/internal/health-claim-cashless/",
+     "source": "https://www.starhealth.in/help/internal/health-claim-cashless/"
+    },
+    {
+     "name": "National Consumer Helpline",
+     "level": "court_or_commission",
+     "channel": "https://consumerhelpline.gov.in/public/",
+     "url": "https://consumerhelpline.gov.in/public/",
+     "phone": null,
+     "when_to_use": "If the dispute remains unresolved through company and regulatory channels.",
+     "timeline": null,
+     "typical_wait": "",
+     "source": "https://www.starhealth.in/grievance-redressal/"
+    }
+   ],
+   "notes": [
+    "re-sourced “Insurance Ombudsman” to the official page starhealth.in that names it",
+    "replaced timeline “30 days” of “Insurance Ombudsman”: its source does not state it",
+    "removed “30 days” from “Insurance Ombudsman”: its source does not state it",
+    "dropped “Bima Bharosa (IRDAI)”: its source is stated only by a non-official page (galaxyhealth.com)",
+    "re-sourced “National Consumer Helpline” to the official page starhealth.in that names it"
+   ],
+   "note": "The RBI Ombudsman clauses [C1, C3, C4] are not applicable as this is a health insurance dispute, not a banking dispute. The Insurance Ombudsman Rules [C2] provide the legal basis for the Ombudsman's authority to pass an award.",
+   "official_pages": 6,
+   "clauses": [
+    "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 16",
+    "Insurance Ombudsman Rules, 2017, Rule 17(1)–(2)",
+    "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 10(2)–(3)",
+    "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 12(3)–(5)"
+   ],
+   "seconds": 0.1,
+   "intake_s": 0.0,
+   "serp_calls": 0,
+   "control": false,
+   "pass": true,
+   "seed": [
+    "Insurer's Grievance Redressal Officer",
+    "IRDAI Bima Bharosa",
+    "Insurance Ombudsman"
+   ],
+   "would_fall_back_to_seed": false
+  },
+  {
+   "id": 13,
+   "company": "Jio",
+   "route": {
+    "domain_free_text": "telecom - unauthorized plan activation and billing dispute",
+    "matched_playbook": "telecom",
+    "confidence": 1.0,
+    "reason": "The complaint is about a mobile service provider (Jio) and an unauthorized billing issue, which falls directly under the telecom playbook.",
+    "mode": "matched",
+    "question": "",
+    "route_key": "telecom",
+    "state": "Maharashtra",
+    "authority_type": "private_company",
+    "queries": [
+     "Jio appellate authority contact",
+     "TRAI telecom consumer grievance redressal",
+     "Jio nodal officer contact details"
+    ]
+   },
+   "expect_hit": true,
+   "forbid_hit": [],
+   "all_sourced": true,
+   "fallback": false,
+   "steps": [
+    {
+     "name": "Reliance Jio Customer Care",
+     "level": "company",
+     "channel": "Call 198 (from Jio) or 1800 889 9999 (from non-Jio). Obtain a complaint reference number (docket number).",
+     "url": null,
+     "phone": null,
+     "when_to_use": "Initial complaint for billing dispute or unauthorized plan activation.",
+     "timeline": "check the timeline in https://trai.gov.in/consumer-info/cgr/appellate-authority?page=10",
+     "typical_wait": "check the timeline in https://trai.gov.in/consumer-info/cgr/appellate-authority?page=10",
+     "source": "https://trai.gov.in/consumer-info/cgr/appellate-authority?page=10"
+    },
+    {
+     "name": "Appellate Authority, Reliance Jio",
+     "level": "sector_regulator_or_ombudsman",
+     "channel": "Submit a written application to the Appellate Authority including the complaint reference number, original complaint, and operator's response.",
+     "url": null,
+     "phone": null,
+     "when_to_use": "If the complaint remains unresolved after the time set out in the source or you are dissatisfied with the resolution provided by customer care.",
+     "timeline": "check the timeline in https://trai.gov.in/consumer-info/cgr/appellate-authority?page=10",
+     "typical_wait": "check the timeline in https://trai.gov.in/consumer-info/cgr/appellate-authority?page=10",
+     "source": "https://trai.gov.in/consumer-info/cgr/appellate-authority?page=10"
+    }
+   ],
+   "notes": [
+    "re-sourced “Reliance Jio Customer Care” to the official page trai.gov.in that names it",
+    "removed link https://www.indiacustomercare.com/jiofi-customer-care from “Reliance Jio Customer Care”: not an official link found in the sources",
+    "replaced timeline “30 days” of “Reliance Jio Customer Care”: its source does not state it",
+    "re-sourced “Appellate Authority, Reliance Jio” to the official page trai.gov.in that names it",
+    "replaced timeline “File within 3 months of disposal or expiry of 30-day resolution period; disposed within 60 days.” of “Appellate Authority, Reliance Jio”: its source does not state it",
+    "removed “30 days” from “Appellate Authority, Reliance Jio”: its source does not state it",
+    "dropped “Consumer Court”: its source is stated only by a non-official page (sansalegal.com)"
+   ],
+   "note": "Always obtain and keep a record of your complaint reference number (docket number) from the operator, as this is required for all subsequent escalations. Ensure you have copies of billing statements and proof of payment when filing your appeal.",
+   "official_pages": 2,
+   "clauses": [
+    "RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025, Para 210",
+    "RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025, Para 212",
+    "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 16",
+    "Telecom Consumers Complaint Redressal Regulations, 2012, Regulation 1"
+   ],
+   "seconds": 0.1,
+   "intake_s": 0.0,
+   "serp_calls": 0,
+   "control": false,
+   "pass": true,
+   "seed": [
+    "Operator complaint centre",
+    "Operator's Appellate Authority",
+    "DoT CPGRAMS / Consumer Commission"
+   ],
+   "would_fall_back_to_seed": false
+  }
+ ]
+}

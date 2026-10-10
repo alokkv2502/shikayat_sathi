@@ -2,17 +2,20 @@
 final letter (never sent automatically)."""
 
 import json
-from datetime import date
+import re
 
 from langchain_core.runnables import RunnableConfig
 from langgraph.types import interrupt
 
 from config import CASES_DIR
-from saathi.deadlines import step_dates
+from saathi.deadlines import localize, step_dates
+from saathi.letter import labels, today
 from saathi.nodes.common import node
 from saathi.nodes.drafter import escalation_for, reply_deadline
+from saathi.nodes.escalation import CPGRAMS, STATE_SIDE
 from saathi.nodes.legal_rag import strip_unsupported
 from saathi.playbooks import tier_of
+from saathi.tools.domains import host, registrable
 
 MAX_REVIEW_ROUNDS = 2  # answering questions redrafts the letter; the last round finalizes
 
@@ -29,7 +32,8 @@ def details_payload(state: dict) -> dict:
             "eligibility": state.get("eligibility") or {}, "case_brief": state.get("case_brief") or {},
             "tier": tier_of(state.get("sector") or "other"), "safety": state.get("safety") or {},
             "sector": state.get("sector"), "company": state.get("company"),
-            "complainant": state.get("complainant") or {}}
+            "complainant": state.get("complainant") or {},
+            "letter_language": state.get("letter_language") or "en"}
 
 
 @node("📝 Details form")
@@ -43,7 +47,9 @@ def ask_details(state: dict) -> dict:
     edits = interrupt(payload) or {}
     answers, fills = _clean(edits.get("case_answers")), _clean(edits.get("fills"))
     me = {**(state.get("complainant") or {}), **_clean(edits.get("complainant"))}
-    return {"case_answers": answers, "fills": fills, "complainant": me,
+    chosen = edits.get("letter_language")
+    lang = chosen if chosen in ("en", "hi") else state.get("letter_language") or "en"
+    return {"case_answers": answers, "fills": fills, "complainant": me, "letter_language": lang,
             "trace": [f"📝 Details form: {len(answers)} answer(s), {len(fills)} detail(s) filled of "
                       f"{len(payload['questions'])} question(s) and {len(payload['missing_facts'])} missing fact(s)"]}
 
@@ -100,6 +106,26 @@ def route_after_review(state: dict) -> str:
     return "reassess" if state.get("redraft") else "finalize"
 
 
+def addressee_block(state: dict, rec: dict | None, tier: str, L: dict) -> list[str]:
+    """The 'To,' block, professional and in the letter's language: the receiving officer and organisation - never a
+    portal or website name."""
+    if tier == "C":
+        return []
+    if tier == "B":  # always the police station, even when 1930 is the first step on the ladder
+        station = (state.get("fills") or {}).get("[POLICE STATION]") or \
+            (state.get("facts") or {}).get("police_station") or "[POLICE STATION]"
+        return [L["sho"], L["station"].format(station)]
+    lines = [ln for ln in state.get("addressee_lines") or []
+             if not re.search(r"https?://|www\.|@|portal|website|पोर्टल|वेबसाइट", ln, re.I)][:3]
+    officer = (rec or {}).get("name") or ""
+    if lines:
+        return ([officer] if officer and officer not in " ".join(lines) else []) + lines
+    org = state.get("company") or (state.get("case_brief") or {}).get("administering_body") or ""
+    st = (state.get("route") or {}).get("state") or ""
+    org_line = org + (f", {st}" if org and st and st.lower() not in org.lower() else "")
+    return [officer or L["gro"]] + ([org_line] if org_line else [])
+
+
 @node("📦 Finalize")
 def finalize(state: dict, config: RunnableConfig | None = None) -> dict:
     edits = state.get("user_edits") or {}
@@ -110,15 +136,20 @@ def finalize(state: dict, config: RunnableConfig | None = None) -> dict:
     case_answers = (state.get("case_answers") or {}) | _clean(edits.get("case_answers"))
     drafted = state.get("drafted_answers") or {}
     undrafted = {k: v for k, v in case_answers.items() if drafted.get(k) != v}  # e.g. given in the last round
+    lang = state.get("letter_language") or "en"
+    L = labels(lang)
+    if lang == "hi":  # an English gloss in brackets after a Hindi word - "लंबित (pending)" - is dropped
+        gloss = r"\s*\((?:[A-Za-z][A-Za-z .'/-]*)\)"
+        body, subject = re.sub(gloss, "", body), re.sub(gloss, "", subject)
     if undrafted:
         details = "\n".join(f"- {question}: {answer}" for question, answer in undrafted.items())
-        body += "\n\nDetails I can confirm about my case:\n" + details
+        body += f"\n\n{L['details']}\n" + details
     # Deadlines are recomputed for the day the letter is dated (the review may finish on a later day).
     escalation = escalation_for(state)
     deadline = reply_deadline(escalation) if tier_of(state.get("sector") or "other") == "A" else {}
     old = (state.get("deadline") or {}).get("date")
     if old and deadline.get("date") and old != deadline["date"]:
-        body = body.replace(old, deadline["date"])
+        body = body.replace(localize(old, lang), localize(deadline["date"], lang))
     clauses = state.get("clauses") or []
     body, removed = strip_unsupported(body, clauses)
     by_tag = {c["tag"]: c for c in clauses}
@@ -128,32 +159,35 @@ def finalize(state: dict, config: RunnableConfig | None = None) -> dict:
     if rec and not (rec.get("verified") and rec.get("source_url")):  # guard: no source, no recipient
         rec = None
     me = {**(state.get("complainant") or {}), **(edits.get("complainant") or {})}
-    to_name = (rec or {}).get("name") or (state.get("escalation") or [{}])[0].get("name", "Grievance Officer")
-    if tier == "B":  # always the police station, even when 1930 is the first step on the ladder
-        station = (state.get("fills") or {}).get("[POLICE STATION]") or (state.get("facts") or {}).get("police_station")
-        to_name = "The Station House Officer\n" + (f"{station} Police Station" if station else
-                                                   "[POLICE STATION] Police Station")
-    header = (f"To,\n{to_name}\n{state.get('company') or ''}\n" + (f"Email: {rec['value']}\n" if rec else "")
-              + f"\nDate: {date.today().strftime('%d %B %Y')}\n\nSubject: {subject}\n\nDear Sir/Madam,\n\n")
-    footer = (f"\n\nYours faithfully,\n{me.get('name') or '[YOUR NAME]'}\n{me.get('phone') or '[PHONE]'}\n"
-              f"{me.get('email') or '[EMAIL]'}\n{me.get('address') or '[ADDRESS]'}")
+    to_lines = addressee_block(state, rec, tier, L)
+    to_name = to_lines[0] if to_lines else ""
+    header = (f"{L['to']}\n" + "\n".join(to_lines) + "\n" + (f"{L['email']}: {rec['value']}\n" if rec else "")
+              + f"\n{L['date']}: {today(lang)}\n\n{L['subject']}: {subject}\n\n{L['salutation']}\n\n")
+    footer = (f"\n\n{L['closing']}\n{me.get('name') or L['name']}\n{me.get('phone') or L['phone']}\n"
+              f"{me.get('email') or L['email_ph']}\n{me.get('address') or L['address']}")
     if tier == "B":
-        footer += "\n\nKeep a copy and ask for a signed, stamped receipt (or the FIR copy) when you submit this."
+        footer += f"\n\n{L['receipt']}"
     if tier == "C":  # an explainer for the person, not a letter to anyone
-        to_name = "You"
-        header = f"{subject}\n{date.today().strftime('%d %B %Y')}\n\n"
-        footer = ("\n\nThis is general information to help you take the next step. It is not legal advice; a lawyer "
-                  "or the District Legal Services Authority can advise on your situation.")
+        to_name = ""
+        header = f"{subject}\n{today(lang)}\n\n"
+        footer = f"\n\n{L['not_advice']}"
     basis = "\n".join(f"[{t}] {by_tag[t]['citation']} — {by_tag[t]['title']}" for t in used)
     brief = state.get("case_brief") or {}
-    sources = brief.get("sources") or []
+    own = {registrable(d) for d in [state.get("company_domain"), *(state.get("official_domains") or [])] if d}
+    sources = [u for u in brief.get("sources") or []  # a letter cites official pages only
+               if (host(u).endswith((".gov.in", ".nic.in")) or registrable(u) in own)
+               and not ((state.get("route") or {}).get("authority_type") in STATE_SIDE and CPGRAMS.search(u))]
     sources_text = "\n".join(f"- {url}" for url in sources)
-    letter = (header + body + footer + (f"\n\nLegal basis cited:\n{basis}" if basis else "")
-              + (f"\n\nScheme and case sources:\n{sources_text}" if sources_text else ""))
+    letter = (header + body + footer + (f"\n\n{L['basis']}\n{basis}" if basis else "")
+              + (f"\n\n{L['sources']}\n{sources_text}" if sources_text else ""))
     ladder = "\n".join(f"{i}. **{s['name']}** ({s['channel']}) — {s['when_to_use']}"
                        + (f" {s['url']}" if s.get("url") else "") + (f" · {s['phone']}" if s.get("phone") else "")
                        + (f"\n   📅 {step_dates(s)}" if step_dates(s) else "")
+                       + (f"\n   🔗 source: {s['source']}" if s.get("source") else "")
                        for i, s in enumerate(escalation, 1))
+    lad = state.get("ladder") or {}
+    if lad.get("fallback") and lad.get("note"):  # honest label when no sector-specific route was found
+        ladder = f"_{lad['note']}_\n\n" + ladder
     if deadline:
         ladder = (f"**Reply due by {deadline['date']}** — {deadline['basis']}"
                   + (f" ({deadline['source']})" if deadline.get("source") else "") + ".\n\n" + ladder)

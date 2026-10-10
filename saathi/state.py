@@ -23,9 +23,14 @@ class ComplaintState(TypedDict, total=False):
     # intake_planner
     language: str                                    # "en" | "hi" | "hinglish"
     complaint_en: str                                # the complaint in English - translated ONCE, at intake
+    letter_language: str                             # en | hi - the WHOLE letter is in this one language
+    addressee_lines: list[str]                       # the drafter's addressee block, in the letter's language
+    legal_query: str                                 # intake's English search query for the applicable law
+    extra_missing: list[dict]                        # intake's case-specific missing facts (beyond the domain minimum)
     sector: str                                      # the domain: a key of playbooks.SECTORS
     tier: str                                        # A draft & escalate · B route urgently · C explain & refer
     route: dict                                      # {domain_free_text, matched_playbook, confidence, reason, mode}
+    ladder: dict                                     # escalation_planner: {steps, fallback, note, notes, sources}
     clarified: bool                                  # the one clarifying question was asked already
     safety: dict                                     # safety_router: {level, categories, helplines, messages}
     case_entities: list[str]
@@ -102,6 +107,12 @@ class Facts(BaseModel):
                                     description="Additional case-specific facts stated by the complainant")
 
 
+class MissingFact(BaseModel):
+    fact: str = Field(description="snake_case key, e.g. booking_reference, meter_number, ticket_number")
+    placeholder: str = Field(description="What the letter shows until it is filled, in capitals and brackets, "
+                                         "e.g. [PNR / BOOKING NUMBER]")
+
+
 class IntakeOut(BaseModel):
     language: Literal["en", "hi", "hinglish"]
     complaint_en: str = Field(description="The complaint translated faithfully into plain English (the same text if "
@@ -131,6 +142,25 @@ class IntakeOut(BaseModel):
                                           "(ongoing violence or a threat to kill, sexual violence, a missing or "
                                           "abducted person, suicide or self-harm risk, a medical emergency). Past, "
                                           "resolved events and ordinary fraud or harassment are not. Else [].")
+    legal_query: str = Field("", description="A short English search query (8-15 words) for the Indian consumer / "
+                                             "regulatory law that applies to THIS complaint, e.g. 'refund not given "
+                                             "for cancelled flight deficiency in service consumer complaint'")
+    missing_facts: list[MissingFact] = Field(default_factory=list,
+                                             description="Up to 4 facts THIS letter needs that the complaint does "
+                                                         "not give (a booking / consumer / policy number, a date, "
+                                                         "an amount). Never ones it already states.")
+    route_key: str = Field("", description="Short snake_case name of the sector, stable across similar complaints: "
+                                           "e.g. electricity, water_supply, piped_gas, airline, university, "
+                                           "municipal_services, ecommerce, banking")
+    state: str = Field("", description="Indian state / UT where this happened or of the authority involved, if "
+                                       "stated or clear from the city; else ''")
+    authority_type: Literal["private_company", "central_government", "state_government", "state_utility_or_psu",
+                            "unknown"] = Field("unknown", description="Who the complaint is against")
+    route_queries: list[str] = Field(default_factory=list,
+                                     description="2-4 web searches that would find the OFFICIAL grievance route for "
+                                                 "this complaint (the body's grievance cell, the sector forum, "
+                                                 "ombudsman or regulator), e.g. 'JVVNL consumer grievance redressal "
+                                                 "forum', 'electricity ombudsman Rajasthan'")
     follow_up_questions: list[str] = Field(default_factory=list,
                                            description="Up to 3 short questions, in the complainant's language, "
                                                        "about facts a strong letter needs that the complaint does "
@@ -157,24 +187,27 @@ class CaseBrief(BaseModel):
     sources: list[str] = Field(description="URLs (from the SOURCE lines) that support the facts above")
 
 
-class RouteStep(BaseModel):
-    name: str = Field(description="The authority / portal / office, as the source names it")
-    channel: str = Field(description="How to reach it: portal, email, phone, office")
-    url: str = Field("", description="Its official URL, ONLY if that URL appears in the sources")
-    when_to_use: str = Field(description="When to go here, per the sources (e.g. after the airline's 30 days)")
-    typical_wait: str = ""
-    source_url: str = Field(description="The SOURCE URL that states this step")
+LevelT = Literal["company", "sector_forum", "sector_regulator_or_ombudsman", "court_or_commission", "state_portal",
+                 "central_portal", "other"]
 
 
-class RouteResearch(BaseModel):
-    playbook_key: str = Field(description="snake_case name for this kind of complaint, 1-3 words, e.g. air_travel")
-    label: str = Field(description="Short label, e.g. 'Air travel (airlines and airports)'")
-    covers: str = Field(description="One line on which complaints this route covers - used to match future ones")
-    regulator: str = Field(description="The regulator / authority over this sector, as the sources name it")
-    complaint_type: Literal["consumer_service", "govt_scheme", "banking", "insurance", "telecom", "loan_app"]
-    steps: list[RouteStep] = Field(description="Escalation steps AFTER the company's own grievance officer, in "
-                                               "order, each stated by a source")
-    law_docs: list[str] = Field(default_factory=list, description="Keys from INDEXED LAW that apply, else []")
+class EscalationStep(BaseModel):
+    order: int
+    authority: str = Field(description="As the source names it, e.g. 'CGRF, Jaipur Vidyut Vitran Nigam Ltd'")
+    level: LevelT = Field(description="company = the body's own grievance cell; sector_forum = a statutory forum of "
+                                      "this sector (e.g. an electricity CGRF); sector_regulator_or_ombudsman; "
+                                      "court_or_commission (consumer commission, courts); state_portal (a state "
+                                      "public-grievance portal / CM helpline); central_portal (CPGRAMS)")
+    when_to_use: str = Field(description="When to go here, per the source")
+    channel: str = Field(description="Portal / email / address / phone, as the source states it")
+    url: str = Field("", description="Its link, ONLY if that exact link appears in the sources")
+    timeline: str | None = Field(None, description="Only if a source states it, e.g. '45 days'; else null")
+    source_url_or_clause: str = Field(description="A SOURCE url from the list, or a clause tag like [C2]")
+
+
+class EscalationPlan(BaseModel):
+    steps: list[EscalationStep] = Field(description="The ladder, in order, each step backed by a source")
+    notes: str = Field("", description="Anything the complainant should know about this route")
 
 
 class ConditionAssessment(BaseModel):
@@ -222,6 +255,10 @@ class PrecedentsOut(BaseModel):
 
 
 class DraftOut(BaseModel):
+    addressee_lines: list[str] = Field(default_factory=list,
+                                       description="2-3 lines naming the receiving office, in the letter's language: "
+                                                   "the officer's title, the organisation / department, and the state "
+                                                   "or city if relevant (no portal or website names)")
     outline: list[str] = Field(default_factory=list,
                                description="Plan first: the ordered points of this specific case's document (who "
                                            "the complainant is, what they are owed and why, what happened, what "

@@ -18,19 +18,6 @@ from saathi.tools.domains import GOOGLE, registrable
 from saathi.tools.fetch import FREE_MAIL, deobfuscate, fetch, find_emails, find_phones, norm_email, norm_phone
 from saathi.tools.serp import CreditLimitReached, SerpApiError, serp
 
-ROLES = [  # (role, pattern) - most specific first
-    ("appellate_authority", r"appellate authority"),
-    ("principal_nodal_officer", r"principal nodal officer|pno\b"),
-    ("nodal_officer", r"nodal officer"),
-    ("grievance_officer", r"grievance (redressal )?officer|grievance officer|\bgro\b|chief grievance"),
-    ("grievance_cell", r"grievance|escalat|complaint|redressal"),
-    ("customer_care", r"customer (care|service|support)|helpline|toll[- ]free|call us|contact us"),
-]
-NAME_RE = re.compile(r"\b(?:Mr|Ms|Mrs|Shri|Smt|Dr|Sh)\.?\s+([A-Z][a-zA-Z.]+(?:\s+[A-Z][a-zA-Z.]+){0,3})")
-LABEL_NAME_RE = re.compile(r"\bName\s*[:\-]\s*([A-Z][a-zA-Z.]+(?:\s+[A-Z][a-zA-Z.]+){0,3})")
-TIMELINE_RE = re.compile(r"within\s+(?:a\s+period\s+of\s+)?(\d+|one|two|three|seven|fifteen|thirty|forty[- ]eight)"
-                         r"\s*(?:\(\d+\)\s*)?(working\s+days|business\s+days|days|hours|hrs|weeks|months?)", re.I)
-
 EXTRACT_SYSTEM = (
     "Extract grievance-redressal contacts for the named company from the page text. Copy names, emails and phone "
     "numbers EXACTLY as written; never guess or complete them. Use '' when a field is absent. Include the "
@@ -40,13 +27,6 @@ EXTRACT_SYSTEM = (
     "GRO Mr. X'). List every contact on the page with the organisation it belongs to, and set "
     "belongs_to_named_company to true ONLY for the named company's own contacts. When unsure, set it to false."
 )
-
-
-def _role(context: str) -> str:
-    for role, pat in ROLES:
-        if re.search(pat, context, re.I):
-            return role
-    return "other"
 
 
 def _windows(text: str, size: int = 1600) -> str:
@@ -65,7 +45,8 @@ def _windows(text: str, size: int = 1600) -> str:
 
 
 def rule_contacts(text: str, mailtos: list[str] | None = None, tels: list[str] | None = None) -> list[dict]:
-    """Every email/phone on the page with role, nearby name and timeline from its context."""
+    """Every email / phone literally on the page (the evidence the verifier needs). Role, name and response time
+    come from the LLM on the pages it reads - not from keyword guesses here."""
     out = []
     flat = re.sub(r"\s+", " ", text)
     values = [("email", e) for e in sorted(set(find_emails(flat)) | {norm_email(m) for m in mailtos or []})]
@@ -81,11 +62,8 @@ def rule_contacts(text: str, mailtos: list[str] | None = None, tels: list[str] |
             if v not in digits:
                 continue
         ctx = flat[max(0, pos - 300): pos + 150] if pos >= 0 else ""
-        before = flat[max(0, pos - 300): pos] if pos >= 0 else ""
-        names = NAME_RE.findall(before) + LABEL_NAME_RE.findall(before)
-        tl = TIMELINE_RE.search(ctx)
-        out.append({"type": kind, "value": v, "role": _role(before[-220:] or ctx), "name": names[-1] if names else "",
-                    "timeline": tl.group(0) if tl else "", "evidence": ctx.strip()[-400:]})
+        out.append({"type": kind, "value": v, "role": "other", "name": "", "timeline": "",
+                    "evidence": ctx.strip()[-400:]})
     return out
 
 
@@ -168,7 +146,7 @@ def extract_from_pages(company: str, results: list[dict], *, max_pages: int = 8)
                 if (kind, v) in foreign:
                     continue
                 if not any(o["value"] == v and o["source_url"] == src["source_url"] for o in observations):
-                    observations.append({"type": kind, "value": v, "role": _role(r["snippet"]), "name": "",
+                    observations.append({"type": kind, "value": v, "role": "other", "name": "",
                                          "timeline": "", "evidence": r["snippet"], **src, "via": "snippet"})
         page_log.append({"url": r["url"], "final_url": page.get("final_url"), "ok": page.get("ok"),
                          "error": page.get("error"), "on_official": r["on_official"], "found": len(found)})

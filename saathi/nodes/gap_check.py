@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from saathi import llm
 from saathi.nodes.common import node
-from saathi.playbooks import SECTORS, missing_facts_for, tier_of
+from saathi.playbooks import SECTORS, merge_missing, tier_of
 from saathi.state import GapCheckOut, schema
 from saathi.tools.domains import host, registrable
 
@@ -110,7 +110,7 @@ def frame_updates(state: dict, brief: dict) -> dict:
     updates: dict = {}
     if sector != state.get("sector"):
         updates.update(sector=sector, tier=tier_of(sector),
-                       missing_facts=missing_facts_for(sector, state.get("facts") or {}))
+                       missing_facts=merge_missing(sector, state.get("facts") or {}, state.get("extra_missing")))
     if sector == "govt_scheme":
         # The department's own grievance channel replaces company grievance-officer searches.
         updates["search_plan"] = [p for p in state.get("search_plan") or [] if p["worker"] == "precedents"]

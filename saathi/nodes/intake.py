@@ -7,9 +7,9 @@ from langgraph.types import Send
 
 from saathi import llm
 from saathi.nodes.common import live, node
+from saathi.letter import default_language
 from saathi.nodes.safety import merge_llm, trace_line
-from saathi.playbooks import (CYBER_RE, ISSUE_QUERIES, SECTORS, TIERS, forum_query, missing_facts_for, playbook_menu,
-                               tier_of)
+from saathi.playbooks import SECTORS, TIERS, forum_query, merge_missing, playbook_menu, tier_of
 from saathi.state import IntakeOut, schema
 from saathi.tools.domains import resolve_official
 from saathi.tools.serp import CreditLimitReached, NoApiKey, SerpApiError, serp
@@ -29,7 +29,11 @@ INTAKE_SYSTEM = (
     "and every facts field is written in English - the rest of the pipeline works from these, not the original. "
     "In follow_up_questions, ask (in the complainant's language) for up to 3 facts a strong letter needs that "
     "are missing - what they already tried, replies received, reference numbers. Safety: list in danger any "
-    "IMMEDIATE risk to someone's life or safety the complaint describes; leave it empty otherwise."
+    "IMMEDIATE risk to someone's life or safety the complaint describes; leave it empty otherwise. For the "
+    "escalation planner: give the Indian state, who the complaint is against (authority_type) and 2-4 web "
+    "searches (route_queries) that would find the official grievance route - you are not deciding the route, "
+    "only where to look. Also write legal_query (an English search for the law that applies) and list the facts "
+    "THIS letter still needs in missing_facts; mark cyber fraud / online scams with the issue type cyber_fraud."
 )
 
 MATCH_MIN = 0.6  # below this the playbook match is not trusted: research the route instead
@@ -45,7 +49,10 @@ def route_of(out: dict) -> dict:
     out["route"] = {"domain_free_text": out.get("domain_free_text") or "", "matched_playbook": key if matched else None,
                     "confidence": conf, "reason": out.get("route_reason") or "",
                     "mode": "matched" if matched else "research",
-                    "question": out.get("clarifying_question") if out.get("needs_clarification") else ""}
+                    "question": out.get("clarifying_question") if out.get("needs_clarification") else "",
+                    # inputs for the escalation planner (same LLM call - no extra latency)
+                    "route_key": out.get("route_key") or "", "state": (out.get("state") or "").strip(), "authority_type": out.get("authority_type") or "unknown",
+                    "queries": [q.strip() for q in out.get("route_queries") or [] if q.strip()][:4]}
     return out
 
 
@@ -69,8 +76,9 @@ def intake_planner(state: dict) -> dict:
     tier = tier_of(sector)
     company = out["company"] if tier == "A" else ""  # B/C: no company to write to (the other party is not one)
     cfg = SECTORS[sector]
-    issues = [i for i in out["issue_types"] if i in ISSUE_QUERIES] or ["other"]
-    missing = missing_facts_for(sector, facts)
+    issues = out["issue_types"] or ["other"]  # validated against IssueT by the schema
+    extra_missing = [m for m in out.get("missing_facts") or []]
+    missing = merge_missing(sector, facts, extra_missing)
     trace = [f"🧭 Intake ({out.get('method')}): language={out['language']}, domain={sector} "
              f"(tier {tier}: {TIERS[tier].lower()}), "
              f"company={company or '?'}, issues={', '.join(issues)}"
@@ -96,17 +104,19 @@ def intake_planner(state: dict) -> dict:
         plan += [{"worker": "grievance", "engine": "google", "q": f"{company} {terms[0]} email"}]
         plan += [{"worker": "precedents", "engine": "google_forums", "q": f"{company} {kw} complaint resolved"},
                  {"worker": "precedents", "engine": "google_news", "q": f"{company} {kw} consumer court"}]
-    forum = forum_query(sector, city, text) if city else None
+    forum = forum_query(sector, city, "cyber_fraud" in issues) if city else None
     if forum:
         plan.append({"worker": "local_forum", "engine": "google_maps", "q": forum[0]})
     if sector == "loan_app":
         plan.insert(0, {"worker": "registry", "engine": "LoanLens (RBI DLA directory)", "q": company})
-    urgent = out.get("urgent_fraud_or_harassment") or (sector == "police" and bool(CYBER_RE.search(text)))
+    urgent = out.get("urgent_fraud_or_harassment") or (sector == "police" and "cyber_fraud" in issues)
     safety = merge_llm(state.get("safety") or {}, out.get("danger") or [], llm.label())  # same LLM call
     if safety:
         trace.insert(0, trace_line(safety))
-    return {"route": route, "language": out["language"], "complaint_en": (out.get("complaint_en") or "").strip() or text,
+    return {"route": route, "language": out["language"], "letter_language": state.get("letter_language") or default_language(out["language"]),
+            "complaint_en": (out.get("complaint_en") or "").strip() or text,
             "extra_questions": [q.strip() for q in out.get("follow_up_questions") or [] if q.strip()][:3],
+            "legal_query": (out.get("legal_query") or "").strip(), "extra_missing": extra_missing,
             "sector": sector, "tier": tier, "company": company, "facts": facts,
             "issue_types": issues, "case_entities": entities, "missing_facts": missing, "search_plan": plan,
             "company_domain": d, "official_domains": official.get("domains") or [],
@@ -122,6 +132,9 @@ def fan_out(state: dict) -> list[Send]:
     sends = [Send(w, state) for w in ("grievance", "precedents", "registry") if w in workers]
     sends.append(Send("local_forum", state))  # always runs (notes a skip without a city), so fan-in is never empty
     sends.append(Send("gap_check", state))    # the eligibility / questions LLM call overlaps the searches
+    from saathi.nodes.escalation import needs_planner
+    if needs_planner(state):                   # ladder from evidence, alongside the searches (not before them)
+        sends.append(Send("escalation_planner", state))
     return sends
 
 

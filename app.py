@@ -194,6 +194,10 @@ def ladder_html(steps: list[dict]) -> str:
         dates = step_dates(s)
         if dates:
             wait += f"<div class='wait'><b>📅 {E(dates)}</b></div>"
+        src = s.get("source") or ""
+        if src:  # every step is traceable to where it came from
+            wait += ("<div class='wait'>🔗 source: " + (f"<a href='{E(src)}' target='_blank'>{E(src.split('//')[-1][:60])}"
+                     " ↗</a>" if src.startswith("http") else E(src[:90])) + "</div>")
         items.append(f"<div class='tstep'><div class='num'>{i}</div><div class='ttl'>{E(s['name'])}</div>{wait}"
                      f"<div class='how'><b>{E(s['channel'])}</b> — {E(s['when_to_use'])}{link}{phone}</div></div>")
     return f"<div class='timeline'>{''.join(items)}</div>"
@@ -346,6 +350,10 @@ def details_dialog(s: dict, graph_module) -> None:
             st.markdown("**A few more details make the letter stronger**")
             for i, q in enumerate(extra):
                 answers[q["key"]] = st.text_input(q["question"], key=f"details_extra_{i}", placeholder="Optional")
+        langs = {"en": "English", "hi": "हिन्दी (Hindi)"}
+        letter_lang = st.radio("Letter language - the whole letter is written in one language", list(langs),
+                               index=list(langs).index(payload.get("letter_language") or "en"),
+                               format_func=langs.get, horizontal=True)
         st.markdown("**Your details for the signature** (optional)")
         c1, c2, c3 = st.columns(3)
         me = {"name": c1.text_input("Your name", me0.get("name", "")),
@@ -355,7 +363,7 @@ def details_dialog(s: dict, graph_module) -> None:
     if go:
         edits = {"fills": {k: v for k, v in fills.items() if v.strip()},
                  "case_answers": {k: v for k, v in answers.items() if v.strip()},
-                 "complainant": {k: v for k, v in me.items() if v.strip()}}
+                 "complainant": {k: v for k, v in me.items() if v.strip()}, "letter_language": letter_lang}
         with st.spinner("Writing your letter with your answers…"):
             resume_or_fail(graph_module, edits)
         st.rerun()

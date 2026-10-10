@@ -1,0 +1,37 @@
+{
+ "steps": [
+  {
+   "name": "The organisation's own grievance cell",
+   "level": "company",
+   "channel": "email / grievance page",
+   "url": null,
+   "phone": null,
+   "timeline": null,
+   "source": "verified contact search (see contacts)",
+   "when_to_use": "First. Complain in writing and keep the complaint / docket number."
+  },
+  {
+   "name": "RBI Integrated Ombudsman",
+   "level": "sector_regulator_or_ombudsman",
+   "channel": "CMS portal, email (crpc@rbi.org.in), or physical post to Centralised Receipt and Processing Centre, 4th Floor, Reserve Bank of India, Sector -17, Central Vista, Chandigarh - 160017",
+   "url": null,
+   "phone": null,
+   "when_to_use": "If the bank does not respond within the time set out in the source, rejects the complaint, or the complainant is not satisfied with the resolution provided by the bank.",
+   "timeline": "check the timeline in https://pgportal.gov.in/",
+   "typical_wait": "check the timeline in https://pgportal.gov.in/",
+   "source": "https://pgportal.gov.in/"
+  }
+ ],
+ "fallback": false,
+ "note": "Public grievance portals like CPGRAMS or state-specific portals are not applicable for private banking/UPI transaction disputes. You must exhaust the bank's internal grievance process before approaching the RBI Ombudsman.",
+ "notes": [
+  "dropped “Concerned Bank (Regulated Entity)”: its source is stated only by a non-official page (idfcfirst.bank.in)",
+  "re-sourced “RBI Integrated Ombudsman” to the official page pgportal.gov.in that names it",
+  "removed link https://cms.rbi.org.in from “RBI Integrated Ombudsman”: not an official link found in the sources",
+  "replaced timeline “30 days” of “RBI Integrated Ombudsman”: its source does not state it",
+  "removed “30 days” from “RBI Integrated Ombudsman”: its source does not state it"
+ ],
+ "sources": [
+  "https://pgportal.gov.in/"
+ ]
+}

@@ -3,9 +3,10 @@
 START → safety_router (rules, instant: emergency numbers first) → intake_planner (ONE LLM call: domain + tier,
         facts, English translation, follow-up questions, and the LLM's danger check)
 → (very unclear: clarify - ONE question, then intake again)
-→ case_research (route research if no verified playbook fits; scheme / product research)
+→ case_research (named scheme / product research)
 → frame (brief decides sector / tier / addressee, no LLM)
-frame ─[Send]→ grievance · precedents · local_forum · gap_check · (registry if loan_app)   (parallel fan-out)
+frame ─[Send]→ grievance · precedents · local_forum · gap_check · (registry if loan_app)
+              · (escalation_planner for every tier-A complaint: ladder from evidence)   (parallel fan-out)
 all of them → verifier                                                                      (fan-in via reducers)
 verifier ── no verified contact & verify_attempts < 2 ──→ grievance (alternative phrasing)  (self-correcting loop 1)
 verifier ── otherwise ──→ legal_rag → ask_details (interrupt: ONE form with every missing fact / question)
@@ -35,6 +36,7 @@ from saathi import timing
 from saathi.nodes.case_research import case_research
 from saathi.nodes.critic import critic, route_after_critic
 from saathi.nodes.drafter import drafter
+from saathi.nodes.escalation import escalation_planner
 from saathi.nodes.gap_check import frame, gap_check, reassess
 from saathi.nodes.grievance import grievance
 from saathi.nodes.intake import clarify, fan_out, intake_planner, route_after_intake
@@ -47,7 +49,7 @@ from saathi.nodes.safety import safety_router
 from saathi.nodes.verifier import route_after_verify, verifier
 from saathi.state import ComplaintState
 
-WORKERS = ["grievance", "precedents", "local_forum", "registry", "gap_check"]
+WORKERS = ["grievance", "precedents", "local_forum", "registry", "gap_check", "escalation_planner"]
 
 
 def build(checkpointer=None):
@@ -58,6 +60,7 @@ def build(checkpointer=None):
     g.add_node("case_research", case_research)
     g.add_node("frame", frame)
     g.add_node("gap_check", gap_check)
+    g.add_node("escalation_planner", escalation_planner)
     g.add_node("grievance", grievance)
     g.add_node("precedents", precedents)
     g.add_node("local_forum", local_forum)
@@ -140,10 +143,13 @@ def new_thread() -> str:
 
 
 def initial_state(complaint: str, *, company: str | None = None, city: str | None = None,
-                  complainant: dict | None = None, live: bool = True) -> dict:
-    return {"complaint": complaint, "company_hint": company or None, "city": city or None,
-            "complainant": complainant or {}, "live": live, "contacts": [], "precedents": [], "pages": [],
-            "errors": [], "trace": [], "live_calls": 0, "blocked_hallucinations": 0}
+                  complainant: dict | None = None, live: bool = True, letter_language: str | None = None) -> dict:
+    state = {"complaint": complaint, "company_hint": company or None, "city": city or None,
+             "complainant": complainant or {}, "live": live, "contacts": [], "precedents": [], "pages": [],
+             "errors": [], "trace": [], "live_calls": 0, "blocked_hallucinations": 0}
+    if letter_language in ("en", "hi"):  # an explicit choice; otherwise intake picks it from the complaint language
+        state["letter_language"] = letter_language
+    return state
 
 
 def stream(inp, thread_id: str, on_update: Callable[[str, dict], None] | None = None,

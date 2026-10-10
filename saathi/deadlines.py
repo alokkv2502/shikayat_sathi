@@ -3,7 +3,7 @@
 Each escalation step in playbooks.py may carry
     reply_within: {n, unit, basis, source, kind}  - how long that body has to respond (from the day it receives it)
     file_within:  {n, unit, from, basis, source}  - the window the complainant has to approach that step
-with unit in hours | days | months | years | working_days and kind "statutory" (a rule in raw/legal/, cited) or
+with unit in hours | days | months | years and kind "statutory" (a rule in raw/legal/, cited) or
 "requested" (a reasonable time the letter asks for where no rule fixes one). The rules were checked against the
 indexed legal texts (raw/legal/) on 2026-10-09.
 
@@ -19,14 +19,27 @@ import calendar
 import re
 from datetime import date, timedelta
 
+HI_MONTHS = ["जनवरी", "फ़रवरी", "मार्च", "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर",
+             "दिसंबर"]
 MONTHS = {m.lower(): i for i, m in enumerate(calendar.month_name) if m} | \
-         {m.lower(): i for i, m in enumerate(calendar.month_abbr) if m} | {"sept": 9}
-# National holidays observed everywhere (state holidays vary): used only for working_days.
-NATIONAL_HOLIDAYS = {(1, 26), (8, 15), (10, 2)}
+         {m.lower(): i for i, m in enumerate(calendar.month_abbr) if m} | {"sept": 9} | \
+         {m: i for i, m in enumerate(HI_MONTHS, 1)} | {"फरवरी": 2, "सितम्बर": 9, "नवम्बर": 11, "दिसम्बर": 12}
 
 
-def fmt(d: date) -> str:
-    return f"{d.day} {d:%B %Y}"
+def fmt(d: date, lang: str = "en") -> str:
+    """'9 November 2026', or '9 नवंबर 2026' for a Hindi letter."""
+    return f"{d.day} {HI_MONTHS[d.month - 1]} {d.year}" if lang == "hi" else f"{d.day} {d:%B %Y}"
+
+
+def localize(date_text: str, lang: str) -> str:
+    """A date written by fmt() in English, in the letter's language."""
+    if lang != "hi" or not date_text:
+        return date_text
+    try:
+        from datetime import datetime
+        return fmt(datetime.strptime(date_text, "%d %B %Y").date(), "hi")
+    except ValueError:
+        return date_text
 
 
 def add_months(d: date, n: int) -> date:
@@ -35,22 +48,12 @@ def add_months(d: date, n: int) -> date:
     return date(y, m, min(d.day, calendar.monthrange(y, m)[1]))
 
 
-def add_working_days(d: date, n: int) -> date:
-    while n > 0:
-        d += timedelta(days=1)
-        if d.weekday() < 5 and (d.month, d.day) not in NATIONAL_HOLIDAYS:
-            n -= 1
-    return d
-
-
 def add(d: date, rule: dict) -> date:
     n, unit = int(rule["n"]), rule["unit"]
     if unit == "hours":
         return d + timedelta(days=-(-n // 24))  # round up to whole days
     if unit == "days":
         return d + timedelta(days=n)
-    if unit == "working_days":
-        return add_working_days(d, n)
     if unit == "months":
         return add_months(d, n)
     if unit == "years":
@@ -67,6 +70,9 @@ DATE_RES = [
     (re.compile(rf"\b{_MON}\.?\s+(\d{{1,2}})(?:st|nd|rd|th)?,?(?:\s+(\d{{4}}))?\b", re.I), "mdy"),
     (re.compile(r"\b(\d{1,2})[/.-](\d{1,2})[/.-](\d{2,4})\b"), "num"),
     (re.compile(r"\b(\d{4})-(\d{2})-(\d{2})\b"), "iso"),
+    # Hindi month names (no \b: Devanagari vowel signs are not "word" characters for re)
+    (re.compile(r"(?<!\d)(\d{1,2})\s+(" + "|".join(sorted({m for m in MONTHS if not m.isascii()}, key=len,
+                                                          reverse=True)) + r")(?:\s*,?\s*(\d{4}))?"), "dmy"),
 ]
 
 
@@ -107,9 +113,10 @@ def to_date(text: str, today: date | None = None) -> date | None:
     return None
 
 
-AMOUNT_RE = re.compile(r"(?:₹|\brs\.?|\binr\b|\brupees?\b)\s*([\d,]+(?:\.\d+)?)\s*(lakh|lac|crore|k)?\b|"
-                       r"\b([\d,]+(?:\.\d+)?)\s*(lakh|lac|crore)?\s*(?:rupees?|/-|rs\b)", re.I)
-SCALE = {"lakh": 100_000, "lac": 100_000, "crore": 10_000_000, "k": 1_000}
+AMOUNT_RE = re.compile(r"(?:₹|\brs\.?|\binr\b|\brupees?\b|रु\.?|रुपये)\s*([\d,]+(?:\.\d+)?)\s*"
+                       r"(lakh|lac|crore|k|लाख|करोड़)?\b|"
+                       r"\b([\d,]+(?:\.\d+)?)\s*(lakh|lac|crore|लाख|करोड़)?\s*(?:rupees?|/-|rs\b|रुपये|रुपए)", re.I)
+SCALE = {"lakh": 100_000, "lac": 100_000, "crore": 10_000_000, "k": 1_000, "लाख": 100_000, "करोड़": 10_000_000}
 
 
 def amounts(text: str) -> list[tuple[int, str]]:

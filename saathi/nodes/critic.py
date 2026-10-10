@@ -18,6 +18,7 @@ from datetime import date
 
 from saathi import deadlines, llm
 from saathi.nodes.common import node
+from saathi.letter import language_issue
 from saathi.nodes.legal_rag import unsupported_refs
 from saathi.playbooks import PUBLIC_CONTACTS, TIERS, tier_of
 from saathi.state import CriticOut, schema
@@ -30,7 +31,9 @@ CRITIC_SYSTEM = (
     "administrative frame; known case-specific facts left out; a threat or abusive tone; a missing remedy; an "
     "eligibility claim the condition checks do not support; ignored review answers; or a letter that could be sent "
     "unchanged for a different case. Never ask the letter to add facts, evidence or documents the complainant has "
-    "not stated - the review step asks them for those. Return an empty list if the letter is accurate and specific."
+    "not stated - the review step asks them for those. [PLACEHOLDERS] in capitals and brackets are deliberate "
+    "blanks for facts the complainant has not given yet: never flag them. Return an empty list if the letter is "
+    "accurate and specific."
 )
 GOVT_FRAME_RULE = ("This is a government scheme, not a consumer-service deficiency: flag any consumer-law framing or "
                    "routing to the National Consumer Helpline.")
@@ -99,8 +102,9 @@ def consistency_issues(state: dict, body: str, today: date | None = None) -> lis
         issues.append(f"Date '{raw}' does not match any date the complainant gave or a computed deadline - do not "
                       f"invent or recalculate dates.")
     dl = state.get("deadline") or {}
-    if dl.get("date") and tier_of(state.get("sector") or "other") == "A" and dl["date"] not in body:
-        issues.append(f"State the reply deadline computed from the rules: {dl['date']} ({dl['basis']}).")
+    by = deadlines.localize(dl.get("date") or "", state.get("letter_language") or "en")
+    if by and tier_of(state.get("sector") or "other") == "A" and by not in body:
+        issues.append(f"State the reply deadline computed from the rules: {by} ({dl['basis']}).")
     return issues
 
 
@@ -123,11 +127,16 @@ def tier_issues(state: dict, body: str) -> list[str]:
     return issues
 
 
+# Hindi: "मैं (एक) पात्र आवेदक हूँ", "मैं पात्र हूँ", "मैं सभी शर्तें पूरी करता/करती हूँ", "मैं योग्य हूँ"
+HI_ELIGIBILITY_CLAIM = re.compile(r"(?<!क्या )मैं\s+(?:एक\s+)?(?:पात्र|योग्य)|सभी\s+(?:\S+\s+){0,2}(?:शर्तें|शर्तों|मानदंड)"
+                                  r"\s+(?:को\s+)?(?:पूरी|पूरा|पूर्ण)\s+(?:कर|हो)")
+
+
 def eligibility_issues(state: dict, body: str) -> list[str]:
     """The letter must not claim more than the condition checks support."""
     checks = state.get("eligibility_checks") or []
     open_ = [c for c in checks if c["status"] != "met"]
-    if open_ and ELIGIBILITY_CLAIM.search(body):
+    if open_ and (ELIGIBILITY_CLAIM.search(body) or HI_ELIGIBILITY_CLAIM.search(body)):
         return [f"Claims eligibility, but {len(open_)} condition(s) are unconfirmed or not met "
                 f"({'; '.join(c['condition'].rstrip('.') for c in open_[:3])}) - ask the office to check instead."]
     return []
@@ -138,11 +147,14 @@ def case_specific_issues(state: dict, body: str) -> list[str]:
     if not brief:
         return []
     issues = []
+    hindi = (state.get("letter_language") or "en") == "hi"  # names and facts arrive in English from intake
     names = list(state.get("case_entities") or []) + [brief.get("subject") or ""]
-    if names and not any(name.casefold() in body.casefold() for name in names if name):
+    if not hindi and names and not any(name.casefold() in body.casefold() for name in names if name):
         issues.append(f"Name the researched scheme, policy, or product ({brief.get('subject')}).")
 
     values = case_fact_values(state)
+    if hindi:  # only values that survive translation unchanged can be matched: IDs, amounts, dates
+        values = [v for v in values if any(ch.isdigit() for ch in v)]
     matched = len(facts_used(values, body))
     required = min(4, len(values))
     if required and matched < required:
@@ -197,6 +209,15 @@ def rule_issues(state: dict) -> list[str]:
     issues.extend(eligibility_issues(state, body))
     issues.extend(tier_issues(state, body))
     issues.extend(consistency_issues(state, body))
+    from saathi.nodes.escalation import CPGRAMS, STATE_SIDE
+    if (state.get("route") or {}).get("authority_type") in STATE_SIDE and CPGRAMS.search(body):
+        issues.append("CPGRAMS is for central-government bodies; this is a state matter - name the state's own "
+                      "grievance route from the escalation ladder instead.")
+    lang_issue = language_issue(f"{state.get('subject') or ''} {body}", state.get("letter_language") or "en",
+                                [state.get("company") or "", *(state.get("case_entities") or []),
+                                 (state.get("case_brief") or {}).get("subject") or ""])
+    if lang_issue:
+        issues.append(lang_issue)
     return issues
 
 
@@ -220,7 +241,9 @@ def critic(state: dict) -> dict:
                      + (GOVT_FRAME_RULE + "\n" if state.get("sector") == "govt_scheme" else ""))
     res = llm.json_call(CRITIC_SYSTEM, f"{frame_context}\nCOMPLAINT:\n{state['complaint']}\n\nCLAUSES:\n{clause_block}\n\n"
                                        f"LETTER:\n{state.get('draft', '')}", schema(CriticOut))
-    issues += [f"Reviewer: {i}" for i in llm.validated(CriticOut, res).issues]
+    asked = [m["placeholder"] for m in state.get("missing_facts") or []]
+    issues += [f"Reviewer: {i}" for i in llm.validated(CriticOut, res).issues
+               if not any(ph in i for ph in asked)]  # placeholders we asked for are deliberate, not a fault
     method = f"rules + {llm.label()}"
     attempts = state.get("draft_attempts", 0)
     if issues and attempts < 2:
