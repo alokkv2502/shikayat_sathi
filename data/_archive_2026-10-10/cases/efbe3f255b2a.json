@@ -1,0 +1,223 @@
+{
+ "complaint": "Mera husband roz phone karke dhamki deta hai ki ghar aake maarega, kal raat ghar ke bahar khada hai abhi bhi vo",
+ "company_hint": null,
+ "city": null,
+ "complainant": {},
+ "live": true,
+ "language": "hi",
+ "complaint_en": "My husband calls me every day and threatens that he will come home and beat me; he was standing outside the house last night and is still there now.",
+ "sector": "police",
+ "tier": "B",
+ "safety": {
+  "level": "emergency",
+  "categories": [
+   "violence"
+  ],
+  "method": "rules + Gemini (gemini-3.1-flash-lite, generate_content)",
+  "helplines": [
+   "112 — National emergency number (police, fire, ambulance)",
+   "181 — Women Helpline"
+  ],
+  "numbers": [
+   "112",
+   "181"
+  ],
+  "messages": [
+   "If you are in danger right now, call 112 (or 181 for women's safety). Get to a safe place first; the complaint can wait."
+  ]
+ },
+ "case_entities": [],
+ "case_brief": {},
+ "eligibility_checks": [],
+ "gap_questions": [],
+ "extra_questions": [
+  "Kya aapne abhi tak police ko 100 ya 112 par call kiya hai?",
+  "Kya aapke paas koi purani police complaint ya FIR ki copy hai?",
+  "Kya aapke ghar ke aas-paas koi aur hai jo aapki madad kar sake?"
+ ],
+ "eligibility": {
+  "status": "no_conditions",
+  "message": ""
+ },
+ "company": "",
+ "company_domain": null,
+ "official_domains": [],
+ "domain_basis": null,
+ "facts": {
+  "product_or_service": "",
+  "issue": "The complainant is being threatened and harassed by her husband who is currently outside her home.",
+  "what_user_wants": "Protection and police intervention",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "",
+  "date": "",
+  "city": "",
+  "place": "Outside the complainant's home",
+  "police_station": "",
+  "details": {}
+ },
+ "issue_types": [
+  "harassment"
+ ],
+ "missing_facts": [
+  {
+   "fact": "date",
+   "placeholder": "[DATE AND TIME OF INCIDENT]"
+  },
+  {
+   "fact": "police_station",
+   "placeholder": "[POLICE STATION]"
+  }
+ ],
+ "search_plan": [],
+ "search_keywords": "domestic violence threat",
+ "urgent_note": "Money lost to fraud? Call 1930 and your bank right now - the first hours matter most for freezing the money.",
+ "contacts": [],
+ "precedents": [],
+ "local_forum": null,
+ "blocked_hallucinations": 0,
+ "errors": [],
+ "verified_contacts": [],
+ "unverified_contacts": [],
+ "recommended": null,
+ "verify_attempts": 1,
+ "grievance_attempts": 0,
+ "clauses": [],
+ "draft": "सेवा में, थाना प्रभारी (SHO), [POLICE STATION], मैं यह शिकायत अपने पति द्वारा दी जा रही धमकियों और उत्पीड़न के संबंध में दर्ज करा रही हूँ। मेरे पति मुझे लगातार फोन करके घर आकर मारने की धमकी दे रहे हैं। [DATE AND TIME OF INCIDENT] से लेकर अब तक, वह मेरे घर के बाहर [YOUR HOME ADDRESS] पर खड़े हैं। उनकी इस हरकत से मुझे और मेरे परिवार को अपनी सुरक्षा का गंभीर खतरा महसूस हो रहा है। मैं आपसे अनुरोध करती हूँ कि इस मामले में तत्काल संज्ञान लें, मेरे पति के खिलाफ प्राथमिकी (FIR) दर्ज करें और मुझे तत्काल सुरक्षा प्रदान करें। कृपया इस मामले की निष्पक्ष जांच करें और मुझे प्राथमिकी की एक निःशुल्क प्रति प्रदान करें।",
+ "subject": "शिकायत: पति द्वारा जान से मारने की धमकी और घर के बाहर उत्पीड़न",
+ "summary": "यह एक पुलिस शिकायत है जिसमें आप अपने पति द्वारा दी जा रही धमकियों और उनके घर के बाहर खड़े होने की सूचना दे रही हैं। इसमें SHO से तत्काल सुरक्षा और FIR दर्ज करने का अनुरोध किया गया है। कृपया इस पत्र को तुरंत अपने नजदीकी पुलिस स्टेशन में जमा करें।",
+ "escalation": [
+  {
+   "name": "Station House Officer (SHO), [POLICE STATION]",
+   "channel": "written complaint at the police station · e-FIR on your state police citizen portal where available",
+   "url": null,
+   "phone": "112",
+   "when_to_use": "Give your written complaint at the police station. For a cognizable offence the police must register an FIR; you can report at any police station (zero FIR) and you are entitled to a free copy. Get a signed and stamped receipt for your written complaint.",
+   "typical_wait": "same day"
+  },
+  {
+   "name": "Superintendent of Police / Deputy Commissioner of Police",
+   "channel": "complaint in writing by registered post or in person",
+   "url": null,
+   "phone": null,
+   "when_to_use": "If the SHO refuses to register an FIR: send the substance of your complaint in writing to the SP/DCP (BNSS, 2023, s.173(4)). Keep the postal receipt.",
+   "typical_wait": "about 2 weeks"
+  },
+  {
+   "name": "Judicial Magistrate",
+   "channel": "application through a lawyer or the District Legal Services Authority (free if eligible)",
+   "url": "https://nalsa.gov.in",
+   "phone": "15100",
+   "when_to_use": "If the police still do not act: apply to the Magistrate to direct registration and investigation (BNSS, 2023, s.175(3)).",
+   "typical_wait": "weeks"
+  }
+ ],
+ "critic_notes": [
+  "Reviewer: The letter includes a placeholder [DATE AND TIME OF INCIDENT] which is a fact not provided by the user and must be filled in by the complainant.",
+  "Reviewer: The letter includes a placeholder [YOUR HOME ADDRESS] which is a fact not provided by the user and must be filled in by the complainant."
+ ],
+ "draft_attempts": 2,
+ "draft_method": "Gemini (gemini-3.1-flash-lite, generate_content)",
+ "deadline": {},
+ "user_edits": {
+  "draft": "सेवा में, थाना प्रभारी (SHO), [POLICE STATION], मैं यह शिकायत अपने पति द्वारा दी जा रही धमकियों और उत्पीड़न के संबंध में दर्ज करा रही हूँ। मेरे पति मुझे लगातार फोन करके घर आकर मारने की धमकी दे रहे हैं। [DATE AND TIME OF INCIDENT] से लेकर अब तक, वह मेरे घर के बाहर [YOUR HOME ADDRESS] पर खड़े हैं। उनकी इस हरकत से मुझे और मेरे परिवार को अपनी सुरक्षा का गंभीर खतरा महसूस हो रहा है। मैं आपसे अनुरोध करती हूँ कि इस मामले में तत्काल संज्ञान लें, मेरे पति के खिलाफ प्राथमिकी (FIR) दर्ज करें और मुझे तत्काल सुरक्षा प्रदान करें। कृपया इस मामले की निष्पक्ष जांच करें और मुझे प्राथमिकी की एक निःशुल्क प्रति प्रदान करें।",
+  "subject": "शिकायत: पति द्वारा जान से मारने की धमकी और घर के बाहर उत्पीड़न",
+  "complainant": {}
+ },
+ "case_answers": {},
+ "fills": {},
+ "drafted_answers": {},
+ "user_draft": "",
+ "review_rounds": 1,
+ "redraft": false,
+ "trace": [
+  "🛟 Safety: no immediate danger detected",
+  "🛟 Safety: EMERGENCY — violence → show 112, 181 (rules + Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧭 Intake (Gemini (gemini-3.1-flash-lite, generate_content)): language=hi, domain=police (tier B: draft and route urgently), company=?, issues=harassment; missing: date, police_station",
+  "🔎 Case research: no named scheme, policy or product to research",
+  "🗺️ Frame: police route confirmed",
+  "📍 Local forum: skipped — no city given",
+  "🧩 Gap check (no conditions): 0 met, 0 to confirm, 0 may not be met; 3 other question(s)",
+  "🛡️ Verifier #1: 0 verified, 0 unverified — no company identified - nothing to verify",
+  "📚 Legal RAG: skipped — no indexed law applies to the police route (no citations will be made)",
+  "📝 Details form: 0 answer(s), 0 detail(s) filled of 3 question(s) and 2 missing fact(s)",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 2 issue(s) → back to drafter",
+  "   • Reviewer: The letter includes a placeholder [DATE AND TIME OF INCIDENT] which refers to a specific fact not provided in the user facts or complaint details.",
+  "   • Reviewer: The letter lacks the specific location or address of the incident, which is critical for a police complaint regarding a person standing outside a home.",
+  "✍️ Drafter #2 (Gemini (gemini-3.1-flash-lite, generate_content)): revising for 2 critic note(s)",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 2 issue(s) remain after 2 drafts → finalize will strip unsupported citations",
+  "   • Reviewer: The letter includes a placeholder [DATE AND TIME OF INCIDENT] which is a fact not provided by the user and must be filled in by the complainant.",
+  "   • Reviewer: The letter includes a placeholder [YOUR HOME ADDRESS] which is a fact not provided by the user and must be filled in by the complainant.",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 0,
+ "final": {
+  "to": null,
+  "to_name": "The Station House Officer\n[POLICE STATION] Police Station",
+  "tier": "B",
+  "safety": {
+   "level": "emergency",
+   "categories": [
+    "violence"
+   ],
+   "method": "rules + Gemini (gemini-3.1-flash-lite, generate_content)",
+   "helplines": [
+    "112 — National emergency number (police, fire, ambulance)",
+    "181 — Women Helpline"
+   ],
+   "numbers": [
+    "112",
+    "181"
+   ],
+   "messages": [
+    "If you are in danger right now, call 112 (or 181 for women's safety). Get to a safe place first; the complaint can wait."
+   ]
+  },
+  "subject": "शिकायत: पति द्वारा जान से मारने की धमकी और घर के बाहर उत्पीड़न",
+  "letter": "To,\nThe Station House Officer\n[POLICE STATION] Police Station\n\n\nDate: 09 October 2026\n\nSubject: शिकायत: पति द्वारा जान से मारने की धमकी और घर के बाहर उत्पीड़न\n\nDear Sir/Madam,\n\nसेवा में, थाना प्रभारी (SHO), [POLICE STATION], मैं यह शिकायत अपने पति द्वारा दी जा रही धमकियों और उत्पीड़न के संबंध में दर्ज करा रही हूँ। मेरे पति मुझे लगातार फोन करके घर आकर मारने की धमकी दे रहे हैं। [DATE AND TIME OF INCIDENT] से लेकर अब तक, वह मेरे घर के बाहर [YOUR HOME ADDRESS] पर खड़े हैं। उनकी इस हरकत से मुझे और मेरे परिवार को अपनी सुरक्षा का गंभीर खतरा महसूस हो रहा है। मैं आपसे अनुरोध करती हूँ कि इस मामले में तत्काल संज्ञान लें, मेरे पति के खिलाफ प्राथमिकी (FIR) दर्ज करें और मुझे तत्काल सुरक्षा प्रदान करें। कृपया इस मामले की निष्पक्ष जांच करें और मुझे प्राथमिकी की एक निःशुल्क प्रति प्रदान करें।\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nKeep a copy and ask for a signed, stamped receipt (or the FIR copy) when you submit this.",
+  "markdown": "## ⚠️ If anyone is in danger right now\n- 112 — National emergency number (police, fire, ambulance)\n- 181 — Women Helpline\n\n# शिकायत: पति द्वारा जान से मारने की धमकी और घर के बाहर उत्पीड़न\n\n**To:** The Station House Officer, [POLICE STATION] Police Station (submit at the police station or on your state police portal)\n\nयह एक पुलिस शिकायत है जिसमें आप अपने पति द्वारा दी जा रही धमकियों और उनके घर के बाहर खड़े होने की सूचना दे रही हैं। इसमें SHO से तत्काल सुरक्षा और FIR दर्ज करने का अनुरोध किया गया है। कृपया इस पत्र को तुरंत अपने नजदीकी पुलिस स्टेशन में जमा करें।\n\n```\nTo,\nThe Station House Officer\n[POLICE STATION] Police Station\n\n\nDate: 09 October 2026\n\nSubject: शिकायत: पति द्वारा जान से मारने की धमकी और घर के बाहर उत्पीड़न\n\nDear Sir/Madam,\n\nसेवा में, थाना प्रभारी (SHO), [POLICE STATION], मैं यह शिकायत अपने पति द्वारा दी जा रही धमकियों और उत्पीड़न के संबंध में दर्ज करा रही हूँ। मेरे पति मुझे लगातार फोन करके घर आकर मारने की धमकी दे रहे हैं। [DATE AND TIME OF INCIDENT] से लेकर अब तक, वह मेरे घर के बाहर [YOUR HOME ADDRESS] पर खड़े हैं। उनकी इस हरकत से मुझे और मेरे परिवार को अपनी सुरक्षा का गंभीर खतरा महसूस हो रहा है। मैं आपसे अनुरोध करती हूँ कि इस मामले में तत्काल संज्ञान लें, मेरे पति के खिलाफ प्राथमिकी (FIR) दर्ज करें और मुझे तत्काल सुरक्षा प्रदान करें। कृपया इस मामले की निष्पक्ष जांच करें और मुझे प्राथमिकी की एक निःशुल्क प्रति प्रदान करें।\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nKeep a copy and ask for a signed, stamped receipt (or the FIR copy) when you submit this.\n```\n\n## Where to report, and if the police don't act\n1. **Station House Officer (SHO), [POLICE STATION]** (written complaint at the police station · e-FIR on your state police citizen portal where available) — Give your written complaint at the police station. For a cognizable offence the police must register an FIR; you can report at any police station (zero FIR) and you are entitled to a free copy. Get a signed and stamped receipt for your written complaint. · 112\n2. **Superintendent of Police / Deputy Commissioner of Police** (complaint in writing by registered post or in person) — If the SHO refuses to register an FIR: send the substance of your complaint in writing to the SP/DCP (BNSS, 2023, s.173(4)). Keep the postal receipt.\n3. **Judicial Magistrate** (application through a lawyer or the District Legal Services Authority (free if eligible)) — If the police still do not act: apply to the Magistrate to direct registration and investigation (BNSS, 2023, s.175(3)). https://nalsa.gov.in · 15100\n\n_Information, not legal advice._\n",
+  "summary": "यह एक पुलिस शिकायत है जिसमें आप अपने पति द्वारा दी जा रही धमकियों और उनके घर के बाहर खड़े होने की सूचना दे रही हैं। इसमें SHO से तत्काल सुरक्षा और FIR दर्ज करने का अनुरोध किया गया है। कृपया इस पत्र को तुरंत अपने नजदीकी पुलिस स्टेशन में जमा करें।",
+  "escalation": [
+   {
+    "name": "Station House Officer (SHO), [POLICE STATION]",
+    "channel": "written complaint at the police station · e-FIR on your state police citizen portal where available",
+    "url": null,
+    "phone": "112",
+    "when_to_use": "Give your written complaint at the police station. For a cognizable offence the police must register an FIR; you can report at any police station (zero FIR) and you are entitled to a free copy. Get a signed and stamped receipt for your written complaint.",
+    "typical_wait": "same day"
+   },
+   {
+    "name": "Superintendent of Police / Deputy Commissioner of Police",
+    "channel": "complaint in writing by registered post or in person",
+    "url": null,
+    "phone": null,
+    "when_to_use": "If the SHO refuses to register an FIR: send the substance of your complaint in writing to the SP/DCP (BNSS, 2023, s.173(4)). Keep the postal receipt.",
+    "typical_wait": "about 2 weeks"
+   },
+   {
+    "name": "Judicial Magistrate",
+    "channel": "application through a lawyer or the District Legal Services Authority (free if eligible)",
+    "url": "https://nalsa.gov.in",
+    "phone": "15100",
+    "when_to_use": "If the police still do not act: apply to the Magistrate to direct registration and investigation (BNSS, 2023, s.175(3)).",
+    "typical_wait": "weeks"
+   }
+  ],
+  "deadline": {},
+  "cited": [],
+  "removed_citations": [],
+  "case_brief": {},
+  "case_answers": {},
+  "eligibility": {
+   "status": "no_conditions",
+   "message": ""
+  },
+  "eligibility_checks": [],
+  "unresolved_critic_notes": [
+   "Reviewer: The letter includes a placeholder [DATE AND TIME OF INCIDENT] which is a fact not provided by the user and must be filled in by the complainant.",
+   "Reviewer: The letter includes a placeholder [YOUR HOME ADDRESS] which is a fact not provided by the user and must be filled in by the complainant."
+  ]
+ },
+ "thread_id": "efbe3f255b2a"
+}

@@ -32,7 +32,7 @@ from langgraph.graph import END, START, StateGraph
 from langgraph.types import Command
 
 from config import DATA_DIR
-from saathi import timing
+from saathi import events, timing
 from saathi.nodes.case_research import case_research
 from saathi.nodes.critic import critic, route_after_critic
 from saathi.nodes.drafter import drafter
@@ -50,6 +50,30 @@ from saathi.nodes.verifier import route_after_verify, verifier
 from saathi.state import ComplaintState
 
 WORKERS = ["grievance", "precedents", "local_forum", "registry", "gap_check", "escalation_planner"]
+
+# The Live view's map of the flow: (phase, [(node, what it does, runs always?)]). Covers every graph node
+# (a test checks), in display order; "may run" nodes run only on some paths (a loop, a question, a loan app).
+PHASES: list[tuple[str, list[tuple[str, str, bool]]]] = [
+    ("Understand", [("safety_router", "Emergency check (instant, rules)", True),
+                    ("intake_planner", "Reads the complaint: domain, facts, translation, danger", True),
+                    ("clarify", "Asks one question if the complaint is very unclear", False)]),
+    ("Research", [("case_research", "Researches the named scheme / product", True),
+                  ("frame", "Decides sector, tier and addressee", True)]),
+    ("In parallel", [("grievance", "Finds the company's grievance officer", True),
+                     ("precedents", "Finds similar past cases", True),
+                     ("local_forum", "Finds the local consumer forum / office", True),
+                     ("gap_check", "Lists the facts still missing", True),
+                     ("escalation_planner", "Plans the escalation ladder from official sources", False),
+                     ("registry", "Checks the RBI lending-app registry", False)]),
+    ("Verify", [("verifier", "Keeps only contacts proven on official pages", True)]),
+    ("Law", [("legal_rag", "Retrieves the applicable law clauses", True)]),
+    ("Your details", [("ask_details", "One form with every missing detail", True),
+                      ("reassess", "Re-checks the case with your answers", False)]),
+    ("Draft & check", [("drafter", "Writes the letter", True),
+                       ("critic", "Checks facts, dates, amounts and language", True)]),
+    ("Review", [("human_review", "You approve or edit the letter", True),
+                ("finalize", "Saves the case and the follow-up dates", True)]),
+]
 
 
 def build(checkpointer=None):
@@ -171,16 +195,31 @@ def run(inp, thread_id: str, on_update=None, app=None) -> dict:
     """Run until the graph pauses (human_review) or ends. Returns the current state values (+ '__interrupt__')."""
     app = app or graph()
     paused = None
+    resumed = isinstance(inp, Command)
+    if isinstance(inp, dict):
+        inp = {**inp, "thread_id": thread_id}  # nodes tag their Live-view events with it
     since, t0 = timing.mark(), time.perf_counter()
-    timing.log.info(f"── thread {thread_id}: {'resumed' if isinstance(inp, Command) else 'started'} ──")
-    for node_name, update in stream(inp, thread_id, on_update, app):
-        if node_name == "__interrupt__":
-            paused = update
+    timing.log.info(f"── thread {thread_id}: {'resumed' if resumed else 'started'} ──")
+    events.emit(thread_id, "run_start", resumed=resumed)
+    try:
+        for node_name, update in stream(inp, thread_id, on_update, app):
+            if node_name == "__interrupt__":
+                paused = update
+    except Exception as e:
+        events.emit(thread_id, "run_failed", error=f"{type(e).__name__}: {str(e)[:200]}",
+                    s=round(time.perf_counter() - t0, 1))
+        raise
+    finally:
+        timing.set_run(None)
     timing.log_run(since, f"── thread {thread_id}: {'paused for review' if paused is not None else 'finished'} "
                           f"after {time.perf_counter() - t0:.1f}s ──")
     values = dict(app.get_state({"configurable": {"thread_id": thread_id}}).values)
     if paused is not None:
         values["__interrupt__"] = paused
+        events.emit(thread_id, "run_paused", stage=paused.get("stage", "") if isinstance(paused, dict) else "",
+                    s=round(time.perf_counter() - t0, 1))
+    else:
+        events.emit(thread_id, "run_finished", s=round(time.perf_counter() - t0, 1))
     return values
 
 

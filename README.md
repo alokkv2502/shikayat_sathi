@@ -162,6 +162,28 @@ headings). The addressee is an office (officer, organisation, district / state),
 rejects a mixed-language letter (only placeholders, IDs, abbreviations and the names the user wrote may stay in
 Latin script), and finalize drops English glosses in brackets from a Hindi letter.
 
+### Live view: watch it work
+
+While a complaint is being prepared, the main page shows one progress line (the step running now) and a
+**🔍 Watch it live ↗** link that opens a second tab. Nothing else changes on the main page, and nothing waits for the
+Live view. The second tab shows:
+
+- the flow, phase by phase, with each step marked done / running / waiting for you / pending / may run / skipped / failed;
+  each step's card has a **Logs & output** panel with its log lines, errors, the calls it made, what it asked you (if
+  it paused) and the state it returned (long text and lists are shortened; one section per run when a step re-ran);
+- what is still to do;
+- an activity feed with every step's notes and every web search, page read, AI call and law lookup (with timings and
+  cache hits);
+- counters for steps, working time, searches, pages, AI calls and law lookups.
+
+Finished complaints can be replayed: use "See how it was prepared ↗" on the result, or "Replay timeline ↗" under Past
+complaints.
+
+How it works: the run executes on a background thread. The node wrapper (`nodes/common.py`), `timing.span` (every
+external call, including pool threads) and `graph.run` append events to `data/runs/<thread_id>.jsonl`
+(`saathi/events.py`). The Live view only reads that file once a second. A failed write is ignored, so a complaint is
+never affected. The log contains the complaint text and stays local, like `data/cases/`.
+
 ## Guardrails: what is code, and why
 
 | Code (checks the LLM) | Where |
@@ -192,6 +214,7 @@ saathi/
   letter.py        one-language letter layout (English / Hindi labels, language check)
   llm.py           Gemini via google-genai (generate_content, JSON schema, thinking "low", 1 retry); AIUnavailable
   timing.py        per-node / per-call latency log in the terminal (SAATHI_TIMING)
+  events.py        Live view event log (data/runs/<thread_id>.jsonl): emit, read, summarize, feed
   nodes/           safety · intake (+ clarify) · case_research · gap_check (+ frame, reassess) · escalation ·
                    grievance · precedents · local_forum · registry_worker · verifier · legal_rag · drafter ·
                    critic · review (ask_details, human_review, finalize) · common (node wrapper)

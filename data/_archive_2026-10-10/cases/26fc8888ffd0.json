@@ -1,0 +1,584 @@
+{
+ "complaint": "AirIndia ne meri Delhi–Pune flight cancel kar di, bas SMS aaya. Refund maanga to credit shell de diya, bolte hain refund nahi milega. Ticket ₹6,800 ka tha.",
+ "company_hint": null,
+ "city": null,
+ "complainant": {},
+ "live": true,
+ "language": "hinglish",
+ "complaint_en": "Air India cancelled my Delhi–Pune flight, I only received an SMS. When I asked for a refund, they gave me a credit shell and said a refund would not be provided. The ticket cost ₹6,800.",
+ "legal_query": "airline flight cancellation refund rules DGCA consumer protection act",
+ "extra_missing": [
+  {
+   "fact": "pnr_number",
+   "placeholder": "[PNR NUMBER]"
+  },
+  {
+   "fact": "flight_date",
+   "placeholder": "[DATE OF FLIGHT]"
+  }
+ ],
+ "sector": "other",
+ "tier": "A",
+ "route": {
+  "domain_free_text": "airline - flight cancellation and forced credit shell instead of refund",
+  "matched_playbook": null,
+  "confidence": 0.0,
+  "reason": "Airlines are not covered by the specific sector playbooks provided; they fall under general consumer services.",
+  "mode": "research",
+  "question": "",
+  "route_key": "airline",
+  "state": "Delhi",
+  "authority_type": "private_company",
+  "queries": [
+   "Air India grievance redressal",
+   "DGCA air sewa portal",
+   "consumer complaint against airline India"
+  ]
+ },
+ "ladder": {
+  "timed_out": true,
+  "steps": [],
+  "fallback": true
+ },
+ "safety": {
+  "level": "none",
+  "categories": [],
+  "method": "rules",
+  "helplines": [],
+  "numbers": [],
+  "messages": []
+ },
+ "case_entities": [],
+ "case_brief": {},
+ "eligibility_checks": [],
+ "gap_questions": [],
+ "extra_questions": [
+  "Kya aapke paas PNR number hai?",
+  "Flight kis date ko thi?",
+  "Kya aapne Air India ke customer care ko email ya call kiya hai? Agar haan, toh kya koi complaint reference number mila?"
+ ],
+ "eligibility": {
+  "status": "no_conditions",
+  "message": ""
+ },
+ "company": "Air India",
+ "company_domain": "airindia.com",
+ "official_domains": [
+  "airindia.com"
+ ],
+ "domain_basis": "top-1 result for “Air India official website”, brand match",
+ "facts": {
+  "product_or_service": "Air India flight (Delhi to Pune)",
+  "issue": "The airline cancelled the flight and issued a credit shell instead of a monetary refund.",
+  "what_user_wants": "Monetary refund",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "6800",
+  "date": "",
+  "city": "Delhi",
+  "place": "",
+  "police_station": "",
+  "details": {}
+ },
+ "issue_types": [
+  "refund",
+  "deficiency"
+ ],
+ "missing_facts": [
+  {
+   "fact": "reference_id",
+   "placeholder": "[BOOKING / REFERENCE NUMBER]"
+  },
+  {
+   "fact": "date",
+   "placeholder": "[DATE OF FLIGHT]"
+  },
+  {
+   "fact": "pnr_number",
+   "placeholder": "[PNR NUMBER]"
+  }
+ ],
+ "search_plan": [
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "site:airindia.com grievance officer"
+  },
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "site:airindia.com customer care"
+  },
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "Air India grievance officer email"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_forums",
+   "q": "Air India Air India flight cancellation refund complaint resolved"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_news",
+   "q": "Air India Air India flight cancellation refund consumer court"
+  }
+ ],
+ "search_keywords": "Air India flight cancellation refund",
+ "urgent_note": null,
+ "contacts": [
+  {
+   "type": "email",
+   "value": "appellateauthority@airindia.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "nodalofficer@airindia.com … पास appellateauthority@airindia.com",
+   "source_url": "https://www.airindia.com/in/hi/contact-us/grievance-resolution.html",
+   "source_domain": "airindia.com",
+   "page_title": "शिकायत निवारण - ग्राहक सहायता और फ़ीडबैक | एयर इंडिया",
+   "via": "snippet",
+   "email": "appellateauthority@airindia.com",
+   "phone": "",
+   "url": "https://www.airindia.com/in/hi/contact-us/grievance-resolution.html",
+   "source_type": "official_domain",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "nodalofficer@airindia.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "nodalofficer@airindia.com … पास appellateauthority@airindia.com",
+   "source_url": "https://www.airindia.com/in/hi/contact-us/grievance-resolution.html",
+   "source_domain": "airindia.com",
+   "page_title": "शिकायत निवारण - ग्राहक सहायता और फ़ीडबैक | एयर इंडिया",
+   "via": "snippet",
+   "email": "nodalofficer@airindia.com",
+   "phone": "",
+   "url": "https://www.airindia.com/in/hi/contact-us/grievance-resolution.html",
+   "source_type": "official_domain",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9692291760",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "ut.me. Please upgrade to a newer browser by downloading one here . Get started for free Get your page Features Pricing Log In Home Features Pricing Customer Helpline support Available 24 hrs , Contact Us , and Toll free in India helpline Number Call 9692291760 Helpline Customer. an Available 24 hrs. India helpline Number . Online shopping, Online customer care, and Register Complaint. All informat",
+   "source_url": "https://about.me/customer.helplinesupport",
+   "source_domain": "about.me",
+   "page_title": "Customer Helpline support - India helpline Number  | about.me",
+   "via": "page",
+   "email": "",
+   "phone": "9692291760",
+   "url": "https://about.me/customer.helplinesupport",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  }
+ ],
+ "precedents": [
+  {
+   "kind": "news",
+   "title": "Air India ‘deficiency in service’: Ticket refund delayed for 5 years, Jalandhar panel pulls up airline",
+   "url": "https://www.tribuneindia.com/news/jalandhar/air-india-deficiency-in-service-ticket-refund-delayed-for-5-years-jalandhar-panel-pulls-up-airline/",
+   "source": "The Tribune",
+   "date": "2026-05-23T07:00:00Z",
+   "snippet": "",
+   "how_resolved": "consumer court"
+  }
+ ],
+ "local_forum": {
+  "name": "District Consumer Disputes Redressal Forum",
+  "address": "Udyog Sadan, 2nd Floor, C – 22-23, Udyog Sadan, Qutab Inst. Area, behind Qutab Hotel, Mehrauli, New Delhi, Delhi 110016",
+  "phone": "011 2656 5666",
+  "website": null,
+  "maps_link": "https://www.google.com/maps/search/?api=1&query=28.537379599999998,77.18817489999999",
+  "city": "Delhi",
+  "kind": "Consumer commission"
+ },
+ "blocked_hallucinations": 0,
+ "errors": [],
+ "verified_contacts": [
+  {
+   "email": "appellateauthority@airindia.com",
+   "phone": "",
+   "url": "https://www.airindia.com/in/hi/contact-us/grievance-resolution.html",
+   "source_url": "https://www.airindia.com/in/hi/contact-us/grievance-resolution.html",
+   "source_type": "official_domain",
+   "verified": true,
+   "reason": "in Google's excerpt of an official-domain page",
+   "type": "email",
+   "value": "appellateauthority@airindia.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "verified",
+   "basis": "in Google's excerpt of an official-domain page",
+   "warnings": [],
+   "checks": [
+    "sources: airindia.com",
+    "email uses the official domain"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.airindia.com/in/hi/contact-us/grievance-resolution.html"
+   ],
+   "evidence": "nodalofficer@airindia.com … पास appellateauthority@airindia.com"
+  },
+  {
+   "email": "nodalofficer@airindia.com",
+   "phone": "",
+   "url": "https://www.airindia.com/in/hi/contact-us/grievance-resolution.html",
+   "source_url": "https://www.airindia.com/in/hi/contact-us/grievance-resolution.html",
+   "source_type": "official_domain",
+   "verified": true,
+   "reason": "in Google's excerpt of an official-domain page",
+   "type": "email",
+   "value": "nodalofficer@airindia.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "verified",
+   "basis": "in Google's excerpt of an official-domain page",
+   "warnings": [],
+   "checks": [
+    "sources: airindia.com",
+    "email uses the official domain"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.airindia.com/in/hi/contact-us/grievance-resolution.html"
+   ],
+   "evidence": "nodalofficer@airindia.com … पास appellateauthority@airindia.com"
+  }
+ ],
+ "unverified_contacts": [
+  {
+   "email": "",
+   "phone": "9692291760",
+   "url": "https://about.me/customer.helplinesupport",
+   "source_url": "https://about.me/customer.helplinesupport",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9692291760",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: about.me"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://about.me/customer.helplinesupport"
+   ],
+   "evidence": "ut.me. Please upgrade to a newer browser by downloading one here . Get started for free Get your page Features Pricing Log In Home Features Pricing Customer Helpline support Available 24 hrs , Contact Us , and Toll free in India helpline Number Call 9692291760 Helpline Customer. an Available 24 hrs. India helpline Number . Online shopping, Online customer care, and Register Complaint. All informat"
+  }
+ ],
+ "recommended": {
+  "email": "appellateauthority@airindia.com",
+  "phone": "",
+  "url": "https://www.airindia.com/in/hi/contact-us/grievance-resolution.html",
+  "source_url": "https://www.airindia.com/in/hi/contact-us/grievance-resolution.html",
+  "source_type": "official_domain",
+  "verified": true,
+  "reason": "in Google's excerpt of an official-domain page",
+  "type": "email",
+  "value": "appellateauthority@airindia.com",
+  "role": "other",
+  "name": "",
+  "name_verified": false,
+  "designation": "",
+  "timeline": "",
+  "status": "verified",
+  "basis": "in Google's excerpt of an official-domain page",
+  "warnings": [],
+  "checks": [
+   "sources: airindia.com",
+   "email uses the official domain"
+  ],
+  "off_brand": false,
+  "sources": [
+   "https://www.airindia.com/in/hi/contact-us/grievance-resolution.html"
+  ],
+  "evidence": "nodalofficer@airindia.com … पास appellateauthority@airindia.com"
+ },
+ "verify_attempts": 1,
+ "grievance_attempts": 1,
+ "clauses": [
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 2(10)–(11)",
+   "title": "Definitions",
+   "citation": "Consumer Protection Act, 2019, Section 2(10)–(11)",
+   "text": "(ii) the right to be informed about the quality, quantity, potency, purity, standard and price of goods, products or services, as the case may be, so as to protect the consumer against unfair trade practices; 4 THE GAZETTE OF INDIA EXTRAORDINARY [P ART II— (iii) the right to be assured, wherever possible, access to a variety of goods, products or services at competitive prices; (iv) the right to be heard and to be assured that consumer's interests will receive due consideration at appropriate fora; (v) the right to seek redressal against unfair trade practice or restrictive trade practices or unscrupulous exploitation of consumers; and (vi) the right to consumer awareness; (10) \"defect\" means any fault, imperfection or shortcoming in the quality, quantity, potency, purity or standard which is required to be maintained by or under any law for the time being in force or under any contract, express or implied or as is claimed by the trader in any manner whatsoever in relation to any goods or product and the expression \"defective\" shall be construed accordingly; (11) \"deficiency\" means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance which is required to be maintained by or under any law for the time being in force or has been undertaken to be performed by a person in pursuance of a contract or otherwise in relation to any service and includes— (i) any act of negligence or omission or commission by such person which causes loss or injury to the consumer; and (ii) deliberate withholding of relevant information by such person to the consumer; ",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.625,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 2(10)–(11)",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+   "tag": "C1"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 20",
+   "title": "Power of Central Authority to recall goods, etc.",
+   "citation": "Consumer Protection Act, 2019, Section 20",
+   "text": "20. Where the Central Authority is satisfied on the basis of investigation that there is sufficient evidence to show violation of consumer rights or unfair trade practice by a person, it may pass such order as may be necessary, including— (a) recalling of goods or withdrawal of services which are dangerous, hazardous or unsafe; (b) reimbursement of the prices of goods or services so recalled to purchasers of such goods or services; and (c) discontinuation of practices which are unfair and prejudicial to consumers' interest: Provided that the Central Authority shall give the person an opportunity of being heard before passing an order under this section.",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.726,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 20",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "airline flight cancellation refund rules DGCA consumer protection act",
+   "tag": "C2"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 85",
+   "title": "Liability of product service provider",
+   "citation": "Consumer Protection Act, 2019, Section 85",
+   "text": "85. A product service provider shall be liable in a product liability action, if— (a) the service provided by him was faulty or imperfect or deficient or inadequate in quality, nature or manner of performance which is required to be provided by or under any law for the time being in force, or pursuant to any contract or otherwise; or (b) there was an act of omission or commission or negligence or conscious withholding any information which caused harm; or (c) the service provider did not issue adequate instructions or warnings to prevent any harm; or (d) the service did not conform to express warranty or the terms and conditions of the contract.",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.599,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 85",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+   "tag": "C3"
+  }
+ ],
+ "draft": "I am writing to formally contest the handling of my Delhi to Pune flight, which was cancelled by Air India. I received an SMS notification regarding this cancellation. Upon requesting a refund for the ticket amount of ₹6,800, I was issued a credit shell instead of a monetary refund. My booking details are as follows: [PNR NUMBER], [BOOKING / REFERENCE NUMBER], and [DATE OF FLIGHT]. Forcing a consumer to accept a credit shell when the airline cancels the service is an unfair trade practice and constitutes a deficiency in service under [C1] and [C3]. The service provider has failed to perform the contract as agreed, and withholding my funds without consent is unacceptable. I request an immediate reversal of this credit shell and a full refund of ₹6,800 to my original payment method. Please resolve this matter by 9 November 2026. If I do not receive a satisfactory response, I will be compelled to escalate this matter to the National Consumer Helpline (NCH) for further action.",
+ "subject": "Grievance regarding flight cancellation and denial of monetary refund - [PNR NUMBER]",
+ "summary": "Air India ne aapki Delhi-Pune flight cancel kar di aur refund ke badle credit shell de diya. Aapne ₹6,800 ka refund maanga hai. Agar company 9 November 2026 tak jawab nahi deti, toh aap National Consumer Helpline (NCH) par complain kar sakte hain.",
+ "escalation": [
+  {
+   "name": "Company grievance contact",
+   "channel": "email / grievance page — appellateauthority@airindia.com",
+   "url": null,
+   "phone": null,
+   "when_to_use": "First. Complain in writing and keep proof.",
+   "typical_wait": "30 days",
+   "reply_within": {
+    "n": 30,
+    "unit": "days",
+    "kind": "requested",
+    "basis": "a reasonable time to resolve it (no rule fixes one for this service)"
+   },
+   "source": "Shikayat Saathi verified playbook (checked against the regulators' texts, 2026-10-07)",
+   "reply_by": "9 November 2026"
+  },
+  {
+   "name": "National Consumer Helpline (NCH)",
+   "channel": "portal / phone / WhatsApp",
+   "url": "https://consumerhelpline.gov.in",
+   "phone": "1915 · WhatsApp 8800001915",
+   "when_to_use": "If the company does not resolve it.",
+   "typical_wait": "about 30-45 days",
+   "source": "Shikayat Saathi verified playbook (checked against the regulators' texts, 2026-10-07)",
+   "from_date": "9 November 2026"
+  },
+  {
+   "name": "District Consumer Disputes Redressal Commission",
+   "channel": "online filing (e-Jagriti)",
+   "url": "https://e-jagriti.gov.in",
+   "phone": null,
+   "when_to_use": "File within two years of the cause of action.",
+   "typical_wait": "months",
+   "file_within": {
+    "n": 2,
+    "unit": "years",
+    "from": "incident",
+    "basis": "a consumer complaint must be filed within two years of the cause of action",
+    "source": "Consumer Protection Act, 2019, Section 69(1)"
+   },
+   "source": "Shikayat Saathi verified playbook (checked against the regulators' texts, 2026-10-07)",
+   "from_date": "9 November 2026"
+  }
+ ],
+ "critic_notes": [
+  "Reviewer: The letter includes placeholders for PNR NUMBER, BOOKING / REFERENCE NUMBER, and DATE OF FLIGHT which are not provided in the user facts and should not be invented by the user."
+ ],
+ "draft_attempts": 2,
+ "draft_method": "Gemini (gemini-3.1-flash-lite, generate_content)",
+ "deadline": {
+  "date": "9 November 2026",
+  "basis": "a reasonable time to resolve it (no rule fixes one for this service)",
+  "source": "",
+  "kind": "requested"
+ },
+ "user_edits": {
+  "draft": "I am writing to formally contest the handling of my Delhi to Pune flight, which was cancelled by Air India. I received an SMS notification regarding this cancellation. Upon requesting a refund for the ticket amount of ₹6,800, I was issued a credit shell instead of a monetary refund. My booking details are as follows: [PNR NUMBER], [BOOKING / REFERENCE NUMBER], and [DATE OF FLIGHT]. Forcing a consumer to accept a credit shell when the airline cancels the service is an unfair trade practice and constitutes a deficiency in service under [C1] and [C3]. The service provider has failed to perform the contract as agreed, and withholding my funds without consent is unacceptable. I request an immediate reversal of this credit shell and a full refund of ₹6,800 to my original payment method. Please resolve this matter by 9 November 2026. If I do not receive a satisfactory response, I will be compelled to escalate this matter to the National Consumer Helpline (NCH) for further action.",
+  "subject": "Grievance regarding flight cancellation and denial of monetary refund - [PNR NUMBER]",
+  "complainant": {}
+ },
+ "case_answers": {},
+ "fills": {},
+ "drafted_answers": {},
+ "user_draft": "",
+ "review_rounds": 1,
+ "redraft": false,
+ "trace": [
+  "🛟 Safety: no immediate danger detected",
+  "🧭 Intake (Gemini (gemini-3.1-flash-lite, generate_content)): language=hinglish, domain=other (tier A: draft and escalate), company=Air India, issues=refund, deficiency; route: research (0.0) — no playbook fits “airline - flight cancellation and forced credit shell instead of refund”; missing: reference_id, date, pnr_number",
+  "🌐 Official domain: airindia.com (top-1 result for “Air India official website”, brand match)",
+  "🔎 Case research: no named scheme, policy or product to research",
+  "🗺️ Frame: other route confirmed",
+  "🔎 Grievance search #1: 3 queries (site:airindia.com grievance officer; site:airindia.com customer care; Air India grievance officer email) → 24 results, 8 pages read, 3 contact mentions (2 on the official domain)",
+  "📰 Precedents: 1 relevant forum/news item(s) (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "📍 Local forum (Consumer commission): District Consumer Disputes Redressal Forum",
+  "🧩 Gap check (no conditions): 0 met, 0 to confirm, 0 may not be met; 3 other question(s)",
+  "🪜 Escalation planner: over 25s — using the fallback route",
+  "🛡️ Verifier #1: 2 verified, 1 unverified — ✅ appellateauthority@airindia.com verified (in Google's excerpt of an official-domain page)",
+  "📚 Legal RAG: 3 clause(s) — Consumer Protection Act, 2019, Section 2(10)–(11); Consumer Protection Act, 2019, Section 20; Consumer Protection Act, 2019, Section 85",
+  "📝 Details form: 0 answer(s), 0 detail(s) filled of 3 question(s) and 3 missing fact(s)",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 1 issue(s) → back to drafter",
+  "   • Reviewer: The letter includes placeholders for the date of the flight, booking reference, and PNR number, which are essential case-specific facts that must be filled in before sending.",
+  "✍️ Drafter #2 (Gemini (gemini-3.1-flash-lite, generate_content)): revising for 1 critic note(s)",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 1 issue(s) remain after 2 drafts → finalize will strip unsupported citations",
+  "   • Reviewer: The letter includes placeholders for PNR NUMBER, BOOKING / REFERENCE NUMBER, and DATE OF FLIGHT which are not provided in the user facts and should not be invented by the user.",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 3,
+ "final": {
+  "to": "appellateauthority@airindia.com",
+  "to_name": "Company grievance contact",
+  "tier": "A",
+  "safety": {
+   "level": "none",
+   "categories": [],
+   "method": "rules",
+   "helplines": [],
+   "numbers": [],
+   "messages": []
+  },
+  "subject": "Grievance regarding flight cancellation and denial of monetary refund - [PNR NUMBER]",
+  "letter": "To,\nCompany grievance contact\nAir India\nEmail: appellateauthority@airindia.com\n\nDate: 10 October 2026\n\nSubject: Grievance regarding flight cancellation and denial of monetary refund - [PNR NUMBER]\n\nDear Sir/Madam,\n\nI am writing to formally contest the handling of my Delhi to Pune flight, which was cancelled by Air India. I received an SMS notification regarding this cancellation. Upon requesting a refund for the ticket amount of ₹6,800, I was issued a credit shell instead of a monetary refund. My booking details are as follows: [PNR NUMBER], [BOOKING / REFERENCE NUMBER], and [DATE OF FLIGHT]. Forcing a consumer to accept a credit shell when the airline cancels the service is an unfair trade practice and constitutes a deficiency in service under [C1] and [C3]. The service provider has failed to perform the contract as agreed, and withholding my funds without consent is unacceptable. I request an immediate reversal of this credit shell and a full refund of ₹6,800 to my original payment method. Please resolve this matter by 9 November 2026. If I do not receive a satisfactory response, I will be compelled to escalate this matter to the National Consumer Helpline (NCH) for further action.\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Consumer Protection Act, 2019, Section 2(10)–(11) — Definitions\n[C3] Consumer Protection Act, 2019, Section 85 — Liability of product service provider",
+  "markdown": "# Grievance regarding flight cancellation and denial of monetary refund - [PNR NUMBER]\n\n**To:** Company grievance contact <appellateauthority@airindia.com>\n\nAir India ne aapki Delhi-Pune flight cancel kar di aur refund ke badle credit shell de diya. Aapne ₹6,800 ka refund maanga hai. Agar company 9 November 2026 tak jawab nahi deti, toh aap National Consumer Helpline (NCH) par complain kar sakte hain.\n\n```\nTo,\nCompany grievance contact\nAir India\nEmail: appellateauthority@airindia.com\n\nDate: 10 October 2026\n\nSubject: Grievance regarding flight cancellation and denial of monetary refund - [PNR NUMBER]\n\nDear Sir/Madam,\n\nI am writing to formally contest the handling of my Delhi to Pune flight, which was cancelled by Air India. I received an SMS notification regarding this cancellation. Upon requesting a refund for the ticket amount of ₹6,800, I was issued a credit shell instead of a monetary refund. My booking details are as follows: [PNR NUMBER], [BOOKING / REFERENCE NUMBER], and [DATE OF FLIGHT]. Forcing a consumer to accept a credit shell when the airline cancels the service is an unfair trade practice and constitutes a deficiency in service under [C1] and [C3]. The service provider has failed to perform the contract as agreed, and withholding my funds without consent is unacceptable. I request an immediate reversal of this credit shell and a full refund of ₹6,800 to my original payment method. Please resolve this matter by 9 November 2026. If I do not receive a satisfactory response, I will be compelled to escalate this matter to the National Consumer Helpline (NCH) for further action.\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Consumer Protection Act, 2019, Section 2(10)–(11) — Definitions\n[C3] Consumer Protection Act, 2019, Section 85 — Liability of product service provider\n```\n\n## If there's no reply\n**Reply due by 9 November 2026** — a reasonable time to resolve it (no rule fixes one for this service).\n\n1. **Company grievance contact** (email / grievance page — appellateauthority@airindia.com) — First. Complain in writing and keep proof.\n   📅 reply due by 9 November 2026\n   🔗 source: Shikayat Saathi verified playbook (checked against the regulators' texts, 2026-10-07)\n2. **National Consumer Helpline (NCH)** (portal / phone / WhatsApp) — If the company does not resolve it. https://consumerhelpline.gov.in · 1915 · WhatsApp 8800001915\n   📅 you can go here from 9 November 2026 if unresolved\n   🔗 source: Shikayat Saathi verified playbook (checked against the regulators' texts, 2026-10-07)\n3. **District Consumer Disputes Redressal Commission** (online filing (e-Jagriti)) — File within two years of the cause of action. https://e-jagriti.gov.in\n   📅 you can go here from 9 November 2026 if unresolved\n   🔗 source: Shikayat Saathi verified playbook (checked against the regulators' texts, 2026-10-07)\n\n_Information, not legal advice._\n",
+  "summary": "Air India ne aapki Delhi-Pune flight cancel kar di aur refund ke badle credit shell de diya. Aapne ₹6,800 ka refund maanga hai. Agar company 9 November 2026 tak jawab nahi deti, toh aap National Consumer Helpline (NCH) par complain kar sakte hain.",
+  "escalation": [
+   {
+    "name": "Company grievance contact",
+    "channel": "email / grievance page — appellateauthority@airindia.com",
+    "url": null,
+    "phone": null,
+    "when_to_use": "First. Complain in writing and keep proof.",
+    "typical_wait": "30 days",
+    "reply_within": {
+     "n": 30,
+     "unit": "days",
+     "kind": "requested",
+     "basis": "a reasonable time to resolve it (no rule fixes one for this service)"
+    },
+    "source": "Shikayat Saathi verified playbook (checked against the regulators' texts, 2026-10-07)",
+    "reply_by": "9 November 2026"
+   },
+   {
+    "name": "National Consumer Helpline (NCH)",
+    "channel": "portal / phone / WhatsApp",
+    "url": "https://consumerhelpline.gov.in",
+    "phone": "1915 · WhatsApp 8800001915",
+    "when_to_use": "If the company does not resolve it.",
+    "typical_wait": "about 30-45 days",
+    "source": "Shikayat Saathi verified playbook (checked against the regulators' texts, 2026-10-07)",
+    "from_date": "9 November 2026"
+   },
+   {
+    "name": "District Consumer Disputes Redressal Commission",
+    "channel": "online filing (e-Jagriti)",
+    "url": "https://e-jagriti.gov.in",
+    "phone": null,
+    "when_to_use": "File within two years of the cause of action.",
+    "typical_wait": "months",
+    "file_within": {
+     "n": 2,
+     "unit": "years",
+     "from": "incident",
+     "basis": "a consumer complaint must be filed within two years of the cause of action",
+     "source": "Consumer Protection Act, 2019, Section 69(1)"
+    },
+    "source": "Shikayat Saathi verified playbook (checked against the regulators' texts, 2026-10-07)",
+    "from_date": "9 November 2026"
+   }
+  ],
+  "deadline": {
+   "date": "9 November 2026",
+   "basis": "a reasonable time to resolve it (no rule fixes one for this service)",
+   "source": "",
+   "kind": "requested"
+  },
+  "cited": [
+   {
+    "doc_id": "cpa",
+    "doc_title": "Consumer Protection Act, 2019",
+    "ref": "Section 2(10)–(11)",
+    "title": "Definitions",
+    "citation": "Consumer Protection Act, 2019, Section 2(10)–(11)",
+    "text": "(ii) the right to be informed about the quality, quantity, potency, purity, standard and price of goods, products or services, as the case may be, so as to protect the consumer against unfair trade practices; 4 THE GAZETTE OF INDIA EXTRAORDINARY [P ART II— (iii) the right to be assured, wherever possible, access to a variety of goods, products or services at competitive prices; (iv) the right to be heard and to be assured that consumer's interests will receive due consideration at appropriate fora; (v) the right to seek redressal against unfair trade practice or restrictive trade practices or unscrupulous exploitation of consumers; and (vi) the right to consumer awareness; (10) \"defect\" means any fault, imperfection or shortcoming in the quality, quantity, potency, purity or standard which is required to be maintained by or under any law for the time being in force or under any contract, express or implied or as is claimed by the trader in any manner whatsoever in relation to any goods or product and the expression \"defective\" shall be construed accordingly; (11) \"deficiency\" means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance which is required to be maintained by or under any law for the time being in force or has been undertaken to be performed by a person in pursuance of a contract or otherwise in relation to any service and includes— (i) any act of negligence or omission or commission by such person which causes loss or injury to the consumer; and (ii) deliberate withholding of relevant information by such person to the consumer; ",
+    "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+    "score": 0.625,
+    "act": "Consumer Protection Act, 2019",
+    "section": "Section 2(10)–(11)",
+    "source_file": "cpa_2019.pdf",
+    "page": null,
+    "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+    "tag": "C1"
+   },
+   {
+    "doc_id": "cpa",
+    "doc_title": "Consumer Protection Act, 2019",
+    "ref": "Section 85",
+    "title": "Liability of product service provider",
+    "citation": "Consumer Protection Act, 2019, Section 85",
+    "text": "85. A product service provider shall be liable in a product liability action, if— (a) the service provided by him was faulty or imperfect or deficient or inadequate in quality, nature or manner of performance which is required to be provided by or under any law for the time being in force, or pursuant to any contract or otherwise; or (b) there was an act of omission or commission or negligence or conscious withholding any information which caused harm; or (c) the service provider did not issue adequate instructions or warnings to prevent any harm; or (d) the service did not conform to express warranty or the terms and conditions of the contract.",
+    "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+    "score": 0.599,
+    "act": "Consumer Protection Act, 2019",
+    "section": "Section 85",
+    "source_file": "cpa_2019.pdf",
+    "page": null,
+    "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+    "tag": "C3"
+   }
+  ],
+  "removed_citations": [],
+  "case_brief": {},
+  "case_answers": {},
+  "eligibility": {
+   "status": "no_conditions",
+   "message": ""
+  },
+  "eligibility_checks": [],
+  "unresolved_critic_notes": [
+   "Reviewer: The letter includes placeholders for PNR NUMBER, BOOKING / REFERENCE NUMBER, and DATE OF FLIGHT which are not provided in the user facts and should not be invented by the user."
+  ]
+ },
+ "thread_id": "26fc8888ffd0"
+}

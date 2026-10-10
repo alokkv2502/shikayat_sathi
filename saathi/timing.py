@@ -86,17 +86,26 @@ def current_node() -> str:
     return getattr(_local, "node", "-")
 
 
+def current_run() -> str | None:
+    return getattr(_local, "run", None)
+
+
+def set_run(thread_id: str | None) -> None:
+    """Tag this thread's spans with a complaint's thread id, so its calls appear in that complaint's Live view."""
+    _local.run = thread_id
+
+
 def carry(fn):
-    """Wrap fn so that, run on a pool thread, its spans are attributed to the node that submitted it."""
-    node = current_node()
+    """Wrap fn so that, run on a pool thread, its spans are attributed to the node (and complaint) that submitted it."""
+    node, run_id = current_node(), current_run()
 
     def run(*a, **kw):
-        prev = getattr(_local, "node", None)
-        _local.node = node
+        prev, prev_run = getattr(_local, "node", None), getattr(_local, "run", None)
+        _local.node, _local.run = node, run_id
         try:
             return fn(*a, **kw)
         finally:
-            _local.node = prev
+            _local.node, _local.run = prev, prev_run
     return run
 
 
@@ -119,6 +128,10 @@ def span(kind: str, label: str = "", *, node: str | None = None, **extra):
             SPANS.append(rec)
             if len(SPANS) > MAX_SPANS:
                 del SPANS[: len(SPANS) - MAX_SPANS]
+        if kind != "node" and current_run():
+            from saathi import events  # lazy: events imports config, timing must stay import-light
+            events.emit(current_run(), "call", call=kind, label=label[:160], node=rec["node"], ms=rec["ms"],
+                        cached=bool(rec.get("cached")))
         if kind != "node" and log.isEnabledFor(logging.DEBUG):
             log.debug(f"  ↳ {rec['node']:<13} {kind:<5} {rec['ms'] / 1000:6.2f}s "
                       f"{'(cached) ' if rec.get('cached') else ''}{label[:100]}")

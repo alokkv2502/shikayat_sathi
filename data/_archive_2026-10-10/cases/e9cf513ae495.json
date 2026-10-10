@@ -1,0 +1,506 @@
+{
+ "complaint": "Kal raat 11 baje mere BOI account se ₹18,500 UPI se kat gaye. Maine koi payment approve nahi kiya, koi OTP share nahi kiya. Ek call aaya tha khud ko bank wala bata raha tha par maine kuch nahi bataya. Aaj subah dekha. Kya karun",
+ "company_hint": null,
+ "city": null,
+ "complainant": {},
+ "live": true,
+ "language": "hinglish",
+ "sector": "bank",
+ "tier": "A",
+ "safety": {
+  "level": "none",
+  "categories": [],
+  "method": "rules",
+  "helplines": [],
+  "numbers": [],
+  "messages": []
+ },
+ "case_entities": [],
+ "case_brief": {},
+ "eligibility_checks": [],
+ "gap_questions": [],
+ "extra_questions": [
+  "Did you receive an acknowledgment number or complaint reference number from the Bank of India when you reported the unauthorized transaction?",
+  "Do you have a copy of the acknowledgment receipt or complaint number from the National Cyber Crime Reporting Portal or the local police station?",
+  "Did you receive any SMS or email notification from your bank regarding the transaction at the time it occurred?"
+ ],
+ "eligibility": {
+  "status": "no_conditions",
+  "message": ""
+ },
+ "company": "Bank of India",
+ "company_domain": "bankofindia.bank.in",
+ "official_domains": [
+  "bankofindia.bank.in"
+ ],
+ "domain_basis": "top-1 result for “Bank of India official website”, brand match",
+ "facts": {
+  "product_or_service": "UPI transaction",
+  "issue": "The user reported an unauthorized UPI transaction of ₹18,500 from their Bank of India account after receiving a suspicious call.",
+  "what_user_wants": "Resolution/recovery of funds",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "18500",
+  "date": "Kal raat",
+  "city": "",
+  "place": "",
+  "police_station": "",
+  "details": {}
+ },
+ "issue_types": [
+  "unauthorised_charge",
+  "cyber_fraud"
+ ],
+ "missing_facts": [
+  {
+   "fact": "reference_id",
+   "placeholder": "[TRANSACTION / COMPLAINT REFERENCE]"
+  }
+ ],
+ "search_plan": [
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "site:bankofindia.bank.in principal nodal officer"
+  },
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "site:bankofindia.bank.in nodal officer"
+  },
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "Bank of India principal nodal officer email"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_forums",
+   "q": "Bank of India unauthorized UPI transaction fraud complaint resolved"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_news",
+   "q": "Bank of India unauthorized UPI transaction fraud consumer court"
+  }
+ ],
+ "search_keywords": "unauthorized UPI transaction fraud",
+ "urgent_note": "For an unauthorised or fraudulent debit, tell the bank immediately and call the National Cyber Crime Helpline 1930 (cybercrime.gov.in) - reporting quickly limits your liability.",
+ "contacts": [
+  {
+   "type": "email",
+   "value": "cgro.boi@bankofindia.bank.in",
+   "role": "nodal_officer",
+   "name": "",
+   "timeline": "",
+   "evidence": "Email: FEBO.NRI@bankofindia.bank.in) Email : cgro.boi@bankofindia.bank.in. Branches with Dedicated Nodal Officer/Counter for providing services",
+   "source_url": "https://bankofindia.bank.in/customer-experience-feedback",
+   "source_domain": "bankofindia.bank.in",
+   "page_title": "Just a moment...",
+   "via": "snippet",
+   "email": "cgro.boi@bankofindia.bank.in",
+   "phone": "",
+   "url": "https://bankofindia.bank.in/customer-experience-feedback",
+   "source_type": "official_domain",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "febo.nri@bankofindia.bank.in",
+   "role": "nodal_officer",
+   "name": "",
+   "timeline": "",
+   "evidence": "Email: FEBO.NRI@bankofindia.bank.in) Email : cgro.boi@bankofindia.bank.in. Branches with Dedicated Nodal Officer/Counter for providing services",
+   "source_url": "https://bankofindia.bank.in/customer-experience-feedback",
+   "source_domain": "bankofindia.bank.in",
+   "page_title": "Just a moment...",
+   "via": "snippet",
+   "email": "febo.nri@bankofindia.bank.in",
+   "phone": "",
+   "url": "https://bankofindia.bank.in/customer-experience-feedback",
+   "source_type": "official_domain",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "cgro.boi@bankofindia.bank.in",
+   "role": "nodal_officer",
+   "name": "",
+   "timeline": "",
+   "evidence": "Email : cgro.boi@bankofindia.bank.in. Branches with Dedicated Nodal Officer/Counter for providing services. Dedicated Nodal Officer/Counter for providing ...",
+   "source_url": "https://bankofindia.bank.in/contact-sebi",
+   "source_domain": "bankofindia.bank.in",
+   "page_title": "Just a moment...",
+   "via": "snippet",
+   "email": "cgro.boi@bankofindia.bank.in",
+   "phone": "",
+   "url": "https://bankofindia.bank.in/contact-sebi",
+   "source_type": "official_domain",
+   "verified": false,
+   "reason": ""
+  }
+ ],
+ "precedents": [],
+ "local_forum": null,
+ "blocked_hallucinations": 0,
+ "errors": [
+  "precedents: Bank of India unauthorized UPI transaction fraud complaint resolved: skipped after 8s"
+ ],
+ "verified_contacts": [
+  {
+   "email": "cgro.boi@bankofindia.bank.in",
+   "phone": "",
+   "url": "https://bankofindia.bank.in/customer-experience-feedback",
+   "source_url": "https://bankofindia.bank.in/customer-experience-feedback",
+   "source_type": "official_domain",
+   "verified": true,
+   "reason": "in Google's excerpt of an official-domain page",
+   "type": "email",
+   "value": "cgro.boi@bankofindia.bank.in",
+   "role": "nodal_officer",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "verified",
+   "basis": "in Google's excerpt of an official-domain page",
+   "warnings": [],
+   "checks": [
+    "sources: bankofindia.bank.in",
+    "email uses the official domain"
+   ],
+   "sources": [
+    "https://bankofindia.bank.in/contact-sebi",
+    "https://bankofindia.bank.in/customer-experience-feedback"
+   ],
+   "evidence": "Email: FEBO.NRI@bankofindia.bank.in) Email : cgro.boi@bankofindia.bank.in. Branches with Dedicated Nodal Officer/Counter for providing services"
+  },
+  {
+   "email": "febo.nri@bankofindia.bank.in",
+   "phone": "",
+   "url": "https://bankofindia.bank.in/customer-experience-feedback",
+   "source_url": "https://bankofindia.bank.in/customer-experience-feedback",
+   "source_type": "official_domain",
+   "verified": true,
+   "reason": "in Google's excerpt of an official-domain page",
+   "type": "email",
+   "value": "febo.nri@bankofindia.bank.in",
+   "role": "nodal_officer",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "verified",
+   "basis": "in Google's excerpt of an official-domain page",
+   "warnings": [],
+   "checks": [
+    "sources: bankofindia.bank.in",
+    "email uses the official domain"
+   ],
+   "sources": [
+    "https://bankofindia.bank.in/customer-experience-feedback"
+   ],
+   "evidence": "Email: FEBO.NRI@bankofindia.bank.in) Email : cgro.boi@bankofindia.bank.in. Branches with Dedicated Nodal Officer/Counter for providing services"
+  }
+ ],
+ "unverified_contacts": [],
+ "recommended": {
+  "email": "cgro.boi@bankofindia.bank.in",
+  "phone": "",
+  "url": "https://bankofindia.bank.in/customer-experience-feedback",
+  "source_url": "https://bankofindia.bank.in/customer-experience-feedback",
+  "source_type": "official_domain",
+  "verified": true,
+  "reason": "in Google's excerpt of an official-domain page",
+  "type": "email",
+  "value": "cgro.boi@bankofindia.bank.in",
+  "role": "nodal_officer",
+  "name": "",
+  "name_verified": false,
+  "designation": "",
+  "timeline": "",
+  "status": "verified",
+  "basis": "in Google's excerpt of an official-domain page",
+  "warnings": [],
+  "checks": [
+   "sources: bankofindia.bank.in",
+   "email uses the official domain"
+  ],
+  "sources": [
+   "https://bankofindia.bank.in/contact-sebi",
+   "https://bankofindia.bank.in/customer-experience-feedback"
+  ],
+  "evidence": "Email: FEBO.NRI@bankofindia.bank.in) Email : cgro.boi@bankofindia.bank.in. Branches with Dedicated Nodal Officer/Counter for providing services"
+ },
+ "verify_attempts": 1,
+ "grievance_attempts": 1,
+ "clauses": [
+  {
+   "doc_id": "ios",
+   "doc_title": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+   "ref": "Clause 9",
+   "title": "Grounds of Complaint",
+   "citation": "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 9",
+   "text": "9. Grounds of Complaint Any customer aggrieved by an act or omission of a Bank resulting in deficiency in service may file a complaint under the Scheme personally or through an authorised representative as defined under clause 3(1)(c).",
+   "source_url": "https://website.rbi.org.in/documents/d/rbi/reserve-bank-integrated-ombudsman-scheme-2026-160126",
+   "score": 0.856,
+   "act": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+   "section": "Clause 9",
+   "source_file": "rbi_ios_2026.pdf",
+   "page": null,
+   "query": "grounds of complaint act or omission of bank resulting in deficiency in service",
+   "tag": "C1"
+  },
+  {
+   "doc_id": "ios",
+   "doc_title": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+   "ref": "Clause 3(1)",
+   "title": "Definitions",
+   "citation": "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 3(1)",
+   "text": "(i) “Deficiency in service” means a shortcoming or an inadequacy in any service, which the Bank is required to provide statutorily or otherwise, which may or may not result in financial loss or damage to the customer; (j) “Non-Banking Financial Company” (NBFC) means an NBFC as defined in Section 45-I (f) of the Reserve Bank of India Act, 1934 and registered with the Reserve Bank, to the extent included under the Scheme but does not include, an NBFC in resolution or winding up/liquidation, or under Directions of Reserve Bank of India; (k) “Non- bank Prepaid Payment Instruments Issuer” means a company, as defined in the Companies Act, 2013 (18 of 2013), which has been granted a Certificate of Authorisation by the Reserve Bank of India under Section 7(1) of the Payment and Settlement Systems Act, 2007 (51 of 2007) to operate as a Prepaid Payment Instrument Issuer; (l) “RBI Deputy Ombudsman” means a person appointed by the Reserve Bank as such under Clause 4 of the Scheme; (m) “RBI Ombudsman” means a person appointed by the Reserve Bank as such under Clause 4 of the Scheme; (n) “Regulated Entity” means a bank or a Non-Banking Financial Company, or a Non - bank Prepaid Payment Instruments Issuer or a Credit Information Company as defined in the Scheme, or any other entity as may be specified by the Reserve Bank from time to time, to the extent not excluded under the Scheme; This is Public document. (o) “Rejected Complaints” means complaints that are closed under the provisions as specified in clause 16 of the Scheme. (p) “Settlement” means an outcome of the processes under clause 14 of the Scheme; (q) “The Reserve Bank” means Reserve Bank of India constituted under Section 3 of the Reserve Bank of India Act, 1934. ",
+   "source_url": "https://website.rbi.org.in/documents/d/rbi/reserve-bank-integrated-ombudsman-scheme-2026-160126",
+   "score": 0.773,
+   "act": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+   "section": "Clause 3(1)",
+   "source_file": "rbi_ios_2026.pdf",
+   "page": null,
+   "query": "grounds of complaint act or omission of bank resulting in deficiency in service",
+   "tag": "C2"
+  }
+ ],
+ "draft": "I am writing to formally report an unauthorized UPI transaction of ₹18,500 debited from my Bank of India account. While I initially mentioned the incident occurred around 11 PM, I have verified the exact details as 4 October 2026, at 12:30 PM, with Transaction ID 9836728. I did not authorize this payment, nor did I share any OTP or credentials with anyone, despite receiving a suspicious call prior to the incident. Upon discovering the deduction, I immediately contacted the bank to block my UPI/account and filed a formal complaint with the National Cyber Crime Reporting Portal. This unauthorized debit constitutes a deficiency in service [C1]. Under [C2], I expect the bank to maintain the security of my account. I request you to investigate this fraudulent transaction immediately and initiate the recovery of my funds. Please provide a status update on my complaint [TRANSACTION / COMPLAINT REFERENCE] by 8 November 2026. If this matter is not resolved within 30 days, I will be compelled to escalate this grievance to the RBI Ombudsman under the Reserve Bank – Integrated Ombudsman Scheme, 2026.",
+ "subject": "Unauthorized UPI Transaction - Account [ACCOUNT NUMBER] - Transaction ID 9836728",
+ "summary": "Aapke Bank of India account se ₹18,500 ka unauthorized UPI transaction hua hai. Maine details clarify kar di hain (4 October 2026, 12:30 PM, ID: 9836728) aur bank ko inform kar diya hai. Maine cybercrime portal par bhi complaint file kar di hai aur ab refund ki maang kar raha hoon.",
+ "escalation": [
+  {
+   "name": "Bank grievance cell → Principal Nodal Officer",
+   "channel": "email / bank complaint portal — cgro.boi@bankofindia.bank.in",
+   "url": null,
+   "phone": null,
+   "when_to_use": "First. Complain in writing and keep the complaint number; escalate to the Principal Nodal Officer if unresolved.",
+   "typical_wait": "30 days",
+   "reply_within": {
+    "n": 30,
+    "unit": "days",
+    "kind": "statutory",
+    "basis": "if the bank does not reply within 30 days of receiving your complaint, you can go to the RBI Ombudsman",
+    "source": "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 10(1)"
+   },
+   "reply_by": "8 November 2026"
+  },
+  {
+   "name": "RBI Ombudsman (RB-IOS, 2026)",
+   "channel": "RBI CMS portal / email",
+   "url": "https://cms.rbi.org.in",
+   "phone": "14448 (RBI contact centre)",
+   "when_to_use": "No reply within 30 days, or the reply is unsatisfactory. Also crpc@rbi.org.in. No fee.",
+   "typical_wait": "weeks",
+   "from_date": "8 November 2026"
+  },
+  {
+   "name": "District Consumer Commission",
+   "channel": "online filing (e-Jagriti)",
+   "url": "https://e-jagriti.gov.in",
+   "phone": null,
+   "when_to_use": "Deficiency in banking service is also a consumer dispute.",
+   "typical_wait": "months",
+   "file_within": {
+    "n": 2,
+    "unit": "years",
+    "from": "incident",
+    "basis": "a consumer complaint must be filed within two years of the cause of action",
+    "source": "Consumer Protection Act, 2019, Section 69(1)"
+   },
+   "from_date": "8 November 2026"
+  }
+ ],
+ "critic_notes": [
+  "'9836728' does not appear in the complaint - do not invent IDs, amounts or numbers.",
+  "Reviewer: The letter includes a placeholder [TRANSACTION / COMPLAINT REFERENCE] that has not been filled in with the actual transaction ID provided in the review answers.",
+  "Reviewer: The letter mentions a deadline of 8 November 2026, but does not explain the basis for this specific date, making it appear arbitrary."
+ ],
+ "draft_attempts": 2,
+ "draft_method": "Gemini (gemini-3.1-flash-lite, generate_content)",
+ "deadline": {
+  "date": "8 November 2026",
+  "basis": "if the bank does not reply within 30 days of receiving your complaint, you can go to the RBI Ombudsman",
+  "source": "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 10(1)",
+  "kind": "statutory"
+ },
+ "user_edits": {
+  "draft": "I am writing to formally report an unauthorized UPI transaction of ₹18,500 debited from my Bank of India account. While I initially mentioned the incident occurred around 11 PM, I have verified the exact details as 4 October 2026, at 12:30 PM, with Transaction ID 9836728. I did not authorize this payment, nor did I share any OTP or credentials with anyone, despite receiving a suspicious call prior to the incident. Upon discovering the deduction, I immediately contacted the bank to block my UPI/account and filed a formal complaint with the National Cyber Crime Reporting Portal. This unauthorized debit constitutes a deficiency in service [C1]. Under [C2], I expect the bank to maintain the security of my account. I request you to investigate this fraudulent transaction immediately and initiate the recovery of my funds. Please provide a status update on my complaint [TRANSACTION / COMPLAINT REFERENCE] by 8 November 2026. If this matter is not resolved within 30 days, I will be compelled to escalate this grievance to the RBI Ombudsman under the Reserve Bank – Integrated Ombudsman Scheme, 2026.",
+  "subject": "Unauthorized UPI Transaction - Account [ACCOUNT NUMBER] - Transaction ID 9836728",
+  "fills": {},
+  "case_answers": {},
+  "complainant": {}
+ },
+ "case_answers": {
+  "Did you report this unauthorized transaction to the Bank of India customer care or block your UPI/account immediately after discovering it?": "yes",
+  "Have you filed a complaint on the National Cyber Crime Reporting Portal (cybercrime.gov.in) or with your local police station?": "Yes",
+  "What is the exact date and time the transaction occurred, and do you have the transaction ID from your bank statement?": "4 october, 2026 , 12:30 pm .Transaction id:9836728"
+ },
+ "fills": {},
+ "drafted_answers": {
+  "Did you report this unauthorized transaction to the Bank of India customer care or block your UPI/account immediately after discovering it?": "yes",
+  "Have you filed a complaint on the National Cyber Crime Reporting Portal (cybercrime.gov.in) or with your local police station?": "Yes",
+  "What is the exact date and time the transaction occurred, and do you have the transaction ID from your bank statement?": "4 october, 2026 , 12:30 pm .Transaction id:9836728"
+ },
+ "user_draft": "",
+ "review_rounds": 2,
+ "redraft": false,
+ "trace": [
+  "🧭 Intake (Gemini (gemini-3.1-flash-lite, generate_content)): language=hinglish, domain=bank (tier A: draft and escalate), company=Bank of India, issues=unauthorised_charge, cyber_fraud; missing: reference_id",
+  "🌐 Official domain: bankofindia.bank.in (top-1 result for “Bank of India official website”, brand match)",
+  "🛟 Safety: no immediate danger detected",
+  "🔎 Case research: no named scheme, policy or product to research",
+  "🗺️ Frame: bank route confirmed",
+  "🔎 Grievance search #1: 3 queries (site:bankofindia.bank.in principal nodal officer; site:bankofindia.bank.in nodal officer; Bank of India principal nodal officer email) → 24 results, 8 pages read, 3 contact mentions (3 on the official domain)",
+  "📰 Precedents: 0 relevant forum/news item(s) (Gemini (gemini-3.1-flash-lite, generate_content)); 1 search(es) failed",
+  "📍 Local forum: skipped — no city given",
+  "🧩 Gap check (Gemini (gemini-3.1-flash-lite, generate_content)): 0 met, 0 to confirm, 0 may not be met; 3 other question(s)",
+  "🛡️ Verifier #1: 2 verified, 0 unverified — ✅ cgro.boi@bankofindia.bank.in verified (in Google's excerpt of an official-domain page)",
+  "📚 Legal RAG: 2 clause(s) — Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 9; Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 3(1)",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 2 issue(s) → back to drafter",
+  "   • State the reply deadline computed from the rules: 8 November 2026 (if the bank does not reply within 30 days of receiving your complaint, you can go to the RBI Ombudsman).",
+  "   • Reviewer: The letter cites Clause 3(1) of the RBI Integrated Ombudsman Scheme, 2026, which defines terms like 'Deficiency in service' and 'NBFC', but does not contain any actionable rights or obligations relevant to the complaint, making the citation legally irrelevant.",
+  "✍️ Drafter #2 (Gemini (gemini-3.1-flash-lite, generate_content)): revising for 2 critic note(s)",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 1 issue(s) remain after 2 drafts → finalize will strip unsupported citations",
+  "   • Reviewer: The letter includes a specific deadline (8 November 2026) that is not supported by the user's facts or the provided clauses, as the user did not provide a date for when the letter is being sent.",
+  "🙋 Human review: 3 new answer(s) → reassess and redraft",
+  "🔁 Reassess (Gemini (gemini-3.1-flash-lite, generate_content)): 3 answer(s) — no published conditions → redrafting",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 4 issue(s) → back to drafter",
+  "   • '9836728' does not appear in the complaint - do not invent IDs, amounts or numbers.",
+  "   • State the reply deadline computed from the rules: 8 November 2026 (if the bank does not reply within 30 days of receiving your complaint, you can go to the RBI Ombudsman).",
+  "   • Reviewer: The letter references a placeholder [TRANSACTION / COMPLAINT REFERENCE] which should be replaced with the actual transaction ID provided in the review answers (9836728) or a specific complaint reference number if one exists.",
+  "   • Reviewer: The letter states the transaction occurred on 4 October 2026 at 12:30 PM, but the user's initial complaint text stated 'Kal raat 11 baje' (last night at 11 PM). While the review answer provides a specific date/time, the letter should acknowledge this discrepancy or clarify that the review answer is the corrected information.",
+  "✍️ Drafter #2 (Gemini (gemini-3.1-flash-lite, generate_content)): revising for 4 critic note(s)",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 3 issue(s) remain after 2 drafts → finalize will strip unsupported citations",
+  "   • '9836728' does not appear in the complaint - do not invent IDs, amounts or numbers.",
+  "   • Reviewer: The letter includes a placeholder [TRANSACTION / COMPLAINT REFERENCE] that has not been filled in with the actual transaction ID provided in the review answers.",
+  "   • Reviewer: The letter mentions a deadline of 8 November 2026, but does not explain the basis for this specific date, making it appear arbitrary.",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 4,
+ "final": {
+  "to": "cgro.boi@bankofindia.bank.in",
+  "to_name": "Bank grievance cell → Principal Nodal Officer",
+  "tier": "A",
+  "safety": {
+   "level": "none",
+   "categories": [],
+   "method": "rules",
+   "helplines": [],
+   "numbers": [],
+   "messages": []
+  },
+  "subject": "Unauthorized UPI Transaction - Account [ACCOUNT NUMBER] - Transaction ID 9836728",
+  "letter": "To,\nBank grievance cell → Principal Nodal Officer\nBank of India\nEmail: cgro.boi@bankofindia.bank.in\n\nDate: 09 October 2026\n\nSubject: Unauthorized UPI Transaction - Account [ACCOUNT NUMBER] - Transaction ID 9836728\n\nDear Sir/Madam,\n\nI am writing to formally report an unauthorized UPI transaction of ₹18,500 debited from my Bank of India account. While I initially mentioned the incident occurred around 11 PM, I have verified the exact details as 4 October 2026, at 12:30 PM, with Transaction ID 9836728. I did not authorize this payment, nor did I share any OTP or credentials with anyone, despite receiving a suspicious call prior to the incident. Upon discovering the deduction, I immediately contacted the bank to block my UPI/account and filed a formal complaint with the National Cyber Crime Reporting Portal. This unauthorized debit constitutes a deficiency in service [C1]. Under [C2], I expect the bank to maintain the security of my account. I request you to investigate this fraudulent transaction immediately and initiate the recovery of my funds. Please provide a status update on my complaint [TRANSACTION / COMPLAINT REFERENCE] by 8 November 2026. If this matter is not resolved within 30 days, I will be compelled to escalate this grievance to the RBI Ombudsman under the Reserve Bank – Integrated Ombudsman Scheme, 2026.\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 9 — Grounds of Complaint\n[C2] Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 3(1) — Definitions",
+  "markdown": "# Unauthorized UPI Transaction - Account [ACCOUNT NUMBER] - Transaction ID 9836728\n\n**To:** Bank grievance cell → Principal Nodal Officer <cgro.boi@bankofindia.bank.in>\n\nAapke Bank of India account se ₹18,500 ka unauthorized UPI transaction hua hai. Maine details clarify kar di hain (4 October 2026, 12:30 PM, ID: 9836728) aur bank ko inform kar diya hai. Maine cybercrime portal par bhi complaint file kar di hai aur ab refund ki maang kar raha hoon.\n\n```\nTo,\nBank grievance cell → Principal Nodal Officer\nBank of India\nEmail: cgro.boi@bankofindia.bank.in\n\nDate: 09 October 2026\n\nSubject: Unauthorized UPI Transaction - Account [ACCOUNT NUMBER] - Transaction ID 9836728\n\nDear Sir/Madam,\n\nI am writing to formally report an unauthorized UPI transaction of ₹18,500 debited from my Bank of India account. While I initially mentioned the incident occurred around 11 PM, I have verified the exact details as 4 October 2026, at 12:30 PM, with Transaction ID 9836728. I did not authorize this payment, nor did I share any OTP or credentials with anyone, despite receiving a suspicious call prior to the incident. Upon discovering the deduction, I immediately contacted the bank to block my UPI/account and filed a formal complaint with the National Cyber Crime Reporting Portal. This unauthorized debit constitutes a deficiency in service [C1]. Under [C2], I expect the bank to maintain the security of my account. I request you to investigate this fraudulent transaction immediately and initiate the recovery of my funds. Please provide a status update on my complaint [TRANSACTION / COMPLAINT REFERENCE] by 8 November 2026. If this matter is not resolved within 30 days, I will be compelled to escalate this grievance to the RBI Ombudsman under the Reserve Bank – Integrated Ombudsman Scheme, 2026.\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 9 — Grounds of Complaint\n[C2] Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 3(1) — Definitions\n```\n\n## If there's no reply\n**Reply due by 8 November 2026** — if the bank does not reply within 30 days of receiving your complaint, you can go to the RBI Ombudsman (Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 10(1)).\n\n1. **Bank grievance cell → Principal Nodal Officer** (email / bank complaint portal — cgro.boi@bankofindia.bank.in) — First. Complain in writing and keep the complaint number; escalate to the Principal Nodal Officer if unresolved.\n   📅 reply due by 8 November 2026\n2. **RBI Ombudsman (RB-IOS, 2026)** (RBI CMS portal / email) — No reply within 30 days, or the reply is unsatisfactory. Also crpc@rbi.org.in. No fee. https://cms.rbi.org.in · 14448 (RBI contact centre)\n   📅 you can go here from 8 November 2026 if unresolved\n3. **District Consumer Commission** (online filing (e-Jagriti)) — Deficiency in banking service is also a consumer dispute. https://e-jagriti.gov.in\n   📅 you can go here from 8 November 2026 if unresolved\n\n_Information, not legal advice._\n",
+  "summary": "Aapke Bank of India account se ₹18,500 ka unauthorized UPI transaction hua hai. Maine details clarify kar di hain (4 October 2026, 12:30 PM, ID: 9836728) aur bank ko inform kar diya hai. Maine cybercrime portal par bhi complaint file kar di hai aur ab refund ki maang kar raha hoon.",
+  "escalation": [
+   {
+    "name": "Bank grievance cell → Principal Nodal Officer",
+    "channel": "email / bank complaint portal — cgro.boi@bankofindia.bank.in",
+    "url": null,
+    "phone": null,
+    "when_to_use": "First. Complain in writing and keep the complaint number; escalate to the Principal Nodal Officer if unresolved.",
+    "typical_wait": "30 days",
+    "reply_within": {
+     "n": 30,
+     "unit": "days",
+     "kind": "statutory",
+     "basis": "if the bank does not reply within 30 days of receiving your complaint, you can go to the RBI Ombudsman",
+     "source": "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 10(1)"
+    },
+    "reply_by": "8 November 2026"
+   },
+   {
+    "name": "RBI Ombudsman (RB-IOS, 2026)",
+    "channel": "RBI CMS portal / email",
+    "url": "https://cms.rbi.org.in",
+    "phone": "14448 (RBI contact centre)",
+    "when_to_use": "No reply within 30 days, or the reply is unsatisfactory. Also crpc@rbi.org.in. No fee.",
+    "typical_wait": "weeks",
+    "from_date": "8 November 2026"
+   },
+   {
+    "name": "District Consumer Commission",
+    "channel": "online filing (e-Jagriti)",
+    "url": "https://e-jagriti.gov.in",
+    "phone": null,
+    "when_to_use": "Deficiency in banking service is also a consumer dispute.",
+    "typical_wait": "months",
+    "file_within": {
+     "n": 2,
+     "unit": "years",
+     "from": "incident",
+     "basis": "a consumer complaint must be filed within two years of the cause of action",
+     "source": "Consumer Protection Act, 2019, Section 69(1)"
+    },
+    "from_date": "8 November 2026"
+   }
+  ],
+  "deadline": {
+   "date": "8 November 2026",
+   "basis": "if the bank does not reply within 30 days of receiving your complaint, you can go to the RBI Ombudsman",
+   "source": "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 10(1)",
+   "kind": "statutory"
+  },
+  "cited": [
+   {
+    "doc_id": "ios",
+    "doc_title": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+    "ref": "Clause 9",
+    "title": "Grounds of Complaint",
+    "citation": "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 9",
+    "text": "9. Grounds of Complaint Any customer aggrieved by an act or omission of a Bank resulting in deficiency in service may file a complaint under the Scheme personally or through an authorised representative as defined under clause 3(1)(c).",
+    "source_url": "https://website.rbi.org.in/documents/d/rbi/reserve-bank-integrated-ombudsman-scheme-2026-160126",
+    "score": 0.856,
+    "act": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+    "section": "Clause 9",
+    "source_file": "rbi_ios_2026.pdf",
+    "page": null,
+    "query": "grounds of complaint act or omission of bank resulting in deficiency in service",
+    "tag": "C1"
+   },
+   {
+    "doc_id": "ios",
+    "doc_title": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+    "ref": "Clause 3(1)",
+    "title": "Definitions",
+    "citation": "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 3(1)",
+    "text": "(i) “Deficiency in service” means a shortcoming or an inadequacy in any service, which the Bank is required to provide statutorily or otherwise, which may or may not result in financial loss or damage to the customer; (j) “Non-Banking Financial Company” (NBFC) means an NBFC as defined in Section 45-I (f) of the Reserve Bank of India Act, 1934 and registered with the Reserve Bank, to the extent included under the Scheme but does not include, an NBFC in resolution or winding up/liquidation, or under Directions of Reserve Bank of India; (k) “Non- bank Prepaid Payment Instruments Issuer” means a company, as defined in the Companies Act, 2013 (18 of 2013), which has been granted a Certificate of Authorisation by the Reserve Bank of India under Section 7(1) of the Payment and Settlement Systems Act, 2007 (51 of 2007) to operate as a Prepaid Payment Instrument Issuer; (l) “RBI Deputy Ombudsman” means a person appointed by the Reserve Bank as such under Clause 4 of the Scheme; (m) “RBI Ombudsman” means a person appointed by the Reserve Bank as such under Clause 4 of the Scheme; (n) “Regulated Entity” means a bank or a Non-Banking Financial Company, or a Non - bank Prepaid Payment Instruments Issuer or a Credit Information Company as defined in the Scheme, or any other entity as may be specified by the Reserve Bank from time to time, to the extent not excluded under the Scheme; This is Public document. (o) “Rejected Complaints” means complaints that are closed under the provisions as specified in clause 16 of the Scheme. (p) “Settlement” means an outcome of the processes under clause 14 of the Scheme; (q) “The Reserve Bank” means Reserve Bank of India constituted under Section 3 of the Reserve Bank of India Act, 1934. ",
+    "source_url": "https://website.rbi.org.in/documents/d/rbi/reserve-bank-integrated-ombudsman-scheme-2026-160126",
+    "score": 0.773,
+    "act": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+    "section": "Clause 3(1)",
+    "source_file": "rbi_ios_2026.pdf",
+    "page": null,
+    "query": "grounds of complaint act or omission of bank resulting in deficiency in service",
+    "tag": "C2"
+   }
+  ],
+  "removed_citations": [],
+  "case_brief": {},
+  "case_answers": {
+   "Did you report this unauthorized transaction to the Bank of India customer care or block your UPI/account immediately after discovering it?": "yes",
+   "Have you filed a complaint on the National Cyber Crime Reporting Portal (cybercrime.gov.in) or with your local police station?": "Yes",
+   "What is the exact date and time the transaction occurred, and do you have the transaction ID from your bank statement?": "4 october, 2026 , 12:30 pm .Transaction id:9836728"
+  },
+  "eligibility": {
+   "status": "no_conditions",
+   "message": ""
+  },
+  "eligibility_checks": [],
+  "unresolved_critic_notes": [
+   "'9836728' does not appear in the complaint - do not invent IDs, amounts or numbers.",
+   "Reviewer: The letter includes a placeholder [TRANSACTION / COMPLAINT REFERENCE] that has not been filled in with the actual transaction ID provided in the review answers.",
+   "Reviewer: The letter mentions a deadline of 8 November 2026, but does not explain the basis for this specific date, making it appear arbitrary."
+  ]
+ },
+ "thread_id": "e9cf513ae495"
+}

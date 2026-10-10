@@ -1,0 +1,74 @@
+{"t": 1791616577.209, "kind": "run_start", "resumed": false}
+{"t": 1791616577.322, "kind": "node_start", "node": "safety_router", "label": "🛟 Safety"}
+{"t": 1791616577.323, "kind": "node_end", "node": "safety_router", "ms": 0, "trace": ["🛟 Safety: no immediate danger detected"], "errors": []}
+{"t": 1791616577.325, "kind": "node_start", "node": "intake_planner", "label": "🧭 Intake"}
+{"t": 1791616583.776, "kind": "call", "call": "llm", "label": "You triage Indian grievances written in English, Hindi or Hi · 1508 chars in", "node": "intake_planner", "ms": 6447, "cached": false}
+{"t": 1791616584.782, "kind": "call", "call": "serp", "label": "google: Builder official website", "node": "intake_planner", "ms": 1005, "cached": false}
+{"t": 1791616586.186, "kind": "call", "call": "fetch", "label": "https://buildersnetwork.in", "node": "intake_planner", "ms": 1380, "cached": false}
+{"t": 1791616586.187, "kind": "node_end", "node": "intake_planner", "ms": 8862, "trace": ["🧭 Intake (Gemini (gemini-3.1-flash-lite, generate_content)): language=hinglish, domain=other (tier A: draft and escalate), company=Builder, issues=deficiency; to research: RERA; route: matched (0.8); missing: reference_id, builder_name, project_name, agreement_date", "🌐 Official domain: buildersnetwork.in (top-3 result for “Builder official website”, brand match)"], "errors": []}
+{"t": 1791616586.189, "kind": "node_start", "node": "case_research", "label": "🔎 Case research"}
+{"t": 1791616588.702, "kind": "call", "call": "serp", "label": "google: site:buildersnetwork.in \"RERA\"", "node": "case_research", "ms": 2510, "cached": false}
+{"t": 1791616589.989, "kind": "call", "call": "fetch", "label": "https://www.aurumproptech.in/pulse/faqs/what-is-the-real-estate-regulatory-authority-rera-in-different-states", "node": "case_research", "ms": 1287, "cached": false}
+{"t": 1791616592.955, "kind": "call", "call": "fetch", "label": "https://veritect.ai/research/citizens/what-is-rera-how-protects-homebuyers", "node": "case_research", "ms": 2965, "cached": false}
+{"t": 1791616594.118, "kind": "call", "call": "serp", "label": "google: \"RERA\" Uttar Pradesh eligibility benefits grievance site:gov.in", "node": "case_research", "ms": 1163, "cached": false}
+{"t": 1791616596.166, "kind": "call", "call": "serp", "label": "google: \"RERA\" Uttar Pradesh eligibility conditions how to claim grievance", "node": "case_research", "ms": 2047, "cached": false}
+{"t": 1791616604.089, "kind": "call", "call": "llm", "label": "You build a source-grounded case brief about a named scheme, · 14601 chars in", "node": "case_research", "ms": 7921, "cached": false}
+{"t": 1791616604.093, "kind": "node_end", "node": "case_research", "ms": 17903, "trace": ["🔎 Case research: Real Estate (Regulation and Development) Act, 2016 (RERA) — 5 condition(s) from 2 source(s) (0 official page(s) read)"], "errors": []}
+{"t": 1791616604.095, "kind": "node_start", "node": "frame", "label": "🗺️ Frame"}
+{"t": 1791616604.095, "kind": "node_end", "node": "frame", "ms": 0, "trace": ["🗺️ Frame: route → govt_scheme (tier A)"], "errors": []}
+{"t": 1791616604.097, "kind": "node_start", "node": "precedents", "label": "📰 Precedents"}
+{"t": 1791616604.099, "kind": "node_start", "node": "escalation_planner", "label": "🪜 Escalation planner"}
+{"t": 1791616604.098, "kind": "node_start", "node": "gap_check", "label": "🧩 Gap check"}
+{"t": 1791616604.097, "kind": "node_start", "node": "local_forum", "label": "📍 Local forum"}
+{"t": 1791616604.107, "kind": "node_end", "node": "local_forum", "ms": 0, "trace": ["📍 Local forum: not needed for this domain"], "errors": []}
+{"t": 1791616605.33, "kind": "call", "call": "serp", "label": "google: UP RERA grievance portal", "node": "escalation_planner", "ms": 1229, "cached": false}
+{"t": 1791616605.805, "kind": "call", "call": "fetch", "label": "https://www.magicbricks.com/blog/up-rera-complaint-filing-process/127525.html", "node": "escalation_planner", "ms": 474, "cached": false}
+{"t": 1791616605.817, "kind": "call", "call": "serp", "label": "google_news: State-level Real Estate Regulatory Authority (e.g., UP-RERA for Noida projects) delayed possession builder complaint consumer court", "node": "precedents", "ms": 1718, "cached": false}
+{"t": 1791616606.827, "kind": "call", "call": "llm", "label": "Compare every case condition with only the facts explicitly  · 1376 chars in", "node": "gap_check", "ms": 2722, "cached": false}
+{"t": 1791616606.829, "kind": "node_end", "node": "gap_check", "ms": 2725, "trace": ["🧩 Gap check (Gemini (gemini-3.1-flash-lite, generate_content)): 1 met, 4 to confirm, 0 may not be met; 4 other question(s)"], "errors": []}
+{"t": 1791616611.051, "kind": "call", "call": "fetch", "label": "https://up-rera.in/Projectsummary?UI0aPA1ISD=sgUgC8t3ryQ=&hfFlag=9emr4VdBw22M7BGjKtJWMPDI4s5cHQZP&NPJ6RAme=NeQzzGknJ/o=&PaURJEMAN4=ZL9MNERkNdYCCGCsCVv/pg==&IRSA", "node": "escalation_planner", "ms": 5246, "cached": false}
+{"t": 1791616612.108, "kind": "node_end", "node": "precedents", "ms": 8010, "trace": ["📰 Precedents: 0 relevant forum/news item(s) (nothing to judge); 1 search(es) failed"], "errors": ["precedents: State-level Real Estate Regulatory Authority (e.g., UP-RERA for Noida projects) delayed possession builder complaint complaint resolved: skipped after 8s"]}
+{"t": 1791616612.351, "kind": "call", "call": "serp", "label": "google: how to file complaint against builder in UP RERA", "node": "escalation_planner", "ms": 1300, "cached": false}
+{"t": 1791616613.409, "kind": "call", "call": "serp", "label": "google: National Consumer Helpline real estate complaint", "node": "escalation_planner", "ms": 1058, "cached": false}
+{"t": 1791616613.778, "kind": "call", "call": "fetch", "label": "https://ncsk.nic.in/hi/complaints/3-617", "node": "escalation_planner", "ms": 368, "cached": false}
+{"t": 1791616614.714, "kind": "call", "call": "serp", "label": "google_forums: State-level Real Estate Regulatory Authority (e.g., UP-RERA for Noida projects) delayed possession builder complaint complaint resolved", "node": "precedents", "ms": 10615, "cached": false}
+{"t": 1791616623.681, "kind": "call", "call": "serp", "label": "google: State-level Real Estate Regulatory Authority (e.g., UP-RERA for Noida projects) grievance redressal officer escalation", "node": "escalation_planner", "ms": 9902, "cached": false}
+{"t": 1791616625.498, "kind": "call", "call": "init", "label": "connect to Qdrant (once per process)", "node": "escalation_planner", "ms": 477, "cached": false}
+{"t": 1791616626.754, "kind": "call", "call": "init", "label": "load embedding model BAAI/bge-small-en-v1.5 (once per process)", "node": "escalation_planner", "ms": 1052, "cached": false}
+{"t": 1791616626.868, "kind": "call", "call": "rag", "label": "retrieve [cpa,ecom,ios,trai,ins,dl,ccr,gen,ecom26,ins23,rbc,rbc26] real estate - delayed possession of property consumer grieva", "node": "escalation_planner", "ms": 3186, "cached": false}
+{"t": 1791616629.105, "kind": "node_end", "node": "escalation_planner", "ms": 25005, "trace": ["🪜 Escalation planner: over 25s — using the verified seed ladder"], "errors": []}
+{"t": 1791616629.109, "kind": "node_start", "node": "verifier", "label": "🛡️ Verifier"}
+{"t": 1791616629.11, "kind": "node_end", "node": "verifier", "ms": 0, "trace": ["🛡️ Verifier #1: 0 verified, 0 unverified — no verified grievance email (0 unverified contact(s) kept aside)"], "errors": []}
+{"t": 1791616629.112, "kind": "node_start", "node": "legal_rag", "label": "📚 Legal RAG"}
+{"t": 1791616629.114, "kind": "node_end", "node": "legal_rag", "ms": 0, "trace": ["📚 Legal RAG: skipped — no indexed law applies to the govt_scheme route (no citations will be made)"], "errors": []}
+{"t": 1791616629.115, "kind": "node_start", "node": "ask_details", "label": "📝 Details form"}
+{"t": 1791616629.117, "kind": "node_waiting", "node": "ask_details", "ms": 1}
+{"t": 1791616629.142, "kind": "run_paused", "stage": "details", "s": 51.9}
+{"t": 1791616641.683, "kind": "call", "call": "llm", "label": "Propose the escalation ladder for this Indian complaint, usi · 9518 chars in", "node": "escalation_planner", "ms": 14813, "cached": false}
+{"t": 1791616642.635, "kind": "call", "call": "serp", "label": "google: Conciliation Forum, UP-RERA official", "node": "escalation_planner", "ms": 950, "cached": false}
+{"t": 1791616643.787, "kind": "call", "call": "serp", "label": "google: UP-RERA (Uttar Pradesh Real Estate Regulatory Authority) official", "node": "escalation_planner", "ms": 1152, "cached": false}
+{"t": 1791616643.788, "kind": "call", "call": "serp", "label": "google: UP-RERA (Execution Wing) official", "node": "escalation_planner", "ms": 0, "cached": false}
+{"t": 1791616675.056, "kind": "run_start", "resumed": true}
+{"t": 1791616675.19, "kind": "node_start", "node": "ask_details", "label": "📝 Details form"}
+{"t": 1791616675.192, "kind": "node_end", "node": "ask_details", "ms": 0, "trace": ["📝 Details form: 0 answer(s), 0 detail(s) filled of 8 question(s) and 3 missing fact(s)"], "errors": []}
+{"t": 1791616675.194, "kind": "node_start", "node": "drafter", "label": "✍️ Drafter"}
+{"t": 1791616684.788, "kind": "call", "call": "llm", "label": "You draft firm, respectful and case-specific grievances for  · 6713 chars in", "node": "drafter", "ms": 9592, "cached": false}
+{"t": 1791616684.79, "kind": "node_end", "node": "drafter", "ms": 9594, "trace": ["✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))"], "errors": []}
+{"t": 1791616684.791, "kind": "node_start", "node": "critic", "label": "🧐 Critic"}
+{"t": 1791616686.949, "kind": "call", "call": "llm", "label": "You review a personalized grievance before it is sent. Compa · 5479 chars in", "node": "critic", "ms": 2155, "cached": false}
+{"t": 1791616686.952, "kind": "node_end", "node": "critic", "ms": 2160, "trace": ["🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 3 issue(s) → back to drafter", "   • The agreement date is unknown - write the placeholder [DATE OF BUYER-SELLER AGREEMENT].", "   • Reviewer: The letter is written as an inquiry to an unknown recipient asking them to check the status of the project and eligibility, rather than a formal grievance letter addressed to the UP-RERA authority as required by the case brief.", "   • Reviewer: The letter asks the recipient to confirm the complainant's eligibility and registration status, whereas the complainant is responsible for verifying these facts and providing the necessary documentation (Agreement for sale, payment proofs) to the authority."], "errors": []}
+{"t": 1791616686.954, "kind": "node_start", "node": "drafter", "label": "✍️ Drafter"}
+{"t": 1791616691.951, "kind": "call", "call": "llm", "label": "You draft firm, respectful and case-specific grievances for  · 8441 chars in", "node": "drafter", "ms": 4995, "cached": false}
+{"t": 1791616691.955, "kind": "node_end", "node": "drafter", "ms": 5000, "trace": ["✍️ Drafter #2 (Gemini (gemini-3.1-flash-lite, generate_content)): revising for 3 critic note(s)"], "errors": []}
+{"t": 1791616691.956, "kind": "node_start", "node": "critic", "label": "🧐 Critic"}
+{"t": 1791616694.003, "kind": "call", "call": "llm", "label": "You review a personalized grievance before it is sent. Compa · 5601 chars in", "node": "critic", "ms": 2042, "cached": false}
+{"t": 1791616694.005, "kind": "node_end", "node": "critic", "ms": 2048, "trace": ["🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 2 issue(s) remain after 2 drafts → finalize will strip unsupported citations", "   • Reviewer: The letter asks the recipient (UP-RERA) to clarify if the project is registered or if the complainant is eligible, rather than asserting the facts and filing a formal complaint as required by the RERA process.", "   • Reviewer: The letter fails to explicitly state the intent to file a formal complaint under the Real Estate (Regulation and Development) Act, 2016, which is necessary for the authority to adjudicate the dispute."], "errors": []}
+{"t": 1791616694.006, "kind": "node_start", "node": "human_review", "label": "🙋 Human review"}
+{"t": 1791616694.007, "kind": "node_waiting", "node": "human_review", "ms": 0}
+{"t": 1791616694.018, "kind": "run_paused", "stage": "review", "s": 19.0}
+{"t": 1791616701.435, "kind": "run_start", "resumed": true}
+{"t": 1791616701.567, "kind": "node_start", "node": "human_review", "label": "🙋 Human review"}
+{"t": 1791616701.569, "kind": "node_end", "node": "human_review", "ms": 0, "trace": ["🙋 Human review: approved"], "errors": []}
+{"t": 1791616701.571, "kind": "node_start", "node": "finalize", "label": "📦 Finalize"}
+{"t": 1791616701.574, "kind": "node_end", "node": "finalize", "ms": 2, "trace": ["📦 Finalize: letter ready for the official complaint form — nothing is sent automatically"], "errors": []}
+{"t": 1791616701.71, "kind": "run_finished", "s": 0.3}

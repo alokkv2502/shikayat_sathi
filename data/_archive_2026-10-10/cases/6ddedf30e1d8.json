@@ -1,0 +1,290 @@
+{
+ "complaint": "Papa ka zameen ka case Allahabad civil court mein 8 saal se chal raha hai. Har baar agli date mil jaati hai. Vakeel phone nahi uthata, aur naya vakeel karne ke paise nahi hain. Kya kar sakte hain?",
+ "company_hint": null,
+ "city": null,
+ "complainant": {},
+ "live": true,
+ "language": "hinglish",
+ "complaint_en": "My father's land case has been going on in the Allahabad Civil Court for 8 years. Every time, we just get the next date. The lawyer does not pick up the phone, and we do not have the money to hire a new lawyer. What can we do?",
+ "sector": "legal",
+ "tier": "C",
+ "safety": {
+  "level": "none",
+  "categories": [],
+  "method": "rules",
+  "helplines": [],
+  "numbers": [],
+  "messages": []
+ },
+ "case_entities": [],
+ "case_brief": {},
+ "eligibility_checks": [
+  {
+   "condition": "You are a woman or a child.",
+   "status": "met",
+   "evidence": "Complainant answered 'woman'",
+   "question": ""
+  },
+  {
+   "condition": "You belong to a Scheduled Caste or Scheduled Tribe.",
+   "status": "met",
+   "evidence": "Complainant answered 'ST'",
+   "question": ""
+  },
+  {
+   "condition": "You are a person with a disability.",
+   "status": "not_met",
+   "evidence": "Complainant answered 'NO'",
+   "question": ""
+  },
+  {
+   "condition": "You are an industrial workman.",
+   "status": "not_met",
+   "evidence": "Complainant answered 'NO'",
+   "question": ""
+  },
+  {
+   "condition": "You are a victim of trafficking or forced labour (begar).",
+   "status": "not_met",
+   "evidence": "Complainant answered 'NO'",
+   "question": ""
+  },
+  {
+   "condition": "You are a victim of a mass disaster, ethnic or caste violence, flood, drought, earthquake or industrial disaster.",
+   "status": "unknown",
+   "evidence": "",
+   "question": "Are you a victim of any mass disaster, ethnic or caste violence, flood, drought, earthquake, or industrial disaster?"
+  },
+  {
+   "condition": "You are in custody (including a protective home, juvenile home or psychiatric hospital).",
+   "status": "unknown",
+   "evidence": "",
+   "question": "Are you currently in custody, a protective home, a juvenile home, or a psychiatric hospital?"
+  },
+  {
+   "condition": "Your annual income is below the limit your state has set for free legal aid.",
+   "status": "unknown",
+   "evidence": "",
+   "question": "What is the specific annual income limit for free legal aid in Uttar Pradesh, and does your income of 80,000 fall below it?"
+  }
+ ],
+ "gap_questions": [
+  "Are you a victim of any mass disaster, ethnic or caste violence, flood, drought, earthquake, or industrial disaster?",
+  "Are you currently in custody, a protective home, a juvenile home, or a psychiatric hospital?",
+  "What is the specific annual income limit for free legal aid in Uttar Pradesh, and does your income of 80,000 fall below it?"
+ ],
+ "extra_questions": [
+  "Kya aapne kabhi court ki website par case status check kiya hai?",
+  "Kya aapne apne vakeel ko koi formal notice ya letter bheja hai?",
+  "Kya aapne court mein judge se directly baat karne ki koshish ki hai?",
+  "What is the Case Number (CNR number) of your land dispute in the Allahabad Civil Court?"
+ ],
+ "eligibility": {
+  "status": "meets_listed",
+  "message": "You appear to qualify for free legal aid: You are a woman or a child."
+ },
+ "company": "",
+ "company_domain": null,
+ "official_domains": [],
+ "domain_basis": null,
+ "facts": {
+  "product_or_service": "Legal representation for land dispute case",
+  "issue": "The complainant's land case has been pending for 8 years with frequent adjournments and unresponsive legal counsel.",
+  "what_user_wants": "Advice on how to proceed with the case given financial constraints and lawyer negligence",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "",
+  "date": "",
+  "city": "Allahabad",
+  "place": "Allahabad Civil Court",
+  "police_station": "",
+  "details": {}
+ },
+ "issue_types": [
+  "other"
+ ],
+ "missing_facts": [],
+ "search_plan": [],
+ "search_keywords": "pending court case delay",
+ "urgent_note": null,
+ "contacts": [],
+ "precedents": [],
+ "local_forum": null,
+ "blocked_hallucinations": 0,
+ "errors": [],
+ "verified_contacts": [],
+ "unverified_contacts": [],
+ "recommended": null,
+ "verify_attempts": 1,
+ "grievance_attempts": 0,
+ "clauses": [],
+ "draft": "This is general information regarding your situation with the ongoing land dispute case at the Allahabad Civil Court. Since your case has been pending for eight years, you can track its progress independently using the eCourts Services website or mobile app. By entering your 16-character CNR number, you can view the next hearing date, previous orders, and the current status of the proceedings. If you do not have the CNR number, you can search by selecting the court complex, case type, case number, and year. Regarding your concerns about unresponsive legal counsel and financial constraints, you may approach the District Legal Services Authority (DLSA) in Allahabad. Under the Legal Services Authorities Act, free legal aid is provided to eligible persons, which includes women and members of Scheduled Castes or Scheduled Tribes. You can contact the DLSA helpline at 15100 to inquire about obtaining a free lawyer to represent you. It is advisable to keep all your case-related documents, such as previous orders and notices, organized and ready for review by a legal aid panel lawyer. Additionally, you may inquire with the court or your legal aid representative about the possibility of resolving the matter through Lok Adalat or mediation, which are alternative methods designed to settle disputes outside of the formal trial process.",
+ "subject": "Information regarding your pending civil case and legal aid options",
+ "summary": "Aapka case Allahabad Civil Court mein pending hai, jise aap eCourts website par CNR number daal kar check kar sakte hain. Kyunki aap mahila hain aur ST category se hain, aap District Legal Services Authority (DLSA) se free legal aid aur lawyer ke liye apply kar sakti hain. Aap 15100 helpline par call karke madad le sakti hain aur apne documents taiyaar rakhein.",
+ "escalation": [
+  {
+   "name": "District Legal Services Authority (DLSA)",
+   "channel": "DLSA office at your district court · NALSA legal-aid helpline",
+   "url": "https://nalsa.gov.in",
+   "phone": "15100",
+   "when_to_use": "First. Free legal advice, and a free lawyer if you are eligible; DLSA also runs Lok Adalats for settling disputes without a trial.",
+   "typical_wait": "a few days"
+  },
+  {
+   "name": "eCourts case status",
+   "channel": "eCourts Services website / app",
+   "url": "https://services.ecourts.gov.in",
+   "phone": null,
+   "when_to_use": "If you already have a case: check its status, next hearing date and orders with the 16-character CNR number, or with the court, case type, number and year.",
+   "typical_wait": "instant"
+  }
+ ],
+ "critic_notes": [],
+ "draft_attempts": 1,
+ "draft_method": "Gemini (gemini-3.1-flash-lite, generate_content)",
+ "deadline": {},
+ "user_edits": {
+  "draft": "This is general information regarding your situation with the ongoing land dispute case at the Allahabad Civil Court. Since your case has been pending for eight years, you can track its progress independently using the eCourts Services website or mobile app. By entering your 16-character CNR number, you can view the next hearing date, previous orders, and the current status of the proceedings. If you do not have the CNR number, you can search by selecting the court complex, case type, case number, and year. Regarding your concerns about unresponsive legal counsel and financial constraints, you may approach the District Legal Services Authority (DLSA) in Allahabad. Under the Legal Services Authorities Act, free legal aid is provided to eligible persons, which includes women and members of Scheduled Castes or Scheduled Tribes. You can contact the DLSA helpline at 15100 to inquire about obtaining a free lawyer to represent you. It is advisable to keep all your case-related documents, such as previous orders and notices, organized and ready for review by a legal aid panel lawyer. Additionally, you may inquire with the court or your legal aid representative about the possibility of resolving the matter through Lok Adalat or mediation, which are alternative methods designed to settle disputes outside of the formal trial process.",
+  "subject": "Information regarding your pending civil case and legal aid options",
+  "complainant": {}
+ },
+ "case_answers": {
+  "You are a woman or a child.": "woman",
+  "You belong to a Scheduled Caste or Scheduled Tribe.": "ST",
+  "You are a person with a disability.": "NO",
+  "You are an industrial workman.": "NO",
+  "You are a victim of trafficking or forced labour (begar).": "NO",
+  "Your annual income is below the limit your state has set for free legal aid.": "80000"
+ },
+ "fills": {},
+ "drafted_answers": {
+  "You are a woman or a child.": "woman",
+  "You belong to a Scheduled Caste or Scheduled Tribe.": "ST",
+  "You are a person with a disability.": "NO",
+  "You are an industrial workman.": "NO",
+  "You are a victim of trafficking or forced labour (begar).": "NO",
+  "Your annual income is below the limit your state has set for free legal aid.": "80000"
+ },
+ "user_draft": "",
+ "review_rounds": 1,
+ "redraft": false,
+ "trace": [
+  "🧭 Intake (Gemini (gemini-3.1-flash-lite, generate_content)): language=hinglish, domain=legal (tier C: explain and refer), company=?, issues=other",
+  "🛟 Safety: no immediate danger detected",
+  "🔎 Case research: no named scheme, policy or product to research",
+  "🗺️ Frame: legal route confirmed",
+  "📍 Local forum: no free legal aid (dlsa) found for Allahabad",
+  "🧩 Gap check (Gemini (gemini-3.1-flash-lite, generate_content)): 0 met, 8 to confirm, 0 may not be met; 4 other question(s)",
+  "🛡️ Verifier #1: 0 verified, 0 unverified — no company identified - nothing to verify",
+  "📚 Legal RAG: skipped — no indexed law applies to the legal route (no citations will be made)",
+  "📝 Details form: 6 answer(s), 0 detail(s) filled of 12 question(s) and 0 missing fact(s)",
+  "🔁 Reassess (Gemini (gemini-3.1-flash-lite, generate_content)): 6 answer(s) — 2 met, 3 to confirm, 3 may not be met; 4 other question(s) · meets listed → drafting",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧐 Critic (rules): passed — every claim is cited, no invented facts",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 1,
+ "final": {
+  "to": null,
+  "to_name": "You",
+  "tier": "C",
+  "safety": {
+   "level": "none",
+   "categories": [],
+   "method": "rules",
+   "helplines": [],
+   "numbers": [],
+   "messages": []
+  },
+  "subject": "Information regarding your pending civil case and legal aid options",
+  "letter": "Information regarding your pending civil case and legal aid options\n09 October 2026\n\nThis is general information regarding your situation with the ongoing land dispute case at the Allahabad Civil Court. Since your case has been pending for eight years, you can track its progress independently using the eCourts Services website or mobile app. By entering your 16-character CNR number, you can view the next hearing date, previous orders, and the current status of the proceedings. If you do not have the CNR number, you can search by selecting the court complex, case type, case number, and year. Regarding your concerns about unresponsive legal counsel and financial constraints, you may approach the District Legal Services Authority (DLSA) in Allahabad. Under the Legal Services Authorities Act, free legal aid is provided to eligible persons, which includes women and members of Scheduled Castes or Scheduled Tribes. You can contact the DLSA helpline at 15100 to inquire about obtaining a free lawyer to represent you. It is advisable to keep all your case-related documents, such as previous orders and notices, organized and ready for review by a legal aid panel lawyer. Additionally, you may inquire with the court or your legal aid representative about the possibility of resolving the matter through Lok Adalat or mediation, which are alternative methods designed to settle disputes outside of the formal trial process.\n\nThis is general information to help you take the next step. It is not legal advice; a lawyer or the District Legal Services Authority can advise on your situation.",
+  "markdown": "# Information regarding your pending civil case and legal aid options\n\nAapka case Allahabad Civil Court mein pending hai, jise aap eCourts website par CNR number daal kar check kar sakte hain. Kyunki aap mahila hain aur ST category se hain, aap District Legal Services Authority (DLSA) se free legal aid aur lawyer ke liye apply kar sakti hain. Aap 15100 helpline par call karke madad le sakti hain aur apne documents taiyaar rakhein.\n\n```\nInformation regarding your pending civil case and legal aid options\n09 October 2026\n\nThis is general information regarding your situation with the ongoing land dispute case at the Allahabad Civil Court. Since your case has been pending for eight years, you can track its progress independently using the eCourts Services website or mobile app. By entering your 16-character CNR number, you can view the next hearing date, previous orders, and the current status of the proceedings. If you do not have the CNR number, you can search by selecting the court complex, case type, case number, and year. Regarding your concerns about unresponsive legal counsel and financial constraints, you may approach the District Legal Services Authority (DLSA) in Allahabad. Under the Legal Services Authorities Act, free legal aid is provided to eligible persons, which includes women and members of Scheduled Castes or Scheduled Tribes. You can contact the DLSA helpline at 15100 to inquire about obtaining a free lawyer to represent you. It is advisable to keep all your case-related documents, such as previous orders and notices, organized and ready for review by a legal aid panel lawyer. Additionally, you may inquire with the court or your legal aid representative about the possibility of resolving the matter through Lok Adalat or mediation, which are alternative methods designed to settle disputes outside of the formal trial process.\n\nThis is general information to help you take the next step. It is not legal advice; a lawyer or the District Legal Services Authority can advise on your situation.\n```\n\n## Where to get help\n1. **District Legal Services Authority (DLSA)** (DLSA office at your district court · NALSA legal-aid helpline) — First. Free legal advice, and a free lawyer if you are eligible; DLSA also runs Lok Adalats for settling disputes without a trial. https://nalsa.gov.in · 15100\n2. **eCourts case status** (eCourts Services website / app) — If you already have a case: check its status, next hearing date and orders with the 16-character CNR number, or with the court, case type, number and year. https://services.ecourts.gov.in\n\n_Information, not legal advice._\n",
+  "summary": "Aapka case Allahabad Civil Court mein pending hai, jise aap eCourts website par CNR number daal kar check kar sakte hain. Kyunki aap mahila hain aur ST category se hain, aap District Legal Services Authority (DLSA) se free legal aid aur lawyer ke liye apply kar sakti hain. Aap 15100 helpline par call karke madad le sakti hain aur apne documents taiyaar rakhein.",
+  "escalation": [
+   {
+    "name": "District Legal Services Authority (DLSA)",
+    "channel": "DLSA office at your district court · NALSA legal-aid helpline",
+    "url": "https://nalsa.gov.in",
+    "phone": "15100",
+    "when_to_use": "First. Free legal advice, and a free lawyer if you are eligible; DLSA also runs Lok Adalats for settling disputes without a trial.",
+    "typical_wait": "a few days"
+   },
+   {
+    "name": "eCourts case status",
+    "channel": "eCourts Services website / app",
+    "url": "https://services.ecourts.gov.in",
+    "phone": null,
+    "when_to_use": "If you already have a case: check its status, next hearing date and orders with the 16-character CNR number, or with the court, case type, number and year.",
+    "typical_wait": "instant"
+   }
+  ],
+  "deadline": {},
+  "cited": [],
+  "removed_citations": [],
+  "case_brief": {},
+  "case_answers": {
+   "You are a woman or a child.": "woman",
+   "You belong to a Scheduled Caste or Scheduled Tribe.": "ST",
+   "You are a person with a disability.": "NO",
+   "You are an industrial workman.": "NO",
+   "You are a victim of trafficking or forced labour (begar).": "NO",
+   "Your annual income is below the limit your state has set for free legal aid.": "80000"
+  },
+  "eligibility": {
+   "status": "meets_listed",
+   "message": "You appear to qualify for free legal aid: You are a woman or a child."
+  },
+  "eligibility_checks": [
+   {
+    "condition": "You are a woman or a child.",
+    "status": "met",
+    "evidence": "Complainant answered 'woman'",
+    "question": ""
+   },
+   {
+    "condition": "You belong to a Scheduled Caste or Scheduled Tribe.",
+    "status": "met",
+    "evidence": "Complainant answered 'ST'",
+    "question": ""
+   },
+   {
+    "condition": "You are a person with a disability.",
+    "status": "not_met",
+    "evidence": "Complainant answered 'NO'",
+    "question": ""
+   },
+   {
+    "condition": "You are an industrial workman.",
+    "status": "not_met",
+    "evidence": "Complainant answered 'NO'",
+    "question": ""
+   },
+   {
+    "condition": "You are a victim of trafficking or forced labour (begar).",
+    "status": "not_met",
+    "evidence": "Complainant answered 'NO'",
+    "question": ""
+   },
+   {
+    "condition": "You are a victim of a mass disaster, ethnic or caste violence, flood, drought, earthquake or industrial disaster.",
+    "status": "unknown",
+    "evidence": "",
+    "question": "Are you a victim of any mass disaster, ethnic or caste violence, flood, drought, earthquake, or industrial disaster?"
+   },
+   {
+    "condition": "You are in custody (including a protective home, juvenile home or psychiatric hospital).",
+    "status": "unknown",
+    "evidence": "",
+    "question": "Are you currently in custody, a protective home, a juvenile home, or a psychiatric hospital?"
+   },
+   {
+    "condition": "Your annual income is below the limit your state has set for free legal aid.",
+    "status": "unknown",
+    "evidence": "",
+    "question": "What is the specific annual income limit for free legal aid in Uttar Pradesh, and does your income of 80,000 fall below it?"
+   }
+  ],
+  "unresolved_critic_notes": []
+ },
+ "thread_id": "6ddedf30e1d8"
+}

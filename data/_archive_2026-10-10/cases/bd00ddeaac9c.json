@@ -1,0 +1,299 @@
+{
+ "complaint": "Har mahine bijli ka bill ₹900–1,000 aata tha, is baar ₹7,850 aaya. Meter reader aaya hi nahi, bill mein “average” likha hai. Jaipur.",
+ "company_hint": null,
+ "city": null,
+ "complainant": {
+  "name": "Alok",
+  "phone": "09305286016",
+  "email": "alok930528@gmail.com"
+ },
+ "live": true,
+ "language": "hinglish",
+ "complaint_en": "Every month the electricity bill used to be ₹900–1,000, this time it came to ₹7,850. The meter reader did not even come, and the bill says \"average\". Jaipur.",
+ "sector": "public_service",
+ "tier": "A",
+ "route": {
+  "domain_free_text": "electricity bill - excessive billing due to average reading",
+  "matched_playbook": "public_service",
+  "confidence": 1.0,
+  "reason": "This is a grievance regarding a public utility service (electricity) and billing discrepancy.",
+  "mode": "matched",
+  "question": ""
+ },
+ "safety": {
+  "level": "none",
+  "categories": [],
+  "method": "rules",
+  "helplines": [],
+  "numbers": [],
+  "messages": []
+ },
+ "case_entities": [],
+ "case_brief": {},
+ "eligibility_checks": [],
+ "gap_questions": [],
+ "extra_questions": [],
+ "eligibility": {
+  "status": "no_conditions",
+  "message": ""
+ },
+ "company": "Electricity Department",
+ "company_domain": null,
+ "official_domains": [],
+ "domain_basis": null,
+ "facts": {
+  "product_or_service": "Electricity connection",
+  "issue": "The electricity bill is excessively high due to an estimated 'average' reading instead of an actual meter reading.",
+  "what_user_wants": "Correction of the bill amount",
+  "order_id": "",
+  "reference_id": "12345",
+  "amount": "7850",
+  "date": "4 th October, 2026",
+  "city": "Jaipur",
+  "place": "",
+  "police_station": "",
+  "details": {}
+ },
+ "issue_types": [
+  "deficiency"
+ ],
+ "missing_facts": [],
+ "search_plan": [
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "Electricity Department public grievance officer email"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_forums",
+   "q": "Electricity Department electricity bill average reading complaint resolved"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_news",
+   "q": "Electricity Department electricity bill average reading consumer court"
+  }
+ ],
+ "search_keywords": "electricity bill average reading",
+ "urgent_note": null,
+ "contacts": [
+  {
+   "type": "phone",
+   "value": "1915",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": " Main article: Electricity generation See also: Electric power transmission and Mains electricity Early 20th-century alternator made in Budapest , Hungary, in the power generating hall of a hydroelectric station (photograph by Prokudin-Gorsky , 1905–1915). In the 6th century BC the Greek philosopher Thales of Miletus experimented with amber rods: these were the first studies into the production of",
+   "owner": "unknown",
+   "source_url": "https://en.wikipedia.org/wiki/Electricity",
+   "source_domain": "wikipedia.org",
+   "page_title": "Electricity - Wikipedia",
+   "via": "page",
+   "email": "",
+   "phone": "1915",
+   "url": "https://en.wikipedia.org/wiki/Electricity",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "0000000003",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "al elements like hydrogen, carbon, oxygen, and copper. Atoms of many types can combine to make molecules, which build the matter we can physically see and touch. Atoms are tiny , stretching at a max to about 300 picometers long (that's 3x10 -10 or 0.0000000003 meters). A copper penny (if it actually were made of 100% copper) would have 3.2x10 22 atoms (32,000,000,000,000,000,000,000 atoms) of copp",
+   "owner": "unknown",
+   "source_url": "https://learn.sparkfun.com/tutorials/what-is-electricity/all",
+   "source_domain": "sparkfun.com",
+   "page_title": "What is Electricity? - SparkFun Learn",
+   "via": "page",
+   "email": "",
+   "phone": "0000000003",
+   "url": "https://learn.sparkfun.com/tutorials/what-is-electricity/all",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  }
+ ],
+ "precedents": [],
+ "local_forum": null,
+ "blocked_hallucinations": 0,
+ "errors": [
+  "precedents: Electricity Department electricity bill average reading complaint resolved: skipped after 8s"
+ ],
+ "verified_contacts": [],
+ "unverified_contacts": [
+  {
+   "email": "",
+   "phone": "0000000003",
+   "url": "https://learn.sparkfun.com/tutorials/what-is-electricity/all",
+   "source_url": "https://learn.sparkfun.com/tutorials/what-is-electricity/all",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "0000000003",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: sparkfun.com"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://learn.sparkfun.com/tutorials/what-is-electricity/all"
+   ],
+   "evidence": "al elements like hydrogen, carbon, oxygen, and copper. Atoms of many types can combine to make molecules, which build the matter we can physically see and touch. Atoms are tiny , stretching at a max to about 300 picometers long (that's 3x10 -10 or 0.0000000003 meters). A copper penny (if it actually were made of 100% copper) would have 3.2x10 22 atoms (32,000,000,000,000,000,000,000 atoms) of copp"
+  }
+ ],
+ "recommended": null,
+ "verify_attempts": 2,
+ "grievance_attempts": 2,
+ "clauses": [],
+ "draft": "I am writing to formally contest the electricity bill generated for my connection in Jaipur, which shows an amount of ₹7,850. My monthly electricity consumption typically results in a bill between ₹900 and ₹1,000. This sudden, excessive charge is unjustified. Upon reviewing the bill, I noted that it has been generated based on an 'average' reading rather than an actual meter reading. Furthermore, no meter reader visited my premises to record the actual consumption for this billing cycle. I request the department to verify the actual meter reading immediately and issue a corrected bill reflecting the true consumption. Please confirm the rectification of this error within 7 days. If this matter is not resolved satisfactorily, I will be compelled to escalate this grievance to the CPGRAMS portal.",
+ "subject": "Grievance regarding inflated electricity bill - Jaipur",
+ "summary": "Aapka bijli ka bill ₹7,850 aaya hai jo ki aapke normal bill ₹900-₹1,000 se bahut zyada hai. Kyunki meter reader nahi aaya aur bill 'average' reading par bana hai, isliye aapne bill sudharne ki maang ki hai. Agar 7 din mein koi jawab nahi aata, toh aap CPGRAMS portal par shikayat kar sakte hain.",
+ "escalation": [
+  {
+   "name": "Department's public grievance officer / portal",
+   "channel": "official portal / office",
+   "url": null,
+   "phone": null,
+   "when_to_use": "First. Complain in writing to the office responsible and keep the acknowledgement or registration number.",
+   "typical_wait": "per the department's citizen charter",
+   "source": "Shikayat Saathi verified playbook (checked against the regulators' texts, 2026-10-07)"
+  },
+  {
+   "name": "CPGRAMS or your state's public grievance portal",
+   "channel": "pgportal.gov.in (central and many state departments) / state CM helpline",
+   "url": "https://pgportal.gov.in",
+   "phone": null,
+   "when_to_use": "No action in the charter's time, or an unsatisfactory reply. Quote your first complaint number.",
+   "typical_wait": "Use the timeline shown on the portal.",
+   "source": "Shikayat Saathi verified playbook (checked against the regulators' texts, 2026-10-07)"
+  }
+ ],
+ "critic_notes": [
+  "Amount '₹1,000' does not match any amount the complainant gave - use their figure or a [PLACEHOLDER].",
+  "Reviewer: The letter fails to mention that the complainant has already contacted customer care, which is a key fact provided in the review answers."
+ ],
+ "draft_attempts": 2,
+ "draft_method": "Gemini (gemini-3.1-flash-lite, generate_content)",
+ "deadline": {},
+ "user_edits": {
+  "draft": "I am writing to formally contest the electricity bill generated for my connection in Jaipur, which shows an amount of ₹7,850. My monthly electricity consumption typically results in a bill between ₹900 and ₹1,000. This sudden, excessive charge is unjustified. Upon reviewing the bill, I noted that it has been generated based on an 'average' reading rather than an actual meter reading. Furthermore, no meter reader visited my premises to record the actual consumption for this billing cycle. I request the department to verify the actual meter reading immediately and issue a corrected bill reflecting the true consumption. Please confirm the rectification of this error within 7 days. If this matter is not resolved satisfactorily, I will be compelled to escalate this grievance to the CPGRAMS portal.",
+  "subject": "Grievance regarding inflated electricity bill - Jaipur",
+  "complainant": {
+   "name": "Alok",
+   "phone": "09305286016",
+   "email": "alok930528@gmail.com"
+  }
+ },
+ "case_answers": {
+  "Kya aapne is bill ke baare mein apne electricity provider ke customer care ya local office mein koi complaint darj ki hai?": "Yes",
+  "Agar ki hai, toh kya aapke paas koi complaint reference number ya unka koi jawab hai?": "No"
+ },
+ "fills": {
+  "[APPLICATION / COMPLAINT NUMBER]": "12345",
+  "[DATE]": "4 th October, 2026"
+ },
+ "drafted_answers": {
+  "Kya aapne is bill ke baare mein apne electricity provider ke customer care ya local office mein koi complaint darj ki hai?": "Yes",
+  "Agar ki hai, toh kya aapke paas koi complaint reference number ya unka koi jawab hai?": "No"
+ },
+ "user_draft": "",
+ "review_rounds": 1,
+ "redraft": false,
+ "trace": [
+  "🛟 Safety: no immediate danger detected",
+  "🧭 Intake (Gemini (gemini-3.1-flash-lite, generate_content)): language=hinglish, domain=public_service (tier A: draft and escalate), company=Electricity Department, issues=deficiency; route: matched (1.0); missing: reference_id, date",
+  "🌐 Official domain: not resolved",
+  "🔎 Case research: no named scheme, policy or product to research",
+  "🗺️ Frame: public_service route confirmed",
+  "🔎 Grievance search #1: 1 queries (Electricity Department public grievance officer email) → 2 results, 2 pages read, 0 contact mentions (0 on the official domain)",
+  "📰 Precedents: 0 relevant forum/news item(s) (Gemini (gemini-3.1-flash-lite, generate_content)); 1 search(es) failed",
+  "📍 Local forum: not needed for this domain",
+  "🧩 Gap check (no conditions): 0 met, 0 to confirm, 0 may not be met; 2 other question(s)",
+  "🛡️ Verifier #1: 0 verified, 0 unverified — no grievance contact found — retrying search with “nodal officer”, “citizen charter”",
+  "🔎 Grievance retry #2: 2 queries (Electricity Department nodal officer email; Electricity Department citizen charter email) → 16 results, 8 pages read, 2 contact mentions (0 on the official domain)",
+  "🛡️ Verifier #2: 0 verified, 1 unverified — no verified grievance email (1 unverified contact(s) kept aside)",
+  "📚 Legal RAG: skipped — no indexed law applies to the public_service route (no citations will be made)",
+  "📝 Details form: 2 answer(s), 2 detail(s) filled of 2 question(s) and 2 missing fact(s)",
+  "🔁 Reassess (no conditions): 2 answer(s) — no published conditions → drafting",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 3 issue(s) → back to drafter",
+  "   • Amount '₹1,000' does not match any amount the complainant gave - use their figure or a [PLACEHOLDER].",
+  "   • Date '4th October 2026' does not match any date the complainant gave or a computed deadline - do not invent or recalculate dates.",
+  "   • Reviewer: The letter states 'I have previously raised this issue, but it remains unresolved', but the user's review answers explicitly state they do not have a complaint reference number or any response from the provider, which contradicts the claim of a formal, unresolved prior complaint.",
+  "✍️ Drafter #2 (Gemini (gemini-3.1-flash-lite, generate_content)): revising for 3 critic note(s)",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 2 issue(s) remain after 2 drafts → finalize will strip unsupported citations",
+  "   • Amount '₹1,000' does not match any amount the complainant gave - use their figure or a [PLACEHOLDER].",
+  "   • Reviewer: The letter fails to mention that the complainant has already contacted customer care, which is a key fact provided in the review answers.",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 4,
+ "final": {
+  "to": null,
+  "to_name": "Department's public grievance officer / portal",
+  "tier": "A",
+  "safety": {
+   "level": "none",
+   "categories": [],
+   "method": "rules",
+   "helplines": [],
+   "numbers": [],
+   "messages": []
+  },
+  "subject": "Grievance regarding inflated electricity bill - Jaipur",
+  "letter": "To,\nDepartment's public grievance officer / portal\nElectricity Department\n\nDate: 10 October 2026\n\nSubject: Grievance regarding inflated electricity bill - Jaipur\n\nDear Sir/Madam,\n\nI am writing to formally contest the electricity bill generated for my connection in Jaipur, which shows an amount of ₹7,850. My monthly electricity consumption typically results in a bill between ₹900 and ₹1,000. This sudden, excessive charge is unjustified. Upon reviewing the bill, I noted that it has been generated based on an 'average' reading rather than an actual meter reading. Furthermore, no meter reader visited my premises to record the actual consumption for this billing cycle. I request the department to verify the actual meter reading immediately and issue a corrected bill reflecting the true consumption. Please confirm the rectification of this error within 7 days. If this matter is not resolved satisfactorily, I will be compelled to escalate this grievance to the CPGRAMS portal.\n\nYours faithfully,\nAlok\n09305286016\nalok930528@gmail.com\n[ADDRESS]",
+  "markdown": "# Grievance regarding inflated electricity bill - Jaipur\n\n**To:** Department's public grievance officer / portal (no verified email - use the official complaint form)\n\nAapka bijli ka bill ₹7,850 aaya hai jo ki aapke normal bill ₹900-₹1,000 se bahut zyada hai. Kyunki meter reader nahi aaya aur bill 'average' reading par bana hai, isliye aapne bill sudharne ki maang ki hai. Agar 7 din mein koi jawab nahi aata, toh aap CPGRAMS portal par shikayat kar sakte hain.\n\n```\nTo,\nDepartment's public grievance officer / portal\nElectricity Department\n\nDate: 10 October 2026\n\nSubject: Grievance regarding inflated electricity bill - Jaipur\n\nDear Sir/Madam,\n\nI am writing to formally contest the electricity bill generated for my connection in Jaipur, which shows an amount of ₹7,850. My monthly electricity consumption typically results in a bill between ₹900 and ₹1,000. This sudden, excessive charge is unjustified. Upon reviewing the bill, I noted that it has been generated based on an 'average' reading rather than an actual meter reading. Furthermore, no meter reader visited my premises to record the actual consumption for this billing cycle. I request the department to verify the actual meter reading immediately and issue a corrected bill reflecting the true consumption. Please confirm the rectification of this error within 7 days. If this matter is not resolved satisfactorily, I will be compelled to escalate this grievance to the CPGRAMS portal.\n\nYours faithfully,\nAlok\n09305286016\nalok930528@gmail.com\n[ADDRESS]\n```\n\n## If there's no reply\n1. **Department's public grievance officer / portal** (official portal / office) — First. Complain in writing to the office responsible and keep the acknowledgement or registration number.\n2. **CPGRAMS or your state's public grievance portal** (pgportal.gov.in (central and many state departments) / state CM helpline) — No action in the charter's time, or an unsatisfactory reply. Quote your first complaint number. https://pgportal.gov.in\n\n_Information, not legal advice._\n",
+  "summary": "Aapka bijli ka bill ₹7,850 aaya hai jo ki aapke normal bill ₹900-₹1,000 se bahut zyada hai. Kyunki meter reader nahi aaya aur bill 'average' reading par bana hai, isliye aapne bill sudharne ki maang ki hai. Agar 7 din mein koi jawab nahi aata, toh aap CPGRAMS portal par shikayat kar sakte hain.",
+  "escalation": [
+   {
+    "name": "Department's public grievance officer / portal",
+    "channel": "official portal / office",
+    "url": null,
+    "phone": null,
+    "when_to_use": "First. Complain in writing to the office responsible and keep the acknowledgement or registration number.",
+    "typical_wait": "per the department's citizen charter",
+    "source": "Shikayat Saathi verified playbook (checked against the regulators' texts, 2026-10-07)"
+   },
+   {
+    "name": "CPGRAMS or your state's public grievance portal",
+    "channel": "pgportal.gov.in (central and many state departments) / state CM helpline",
+    "url": "https://pgportal.gov.in",
+    "phone": null,
+    "when_to_use": "No action in the charter's time, or an unsatisfactory reply. Quote your first complaint number.",
+    "typical_wait": "Use the timeline shown on the portal.",
+    "source": "Shikayat Saathi verified playbook (checked against the regulators' texts, 2026-10-07)"
+   }
+  ],
+  "deadline": {},
+  "cited": [],
+  "removed_citations": [],
+  "case_brief": {},
+  "case_answers": {
+   "Kya aapne is bill ke baare mein apne electricity provider ke customer care ya local office mein koi complaint darj ki hai?": "Yes",
+   "Agar ki hai, toh kya aapke paas koi complaint reference number ya unka koi jawab hai?": "No"
+  },
+  "eligibility": {
+   "status": "no_conditions",
+   "message": ""
+  },
+  "eligibility_checks": [],
+  "unresolved_critic_notes": [
+   "Amount '₹1,000' does not match any amount the complainant gave - use their figure or a [PLACEHOLDER].",
+   "Reviewer: The letter fails to mention that the complainant has already contacted customer care, which is a key fact provided in the review answers."
+  ]
+ },
+ "thread_id": "bd00ddeaac9c"
+}

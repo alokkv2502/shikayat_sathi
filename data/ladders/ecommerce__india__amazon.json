@@ -1,0 +1,56 @@
+{
+ "steps": [
+  {
+   "name": "Amazon Customer Service",
+   "level": "company",
+   "channel": "Your Orders section on Amazon.in",
+   "url": "https://www.amazon.in/gp/help/customer/display.html?nodeId=508510",
+   "phone": null,
+   "when_to_use": "For issues with defective products and return requests, as the primary point of contact.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "https://www.amazon.in/gp/help/customer/display.html?nodeId=508510"
+  },
+  {
+   "name": "National Consumer Helpline (NCH)",
+   "level": "sector_regulator_or_ombudsman",
+   "channel": "Call 1915, SMS/WhatsApp 8800001915, or via the NCH Web Portal",
+   "url": "https://consumerhelpline.gov.in/public/consumerrights",
+   "phone": null,
+   "when_to_use": "If the company fails to resolve the complaint regarding defective goods or failed returns.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "https://consumerhelpline.gov.in/public/consumerrights"
+  },
+  {
+   "name": "Department of Consumer Affairs (Public Grievance Portal)",
+   "level": "central_portal",
+   "channel": "CPGRAMS portal",
+   "url": null,
+   "phone": null,
+   "when_to_use": "If the grievance remains unresolved after initial attempts.",
+   "timeline": "21 days",
+   "typical_wait": "21 days",
+   "source": "https://consumeraffairs.gov.in/pages/public-grivance"
+  },
+  {
+   "name": "District Consumer Disputes Redressal Commission",
+   "level": "court_or_commission",
+   "channel": "District Consumer Disputes Redressal Commission",
+   "url": null,
+   "phone": null,
+   "when_to_use": "For formal legal action regarding deficiency in service or defective products.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1485097"
+  }
+ ],
+ "fallback": false,
+ "note": "Under the Consumer Protection (E-Commerce) Rules, 2020, e-commerce entities are prohibited from refusing to take back defective goods or refusing to refund consideration [C1], [C3].",
+ "notes": [],
+ "sources": [
+  "https://consumeraffairs.gov.in/pages/public-grivance",
+  "https://consumerhelpline.gov.in/public/consumerrights",
+  "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1485097"
+ ]
+}

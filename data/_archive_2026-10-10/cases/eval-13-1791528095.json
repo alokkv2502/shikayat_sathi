@@ -1,0 +1,291 @@
+{
+ "complaint": "IndiGo cancelled my flight and has not refunded Rs 7,400 after 45 days.",
+ "company_hint": null,
+ "city": null,
+ "complainant": {},
+ "live": false,
+ "language": "en",
+ "sector": "other",
+ "case_entities": [],
+ "case_brief": {},
+ "eligibility_checks": [],
+ "gap_questions": [],
+ "extra_questions": [],
+ "eligibility": {
+  "status": "no_conditions",
+  "message": ""
+ },
+ "company": "IndiGo",
+ "company_domain": null,
+ "official_domains": [],
+ "domain_basis": null,
+ "facts": {
+  "product_or_service": "",
+  "issue": "IndiGo cancelled my flight and has not refunded Rs 7,400 after 45 days.",
+  "what_user_wants": "",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "7400",
+  "date": "",
+  "city": "",
+  "details": {}
+ },
+ "issue_types": [
+  "refund"
+ ],
+ "missing_facts": [
+  {
+   "fact": "reference_id",
+   "placeholder": "[BOOKING / REFERENCE NUMBER]"
+  },
+  {
+   "fact": "date",
+   "placeholder": "[DATE]"
+  }
+ ],
+ "search_plan": [
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "IndiGo grievance officer email"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_forums",
+   "q": "IndiGo refund complaint resolved"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_news",
+   "q": "IndiGo refund consumer court"
+  }
+ ],
+ "search_keywords": "refund",
+ "urgent_note": null,
+ "contacts": [],
+ "precedents": [],
+ "local_forum": null,
+ "blocked_hallucinations": 0,
+ "errors": [],
+ "verified_contacts": [],
+ "unverified_contacts": [],
+ "recommended": null,
+ "verify_attempts": 1,
+ "grievance_attempts": 1,
+ "clauses": [
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 2(10)–(11)",
+   "title": "Definitions",
+   "citation": "Consumer Protection Act, 2019, Section 2(10)–(11)",
+   "text": "(ii) the right to be informed about the quality, quantity, potency, purity, standard and price of goods, products or services, as the case may be, so as to protect the consumer against unfair trade practices; 4 THE GAZETTE OF INDIA EXTRAORDINARY [P ART II— (iii) the right to be assured, wherever possible, access to a variety of goods, products or services at competitive prices; (iv) the right to be heard and to be assured that consumer's interests will receive due consideration at appropriate fora; (v) the right to seek redressal against unfair trade practice or restrictive trade practices or unscrupulous exploitation of consumers; and (vi) the right to consumer awareness; (10) \"defect\" means any fault, imperfection or shortcoming in the quality, quantity, potency, purity or standard which is required to be maintained by or under any law for the time being in force or under any contract, express or implied or as is claimed by the trader in any manner whatsoever in relation to any goods or product and the expression \"defective\" shall be construed accordingly; (11) \"deficiency\" means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance which is required to be maintained by or under any law for the time being in force or has been undertaken to be performed by a person in pursuance of a contract or otherwise in relation to any service and includes— (i) any act of negligence or omission or commission by such person which causes loss or injury to the consumer; and (ii) deliberate withholding of relevant information by such person to the consumer; ",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.625,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 2(10)–(11)",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+   "tag": "C1"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 88",
+   "title": "Whoever, fails to comply with any direction of the Central Authority under",
+   "citation": "Consumer Protection Act, 2019, Section 88",
+   "text": "88. Whoever, fails to comply with any direction of the Central Authority under sections 20 and 21, shall be punished with imprisonment for a term which may extend to six months or with fine which may extend to twenty lakh rupees, or with both.",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.666,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 88",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "refund of consideration within time; consumer right to seek redressal; unfair trade practice IndiGo cancelled my flight and has not refunded Rs 7,400 after 45 days.",
+   "tag": "C2"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 85",
+   "title": "Liability of product service provider",
+   "citation": "Consumer Protection Act, 2019, Section 85",
+   "text": "85. A product service provider shall be liable in a product liability action, if— (a) the service provided by him was faulty or imperfect or deficient or inadequate in quality, nature or manner of performance which is required to be provided by or under any law for the time being in force, or pursuant to any contract or otherwise; or (b) there was an act of omission or commission or negligence or conscious withholding any information which caused harm; or (c) the service provider did not issue adequate instructions or warnings to prevent any harm; or (d) the service did not conform to express warranty or the terms and conditions of the contract.",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.599,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 85",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+   "tag": "C3"
+  },
+  {
+   "doc_id": "ccr",
+   "doc_title": "Consumer Protection (Consumer Disputes Redressal Commissions) Rules, 2020",
+   "ref": "Rule 7(8)–(11)",
+   "title": "Fee for making complaints",
+   "citation": "Consumer Protection (Consumer Disputes Redressal Commissions) Rules, 2020, Rule 7(8)–(11)",
+   "text": "(8) Above rupees four crore and upto rupees six crore Rs.4000 (9) Above rupees six crore and upto rupees eight crore Rs.5000 (10) Above rupees eight crore and upto rupees ten crore Rs.6000 National Commission (11) Above rupees ten crore Rs.7500",
+   "source_url": "https://consumeraffairs.nic.in/acts-and-rules/consumer-protection",
+   "score": 0.65,
+   "act": "Consumer Protection (Consumer Disputes Redressal Commissions) Rules, 2020",
+   "section": "Rule 7(8)–(11)",
+   "source_file": "Consumer Commission Rules & General Rules_1732703661.pdf",
+   "page": null,
+   "query": "refund of consideration within time; consumer right to seek redressal; unfair trade practice IndiGo cancelled my flight and has not refunded Rs 7,400 after 45 days.",
+   "tag": "C4"
+  }
+ ],
+ "draft": "I am writing to formally complain about your product/service (reference [BOOKING / REFERENCE NUMBER], dated [DATE], amount ₹7400).\n\nWhat happened: IndiGo cancelled my flight and has not refunded Rs 7,400 after 45 days.\n\nThis is contrary to the consumer-protection rules that apply to you, including: Definitions [C1]; Whoever, fails to comply with any direction of the Central Authority under [C2]; Liability of product service provider [C3].\n\nI request: [REMEDY - e.g. full refund / replacement / reversal].\n\nPlease acknowledge this complaint and resolve it within 30 days. If it is not resolved, I will escalate it to National Consumer Helpline (NCH).",
+ "subject": "Complaint: IndiGo cancelled my flight and has not refunded Rs 7,400 after 45 days — [BOOKING / REFERENCE NUMBER]",
+ "summary": "Your complaint is against IndiGo. Send this letter to the Company grievance contact first; if there's no fix in 30 days, go to National Consumer Helpline (NCH).",
+ "escalation": [
+  {
+   "name": "Company grievance contact",
+   "channel": "email / grievance page",
+   "url": null,
+   "phone": null,
+   "when_to_use": "First. Complain in writing and keep proof.",
+   "typical_wait": "30 days"
+  },
+  {
+   "name": "National Consumer Helpline (NCH)",
+   "channel": "portal / phone / WhatsApp",
+   "url": "https://consumerhelpline.gov.in",
+   "phone": "1915 · WhatsApp 8800001915",
+   "when_to_use": "If the company does not resolve it.",
+   "typical_wait": "about 30-45 days"
+  },
+  {
+   "name": "District Consumer Disputes Redressal Commission",
+   "channel": "online filing (e-Jagriti)",
+   "url": "https://e-jagriti.gov.in",
+   "phone": null,
+   "when_to_use": "File within two years of the cause of action.",
+   "typical_wait": "months"
+  }
+ ],
+ "critic_notes": [],
+ "draft_attempts": 1,
+ "draft_method": "template",
+ "user_edits": {
+  "approved": true
+ },
+ "case_answers": {},
+ "fills": {},
+ "drafted_answers": {},
+ "user_draft": "",
+ "review_rounds": 1,
+ "redraft": false,
+ "trace": [
+  "🧭 Intake (rules): language=en, sector=other, company=IndiGo, issues=refund; missing: reference_id, date",
+  "🌐 Official domain: not resolved",
+  "🔎 Case research: no named scheme, policy or product to research",
+  "🧩 Gap check (rules): no published conditions to compare",
+  "🔎 Grievance search #1: 1 queries (IndiGo grievance officer email) → 0 results, 0 pages read, 0 contact mentions (0 on the official domain)",
+  "📰 Precedents: 0 relevant forum/news item(s) (rules)",
+  "📍 Local forum: skipped — no city given",
+  "🛡️ Verifier #1: 0 verified, 0 unverified — no verified grievance email (0 unverified contact(s) kept aside)",
+  "📚 Legal RAG: 4 clause(s) — Consumer Protection Act, 2019, Section 2(10)–(11); Consumer Protection Act, 2019, Section 88; Consumer Protection Act, 2019, Section 85; Consumer Protection (Consumer Disputes Redressal Commissions) Rules, 2020, Rule 7(8)–(11)",
+  "✍️ Drafter #1 (template)",
+  "🧐 Critic (rules): passed — every claim is cited, no invented facts",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 0,
+ "final": {
+  "to": null,
+  "to_name": "Company grievance contact",
+  "subject": "Complaint: IndiGo cancelled my flight and has not refunded Rs 7,400 after 45 days — [BOOKING / REFERENCE NUMBER]",
+  "letter": "To,\nCompany grievance contact\nIndiGo\n\nDate: 09 October 2026\n\nSubject: Complaint: IndiGo cancelled my flight and has not refunded Rs 7,400 after 45 days — [BOOKING / REFERENCE NUMBER]\n\nDear Sir/Madam,\n\nI am writing to formally complain about your product/service (reference [BOOKING / REFERENCE NUMBER], dated [DATE], amount ₹7400).\n\nWhat happened: IndiGo cancelled my flight and has not refunded Rs 7,400 after 45 days.\n\nThis is contrary to the consumer-protection rules that apply to you, including: Definitions [C1]; Whoever, fails to comply with any direction of the Central Authority under [C2]; Liability of product service provider [C3].\n\nI request: [REMEDY - e.g. full refund / replacement / reversal].\n\nPlease acknowledge this complaint and resolve it within 30 days. If it is not resolved, I will escalate it to National Consumer Helpline (NCH).\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Consumer Protection Act, 2019, Section 2(10)–(11) — Definitions\n[C2] Consumer Protection Act, 2019, Section 88 — Whoever, fails to comply with any direction of the Central Authority under\n[C3] Consumer Protection Act, 2019, Section 85 — Liability of product service provider",
+  "markdown": "# Complaint: IndiGo cancelled my flight and has not refunded Rs 7,400 after 45 days — [BOOKING / REFERENCE NUMBER]\n\n**To:** Company grievance contact (no verified email - use the official complaint form)\n\nYour complaint is against IndiGo. Send this letter to the Company grievance contact first; if there's no fix in 30 days, go to National Consumer Helpline (NCH).\n\n```\nTo,\nCompany grievance contact\nIndiGo\n\nDate: 09 October 2026\n\nSubject: Complaint: IndiGo cancelled my flight and has not refunded Rs 7,400 after 45 days — [BOOKING / REFERENCE NUMBER]\n\nDear Sir/Madam,\n\nI am writing to formally complain about your product/service (reference [BOOKING / REFERENCE NUMBER], dated [DATE], amount ₹7400).\n\nWhat happened: IndiGo cancelled my flight and has not refunded Rs 7,400 after 45 days.\n\nThis is contrary to the consumer-protection rules that apply to you, including: Definitions [C1]; Whoever, fails to comply with any direction of the Central Authority under [C2]; Liability of product service provider [C3].\n\nI request: [REMEDY - e.g. full refund / replacement / reversal].\n\nPlease acknowledge this complaint and resolve it within 30 days. If it is not resolved, I will escalate it to National Consumer Helpline (NCH).\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Consumer Protection Act, 2019, Section 2(10)–(11) — Definitions\n[C2] Consumer Protection Act, 2019, Section 88 — Whoever, fails to comply with any direction of the Central Authority under\n[C3] Consumer Protection Act, 2019, Section 85 — Liability of product service provider\n```\n\n## If there's no reply\n1. **Company grievance contact** (email / grievance page) — First. Complain in writing and keep proof.\n2. **National Consumer Helpline (NCH)** (portal / phone / WhatsApp) — If the company does not resolve it. https://consumerhelpline.gov.in · 1915 · WhatsApp 8800001915\n3. **District Consumer Disputes Redressal Commission** (online filing (e-Jagriti)) — File within two years of the cause of action. https://e-jagriti.gov.in\n\n_Information, not legal advice._\n",
+  "summary": "Your complaint is against IndiGo. Send this letter to the Company grievance contact first; if there's no fix in 30 days, go to National Consumer Helpline (NCH).",
+  "escalation": [
+   {
+    "name": "Company grievance contact",
+    "channel": "email / grievance page",
+    "url": null,
+    "phone": null,
+    "when_to_use": "First. Complain in writing and keep proof.",
+    "typical_wait": "30 days"
+   },
+   {
+    "name": "National Consumer Helpline (NCH)",
+    "channel": "portal / phone / WhatsApp",
+    "url": "https://consumerhelpline.gov.in",
+    "phone": "1915 · WhatsApp 8800001915",
+    "when_to_use": "If the company does not resolve it.",
+    "typical_wait": "about 30-45 days"
+   },
+   {
+    "name": "District Consumer Disputes Redressal Commission",
+    "channel": "online filing (e-Jagriti)",
+    "url": "https://e-jagriti.gov.in",
+    "phone": null,
+    "when_to_use": "File within two years of the cause of action.",
+    "typical_wait": "months"
+   }
+  ],
+  "cited": [
+   {
+    "doc_id": "cpa",
+    "doc_title": "Consumer Protection Act, 2019",
+    "ref": "Section 2(10)–(11)",
+    "title": "Definitions",
+    "citation": "Consumer Protection Act, 2019, Section 2(10)–(11)",
+    "text": "(ii) the right to be informed about the quality, quantity, potency, purity, standard and price of goods, products or services, as the case may be, so as to protect the consumer against unfair trade practices; 4 THE GAZETTE OF INDIA EXTRAORDINARY [P ART II— (iii) the right to be assured, wherever possible, access to a variety of goods, products or services at competitive prices; (iv) the right to be heard and to be assured that consumer's interests will receive due consideration at appropriate fora; (v) the right to seek redressal against unfair trade practice or restrictive trade practices or unscrupulous exploitation of consumers; and (vi) the right to consumer awareness; (10) \"defect\" means any fault, imperfection or shortcoming in the quality, quantity, potency, purity or standard which is required to be maintained by or under any law for the time being in force or under any contract, express or implied or as is claimed by the trader in any manner whatsoever in relation to any goods or product and the expression \"defective\" shall be construed accordingly; (11) \"deficiency\" means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance which is required to be maintained by or under any law for the time being in force or has been undertaken to be performed by a person in pursuance of a contract or otherwise in relation to any service and includes— (i) any act of negligence or omission or commission by such person which causes loss or injury to the consumer; and (ii) deliberate withholding of relevant information by such person to the consumer; ",
+    "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+    "score": 0.625,
+    "act": "Consumer Protection Act, 2019",
+    "section": "Section 2(10)–(11)",
+    "source_file": "cpa_2019.pdf",
+    "page": null,
+    "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+    "tag": "C1"
+   },
+   {
+    "doc_id": "cpa",
+    "doc_title": "Consumer Protection Act, 2019",
+    "ref": "Section 88",
+    "title": "Whoever, fails to comply with any direction of the Central Authority under",
+    "citation": "Consumer Protection Act, 2019, Section 88",
+    "text": "88. Whoever, fails to comply with any direction of the Central Authority under sections 20 and 21, shall be punished with imprisonment for a term which may extend to six months or with fine which may extend to twenty lakh rupees, or with both.",
+    "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+    "score": 0.666,
+    "act": "Consumer Protection Act, 2019",
+    "section": "Section 88",
+    "source_file": "cpa_2019.pdf",
+    "page": null,
+    "query": "refund of consideration within time; consumer right to seek redressal; unfair trade practice IndiGo cancelled my flight and has not refunded Rs 7,400 after 45 days.",
+    "tag": "C2"
+   },
+   {
+    "doc_id": "cpa",
+    "doc_title": "Consumer Protection Act, 2019",
+    "ref": "Section 85",
+    "title": "Liability of product service provider",
+    "citation": "Consumer Protection Act, 2019, Section 85",
+    "text": "85. A product service provider shall be liable in a product liability action, if— (a) the service provided by him was faulty or imperfect or deficient or inadequate in quality, nature or manner of performance which is required to be provided by or under any law for the time being in force, or pursuant to any contract or otherwise; or (b) there was an act of omission or commission or negligence or conscious withholding any information which caused harm; or (c) the service provider did not issue adequate instructions or warnings to prevent any harm; or (d) the service did not conform to express warranty or the terms and conditions of the contract.",
+    "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+    "score": 0.599,
+    "act": "Consumer Protection Act, 2019",
+    "section": "Section 85",
+    "source_file": "cpa_2019.pdf",
+    "page": null,
+    "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+    "tag": "C3"
+   }
+  ],
+  "removed_citations": [],
+  "case_brief": {},
+  "case_answers": {},
+  "eligibility": {
+   "status": "no_conditions",
+   "message": ""
+  },
+  "eligibility_checks": [],
+  "unresolved_critic_notes": []
+ },
+ "thread_id": "eval-13-1791528095"
+}

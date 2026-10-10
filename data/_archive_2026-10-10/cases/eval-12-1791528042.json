@@ -1,0 +1,205 @@
+{
+ "complaint": "एक लोन ऐप वाले मुझे धमकी दे रहे हैं और मेरी फोटो मेरे दोस्तों को भेज रहे हैं।",
+ "company_hint": null,
+ "city": null,
+ "complainant": {},
+ "live": false,
+ "language": "hi",
+ "sector": "loan_app",
+ "case_entities": [],
+ "case_brief": {},
+ "eligibility_checks": [],
+ "gap_questions": [],
+ "extra_questions": [],
+ "eligibility": {
+  "status": "no_conditions",
+  "message": ""
+ },
+ "company": "",
+ "company_domain": null,
+ "official_domains": [],
+ "domain_basis": null,
+ "facts": {
+  "product_or_service": "",
+  "issue": "एक लोन ऐप वाले मुझे धमकी दे रहे हैं और मेरी फोटो मेरे दोस्तों को भेज रहे हैं।",
+  "what_user_wants": "",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "",
+  "date": "",
+  "city": "",
+  "details": {}
+ },
+ "issue_types": [
+  "harassment"
+ ],
+ "missing_facts": [
+  {
+   "fact": "reference_id",
+   "placeholder": "[LOAN ACCOUNT NUMBER]"
+  },
+  {
+   "fact": "date",
+   "placeholder": "[DATE OF CALLS]"
+  }
+ ],
+ "search_plan": [
+  {
+   "worker": "registry",
+   "engine": "LoanLens (RBI DLA directory)",
+   "q": ""
+  }
+ ],
+ "search_keywords": "harassment",
+ "urgent_note": "Harassment, threats or misuse of photos/contacts is a crime: report on cybercrime.gov.in / 1930.",
+ "contacts": [],
+ "precedents": [],
+ "local_forum": null,
+ "registry": {
+  "status": "unavailable",
+  "notes": [
+   "LoanLens registry not found at D:\\hackathon\\shikayat_sathi\\Loanlens"
+  ]
+ },
+ "blocked_hallucinations": 0,
+ "errors": [],
+ "verified_contacts": [],
+ "unverified_contacts": [],
+ "recommended": null,
+ "verify_attempts": 1,
+ "grievance_attempts": 0,
+ "clauses": [
+  {
+   "doc_id": "dl",
+   "doc_title": "RBI (Digital Lending) Directions, 2025",
+   "ref": "Para 11",
+   "title": "Grievance redressal",
+   "citation": "RBI (Digital Lending) Directions, 2025, Para 11",
+   "text": "11. Grievance redressal i. The RE, and the LSP which has an interface with the borrower, shall designate nodal grievance redressal officers to deal with digital lending related complaints/ issues raised by the borrower. ii. Contact details of the nodal grievance redressal officers shall be prominently displayed on the websites of the RE, its LSP and on the DLA, as well as in the KFS provided to the borrower. iii. The facility of lodging complaint shall also be made available on the DLA and on the website as stated above. It is reiterated that responsibility of grievance redressal shall continue to remain with the RE. iv. If any complaint lodged by the borrower against the RE or the LSP engaged by the RE is rejected wholly or partly by the RE, or the borrower is not satisfied with the reply; or the borrower has not received any reply within 30 days of receipt of complaint by the RE, the said borrower can lodge a complaint over the Complaint Management System (CMS) portal under the Reserve Bank-Integrated Ombudsman Scheme (RB-IOS) or send a physical complaint to “Centralised Receipt and Processing Centre, 4th Floor, Reserve Bank of India, Sector-17, Central Vista, Chandigarh - 160017” as per the grievance redressal mechanism prescribed by the Reserve Bank. This information shall be suitably conveyed to the borrower. Chapter IV: Technology and Data Requirement",
+   "source_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12848",
+   "score": 0.863,
+   "act": "RBI (Digital Lending) Directions, 2025",
+   "section": "Para 11",
+   "source_file": "rbi_digital_lending_directions_2025.html",
+   "page": null,
+   "query": "nodal grievance redressal officer digital lending complaints",
+   "tag": "C1"
+  }
+ ],
+ "draft": "I am writing to formally complain about your product/service (reference [LOAN ACCOUNT NUMBER], dated [DATE OF CALLS]).\n\nWhat happened: एक लोन ऐप वाले मुझे धमकी दे रहे हैं और मेरी फोटो मेरे दोस्तों को भेज रहे हैं।\n\nThis is contrary to the consumer-protection rules that apply to you, including: Grievance redressal [C1].\n\nI request: [REMEDY - e.g. full refund / replacement / reversal].\n\nPlease acknowledge this complaint and resolve it within 30 days. If it is not resolved, I will escalate it to RBI Ombudsman (RB-IOS, 2026).",
+ "subject": "Complaint: एक लोन ऐप वाले मुझे धमकी दे रहे हैं और मेरी फोटो मेरे दोस्तों को भेज र — [LOAN ACCOUNT NUMBER]",
+ "summary": "आपकी शिकायत कंपनी के ख़िलाफ़ है। पहले Lender's Grievance Redressal Officer (from RBI's DLA directory) को यह पत्र भेजें; 30 दिन में जवाब न मिले तो RBI Ombudsman (RB-IOS, 2026) पर जाएँ।",
+ "escalation": [
+  {
+   "name": "Lender's Grievance Redressal Officer (from RBI's DLA directory)",
+   "channel": "email / phone",
+   "url": null,
+   "phone": null,
+   "when_to_use": "If the app is in RBI's Digital Lending App directory, write to the GRO the lender declared to RBI.",
+   "typical_wait": "30 days"
+  },
+  {
+   "name": "RBI Ombudsman (RB-IOS, 2026)",
+   "channel": "RBI CMS portal",
+   "url": "https://cms.rbi.org.in",
+   "phone": "14448",
+   "when_to_use": "For apps of RBI-regulated lenders, after 30 days without resolution.",
+   "typical_wait": "weeks"
+  },
+  {
+   "name": "Cyber Crime / Sachet",
+   "channel": "cybercrime.gov.in · police · sachet.rbi.org.in",
+   "url": "https://cybercrime.gov.in",
+   "phone": "1930",
+   "when_to_use": "Threats, harassment, misuse of photos/contacts, or an app NOT in RBI's directory (report it on sachet.rbi.org.in).",
+   "typical_wait": "immediate"
+  }
+ ],
+ "critic_notes": [],
+ "draft_attempts": 1,
+ "draft_method": "template",
+ "user_edits": {
+  "approved": true
+ },
+ "case_answers": {},
+ "fills": {},
+ "drafted_answers": {},
+ "user_draft": "",
+ "review_rounds": 1,
+ "redraft": false,
+ "trace": [
+  "🧭 Intake (rules): language=hi, sector=loan_app, company=?, issues=harassment; missing: reference_id, date",
+  "🔎 Case research: no named scheme, policy or product to research",
+  "🧩 Gap check (rules): no published conditions to compare",
+  "🏛️ Registry (LoanLens):  → unavailable",
+  "📍 Local forum: skipped — no city given",
+  "🛡️ Verifier #1: 0 verified, 0 unverified — no company identified - nothing to verify",
+  "📚 Legal RAG: 1 clause(s) — RBI (Digital Lending) Directions, 2025, Para 11",
+  "✍️ Drafter #1 (template)",
+  "🧐 Critic (rules): passed — every claim is cited, no invented facts",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 0,
+ "final": {
+  "to": null,
+  "to_name": "Lender's Grievance Redressal Officer (from RBI's DLA directory)",
+  "subject": "Complaint: एक लोन ऐप वाले मुझे धमकी दे रहे हैं और मेरी फोटो मेरे दोस्तों को भेज र — [LOAN ACCOUNT NUMBER]",
+  "letter": "To,\nLender's Grievance Redressal Officer (from RBI's DLA directory)\n\n\nDate: 09 October 2026\n\nSubject: Complaint: एक लोन ऐप वाले मुझे धमकी दे रहे हैं और मेरी फोटो मेरे दोस्तों को भेज र — [LOAN ACCOUNT NUMBER]\n\nDear Sir/Madam,\n\nI am writing to formally complain about your product/service (reference [LOAN ACCOUNT NUMBER], dated [DATE OF CALLS]).\n\nWhat happened: एक लोन ऐप वाले मुझे धमकी दे रहे हैं और मेरी फोटो मेरे दोस्तों को भेज रहे हैं।\n\nThis is contrary to the consumer-protection rules that apply to you, including: Grievance redressal [C1].\n\nI request: [REMEDY - e.g. full refund / replacement / reversal].\n\nPlease acknowledge this complaint and resolve it within 30 days. If it is not resolved, I will escalate it to RBI Ombudsman (RB-IOS, 2026).\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] RBI (Digital Lending) Directions, 2025, Para 11 — Grievance redressal",
+  "markdown": "# Complaint: एक लोन ऐप वाले मुझे धमकी दे रहे हैं और मेरी फोटो मेरे दोस्तों को भेज र — [LOAN ACCOUNT NUMBER]\n\n**To:** Lender's Grievance Redressal Officer (from RBI's DLA directory) (no verified email - use the official complaint form)\n\nआपकी शिकायत कंपनी के ख़िलाफ़ है। पहले Lender's Grievance Redressal Officer (from RBI's DLA directory) को यह पत्र भेजें; 30 दिन में जवाब न मिले तो RBI Ombudsman (RB-IOS, 2026) पर जाएँ।\n\n```\nTo,\nLender's Grievance Redressal Officer (from RBI's DLA directory)\n\n\nDate: 09 October 2026\n\nSubject: Complaint: एक लोन ऐप वाले मुझे धमकी दे रहे हैं और मेरी फोटो मेरे दोस्तों को भेज र — [LOAN ACCOUNT NUMBER]\n\nDear Sir/Madam,\n\nI am writing to formally complain about your product/service (reference [LOAN ACCOUNT NUMBER], dated [DATE OF CALLS]).\n\nWhat happened: एक लोन ऐप वाले मुझे धमकी दे रहे हैं और मेरी फोटो मेरे दोस्तों को भेज रहे हैं।\n\nThis is contrary to the consumer-protection rules that apply to you, including: Grievance redressal [C1].\n\nI request: [REMEDY - e.g. full refund / replacement / reversal].\n\nPlease acknowledge this complaint and resolve it within 30 days. If it is not resolved, I will escalate it to RBI Ombudsman (RB-IOS, 2026).\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] RBI (Digital Lending) Directions, 2025, Para 11 — Grievance redressal\n```\n\n## If there's no reply\n1. **Lender's Grievance Redressal Officer (from RBI's DLA directory)** (email / phone) — If the app is in RBI's Digital Lending App directory, write to the GRO the lender declared to RBI.\n2. **RBI Ombudsman (RB-IOS, 2026)** (RBI CMS portal) — For apps of RBI-regulated lenders, after 30 days without resolution. https://cms.rbi.org.in · 14448\n3. **Cyber Crime / Sachet** (cybercrime.gov.in · police · sachet.rbi.org.in) — Threats, harassment, misuse of photos/contacts, or an app NOT in RBI's directory (report it on sachet.rbi.org.in). https://cybercrime.gov.in · 1930\n\n_Information, not legal advice._\n",
+  "summary": "आपकी शिकायत कंपनी के ख़िलाफ़ है। पहले Lender's Grievance Redressal Officer (from RBI's DLA directory) को यह पत्र भेजें; 30 दिन में जवाब न मिले तो RBI Ombudsman (RB-IOS, 2026) पर जाएँ।",
+  "escalation": [
+   {
+    "name": "Lender's Grievance Redressal Officer (from RBI's DLA directory)",
+    "channel": "email / phone",
+    "url": null,
+    "phone": null,
+    "when_to_use": "If the app is in RBI's Digital Lending App directory, write to the GRO the lender declared to RBI.",
+    "typical_wait": "30 days"
+   },
+   {
+    "name": "RBI Ombudsman (RB-IOS, 2026)",
+    "channel": "RBI CMS portal",
+    "url": "https://cms.rbi.org.in",
+    "phone": "14448",
+    "when_to_use": "For apps of RBI-regulated lenders, after 30 days without resolution.",
+    "typical_wait": "weeks"
+   },
+   {
+    "name": "Cyber Crime / Sachet",
+    "channel": "cybercrime.gov.in · police · sachet.rbi.org.in",
+    "url": "https://cybercrime.gov.in",
+    "phone": "1930",
+    "when_to_use": "Threats, harassment, misuse of photos/contacts, or an app NOT in RBI's directory (report it on sachet.rbi.org.in).",
+    "typical_wait": "immediate"
+   }
+  ],
+  "cited": [
+   {
+    "doc_id": "dl",
+    "doc_title": "RBI (Digital Lending) Directions, 2025",
+    "ref": "Para 11",
+    "title": "Grievance redressal",
+    "citation": "RBI (Digital Lending) Directions, 2025, Para 11",
+    "text": "11. Grievance redressal i. The RE, and the LSP which has an interface with the borrower, shall designate nodal grievance redressal officers to deal with digital lending related complaints/ issues raised by the borrower. ii. Contact details of the nodal grievance redressal officers shall be prominently displayed on the websites of the RE, its LSP and on the DLA, as well as in the KFS provided to the borrower. iii. The facility of lodging complaint shall also be made available on the DLA and on the website as stated above. It is reiterated that responsibility of grievance redressal shall continue to remain with the RE. iv. If any complaint lodged by the borrower against the RE or the LSP engaged by the RE is rejected wholly or partly by the RE, or the borrower is not satisfied with the reply; or the borrower has not received any reply within 30 days of receipt of complaint by the RE, the said borrower can lodge a complaint over the Complaint Management System (CMS) portal under the Reserve Bank-Integrated Ombudsman Scheme (RB-IOS) or send a physical complaint to “Centralised Receipt and Processing Centre, 4th Floor, Reserve Bank of India, Sector-17, Central Vista, Chandigarh - 160017” as per the grievance redressal mechanism prescribed by the Reserve Bank. This information shall be suitably conveyed to the borrower. Chapter IV: Technology and Data Requirement",
+    "source_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12848",
+    "score": 0.863,
+    "act": "RBI (Digital Lending) Directions, 2025",
+    "section": "Para 11",
+    "source_file": "rbi_digital_lending_directions_2025.html",
+    "page": null,
+    "query": "nodal grievance redressal officer digital lending complaints",
+    "tag": "C1"
+   }
+  ],
+  "removed_citations": [],
+  "case_brief": {},
+  "case_answers": {},
+  "eligibility": {
+   "status": "no_conditions",
+   "message": ""
+  },
+  "eligibility_checks": [],
+  "unresolved_critic_notes": []
+ },
+ "thread_id": "eval-12-1791528042"
+}

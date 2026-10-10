@@ -1,0 +1,295 @@
+{
+ "complaint": "Amazon delivered a fake perfume and is refusing to take it back.",
+ "company_hint": null,
+ "city": null,
+ "complainant": {},
+ "live": false,
+ "language": "en",
+ "sector": "ecommerce",
+ "case_entities": [],
+ "case_brief": {},
+ "eligibility_checks": [],
+ "gap_questions": [],
+ "extra_questions": [],
+ "eligibility": {
+  "status": "no_conditions",
+  "message": ""
+ },
+ "company": "Amazon",
+ "company_domain": null,
+ "official_domains": [],
+ "domain_basis": null,
+ "facts": {
+  "product_or_service": "",
+  "issue": "Amazon delivered a fake perfume and is refusing to take it back.",
+  "what_user_wants": "",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "",
+  "date": "",
+  "city": "",
+  "details": {}
+ },
+ "issue_types": [
+  "defective"
+ ],
+ "missing_facts": [
+  {
+   "fact": "order_id",
+   "placeholder": "[ORDER ID]"
+  },
+  {
+   "fact": "date",
+   "placeholder": "[ORDER DATE]"
+  },
+  {
+   "fact": "amount",
+   "placeholder": "[AMOUNT]"
+  }
+ ],
+ "search_plan": [
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "Amazon grievance officer email"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_forums",
+   "q": "Amazon defective product complaint resolved"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_news",
+   "q": "Amazon defective product consumer court"
+  }
+ ],
+ "search_keywords": "defective product",
+ "urgent_note": null,
+ "contacts": [],
+ "precedents": [],
+ "local_forum": null,
+ "blocked_hallucinations": 0,
+ "errors": [],
+ "verified_contacts": [],
+ "unverified_contacts": [],
+ "recommended": null,
+ "verify_attempts": 1,
+ "grievance_attempts": 1,
+ "clauses": [
+  {
+   "doc_id": "ecom",
+   "doc_title": "Consumer Protection (E-Commerce) Rules, 2020",
+   "ref": "Rule 6(4)",
+   "title": "Duties of sellers on marketplace",
+   "citation": "Consumer Protection (E-Commerce) Rules, 2020, Rule 6(4)",
+   "text": "(4) Any seller offering goods or services through a marketplace e-commerce entity shall: (a) have a prior written contract with the respective e-commerce entity in order to undertake or solicit such sale or offer; (b) appoint a grievance officer for consumer grievance redressal and ensure that the grievance officer acknowledges the receipt of any consumer complaint within forty-eight hours and redresses the complaint within one month from the date of receipt of the complaint; (c) ensure that the advertisements for marketing of goods or services are consistent with the actual characteristics, access and usage conditions of such goods or services. (d) provide to the e-commerce entity its legal name, principal geographic address of its headquarters and all branches, the name and details of its website, its e-mail address, customer care contact details such as fax, landline, and mobile numbers and where applicable, its GSTIN and PAN details. ",
+   "source_url": "https://consumeraffairs.nic.in/sites/default/files/E%20commerce%20rules.pdf",
+   "score": 0.765,
+   "act": "Consumer Protection (E-Commerce) Rules, 2020",
+   "section": "Rule 6(4)",
+   "source_file": "ecommerce_rules_2020.html",
+   "page": null,
+   "query": "e-commerce grievance officer acknowledge 48 hours redress one month",
+   "tag": "C1"
+  },
+  {
+   "doc_id": "ecom",
+   "doc_title": "Consumer Protection (E-Commerce) Rules, 2020",
+   "ref": "Rule 7(4)–(5)",
+   "title": "Duties and liabilities of inventory e-commerce entities",
+   "citation": "Consumer Protection (E-Commerce) Rules, 2020, Rule 7(4)–(5)",
+   "text": "(4) No inventory e-commerce entity shall refuse to take back goods, or withdraw or discontinue services purchased or agreed to be purchased, or refuse to refund consideration, if paid, if such goods or services are defective, deficient spurious, or if the goods or services are not of the characteristics or features as advertised or as agreed to, or if such goods or services are delivered late from the stated delivery schedule: Provided that in the case of late delivery, this sub rule shall not apply if such late delivery was due to force majeure. (5) Any inventory e-commerce entity which explicitly or implicitly vouches for the authenticity of the goods or services sold by it, or guarantees that such goods or services are authentic, shall bear appropriate liability in any action related to the authenticity of such good or service.",
+   "source_url": "https://consumeraffairs.nic.in/sites/default/files/E%20commerce%20rules.pdf",
+   "score": 0.731,
+   "act": "Consumer Protection (E-Commerce) Rules, 2020",
+   "section": "Rule 7(4)–(5)",
+   "source_file": "ecommerce_rules_2020.html",
+   "page": null,
+   "query": "defective goods replacement refund; product liability; deficiency Amazon delivered a fake perfume and is refusing to take it back.",
+   "tag": "C2"
+  },
+  {
+   "doc_id": "ecom",
+   "doc_title": "Consumer Protection (E-Commerce) Rules, 2020",
+   "ref": "Rule 4(1)–(5)",
+   "title": "Duties of e-commerce entities",
+   "citation": "Consumer Protection (E-Commerce) Rules, 2020, Rule 4(1)–(5)",
+   "text": "4. Duties of e-commerce entities. — (1) An e-commerce entity shall: (a) be a company incorporated under the Companies Act, 1956 (1 of 1956) or the Companies Act, 2013 (18 of 2013) or a foreign company covered under clause (42) of section 2 of the Companies Act, 2013 (18 of 2013) or an office, branch or agency outside India owned or controlled by a person resident in India as provided in sub-clause (iii) of clause (v) of section 2 of the Foreign Exchange Management Act, 1999 (42 of 1999); and (b) appoint a nodal person of contact or an alternate senior designated functionary who is resident in India, to ensure compliance with the provisions of the Act or the rules made thereunder. (2) Every e-commerce entity shall provide the following information in a clear and accessible manner on its platform, displayed prominently to its users, namely:– (3) No e-commerce entity shall adopt any unfair trade practice, whether in the course of business on its platform or otherwise. (4) Every e-commerce entity shall establish an adequate grievance redressal mechanism having regard to the number of grievances ordinarily received by such entity from India, and shall appoint a grievance officer for consumer grievance redressal, and shall display the name, contact details, and designation of such officer on its platform. (5) Every e-commerce entity shall ensure that the grievance officer referred to in sub-rule (4) acknowledges the receipt of any consumer complaint within forty-eight hours and redresses the complaint within one month from the date of receipt of the complaint. ",
+   "source_url": "https://consumeraffairs.nic.in/sites/default/files/E%20commerce%20rules.pdf",
+   "score": 0.716,
+   "act": "Consumer Protection (E-Commerce) Rules, 2020",
+   "section": "Rule 4(1)–(5)",
+   "source_file": "ecommerce_rules_2020.html",
+   "page": null,
+   "query": "e-commerce grievance officer acknowledge 48 hours redress one month",
+   "tag": "C3"
+  },
+  {
+   "doc_id": "ecom",
+   "doc_title": "Consumer Protection (E-Commerce) Rules, 2020",
+   "ref": "Rule 7(1)–(3)",
+   "title": "Duties and liabilities of inventory e-commerce entities",
+   "citation": "Consumer Protection (E-Commerce) Rules, 2020, Rule 7(1)–(3)",
+   "text": "7. Duties and liabilities of inventory e-commerce entities: – (1) Every inventory e-commerce entity shall provide the following information in a clear and accessible manner, displayed prominently to its users: (a) accurate information related to return, refund, exchange, warranty and guarantee, delivery and shipment, cost of return shipping, mode of payments, grievance redressal mechanism, and any other similar information which may be required by consumers to make informed decisions; (b) all mandatory notices and information required by applicable laws; (c) information on available payment methods, the security of those payment methods, the procedure to cancel regular payments under those methods, any fees or charges payable by users, charge back options, if any, and the contact information of the relevant payment service provider; (d) all contractual information required to be disclosed by law; (e) total price in single figure of any good or service along with the breakup price for the good or service, showing all the compulsory and voluntary charges, such as delivery charges, postage and handling charges, conveyance charges and the applicable tax; and (f) a ticket number for each complaint lodged, through which the consumer can track the status of their complaint. (2) No inventory e-commerce entity shall falsely represent itself as a consumer and post reviews about goods and services or misrepresent the quality or the features of any goods or services. (3) Every inventory e-commerce entity shall ensure that the advertisements for marketing of goods or services are consistent with the actual characteristics, access and usage conditions of such goods or services; ",
+   "source_url": "https://consumeraffairs.nic.in/sites/default/files/E%20commerce%20rules.pdf",
+   "score": 0.663,
+   "act": "Consumer Protection (E-Commerce) Rules, 2020",
+   "section": "Rule 7(1)–(3)",
+   "source_file": "ecommerce_rules_2020.html",
+   "page": null,
+   "query": "defective goods replacement refund; product liability; deficiency Amazon delivered a fake perfume and is refusing to take it back.",
+   "tag": "C4"
+  }
+ ],
+ "draft": "I am writing to formally complain about your product/service (reference [ORDER ID], dated [ORDER DATE], amount [AMOUNT]).\n\nWhat happened: Amazon delivered a fake perfume and is refusing to take it back.\n\nThis is contrary to the consumer-protection rules that apply to you, including: Duties of sellers on marketplace [C1]; Duties and liabilities of inventory e-commerce entities [C2]; Duties of e-commerce entities [C3].\n\nI request: [REMEDY - e.g. full refund / replacement / reversal].\n\nPlease acknowledge this complaint and resolve it within 30 days. If it is not resolved, I will escalate it to National Consumer Helpline (NCH).",
+ "subject": "Complaint: Amazon delivered a fake perfume and is refusing to take it back. — [ORDER ID]",
+ "summary": "Your complaint is against Amazon. Send this letter to the Company grievance officer first; if there's no fix in 30 days, go to National Consumer Helpline (NCH).",
+ "escalation": [
+  {
+   "name": "Company grievance officer",
+   "channel": "email / grievance page",
+   "url": null,
+   "phone": null,
+   "when_to_use": "First. E-commerce entities must display their grievance officer; the officer must acknowledge within 48 hours and redress within one month.",
+   "typical_wait": "48 h acknowledgement, 1 month resolution"
+  },
+  {
+   "name": "National Consumer Helpline (NCH)",
+   "channel": "portal / phone / WhatsApp",
+   "url": "https://consumerhelpline.gov.in",
+   "phone": "1915 (toll-free) · WhatsApp 8800001915",
+   "when_to_use": "If the company does not resolve it in a month. NCH forwards the docket to the company.",
+   "typical_wait": "about 30-45 days"
+  },
+  {
+   "name": "District Consumer Disputes Redressal Commission",
+   "channel": "online filing (e-Jagriti)",
+   "url": "https://e-jagriti.gov.in",
+   "phone": null,
+   "when_to_use": "Still unresolved: file a consumer complaint (claims up to ₹50 lakh) within two years of the cause of action. e-Jagriti replaced e-Daakhil.",
+   "typical_wait": "months"
+  }
+ ],
+ "critic_notes": [],
+ "draft_attempts": 1,
+ "draft_method": "template",
+ "user_edits": {
+  "approved": true
+ },
+ "case_answers": {},
+ "fills": {},
+ "drafted_answers": {},
+ "user_draft": "",
+ "review_rounds": 1,
+ "redraft": false,
+ "trace": [
+  "🧭 Intake (rules): language=en, sector=ecommerce, company=Amazon, issues=defective; missing: order_id, date, amount",
+  "🌐 Official domain: not resolved",
+  "🔎 Case research: no named scheme, policy or product to research",
+  "🧩 Gap check (rules): no published conditions to compare",
+  "🔎 Grievance search #1: 1 queries (Amazon grievance officer email) → 0 results, 0 pages read, 0 contact mentions (0 on the official domain)",
+  "📰 Precedents: 0 relevant forum/news item(s) (rules)",
+  "📍 Local forum: skipped — no city given",
+  "🛡️ Verifier #1: 0 verified, 0 unverified — no verified grievance email (0 unverified contact(s) kept aside)",
+  "📚 Legal RAG: 4 clause(s) — Consumer Protection (E-Commerce) Rules, 2020, Rule 6(4); Consumer Protection (E-Commerce) Rules, 2020, Rule 7(4)–(5); Consumer Protection (E-Commerce) Rules, 2020, Rule 4(1)–(5); Consumer Protection (E-Commerce) Rules, 2020, Rule 7(1)–(3)",
+  "✍️ Drafter #1 (template)",
+  "🧐 Critic (rules): passed — every claim is cited, no invented facts",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 0,
+ "final": {
+  "to": null,
+  "to_name": "Company grievance officer",
+  "subject": "Complaint: Amazon delivered a fake perfume and is refusing to take it back. — [ORDER ID]",
+  "letter": "To,\nCompany grievance officer\nAmazon\n\nDate: 09 October 2026\n\nSubject: Complaint: Amazon delivered a fake perfume and is refusing to take it back. — [ORDER ID]\n\nDear Sir/Madam,\n\nI am writing to formally complain about your product/service (reference [ORDER ID], dated [ORDER DATE], amount [AMOUNT]).\n\nWhat happened: Amazon delivered a fake perfume and is refusing to take it back.\n\nThis is contrary to the consumer-protection rules that apply to you, including: Duties of sellers on marketplace [C1]; Duties and liabilities of inventory e-commerce entities [C2]; Duties of e-commerce entities [C3].\n\nI request: [REMEDY - e.g. full refund / replacement / reversal].\n\nPlease acknowledge this complaint and resolve it within 30 days. If it is not resolved, I will escalate it to National Consumer Helpline (NCH).\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Consumer Protection (E-Commerce) Rules, 2020, Rule 6(4) — Duties of sellers on marketplace\n[C2] Consumer Protection (E-Commerce) Rules, 2020, Rule 7(4)–(5) — Duties and liabilities of inventory e-commerce entities\n[C3] Consumer Protection (E-Commerce) Rules, 2020, Rule 4(1)–(5) — Duties of e-commerce entities",
+  "markdown": "# Complaint: Amazon delivered a fake perfume and is refusing to take it back. — [ORDER ID]\n\n**To:** Company grievance officer (no verified email - use the official complaint form)\n\nYour complaint is against Amazon. Send this letter to the Company grievance officer first; if there's no fix in 30 days, go to National Consumer Helpline (NCH).\n\n```\nTo,\nCompany grievance officer\nAmazon\n\nDate: 09 October 2026\n\nSubject: Complaint: Amazon delivered a fake perfume and is refusing to take it back. — [ORDER ID]\n\nDear Sir/Madam,\n\nI am writing to formally complain about your product/service (reference [ORDER ID], dated [ORDER DATE], amount [AMOUNT]).\n\nWhat happened: Amazon delivered a fake perfume and is refusing to take it back.\n\nThis is contrary to the consumer-protection rules that apply to you, including: Duties of sellers on marketplace [C1]; Duties and liabilities of inventory e-commerce entities [C2]; Duties of e-commerce entities [C3].\n\nI request: [REMEDY - e.g. full refund / replacement / reversal].\n\nPlease acknowledge this complaint and resolve it within 30 days. If it is not resolved, I will escalate it to National Consumer Helpline (NCH).\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Consumer Protection (E-Commerce) Rules, 2020, Rule 6(4) — Duties of sellers on marketplace\n[C2] Consumer Protection (E-Commerce) Rules, 2020, Rule 7(4)–(5) — Duties and liabilities of inventory e-commerce entities\n[C3] Consumer Protection (E-Commerce) Rules, 2020, Rule 4(1)–(5) — Duties of e-commerce entities\n```\n\n## If there's no reply\n1. **Company grievance officer** (email / grievance page) — First. E-commerce entities must display their grievance officer; the officer must acknowledge within 48 hours and redress within one month.\n2. **National Consumer Helpline (NCH)** (portal / phone / WhatsApp) — If the company does not resolve it in a month. NCH forwards the docket to the company. https://consumerhelpline.gov.in · 1915 (toll-free) · WhatsApp 8800001915\n3. **District Consumer Disputes Redressal Commission** (online filing (e-Jagriti)) — Still unresolved: file a consumer complaint (claims up to ₹50 lakh) within two years of the cause of action. e-Jagriti replaced e-Daakhil. https://e-jagriti.gov.in\n\n_Information, not legal advice._\n",
+  "summary": "Your complaint is against Amazon. Send this letter to the Company grievance officer first; if there's no fix in 30 days, go to National Consumer Helpline (NCH).",
+  "escalation": [
+   {
+    "name": "Company grievance officer",
+    "channel": "email / grievance page",
+    "url": null,
+    "phone": null,
+    "when_to_use": "First. E-commerce entities must display their grievance officer; the officer must acknowledge within 48 hours and redress within one month.",
+    "typical_wait": "48 h acknowledgement, 1 month resolution"
+   },
+   {
+    "name": "National Consumer Helpline (NCH)",
+    "channel": "portal / phone / WhatsApp",
+    "url": "https://consumerhelpline.gov.in",
+    "phone": "1915 (toll-free) · WhatsApp 8800001915",
+    "when_to_use": "If the company does not resolve it in a month. NCH forwards the docket to the company.",
+    "typical_wait": "about 30-45 days"
+   },
+   {
+    "name": "District Consumer Disputes Redressal Commission",
+    "channel": "online filing (e-Jagriti)",
+    "url": "https://e-jagriti.gov.in",
+    "phone": null,
+    "when_to_use": "Still unresolved: file a consumer complaint (claims up to ₹50 lakh) within two years of the cause of action. e-Jagriti replaced e-Daakhil.",
+    "typical_wait": "months"
+   }
+  ],
+  "cited": [
+   {
+    "doc_id": "ecom",
+    "doc_title": "Consumer Protection (E-Commerce) Rules, 2020",
+    "ref": "Rule 6(4)",
+    "title": "Duties of sellers on marketplace",
+    "citation": "Consumer Protection (E-Commerce) Rules, 2020, Rule 6(4)",
+    "text": "(4) Any seller offering goods or services through a marketplace e-commerce entity shall: (a) have a prior written contract with the respective e-commerce entity in order to undertake or solicit such sale or offer; (b) appoint a grievance officer for consumer grievance redressal and ensure that the grievance officer acknowledges the receipt of any consumer complaint within forty-eight hours and redresses the complaint within one month from the date of receipt of the complaint; (c) ensure that the advertisements for marketing of goods or services are consistent with the actual characteristics, access and usage conditions of such goods or services. (d) provide to the e-commerce entity its legal name, principal geographic address of its headquarters and all branches, the name and details of its website, its e-mail address, customer care contact details such as fax, landline, and mobile numbers and where applicable, its GSTIN and PAN details. ",
+    "source_url": "https://consumeraffairs.nic.in/sites/default/files/E%20commerce%20rules.pdf",
+    "score": 0.765,
+    "act": "Consumer Protection (E-Commerce) Rules, 2020",
+    "section": "Rule 6(4)",
+    "source_file": "ecommerce_rules_2020.html",
+    "page": null,
+    "query": "e-commerce grievance officer acknowledge 48 hours redress one month",
+    "tag": "C1"
+   },
+   {
+    "doc_id": "ecom",
+    "doc_title": "Consumer Protection (E-Commerce) Rules, 2020",
+    "ref": "Rule 7(4)–(5)",
+    "title": "Duties and liabilities of inventory e-commerce entities",
+    "citation": "Consumer Protection (E-Commerce) Rules, 2020, Rule 7(4)–(5)",
+    "text": "(4) No inventory e-commerce entity shall refuse to take back goods, or withdraw or discontinue services purchased or agreed to be purchased, or refuse to refund consideration, if paid, if such goods or services are defective, deficient spurious, or if the goods or services are not of the characteristics or features as advertised or as agreed to, or if such goods or services are delivered late from the stated delivery schedule: Provided that in the case of late delivery, this sub rule shall not apply if such late delivery was due to force majeure. (5) Any inventory e-commerce entity which explicitly or implicitly vouches for the authenticity of the goods or services sold by it, or guarantees that such goods or services are authentic, shall bear appropriate liability in any action related to the authenticity of such good or service.",
+    "source_url": "https://consumeraffairs.nic.in/sites/default/files/E%20commerce%20rules.pdf",
+    "score": 0.731,
+    "act": "Consumer Protection (E-Commerce) Rules, 2020",
+    "section": "Rule 7(4)–(5)",
+    "source_file": "ecommerce_rules_2020.html",
+    "page": null,
+    "query": "defective goods replacement refund; product liability; deficiency Amazon delivered a fake perfume and is refusing to take it back.",
+    "tag": "C2"
+   },
+   {
+    "doc_id": "ecom",
+    "doc_title": "Consumer Protection (E-Commerce) Rules, 2020",
+    "ref": "Rule 4(1)–(5)",
+    "title": "Duties of e-commerce entities",
+    "citation": "Consumer Protection (E-Commerce) Rules, 2020, Rule 4(1)–(5)",
+    "text": "4. Duties of e-commerce entities. — (1) An e-commerce entity shall: (a) be a company incorporated under the Companies Act, 1956 (1 of 1956) or the Companies Act, 2013 (18 of 2013) or a foreign company covered under clause (42) of section 2 of the Companies Act, 2013 (18 of 2013) or an office, branch or agency outside India owned or controlled by a person resident in India as provided in sub-clause (iii) of clause (v) of section 2 of the Foreign Exchange Management Act, 1999 (42 of 1999); and (b) appoint a nodal person of contact or an alternate senior designated functionary who is resident in India, to ensure compliance with the provisions of the Act or the rules made thereunder. (2) Every e-commerce entity shall provide the following information in a clear and accessible manner on its platform, displayed prominently to its users, namely:– (3) No e-commerce entity shall adopt any unfair trade practice, whether in the course of business on its platform or otherwise. (4) Every e-commerce entity shall establish an adequate grievance redressal mechanism having regard to the number of grievances ordinarily received by such entity from India, and shall appoint a grievance officer for consumer grievance redressal, and shall display the name, contact details, and designation of such officer on its platform. (5) Every e-commerce entity shall ensure that the grievance officer referred to in sub-rule (4) acknowledges the receipt of any consumer complaint within forty-eight hours and redresses the complaint within one month from the date of receipt of the complaint. ",
+    "source_url": "https://consumeraffairs.nic.in/sites/default/files/E%20commerce%20rules.pdf",
+    "score": 0.716,
+    "act": "Consumer Protection (E-Commerce) Rules, 2020",
+    "section": "Rule 4(1)–(5)",
+    "source_file": "ecommerce_rules_2020.html",
+    "page": null,
+    "query": "e-commerce grievance officer acknowledge 48 hours redress one month",
+    "tag": "C3"
+   }
+  ],
+  "removed_citations": [],
+  "case_brief": {},
+  "case_answers": {},
+  "eligibility": {
+   "status": "no_conditions",
+   "message": ""
+  },
+  "eligibility_checks": [],
+  "unresolved_critic_notes": []
+ },
+ "thread_id": "eval-3-1791527970"
+}

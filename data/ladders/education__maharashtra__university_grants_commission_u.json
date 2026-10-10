@@ -1,0 +1,34 @@
+{
+ "steps": [
+  {
+   "name": "The organisation's own grievance cell",
+   "level": "company",
+   "channel": "email / grievance page",
+   "url": null,
+   "phone": null,
+   "timeline": null,
+   "source": "verified contact search (see contacts)",
+   "when_to_use": "First. Complain in writing and keep the complaint / docket number."
+  },
+  {
+   "name": "State Consumer Disputes Redressal Commission Maharashtra",
+   "level": "court_or_commission",
+   "channel": "Online case filing via website, or visit: Judicial Department, Ground Floor, Old Secretariat, Near Jehangir Art Gallery, Behind Elphinstone College, M. G. Road, Mumbai - 400032",
+   "url": "https://grahak.maharashtra.gov.in/en/notices/",
+   "phone": null,
+   "when_to_use": "For consumer disputes regarding services and fees.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "https://mahafood.gov.in/en/provider/state-government/"
+  }
+ ],
+ "fallback": false,
+ "note": "The college's own grievance cell should be approached first, though no specific contact details were provided in the sources. If the college fails to resolve the issue, escalate to the UGC and subsequently the State Consumer Commission as indicated.",
+ "notes": [
+  "dropped “UGC Grievance Redressal Cell”: its source is stated only by a non-official page (teamleaseregtech.com)",
+  "re-sourced “State Consumer Disputes Redressal Commission Maharashtra” to the official page mahafood.gov.in that names it"
+ ],
+ "sources": [
+  "https://mahafood.gov.in/en/provider/state-government/"
+ ]
+}

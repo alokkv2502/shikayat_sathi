@@ -20,6 +20,7 @@ class ComplaintState(TypedDict, total=False):
     city: str | None
     complainant: dict | None
     live: bool
+    thread_id: str                                   # set by graph.run; tags the Live view's event log
     # intake_planner
     language: str                                    # "en" | "hi" | "hinglish"
     complaint_en: str                                # the complaint in English - translated ONCE, at intake

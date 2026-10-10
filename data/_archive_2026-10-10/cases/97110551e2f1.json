@@ -1,0 +1,1186 @@
+{
+ "complaint": "स्टार हेल्थ ने मेरा 85,000 रुपये का क्लेम रिजेक्ट कर दिया।",
+ "company_hint": "Star Health",
+ "city": "Chennai",
+ "complainant": {},
+ "live": true,
+ "language": "hi",
+ "sector": "insurance",
+ "tier": "A",
+ "safety": {
+  "level": "none",
+  "categories": [],
+  "method": "rules",
+  "helplines": [],
+  "numbers": [],
+  "messages": []
+ },
+ "case_entities": [],
+ "case_brief": {},
+ "eligibility_checks": [],
+ "gap_questions": [],
+ "extra_questions": [
+  "What is your policy number or claim reference number?",
+  "What was the specific reason provided by Star Health for rejecting your claim?",
+  "On what date was your claim rejected?"
+ ],
+ "eligibility": {
+  "status": "no_conditions",
+  "message": ""
+ },
+ "company": "Star Health",
+ "company_domain": "starhealth.in",
+ "official_domains": [
+  "starhealth.in"
+ ],
+ "domain_basis": "top-1 result for “Star Health official website”, brand match",
+ "facts": {
+  "product_or_service": "Health Insurance",
+  "issue": "The user's insurance claim was rejected by Star Health.",
+  "what_user_wants": "Claim approval or resolution",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "85000",
+  "date": "",
+  "city": "Chennai",
+  "place": "",
+  "police_station": "",
+  "details": {}
+ },
+ "issue_types": [
+  "claim_rejection"
+ ],
+ "missing_facts": [
+  {
+   "fact": "reference_id",
+   "placeholder": "[POLICY / CLAIM NUMBER]"
+  }
+ ],
+ "search_plan": [
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "site:starhealth.in grievance redressal officer"
+  },
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "site:starhealth.in grievance officer"
+  },
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "Star Health grievance redressal officer email"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_forums",
+   "q": "Star Health Star Health claim rejection complaint resolved"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_news",
+   "q": "Star Health Star Health claim rejection consumer court"
+  },
+  {
+   "worker": "local_forum",
+   "engine": "google_maps",
+   "q": "District Consumer Disputes Redressal Commission Chennai"
+  }
+ ],
+ "search_keywords": "Star Health claim rejection",
+ "urgent_note": null,
+ "contacts": [
+  {
+   "type": "email",
+   "value": "support@starhealth.in",
+   "role": "customer_care",
+   "name": "",
+   "timeline": "",
+   "evidence": "For official guidance, claims, or policy matters, please visit www.starhealth.in or the customer support portal. You may also write to support@starhealth.in or ...",
+   "source_url": "https://forum.starhealth.in/what-is-the-irdai-grievance-portal-and-how-do-you-use-it/",
+   "source_domain": "starhealth.in",
+   "page_title": "What is the Irdai Grievance Portal and How Do You Use It?",
+   "via": "snippet",
+   "email": "support@starhealth.in",
+   "phone": "",
+   "url": "https://forum.starhealth.in/what-is-the-irdai-grievance-portal-and-how-do-you-use-it/",
+   "source_type": "official_domain",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "1202514253",
+   "role": "other",
+   "name": "Preetha",
+   "timeline": "",
+   "evidence": "2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Secretary 0120-2514253 Patna Prasad M Dy Secretary 0612-2547068 Pune Ms. Parvathy Iyer Dy Secretary 020-24471175 THANE Mr. Arun A Sawant Asst. Secretary 022-2081",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "1202514253",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "1412740363",
+   "role": "other",
+   "name": "Sonali Sarin Secretary",
+   "timeline": "",
+   "evidence": "Dy Secretary 0172-2705861 Chennai Smt.Jayshree Anandan Secretary 044-24333668 Delhi Mr. H. Kumar Secretary 1146013992 Guwahati Mr. Kalyan Das Dy. Secretary 0361-2632204 Hyderabad Rajasekhar P Secretary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "1412740363",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "1722705861",
+   "role": "other",
+   "name": "Minati Das Secretary",
+   "timeline": "",
+   "evidence": "mber Ahmedabad Shri S D Dattani Dy Secretary 079 - 25501202 Bengaluru Ms. Nirmala Devi N Secretary 080-26652049 Bhopal Ms. Neera Apte Dy. Secretary 0755-2769201 Bhubaneswar Mrs. Minati Das Secretary 0674-2596429 Chandigarh Manju Kapoor Dy Secretary 0172-2705861 Chennai Smt.Jayshree Anandan Secretary 044-24333668 Delhi Mr. H. Kumar Secretary 1146013992 Guwahati Mr. Kalyan Das Dy. Secretary 0361-263",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "1722705861",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "2024471175",
+   "role": "other",
+   "name": "Parvathy Iyer Dy Secretary",
+   "timeline": "",
+   "evidence": " 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Secretary 0120-2514253 Patna Prasad M Dy Secretary 0612-2547068 Pune Ms. Parvathy Iyer Dy Secretary 020-24471175 THANE Mr. Arun A Sawant Asst. Secretary 022-20812869 CIO . Secretary General 022-69038802 © CIO. All Rights Reserved 2021. Disclaimer . ©",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "2024471175",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "2220812869",
+   "role": "other",
+   "name": "Arun",
+   "timeline": "",
+   "evidence": "22-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Secretary 0120-2514253 Patna Prasad M Dy Secretary 0612-2547068 Pune Ms. Parvathy Iyer Dy Secretary 020-24471175 THANE Mr. Arun A Sawant Asst. Secretary 022-20812869 CIO . Secretary General 022-69038802 © CIO. All Rights Reserved 2021. Disclaimer . © 2017 Alpha. Designed by Epic WebDesign Team Follow Us",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "2220812869",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "2269038802",
+   "role": "other",
+   "name": "Preetha",
+   "timeline": "",
+   "evidence": "retary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Secretary 0120-2514253 Patna Prasad M Dy Secretary 0612-2547068 Pune Ms. Parvathy Iyer Dy Secretary 02",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "2269038802",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "2269038821",
+   "role": "other",
+   "name": "Preetha",
+   "timeline": "",
+   "evidence": "retary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Secretary 0120-2514253 Patna Prasad M Dy Secretary 0612-2547068 Pune Ms. Parvathy Iyer Dy Secretary 02",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "2269038821",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "3322124342",
+   "role": "other",
+   "name": "Jhadeshwar Majhi Secretary",
+   "timeline": "",
+   "evidence": "r Secretary 1146013992 Guwahati Mr. Kalyan Das Dy. Secretary 0361-2632204 Hyderabad Rajasekhar P Secretary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Se",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "3322124342",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "3612632204",
+   "role": "other",
+   "name": "Kalyan Das Dy. Secretary",
+   "timeline": "",
+   "evidence": "tary 0755-2769201 Bhubaneswar Mrs. Minati Das Secretary 0674-2596429 Chandigarh Manju Kapoor Dy Secretary 0172-2705861 Chennai Smt.Jayshree Anandan Secretary 044-24333668 Delhi Mr. H. Kumar Secretary 1146013992 Guwahati Mr. Kalyan Das Dy. Secretary 0361-2632204 Hyderabad Rajasekhar P Secretary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kol",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "3612632204",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "4023376991",
+   "role": "other",
+   "name": "Kalyan Das Dy. Secretary",
+   "timeline": "",
+   "evidence": "Secretary 0674-2596429 Chandigarh Manju Kapoor Dy Secretary 0172-2705861 Chennai Smt.Jayshree Anandan Secretary 044-24333668 Delhi Mr. H. Kumar Secretary 1146013992 Guwahati Mr. Kalyan Das Dy. Secretary 0361-2632204 Hyderabad Rajasekhar P Secretary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "4023376991",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "4424333668",
+   "role": "other",
+   "name": "Minati Das Secretary",
+   "timeline": "",
+   "evidence": "5501202 Bengaluru Ms. Nirmala Devi N Secretary 080-26652049 Bhopal Ms. Neera Apte Dy. Secretary 0755-2769201 Bhubaneswar Mrs. Minati Das Secretary 0674-2596429 Chandigarh Manju Kapoor Dy Secretary 0172-2705861 Chennai Smt.Jayshree Anandan Secretary 044-24333668 Delhi Mr. H. Kumar Secretary 1146013992 Guwahati Mr. Kalyan Das Dy. Secretary 0361-2632204 Hyderabad Rajasekhar P Secretary 040-23376991 J",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "4424333668",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "4842358759",
+   "role": "other",
+   "name": "Shiyas",
+   "timeline": "",
+   "evidence": "hree Anandan Secretary 044-24333668 Delhi Mr. H. Kumar Secretary 1146013992 Guwahati Mr. Kalyan Das Dy. Secretary 0361-2632204 Hyderabad Rajasekhar P Secretary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretar",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "4842358759",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "5224002082",
+   "role": "other",
+   "name": "Atul Misra Dy. Secretary",
+   "timeline": "",
+   "evidence": "Secretary 0361-2632204 Hyderabad Rajasekhar P Secretary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Secretary 0120-2514253 Patna Prasad M Dy Secretary 06",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "5224002082",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "6122547068",
+   "role": "other",
+   "name": "Preetha",
+   "timeline": "",
+   "evidence": "-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Secretary 0120-2514253 Patna Prasad M Dy Secretary 0612-2547068 Pune Ms. Parvathy Iyer Dy Secretary 020-24471175 THANE Mr. Arun A Sawant Asst. Secretary 022-20812869 CIO . Secretary General 022-69038802",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "6122547068",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "6742596429",
+   "role": "other",
+   "name": "Minati Das Secretary",
+   "timeline": "",
+   "evidence": "Centre Name of the official Designation Contact number Ahmedabad Shri S D Dattani Dy Secretary 079 - 25501202 Bengaluru Ms. Nirmala Devi N Secretary 080-26652049 Bhopal Ms. Neera Apte Dy. Secretary 0755-2769201 Bhubaneswar Mrs. Minati Das Secretary 0674-2596429 Chandigarh Manju Kapoor Dy Secretary 0172-2705861 Chennai Smt.Jayshree Anandan Secretary 044-24333668 Delhi Mr. H. Kumar Secretary 1146013",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "6742596429",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "7552769201",
+   "role": "other",
+   "name": "Neera Apte Dy. Secretary",
+   "timeline": "",
+   "evidence": "re Name of the official Designation Contact number Centre Name of the official Designation Contact number Ahmedabad Shri S D Dattani Dy Secretary 079 - 25501202 Bengaluru Ms. Nirmala Devi N Secretary 080-26652049 Bhopal Ms. Neera Apte Dy. Secretary 0755-2769201 Bhubaneswar Mrs. Minati Das Secretary 0674-2596429 Chandigarh Manju Kapoor Dy Secretary 0172-2705861 Chennai Smt.Jayshree Anandan Secretar",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "7552769201",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "8026652049",
+   "role": "other",
+   "name": "Nirmala Devi",
+   "timeline": "",
+   "evidence": "ce Council RTI Centre-wise In-charge details Centre Name of the official Designation Contact number Centre Name of the official Designation Contact number Ahmedabad Shri S D Dattani Dy Secretary 079 - 25501202 Bengaluru Ms. Nirmala Devi N Secretary 080-26652049 Bhopal Ms. Neera Apte Dy. Secretary 0755-2769201 Bhubaneswar Mrs. Minati Das Secretary 0674-2596429 Chandigarh Manju Kapoor Dy Secretary 0",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_domain": "cioins.co.in",
+   "page_title": "CIO",
+   "via": "page",
+   "email": "",
+   "phone": "8026652049",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  }
+ ],
+ "precedents": [
+  {
+   "kind": "news",
+   "title": "DCDRC: Insurer Cannot Ignore Doctor’s Decision to Reject Claims; Orders Star Health To Pay Father ₹94,000 ...",
+   "url": "https://lawbeat.in/news-updates/insurer-cannot-ignore-doctors-decision-to-reject-claims-orders-star-health-to-pay-father-94000-payout-over-wrongful-unnecessary-hospitalisation-denial-1621675",
+   "source": "LawBeat",
+   "date": "2026-08-12T07:00:00Z",
+   "snippet": "",
+   "how_resolved": "Consumer court"
+  },
+  {
+   "kind": "news",
+   "title": "Star Health and Allied Insurance rejects claim citing pre-existing ailment, Ghaziabad consumer forum asks",
+   "url": "https://timesofindia.indiatimes.com/city/noida/star-health-and-allied-insurance-rejects-claim-citing-pre-existing-ailment-ghaziabad-consumer-forum-asks-it-to-clear-claim/articleshow/132967454.cms",
+   "source": "The Times of India",
+   "date": "2026-08-06T07:00:00Z",
+   "snippet": "",
+   "how_resolved": "Consumer forum"
+  },
+  {
+   "kind": "news",
+   "title": "Insurance Claim Rejection Over 2.5-Hour Shortfall Arbitrary: Thrissur Consumer Commission Holds Star...",
+   "url": "https://www.livelaw.in/consumer-cases/insurance-claim-rejection-over-25-hour-shortfall-arbitrary-thrissur-consumer-commission-holds-star-health-liable-533192",
+   "source": "Live Law",
+   "date": "2026-05-06T07:00:00Z",
+   "snippet": "",
+   "how_resolved": "Consumer commission"
+  }
+ ],
+ "local_forum": null,
+ "blocked_hallucinations": 0,
+ "errors": [
+  "precedents: Star Health claim rejection complaint resolved: skipped after 8s"
+ ],
+ "verified_contacts": [
+  {
+   "email": "support@starhealth.in",
+   "phone": "",
+   "url": "https://forum.starhealth.in/what-is-the-irdai-grievance-portal-and-how-do-you-use-it/",
+   "source_url": "https://forum.starhealth.in/what-is-the-irdai-grievance-portal-and-how-do-you-use-it/",
+   "source_type": "official_domain",
+   "verified": true,
+   "reason": "in Google's excerpt of an official-domain page",
+   "type": "email",
+   "value": "support@starhealth.in",
+   "role": "customer_care",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "verified",
+   "basis": "in Google's excerpt of an official-domain page",
+   "warnings": [],
+   "checks": [
+    "sources: starhealth.in",
+    "email uses the official domain"
+   ],
+   "sources": [
+    "https://forum.starhealth.in/what-is-the-irdai-grievance-portal-and-how-do-you-use-it/"
+   ],
+   "evidence": "For official guidance, claims, or policy matters, please visit www.starhealth.in or the customer support portal. You may also write to support@starhealth.in or ..."
+  }
+ ],
+ "unverified_contacts": [
+  {
+   "email": "",
+   "phone": "1202514253",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "1202514253",
+   "role": "other",
+   "name": "Preetha",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Secretary 0120-2514253 Patna Prasad M Dy Secretary 0612-2547068 Pune Ms. Parvathy Iyer Dy Secretary 020-24471175 THANE Mr. Arun A Sawant Asst. Secretary 022-2081"
+  },
+  {
+   "email": "",
+   "phone": "1412740363",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "1412740363",
+   "role": "other",
+   "name": "Sonali Sarin Secretary",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "Dy Secretary 0172-2705861 Chennai Smt.Jayshree Anandan Secretary 044-24333668 Delhi Mr. H. Kumar Secretary 1146013992 Guwahati Mr. Kalyan Das Dy. Secretary 0361-2632204 Hyderabad Rajasekhar P Secretary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-"
+  },
+  {
+   "email": "",
+   "phone": "1722705861",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "1722705861",
+   "role": "other",
+   "name": "Minati Das Secretary",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "mber Ahmedabad Shri S D Dattani Dy Secretary 079 - 25501202 Bengaluru Ms. Nirmala Devi N Secretary 080-26652049 Bhopal Ms. Neera Apte Dy. Secretary 0755-2769201 Bhubaneswar Mrs. Minati Das Secretary 0674-2596429 Chandigarh Manju Kapoor Dy Secretary 0172-2705861 Chennai Smt.Jayshree Anandan Secretary 044-24333668 Delhi Mr. H. Kumar Secretary 1146013992 Guwahati Mr. Kalyan Das Dy. Secretary 0361-263"
+  },
+  {
+   "email": "",
+   "phone": "2024471175",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "2024471175",
+   "role": "other",
+   "name": "Parvathy Iyer Dy Secretary",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": " 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Secretary 0120-2514253 Patna Prasad M Dy Secretary 0612-2547068 Pune Ms. Parvathy Iyer Dy Secretary 020-24471175 THANE Mr. Arun A Sawant Asst. Secretary 022-20812869 CIO . Secretary General 022-69038802 © CIO. All Rights Reserved 2021. Disclaimer . ©"
+  },
+  {
+   "email": "",
+   "phone": "2220812869",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "2220812869",
+   "role": "other",
+   "name": "Arun",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "22-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Secretary 0120-2514253 Patna Prasad M Dy Secretary 0612-2547068 Pune Ms. Parvathy Iyer Dy Secretary 020-24471175 THANE Mr. Arun A Sawant Asst. Secretary 022-20812869 CIO . Secretary General 022-69038802 © CIO. All Rights Reserved 2021. Disclaimer . © 2017 Alpha. Designed by Epic WebDesign Team Follow Us"
+  },
+  {
+   "email": "",
+   "phone": "2269038802",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "2269038802",
+   "role": "other",
+   "name": "Preetha",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "retary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Secretary 0120-2514253 Patna Prasad M Dy Secretary 0612-2547068 Pune Ms. Parvathy Iyer Dy Secretary 02"
+  },
+  {
+   "email": "",
+   "phone": "2269038821",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "2269038821",
+   "role": "other",
+   "name": "Preetha",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "retary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Secretary 0120-2514253 Patna Prasad M Dy Secretary 0612-2547068 Pune Ms. Parvathy Iyer Dy Secretary 02"
+  },
+  {
+   "email": "",
+   "phone": "3322124342",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "3322124342",
+   "role": "other",
+   "name": "Jhadeshwar Majhi Secretary",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "r Secretary 1146013992 Guwahati Mr. Kalyan Das Dy. Secretary 0361-2632204 Hyderabad Rajasekhar P Secretary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Se"
+  },
+  {
+   "email": "",
+   "phone": "3612632204",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "3612632204",
+   "role": "other",
+   "name": "Kalyan Das Dy. Secretary",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "tary 0755-2769201 Bhubaneswar Mrs. Minati Das Secretary 0674-2596429 Chandigarh Manju Kapoor Dy Secretary 0172-2705861 Chennai Smt.Jayshree Anandan Secretary 044-24333668 Delhi Mr. H. Kumar Secretary 1146013992 Guwahati Mr. Kalyan Das Dy. Secretary 0361-2632204 Hyderabad Rajasekhar P Secretary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kol"
+  },
+  {
+   "email": "",
+   "phone": "4023376991",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "4023376991",
+   "role": "other",
+   "name": "Kalyan Das Dy. Secretary",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "Secretary 0674-2596429 Chandigarh Manju Kapoor Dy Secretary 0172-2705861 Chennai Smt.Jayshree Anandan Secretary 044-24333668 Delhi Mr. H. Kumar Secretary 1146013992 Guwahati Mr. Kalyan Das Dy. Secretary 0361-2632204 Hyderabad Rajasekhar P Secretary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124"
+  },
+  {
+   "email": "",
+   "phone": "4424333668",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "4424333668",
+   "role": "other",
+   "name": "Minati Das Secretary",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "5501202 Bengaluru Ms. Nirmala Devi N Secretary 080-26652049 Bhopal Ms. Neera Apte Dy. Secretary 0755-2769201 Bhubaneswar Mrs. Minati Das Secretary 0674-2596429 Chandigarh Manju Kapoor Dy Secretary 0172-2705861 Chennai Smt.Jayshree Anandan Secretary 044-24333668 Delhi Mr. H. Kumar Secretary 1146013992 Guwahati Mr. Kalyan Das Dy. Secretary 0361-2632204 Hyderabad Rajasekhar P Secretary 040-23376991 J"
+  },
+  {
+   "email": "",
+   "phone": "4842358759",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "4842358759",
+   "role": "other",
+   "name": "Shiyas",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "hree Anandan Secretary 044-24333668 Delhi Mr. H. Kumar Secretary 1146013992 Guwahati Mr. Kalyan Das Dy. Secretary 0361-2632204 Hyderabad Rajasekhar P Secretary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretar"
+  },
+  {
+   "email": "",
+   "phone": "5224002082",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "5224002082",
+   "role": "other",
+   "name": "Atul Misra Dy. Secretary",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "Secretary 0361-2632204 Hyderabad Rajasekhar P Secretary 040-23376991 JAIPUR Ms. Sonali Sarin Secretary 0141-2740363 Kochi Mr. Shiyas A Secretary 0484-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Secretary 0120-2514253 Patna Prasad M Dy Secretary 06"
+  },
+  {
+   "email": "",
+   "phone": "6122547068",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "6122547068",
+   "role": "other",
+   "name": "Preetha",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "-2358759 Kolkata Shri Jhadeshwar Majhi Secretary 033-22124342 Lucknow Shri Atul Misra Dy. Secretary 0522-4002082 Mumbai Ms. Preetha G Nair Secretary 022-69038821 Noida Santosh Kumar Kesarwani Asst. Secretary 0120-2514253 Patna Prasad M Dy Secretary 0612-2547068 Pune Ms. Parvathy Iyer Dy Secretary 020-24471175 THANE Mr. Arun A Sawant Asst. Secretary 022-20812869 CIO . Secretary General 022-69038802"
+  },
+  {
+   "email": "",
+   "phone": "6742596429",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "6742596429",
+   "role": "other",
+   "name": "Minati Das Secretary",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "Centre Name of the official Designation Contact number Ahmedabad Shri S D Dattani Dy Secretary 079 - 25501202 Bengaluru Ms. Nirmala Devi N Secretary 080-26652049 Bhopal Ms. Neera Apte Dy. Secretary 0755-2769201 Bhubaneswar Mrs. Minati Das Secretary 0674-2596429 Chandigarh Manju Kapoor Dy Secretary 0172-2705861 Chennai Smt.Jayshree Anandan Secretary 044-24333668 Delhi Mr. H. Kumar Secretary 1146013"
+  },
+  {
+   "email": "",
+   "phone": "7552769201",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "7552769201",
+   "role": "other",
+   "name": "Neera Apte Dy. Secretary",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "re Name of the official Designation Contact number Centre Name of the official Designation Contact number Ahmedabad Shri S D Dattani Dy Secretary 079 - 25501202 Bengaluru Ms. Nirmala Devi N Secretary 080-26652049 Bhopal Ms. Neera Apte Dy. Secretary 0755-2769201 Bhubaneswar Mrs. Minati Das Secretary 0674-2596429 Chandigarh Manju Kapoor Dy Secretary 0172-2705861 Chennai Smt.Jayshree Anandan Secretar"
+  },
+  {
+   "email": "",
+   "phone": "8026652049",
+   "url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_url": "https://www.cioins.co.in/SecretaryCenterwise",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "8026652049",
+   "role": "other",
+   "name": "Nirmala Devi",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: cioins.co.in"
+   ],
+   "sources": [
+    "https://www.cioins.co.in/SecretaryCenterwise"
+   ],
+   "evidence": "ce Council RTI Centre-wise In-charge details Centre Name of the official Designation Contact number Centre Name of the official Designation Contact number Ahmedabad Shri S D Dattani Dy Secretary 079 - 25501202 Bengaluru Ms. Nirmala Devi N Secretary 080-26652049 Bhopal Ms. Neera Apte Dy. Secretary 0755-2769201 Bhubaneswar Mrs. Minati Das Secretary 0674-2596429 Chandigarh Manju Kapoor Dy Secretary 0"
+  }
+ ],
+ "recommended": {
+  "email": "support@starhealth.in",
+  "phone": "",
+  "url": "https://forum.starhealth.in/what-is-the-irdai-grievance-portal-and-how-do-you-use-it/",
+  "source_url": "https://forum.starhealth.in/what-is-the-irdai-grievance-portal-and-how-do-you-use-it/",
+  "source_type": "official_domain",
+  "verified": true,
+  "reason": "in Google's excerpt of an official-domain page",
+  "type": "email",
+  "value": "support@starhealth.in",
+  "role": "customer_care",
+  "name": "",
+  "name_verified": false,
+  "designation": "",
+  "timeline": "",
+  "status": "verified",
+  "basis": "in Google's excerpt of an official-domain page",
+  "warnings": [],
+  "checks": [
+   "sources: starhealth.in",
+   "email uses the official domain"
+  ],
+  "sources": [
+   "https://forum.starhealth.in/what-is-the-irdai-grievance-portal-and-how-do-you-use-it/"
+  ],
+  "evidence": "For official guidance, claims, or policy matters, please visit www.starhealth.in or the customer support portal. You may also write to support@starhealth.in or ..."
+ },
+ "verify_attempts": 1,
+ "grievance_attempts": 1,
+ "clauses": [
+  {
+   "doc_id": "ins",
+   "doc_title": "Insurance Ombudsman Rules, 2017",
+   "ref": "Rule 14(4)–(6)",
+   "title": "Manner in which complaint to be made",
+   "citation": "Insurance Ombudsman Rules, 2017, Rule 14(4)–(6)",
+   "text": "(i) after the order of the insurer 1 [or insurance broker, as the case may be,] rejecting the representation is received; or (ii) after receipt of decision of the insurer 1 [or insurance broker, as the case may be], which is not to the satisfaction of the complainant; (iii) after expiry of a period of one month from the date of sending the written representation to the insurer 1 [or insurance broker, as the case may be, ] if the insurer or 1 [ insurance broker, as the case may be ], named fails to furnish reply to the complainant. (4) The Ombudsman shall be empowered to condone the delay in such cases as he may consider necessary, after calling for objections of the insurer or insurance broker , as the case may be, against the proposed condonation and after recording reasons for condoning the delay and in case the delay is condoned, the date of condonation of delay shall be deemed to be the date of filing of the complaint, for further proceedings under these rules. (5) No complaint before the Insurance Ombudsman shall be maintainable on the same subject matter on which proceedings are pending before or disposed of by any court or consumer forum or arbitrator. 1[(6) The Council for Insurance Ombudsmen shall develop a complaints management system, which shall include an online platform developed for the purpose of online submission and tracking of the status of complaints made under rule 14]. ___________ 1 Substituted by notification G.S.R. 147 (E), dated 2.3.2021",
+   "source_url": "https://cioins.co.in:8082/notification/Insurance%20Ombudsman%20Rules,%202017(%20as%20amended%20till%2009.11.2023).pdf",
+   "score": 0.765,
+   "act": "Insurance Ombudsman Rules, 2017",
+   "section": "Rule 14(4)–(6)",
+   "source_file": "insurance_ombudsman_rules_2017.pdf",
+   "page": null,
+   "query": "complaint to insurer representation rejected or no reply within one month",
+   "tag": "C1"
+  },
+  {
+   "doc_id": "ins",
+   "doc_title": "Insurance Ombudsman Rules, 2017",
+   "ref": "Rule 14(1)–(3)",
+   "title": "Manner in which complaint to be made",
+   "citation": "Insurance Ombudsman Rules, 2017, Rule 14(1)–(3)",
+   "text": "14. Manner in which complaint to be made.—(1) Any person who has a grievance against an insurer 1 [or insurance broker] may himself or through his legal heirs, nominee or assignee, make a complaint in writing to the Insurance Ombudsman within whose territorial jurisdiction the branch or office of the insurer 1 [or the insurance broker, as the case may be,] complained against or the residential address or place of residence of the complainant is located. (2) The complaint shall be in writing, duly 1 [signed, or made by way of electronic mail or online through the website of the Council for Insurance Ombudsmen,] by the complainant or through his legal heirs, nominee or assignee and shall state clearly the name and address of the complainant, the name of the branch or office of the insurer against whom the complaint is made, the facts giving rise to the co mplaint, supported by documents, the nature and extent of the loss caused to the complainant and the relief sought from the Insurance Ombudsman. (3) No complaint to the Insurance Ombudsman shall lie unless (a) the complainant 1 [has made a representation in writing or through electronic mail or online through website of the insurer or insurance broker concerned] named in the complaint and— (i) either the insurer 1 [or insurance broker, as the case may be,] had rejected the complaint; or (ii) the complainant had not received any reply within a period of one month after the insurer 1 [or insurance broker, as the case may be,] received his representation; or (iii) the complainant is not satisfied with the reply given to him by the insurer 1 [or insurance broker, as the case may be.] (b) The complaint is made within one year— ",
+   "source_url": "https://cioins.co.in:8082/notification/Insurance%20Ombudsman%20Rules,%202017(%20as%20amended%20till%2009.11.2023).pdf",
+   "score": 0.708,
+   "act": "Insurance Ombudsman Rules, 2017",
+   "section": "Rule 14(1)–(3)",
+   "source_file": "insurance_ombudsman_rules_2017.pdf",
+   "page": null,
+   "query": "complaint to insurer representation rejected or no reply within one month",
+   "tag": "C2"
+  },
+  {
+   "doc_id": "ins",
+   "doc_title": "Insurance Ombudsman Rules, 2017",
+   "ref": "Rule 17(1)–(2)",
+   "title": "Award",
+   "citation": "Insurance Ombudsman Rules, 2017, Rule 17(1)–(2)",
+   "text": "17. Award.—(1) Where the complaint is not settled by way of mediation under rule 16, the Ombudsman shall pass an award, based on the pleadings and evidence brought on record. 2 [(2) The award passed under the sub -rule (1) shall be in writing, duly signed in person or digitally by the Insurance Ombudsman with reasons for passing such award.] (3)Where the award is in favour of the complainant, it shall state the amount of compensation granted to the complainant after deducting the amount already paid, if any, from the award: ________________ 1 Substituted by notification G.S.R. 147 (E), dated 2.3.2021 2. Substituted by notification G.S.R. 828 (E), dated 9.11.2023 Provided that the Ombudsman shall,— (i) not award any compensation in excess of the loss suffered by the complainant as a direct consequence of the cause of action; or (ii) not award compensation exceeding rupees 3 [fifty] lakhs (including relevant expenses, if any). (4) The Ombudsman shall finalise its findings and pass an award within a period of three months of the receipt of all requirements from the complainant. (5) A copy of the award shall be sent to the complainant and the insurer 1 [or insurance broker, as the case may be,] named in the complaint. (6) The insurer 1 [or insurance broker, as the case may be, ] shall comply with the award within thirty days of the receipt of the award and intimate compliance of the same to the Ombudsman 2 [and upload the details in the complaints management system.] ",
+   "source_url": "https://cioins.co.in:8082/notification/Insurance%20Ombudsman%20Rules,%202017(%20as%20amended%20till%2009.11.2023).pdf",
+   "score": 0.685,
+   "act": "Insurance Ombudsman Rules, 2017",
+   "section": "Rule 17(1)–(2)",
+   "source_file": "insurance_ombudsman_rules_2017.pdf",
+   "page": null,
+   "query": "claim rejected repudiated by insurer; complaint to ombudsman The user's insurance claim was rejected by Star Health.",
+   "tag": "C3"
+  },
+  {
+   "doc_id": "ins",
+   "doc_title": "Insurance Ombudsman Rules, 2017",
+   "ref": "Rule 16",
+   "title": "2[Complaints settled through mediation by Insurance Ombudsman ]",
+   "citation": "Insurance Ombudsman Rules, 2017, Rule 16",
+   "text": "16. 2[Complaints settled through mediation by Insurance Ombudsman ].-(1) Where a complaint is settled through mediation, the Ombudsman shall make a recommendation which it thinks fair in the circumstances of the case, within one month of the date of receipt of mutual written consent for such mediation and the copies of the recommendation shall be sent to the complainant and the insurer 1 [or insurance broker, as the case may be, ] concerned. (2) If the recommendation of the Ombudsman is acceptable to the complainant, he shall send a communication in writing within fifteen d ays of receipt of the recommendation, stating clearly that he accepts the settlement as full and final. (3) The Ombudsman shall send to the insurer, or insurance broker, as the case may be, a copy of its recommendation, along with the acceptance letter re ceived from the complainant and the insurer1 [or insurance broker, as the case may be, ] shall, thereupon, comply with the terms of the recommendation immediately but not later than fifteen days of the receipt of such recommendation, and inform the Ombudsman of its compliance.",
+   "source_url": "https://cioins.co.in:8082/notification/Insurance%20Ombudsman%20Rules,%202017(%20as%20amended%20till%2009.11.2023).pdf",
+   "score": 0.706,
+   "act": "Insurance Ombudsman Rules, 2017",
+   "section": "Rule 16",
+   "source_file": "insurance_ombudsman_rules_2017.pdf",
+   "page": null,
+   "query": "complaint to insurer representation rejected or no reply within one month",
+   "tag": "C4"
+  }
+ ],
+ "draft": "I am writing to formally contest the rejection of my health insurance claim amounting to 85,000 rupees under [POLICY / CLAIM NUMBER]. I request a comprehensive review of my claim file and the specific grounds for this rejection. As a policyholder, I am entitled to a clear and transparent explanation regarding the denial of benefits. Please provide a detailed justification for this decision or process the approval of the claim amount immediately. I expect a formal response to this grievance within 15 days. Should this matter remain unresolved or if the response is unsatisfactory, I will escalate this complaint to the IRDAI Bima Bharosa portal for further intervention as per the regulatory framework.",
+ "subject": "Formal Grievance: Rejection of Health Insurance Claim - [POLICY / CLAIM NUMBER]",
+ "summary": "स्टार हेल्थ द्वारा आपके 85,000 रुपये के स्वास्थ्य बीमा दावे को खारिज करने के खिलाफ यह एक औपचारिक शिकायत है। हमने कंपनी से दावे की समीक्षा करने या अस्वीकृति का स्पष्ट कारण बताने का अनुरोध किया है। यदि 15 दिनों के भीतर समाधान नहीं मिलता है, तो आप IRDAI बीमा भरोसा पोर्टल पर शिकायत दर्ज कर सकते हैं।",
+ "escalation": [
+  {
+   "name": "Insurer's Grievance Redressal Officer",
+   "channel": "email / grievance portal — support@starhealth.in",
+   "url": null,
+   "phone": null,
+   "when_to_use": "First. Quote policy and claim numbers.",
+   "typical_wait": "1 month"
+  },
+  {
+   "name": "IRDAI Bima Bharosa",
+   "channel": "portal / email / phone",
+   "url": "https://bimabharosa.irdai.gov.in",
+   "phone": "155255 / 1800 4254 732",
+   "when_to_use": "Unresolved or unsatisfactory: register on Bima Bharosa (complaints@irdai.gov.in).",
+   "typical_wait": "weeks"
+  },
+  {
+   "name": "Insurance Ombudsman",
+   "channel": "Council for Insurance Ombudsmen",
+   "url": "https://www.cioins.co.in",
+   "phone": null,
+   "when_to_use": "Insurer rejected your complaint or did not reply within one month: complain within one year (awards up to ₹50 lakh).",
+   "typical_wait": "about 3 months"
+  }
+ ],
+ "critic_notes": [
+  "Does not cite any retrieved clause - support the complaint with at least one [C#].",
+  "Reviewer: The letter includes a placeholder '[POLICY / CLAIM NUMBER]' which is a critical piece of information missing from the user facts and must be provided by the user before sending.",
+  "Reviewer: The letter fails to mention the name of the insurer (Star Health) despite it being a known fact in the user's input."
+ ],
+ "draft_attempts": 2,
+ "draft_method": "Gemini (gemini-3.1-flash-lite, generate_content)",
+ "user_edits": {
+  "draft": "I am writing to formally contest the rejection of my health insurance claim amounting to 85,000 rupees under [POLICY / CLAIM NUMBER]. I request a comprehensive review of my claim file and the specific grounds for this rejection. As a policyholder, I am entitled to a clear and transparent explanation regarding the denial of benefits. Please provide a detailed justification for this decision or process the approval of the claim amount immediately. I expect a formal response to this grievance within 15 days. Should this matter remain unresolved or if the response is unsatisfactory, I will escalate this complaint to the IRDAI Bima Bharosa portal for further intervention as per the regulatory framework.",
+  "subject": "Formal Grievance: Rejection of Health Insurance Claim - [POLICY / CLAIM NUMBER]",
+  "fills": {},
+  "case_answers": {},
+  "complainant": {}
+ },
+ "case_answers": {},
+ "fills": {},
+ "drafted_answers": {},
+ "user_draft": "",
+ "review_rounds": 1,
+ "redraft": false,
+ "trace": [
+  "🧭 Intake (Gemini (gemini-3.1-flash-lite, generate_content)): language=hi, domain=insurance (tier A: draft and escalate), company=Star Health, issues=claim_rejection; missing: reference_id",
+  "🌐 Official domain: starhealth.in (top-1 result for “Star Health official website”, brand match)",
+  "🛟 Safety: no immediate danger detected",
+  "🔎 Case research: no named scheme, policy or product to research",
+  "🗺️ Frame: insurance route confirmed",
+  "🔎 Grievance search #1: 3 queries (site:starhealth.in grievance redressal officer; site:starhealth.in grievance officer; Star Health grievance redressal officer email) → 22 results, 8 pages read, 18 contact mentions (1 on the official domain)",
+  "📰 Precedents: 3 relevant forum/news item(s) (Gemini (gemini-3.1-flash-lite, generate_content)); 1 search(es) failed",
+  "📍 Local forum: no consumer commission found for Chennai",
+  "🧩 Gap check (Gemini (gemini-3.1-flash-lite, generate_content)): 0 met, 0 to confirm, 0 may not be met; 3 other question(s)",
+  "🛡️ Verifier #1: 1 verified, 17 unverified — ✅ support@starhealth.in verified (in Google's excerpt of an official-domain page)",
+  "📚 Legal RAG: 4 clause(s) — Insurance Ombudsman Rules, 2017, Rule 14(4)–(6); Insurance Ombudsman Rules, 2017, Rule 14(1)–(3); Insurance Ombudsman Rules, 2017, Rule 17(1)–(2); Insurance Ombudsman Rules, 2017, Rule 16",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 2 issue(s) → back to drafter",
+  "   • Reviewer: The letter includes a placeholder '[POLICY / CLAIM NUMBER]' which is a known case-specific fact that must be filled in before sending.",
+  "   • Reviewer: The letter cites [C2] (Insurance Ombudsman Rules) as the basis for submitting a representation to the insurer, but [C2] actually governs how to file a complaint with the Ombudsman, not how to file a grievance with the insurer itself.",
+  "✍️ Drafter #2 (Gemini (gemini-3.1-flash-lite, generate_content)): revising for 2 critic note(s)",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 3 issue(s) remain after 2 drafts → finalize will strip unsupported citations",
+  "   • Does not cite any retrieved clause - support the complaint with at least one [C#].",
+  "   • Reviewer: The letter includes a placeholder '[POLICY / CLAIM NUMBER]' which is a critical piece of information missing from the user facts and must be provided by the user before sending.",
+  "   • Reviewer: The letter fails to mention the name of the insurer (Star Health) despite it being a known fact in the user's input.",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 5,
+ "final": {
+  "to": "support@starhealth.in",
+  "to_name": "Insurer's Grievance Redressal Officer",
+  "tier": "A",
+  "safety": {
+   "level": "none",
+   "categories": [],
+   "method": "rules",
+   "helplines": [],
+   "numbers": [],
+   "messages": []
+  },
+  "subject": "Formal Grievance: Rejection of Health Insurance Claim - [POLICY / CLAIM NUMBER]",
+  "letter": "To,\nInsurer's Grievance Redressal Officer\nStar Health\nEmail: support@starhealth.in\n\nDate: 09 October 2026\n\nSubject: Formal Grievance: Rejection of Health Insurance Claim - [POLICY / CLAIM NUMBER]\n\nDear Sir/Madam,\n\nI am writing to formally contest the rejection of my health insurance claim amounting to 85,000 rupees under [POLICY / CLAIM NUMBER]. I request a comprehensive review of my claim file and the specific grounds for this rejection. As a policyholder, I am entitled to a clear and transparent explanation regarding the denial of benefits. Please provide a detailed justification for this decision or process the approval of the claim amount immediately. I expect a formal response to this grievance within 15 days. Should this matter remain unresolved or if the response is unsatisfactory, I will escalate this complaint to the IRDAI Bima Bharosa portal for further intervention as per the regulatory framework.\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]",
+  "markdown": "# Formal Grievance: Rejection of Health Insurance Claim - [POLICY / CLAIM NUMBER]\n\n**To:** Insurer's Grievance Redressal Officer <support@starhealth.in>\n\nस्टार हेल्थ द्वारा आपके 85,000 रुपये के स्वास्थ्य बीमा दावे को खारिज करने के खिलाफ यह एक औपचारिक शिकायत है। हमने कंपनी से दावे की समीक्षा करने या अस्वीकृति का स्पष्ट कारण बताने का अनुरोध किया है। यदि 15 दिनों के भीतर समाधान नहीं मिलता है, तो आप IRDAI बीमा भरोसा पोर्टल पर शिकायत दर्ज कर सकते हैं।\n\n```\nTo,\nInsurer's Grievance Redressal Officer\nStar Health\nEmail: support@starhealth.in\n\nDate: 09 October 2026\n\nSubject: Formal Grievance: Rejection of Health Insurance Claim - [POLICY / CLAIM NUMBER]\n\nDear Sir/Madam,\n\nI am writing to formally contest the rejection of my health insurance claim amounting to 85,000 rupees under [POLICY / CLAIM NUMBER]. I request a comprehensive review of my claim file and the specific grounds for this rejection. As a policyholder, I am entitled to a clear and transparent explanation regarding the denial of benefits. Please provide a detailed justification for this decision or process the approval of the claim amount immediately. I expect a formal response to this grievance within 15 days. Should this matter remain unresolved or if the response is unsatisfactory, I will escalate this complaint to the IRDAI Bima Bharosa portal for further intervention as per the regulatory framework.\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n```\n\n## If there's no reply\n1. **Insurer's Grievance Redressal Officer** (email / grievance portal — support@starhealth.in) — First. Quote policy and claim numbers.\n2. **IRDAI Bima Bharosa** (portal / email / phone) — Unresolved or unsatisfactory: register on Bima Bharosa (complaints@irdai.gov.in). https://bimabharosa.irdai.gov.in · 155255 / 1800 4254 732\n3. **Insurance Ombudsman** (Council for Insurance Ombudsmen) — Insurer rejected your complaint or did not reply within one month: complain within one year (awards up to ₹50 lakh). https://www.cioins.co.in\n\n_Information, not legal advice._\n",
+  "summary": "स्टार हेल्थ द्वारा आपके 85,000 रुपये के स्वास्थ्य बीमा दावे को खारिज करने के खिलाफ यह एक औपचारिक शिकायत है। हमने कंपनी से दावे की समीक्षा करने या अस्वीकृति का स्पष्ट कारण बताने का अनुरोध किया है। यदि 15 दिनों के भीतर समाधान नहीं मिलता है, तो आप IRDAI बीमा भरोसा पोर्टल पर शिकायत दर्ज कर सकते हैं।",
+  "escalation": [
+   {
+    "name": "Insurer's Grievance Redressal Officer",
+    "channel": "email / grievance portal — support@starhealth.in",
+    "url": null,
+    "phone": null,
+    "when_to_use": "First. Quote policy and claim numbers.",
+    "typical_wait": "1 month"
+   },
+   {
+    "name": "IRDAI Bima Bharosa",
+    "channel": "portal / email / phone",
+    "url": "https://bimabharosa.irdai.gov.in",
+    "phone": "155255 / 1800 4254 732",
+    "when_to_use": "Unresolved or unsatisfactory: register on Bima Bharosa (complaints@irdai.gov.in).",
+    "typical_wait": "weeks"
+   },
+   {
+    "name": "Insurance Ombudsman",
+    "channel": "Council for Insurance Ombudsmen",
+    "url": "https://www.cioins.co.in",
+    "phone": null,
+    "when_to_use": "Insurer rejected your complaint or did not reply within one month: complain within one year (awards up to ₹50 lakh).",
+    "typical_wait": "about 3 months"
+   }
+  ],
+  "cited": [],
+  "removed_citations": [],
+  "case_brief": {},
+  "case_answers": {},
+  "eligibility": {
+   "status": "no_conditions",
+   "message": ""
+  },
+  "eligibility_checks": [],
+  "unresolved_critic_notes": [
+   "Does not cite any retrieved clause - support the complaint with at least one [C#].",
+   "Reviewer: The letter includes a placeholder '[POLICY / CLAIM NUMBER]' which is a critical piece of information missing from the user facts and must be provided by the user before sending.",
+   "Reviewer: The letter fails to mention the name of the insurer (Star Health) despite it being a known fact in the user's input."
+  ]
+ },
+ "thread_id": "97110551e2f1"
+}

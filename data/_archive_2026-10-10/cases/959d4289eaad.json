@@ -1,0 +1,279 @@
+{
+ "complaint": "i was eligible for PMVBRY. Yet I didnt get the benefit of 6 month employment . ",
+ "company_hint": null,
+ "city": "Delhi",
+ "complainant": {},
+ "live": true,
+ "language": "en",
+ "sector": "other",
+ "company": "PMVBRY",
+ "company_domain": null,
+ "official_domains": [],
+ "domain_basis": null,
+ "facts": {
+  "product_or_service": "PMVBRY scheme",
+  "issue": "The user claims they were eligible for the PMVBRY scheme but did not receive the benefit of 6 months of employment.",
+  "what_user_wants": "Benefit of the scheme",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "",
+  "date": "",
+  "city": "Delhi"
+ },
+ "issue_types": [
+  "deficiency"
+ ],
+ "missing_facts": [
+  {
+   "fact": "reference_id",
+   "placeholder": "[BOOKING / REFERENCE NUMBER]"
+  },
+  {
+   "fact": "date",
+   "placeholder": "[DATE]"
+  },
+  {
+   "fact": "amount",
+   "placeholder": "[AMOUNT]"
+  }
+ ],
+ "search_plan": [
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "PMVBRY grievance officer email"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_forums",
+   "q": "PMVBRY PMVBRY scheme benefit complaint resolved"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_news",
+   "q": "PMVBRY PMVBRY scheme benefit consumer court"
+  },
+  {
+   "worker": "local_forum",
+   "engine": "google_maps",
+   "q": "District Consumer Disputes Redressal Commission Delhi"
+  }
+ ],
+ "search_keywords": "PMVBRY scheme benefit",
+ "urgent_note": null,
+ "contacts": [],
+ "precedents": [],
+ "local_forum": {
+  "name": "District Consumer Disputes Redressal Forum",
+  "address": "Udyog Sadan, 2nd Floor, C – 22-23, Udyog Sadan, Qutab Inst. Area, behind Qutab Hotel, Mehrauli, New Delhi, Delhi 110016",
+  "phone": "011 2656 5666",
+  "website": null,
+  "maps_link": "https://www.google.com/maps/search/?api=1&query=28.537379599999998,77.18817489999999",
+  "city": "Delhi"
+ },
+ "blocked_hallucinations": 0,
+ "errors": [],
+ "verified_contacts": [],
+ "unverified_contacts": [],
+ "recommended": null,
+ "verify_attempts": 2,
+ "grievance_attempts": 2,
+ "clauses": [
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 2(10)–(11)",
+   "title": "Definitions",
+   "citation": "Consumer Protection Act, 2019, Section 2(10)–(11)",
+   "text": "(ii) the right to be informed about the quality, quantity, potency, purity, standard and price of goods, products or services, as the case may be, so as to protect the consumer against unfair trade practices; 4 THE GAZETTE OF INDIA EXTRAORDINARY [P ART II— (iii) the right to be assured, wherever possible, access to a variety of goods, products or services at competitive prices; (iv) the right to be heard and to be assured that consumer's interests will receive due consideration at appropriate fora; (v) the right to seek redressal against unfair trade practice or restrictive trade practices or unscrupulous exploitation of consumers; and (vi) the right to consumer awareness; (10) \"defect\" means any fault, imperfection or shortcoming in the quality, quantity, potency, purity or standard which is required to be maintained by or under any law for the time being in force or under any contract, express or implied or as is claimed by the trader in any manner whatsoever in relation to any goods or product and the expression \"defective\" shall be construed accordingly; (11) \"deficiency\" means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance which is required to be maintained by or under any law for the time being in force or has been undertaken to be performed by a person in pursuance of a contract or otherwise in relation to any service and includes— (i) any act of negligence or omission or commission by such person which causes loss or injury to the consumer; and (ii) deliberate withholding of relevant information by such person to the consumer; ",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.625,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 2(10)–(11)",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+   "tag": "C1"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 88",
+   "title": "Whoever, fails to comply with any direction of the Central Authority under",
+   "citation": "Consumer Protection Act, 2019, Section 88",
+   "text": "88. Whoever, fails to comply with any direction of the Central Authority under sections 20 and 21, shall be punished with imprisonment for a term which may extend to six months or with fine which may extend to twenty lakh rupees, or with both.",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.635,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 88",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency in service fault imperfection shortcoming inadequacy in quality of performance The user claims they were eligible for the PMVBRY scheme but did not receive the benefit of 6 months of employment.",
+   "tag": "C2"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 85",
+   "title": "Liability of product service provider",
+   "citation": "Consumer Protection Act, 2019, Section 85",
+   "text": "85. A product service provider shall be liable in a product liability action, if— (a) the service provided by him was faulty or imperfect or deficient or inadequate in quality, nature or manner of performance which is required to be provided by or under any law for the time being in force, or pursuant to any contract or otherwise; or (b) there was an act of omission or commission or negligence or conscious withholding any information which caused harm; or (c) the service provider did not issue adequate instructions or warnings to prevent any harm; or (d) the service did not conform to express warranty or the terms and conditions of the contract.",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.599,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 85",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+   "tag": "C3"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 2(46)–(47) (contd.)",
+   "title": "Definitions",
+   "citation": "Consumer Protection Act, 2019, Section 2(46)–(47) (contd.)",
+   "text": "(i) making any statement, whether orally or in writing or by visible representation including by means of electronic record, which— (a) falsely represents that the goods are of a particular standard, quality, quantity, grade, composition, style or model; (b) falsely represents that the services are of a particular standard, quality or grade; (c) falsely represents any re-built, second-hand, renovated, reconditioned or old goods as new goods; (d) represents that the goods or services have sponsorship, approval, performance, characteristics, accessories, uses or benefits which such goods or services do not have; (e) represents that the seller or the supplier has a sponsorship or approval or affiliation which such seller or supplier does not have; (f) makes a false or misleading representation concerning the need for, or the usefulness of, any goods or services; (g) gives to the public any warranty or guarantee of the performance, efficacy or length of life of a product or of any goods that is not based on an adequate or proper test thereof: Provided that where a defence is raised to the effect that such warranty or guarantee is based on adequate or proper test, the burden of proof of such defence shall lie on the person raising such defence; (h) makes to the public a representation in a form that purports to be— (A) a warranty or guarantee of a product or of any goods or services; or (B) a promise to replace, maintain or repair an article or any part thereof or to repeat or continue a service until it has achieved a specified result, SEC. 1] THE GAZETTE OF INDIA EXTRAORDINARY 9 if such purported warranty or guarantee or promise is materially misleading or if there is no reasonable prospect that such warranty, guarantee or promise will be carried out; ",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.615,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 2(46)–(47) (contd.)",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency in service fault imperfection shortcoming inadequacy in quality of performance The user claims they were eligible for the PMVBRY scheme but did not receive the benefit of 6 months of employment.",
+   "tag": "C4"
+  }
+ ],
+ "draft": "I applied for the PMVBRY scheme under [BOOKING / REFERENCE NUMBER] on [DATE]. Despite being eligible, I have not received the benefit of 6 months of employment. This failure to provide the promised benefits constitutes a deficiency in service as defined under [C1] and [C3]. The service provided is faulty and inadequate, failing to meet the standards required by the scheme. I request the immediate provision of the 6 months of employment benefit or the equivalent [AMOUNT] as compensation for the loss suffered. Please resolve this matter within 7 days of receipt of this letter. If you fail to address this grievance, I will escalate this complaint to the National Consumer Helpline (NCH) for further action.",
+ "subject": "Grievance regarding non-receipt of PMVBRY scheme benefits",
+ "summary": "You are writing to the PMVBRY scheme authorities regarding your eligibility for the 6-month employment benefit. You have stated that despite being eligible, you have not received this benefit. The letter demands the provision of the benefit or compensation within 7 days, failing which you will escalate the matter to the National Consumer Helpline.",
+ "escalation": [
+  {
+   "name": "Company grievance contact",
+   "channel": "email / grievance page",
+   "url": null,
+   "phone": null,
+   "when_to_use": "First. Complain in writing and keep proof.",
+   "typical_wait": "30 days"
+  },
+  {
+   "name": "National Consumer Helpline (NCH)",
+   "channel": "portal / phone / WhatsApp",
+   "url": "https://consumerhelpline.gov.in",
+   "phone": "1915 · WhatsApp 8800001915",
+   "when_to_use": "If the company does not resolve it.",
+   "typical_wait": "about 30-45 days"
+  },
+  {
+   "name": "District Consumer Disputes Redressal Commission",
+   "channel": "online filing (e-Jagriti)",
+   "url": "https://e-jagriti.gov.in",
+   "phone": null,
+   "when_to_use": "File within two years of the cause of action.",
+   "typical_wait": "months"
+  }
+ ],
+ "critic_notes": [
+  "Reviewer: The letter cites [C1] (Consumer Protection Act, 2019, Section 2(10)–(11)) to support a claim of 'deficiency in service,' but the provided text for [C1] only outlines consumer rights (right to be informed, right to be heard, etc.) and does not define 'deficiency in service'."
+ ],
+ "draft_attempts": 2,
+ "draft_method": "Gemini (gemini-3.1-flash-lite, interactions)",
+ "user_edits": {
+  "draft": "I applied for the PMVBRY scheme under [BOOKING / REFERENCE NUMBER] on [DATE]. Despite being eligible, I have not received the benefit of 6 months of employment. This failure to provide the promised benefits constitutes a deficiency in service as defined under [C1] and [C3]. The service provided is faulty and inadequate, failing to meet the standards required by the scheme. I request the immediate provision of the 6 months of employment benefit or the equivalent [AMOUNT] as compensation for the loss suffered. Please resolve this matter within 7 days of receipt of this letter. If you fail to address this grievance, I will escalate this complaint to the National Consumer Helpline (NCH) for further action.",
+  "subject": "Grievance regarding non-receipt of PMVBRY scheme benefits",
+  "fills": {},
+  "complainant": {}
+ },
+ "trace": [
+  "🧭 Intake (Gemini (gemini-3.1-flash-lite, interactions)): language=en, sector=other, company=PMVBRY, issues=deficiency; missing: reference_id, date, amount",
+  "🌐 Official domain: not resolved",
+  "🔎 Grievance search #1: 1 queries (PMVBRY grievance officer email) → 8 results, 8 pages read, 0 contact mentions (0 on the official domain)",
+  "📰 Precedents: 0 relevant forum/news item(s) (Gemini (gemini-3.1-flash-lite, interactions))",
+  "📍 Local forum: District Consumer Disputes Redressal Forum",
+  "🛡️ Verifier #1: 0 verified, 0 unverified — no grievance contact found — retrying search with “nodal officer”, “escalation”",
+  "🔎 Grievance retry #2: 2 queries (PMVBRY nodal officer email; PMVBRY escalation email) → 16 results, 8 pages read, 0 contact mentions (0 on the official domain)",
+  "🛡️ Verifier #2: 0 verified, 0 unverified — no verified grievance email (0 unverified contact(s) kept aside)",
+  "📚 Legal RAG: 4 clause(s) — Consumer Protection Act, 2019, Section 2(10)–(11); Consumer Protection Act, 2019, Section 88; Consumer Protection Act, 2019, Section 85; Consumer Protection Act, 2019, Section 2(46)–(47) (contd.)",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, interactions))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, interactions)): 1 issue(s) → back to drafter",
+  "   • Reviewer: The letter includes a fact not present in the original complaint: the consumer's residence in Delhi, the specific booking/reference number, and the date of application.",
+  "✍️ Drafter #2 (Gemini (gemini-3.1-flash-lite, interactions)): revising for 1 critic note(s)",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, interactions)): 1 issue(s) remain after 2 drafts → finalize will strip unsupported citations",
+  "   • Reviewer: The letter cites [C1] (Consumer Protection Act, 2019, Section 2(10)–(11)) to support a claim of 'deficiency in service,' but the provided text for [C1] only outlines consumer rights (right to be informed, right to be heard, etc.) and does not define 'deficiency in service'.",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 7,
+ "final": {
+  "to": null,
+  "to_name": "Company grievance contact",
+  "subject": "Grievance regarding non-receipt of PMVBRY scheme benefits",
+  "letter": "To,\nCompany grievance contact\nPMVBRY\n\nDate: 09 October 2026\n\nSubject: Grievance regarding non-receipt of PMVBRY scheme benefits\n\nDear Sir/Madam,\n\nI applied for the PMVBRY scheme under [BOOKING / REFERENCE NUMBER] on [DATE]. Despite being eligible, I have not received the benefit of 6 months of employment. This failure to provide the promised benefits constitutes a deficiency in service as defined under [C1] and [C3]. The service provided is faulty and inadequate, failing to meet the standards required by the scheme. I request the immediate provision of the 6 months of employment benefit or the equivalent [AMOUNT] as compensation for the loss suffered. Please resolve this matter within 7 days of receipt of this letter. If you fail to address this grievance, I will escalate this complaint to the National Consumer Helpline (NCH) for further action.\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Consumer Protection Act, 2019, Section 2(10)–(11) — Definitions\n[C3] Consumer Protection Act, 2019, Section 85 — Liability of product service provider",
+  "markdown": "# Grievance regarding non-receipt of PMVBRY scheme benefits\n\n**To:** Company grievance contact (no verified email - use the official complaint form)\n\nYou are writing to the PMVBRY scheme authorities regarding your eligibility for the 6-month employment benefit. You have stated that despite being eligible, you have not received this benefit. The letter demands the provision of the benefit or compensation within 7 days, failing which you will escalate the matter to the National Consumer Helpline.\n\n```\nTo,\nCompany grievance contact\nPMVBRY\n\nDate: 09 October 2026\n\nSubject: Grievance regarding non-receipt of PMVBRY scheme benefits\n\nDear Sir/Madam,\n\nI applied for the PMVBRY scheme under [BOOKING / REFERENCE NUMBER] on [DATE]. Despite being eligible, I have not received the benefit of 6 months of employment. This failure to provide the promised benefits constitutes a deficiency in service as defined under [C1] and [C3]. The service provided is faulty and inadequate, failing to meet the standards required by the scheme. I request the immediate provision of the 6 months of employment benefit or the equivalent [AMOUNT] as compensation for the loss suffered. Please resolve this matter within 7 days of receipt of this letter. If you fail to address this grievance, I will escalate this complaint to the National Consumer Helpline (NCH) for further action.\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Consumer Protection Act, 2019, Section 2(10)–(11) — Definitions\n[C3] Consumer Protection Act, 2019, Section 85 — Liability of product service provider\n```\n\n## If there's no reply\n1. **Company grievance contact** (email / grievance page) — First. Complain in writing and keep proof.\n2. **National Consumer Helpline (NCH)** (portal / phone / WhatsApp) — If the company does not resolve it. https://consumerhelpline.gov.in · 1915 · WhatsApp 8800001915\n3. **District Consumer Disputes Redressal Commission** (online filing (e-Jagriti)) — File within two years of the cause of action. https://e-jagriti.gov.in\n\n_Information, not legal advice._\n",
+  "summary": "You are writing to the PMVBRY scheme authorities regarding your eligibility for the 6-month employment benefit. You have stated that despite being eligible, you have not received this benefit. The letter demands the provision of the benefit or compensation within 7 days, failing which you will escalate the matter to the National Consumer Helpline.",
+  "escalation": [
+   {
+    "name": "Company grievance contact",
+    "channel": "email / grievance page",
+    "url": null,
+    "phone": null,
+    "when_to_use": "First. Complain in writing and keep proof.",
+    "typical_wait": "30 days"
+   },
+   {
+    "name": "National Consumer Helpline (NCH)",
+    "channel": "portal / phone / WhatsApp",
+    "url": "https://consumerhelpline.gov.in",
+    "phone": "1915 · WhatsApp 8800001915",
+    "when_to_use": "If the company does not resolve it.",
+    "typical_wait": "about 30-45 days"
+   },
+   {
+    "name": "District Consumer Disputes Redressal Commission",
+    "channel": "online filing (e-Jagriti)",
+    "url": "https://e-jagriti.gov.in",
+    "phone": null,
+    "when_to_use": "File within two years of the cause of action.",
+    "typical_wait": "months"
+   }
+  ],
+  "cited": [
+   {
+    "doc_id": "cpa",
+    "doc_title": "Consumer Protection Act, 2019",
+    "ref": "Section 2(10)–(11)",
+    "title": "Definitions",
+    "citation": "Consumer Protection Act, 2019, Section 2(10)–(11)",
+    "text": "(ii) the right to be informed about the quality, quantity, potency, purity, standard and price of goods, products or services, as the case may be, so as to protect the consumer against unfair trade practices; 4 THE GAZETTE OF INDIA EXTRAORDINARY [P ART II— (iii) the right to be assured, wherever possible, access to a variety of goods, products or services at competitive prices; (iv) the right to be heard and to be assured that consumer's interests will receive due consideration at appropriate fora; (v) the right to seek redressal against unfair trade practice or restrictive trade practices or unscrupulous exploitation of consumers; and (vi) the right to consumer awareness; (10) \"defect\" means any fault, imperfection or shortcoming in the quality, quantity, potency, purity or standard which is required to be maintained by or under any law for the time being in force or under any contract, express or implied or as is claimed by the trader in any manner whatsoever in relation to any goods or product and the expression \"defective\" shall be construed accordingly; (11) \"deficiency\" means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance which is required to be maintained by or under any law for the time being in force or has been undertaken to be performed by a person in pursuance of a contract or otherwise in relation to any service and includes— (i) any act of negligence or omission or commission by such person which causes loss or injury to the consumer; and (ii) deliberate withholding of relevant information by such person to the consumer; ",
+    "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+    "score": 0.625,
+    "act": "Consumer Protection Act, 2019",
+    "section": "Section 2(10)–(11)",
+    "source_file": "cpa_2019.pdf",
+    "page": null,
+    "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+    "tag": "C1"
+   },
+   {
+    "doc_id": "cpa",
+    "doc_title": "Consumer Protection Act, 2019",
+    "ref": "Section 85",
+    "title": "Liability of product service provider",
+    "citation": "Consumer Protection Act, 2019, Section 85",
+    "text": "85. A product service provider shall be liable in a product liability action, if— (a) the service provided by him was faulty or imperfect or deficient or inadequate in quality, nature or manner of performance which is required to be provided by or under any law for the time being in force, or pursuant to any contract or otherwise; or (b) there was an act of omission or commission or negligence or conscious withholding any information which caused harm; or (c) the service provider did not issue adequate instructions or warnings to prevent any harm; or (d) the service did not conform to express warranty or the terms and conditions of the contract.",
+    "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+    "score": 0.599,
+    "act": "Consumer Protection Act, 2019",
+    "section": "Section 85",
+    "source_file": "cpa_2019.pdf",
+    "page": null,
+    "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+    "tag": "C3"
+   }
+  ],
+  "removed_citations": [],
+  "unresolved_critic_notes": [
+   "Reviewer: The letter cites [C1] (Consumer Protection Act, 2019, Section 2(10)–(11)) to support a claim of 'deficiency in service,' but the provided text for [C1] only outlines consumer rights (right to be informed, right to be heard, etc.) and does not define 'deficiency in service'."
+  ]
+ },
+ "thread_id": "959d4289eaad"
+}

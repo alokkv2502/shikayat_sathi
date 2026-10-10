@@ -1,0 +1,58 @@
+{
+ "steps": [
+  {
+   "name": "Airtel Customer Care",
+   "level": "company",
+   "channel": "Call 198 (Toll Free) or 121, or use the 'Help and Support' section in the Airtel Thanks App.",
+   "url": "https://www.airtel.in/blog/airtel-app/steps-to-reach-out-to-airtel-customer-care-executive/",
+   "phone": null,
+   "when_to_use": "For initial complaints regarding unauthorized plan activation and balance deduction.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "https://www.airtel.in/blog/airtel-app/steps-to-reach-out-to-airtel-customer-care-executive/"
+  },
+  {
+   "name": "Airtel Nodal Officer",
+   "level": "company",
+   "channel": "Contact the Nodal Officer for your specific state via the phone number or email provided in the official list.",
+   "url": "https://www.trai.gov.in/sites/default/files/2024-11/Airtel_Nodal_Officer_15122017_1.pdf",
+   "phone": null,
+   "when_to_use": "If the issue remains unresolved through standard customer care channels.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "https://www.trai.gov.in/sites/default/files/2024-11/Airtel_Nodal_Officer_15122017_1.pdf"
+  },
+  {
+   "name": "Telecom Consumer Complaints Monitoring System (TCCMS)",
+   "level": "sector_regulator_or_ombudsman",
+   "channel": "Register your complaint on the TCCMS portal.",
+   "url": "https://tccms.trai.gov.in/Queries.aspx?cid=1",
+   "phone": null,
+   "when_to_use": "If the service provider fails to resolve the complaint.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "https://tccms.trai.gov.in/Queries.aspx?cid=1"
+  },
+  {
+   "name": "National Consumer Helpline (NCH)",
+   "level": "other",
+   "channel": "Call 1800-11-4000 or 14404.",
+   "url": null,
+   "phone": null,
+   "when_to_use": "As a general public-grievance portal for consumer assistance.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "https://www.airtel.in/blog/airtel-app/steps-to-reach-out-to-airtel-customer-care-executive/"
+  }
+ ],
+ "fallback": false,
+ "note": "Document all interactions with Airtel, including dates, times, and representative names, as this is crucial for further escalation. The RBI clauses provided in the context are not applicable as they pertain to commercial banks, not telecom service providers.",
+ "notes": [
+  "dropped “Consumer Disputes Redressal Commission”: its source is stated only by a non-official page (consumercourt.net)",
+  "re-sourced “National Consumer Helpline (NCH)” to the official page airtel.in that names it"
+ ],
+ "sources": [
+  "https://tccms.trai.gov.in/Queries.aspx?cid=1",
+  "https://www.airtel.in/blog/airtel-app/steps-to-reach-out-to-airtel-customer-care-executive/"
+ ]
+}

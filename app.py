@@ -3,6 +3,9 @@ Run: streamlit run app.py"""
 import html
 import json
 import logging
+import re
+import threading
+import time
 import urllib.parse
 
 import pandas as pd
@@ -68,6 +71,18 @@ st.markdown("""
 .stage.run { border-color:var(--saffron); box-shadow:0 0 0 2px #F8E7C7; }
 .stage.run .st { color:#80500D; font-weight:700; }
 .stage.todo { opacity:.64; }
+.stage.wait { border-color:#8FB3D9; background:#EEF4FB; } .stage.wait .st { color:#1F4E7A; font-weight:700; }
+.stage.skip { opacity:.42; border-style:dashed; }
+.stage.fail { border-color:#E8B8B3; background:var(--red-soft); } .stage.fail .st { color:var(--red); font-weight:700; }
+.stage.run { animation:pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 50% { box-shadow:0 0 0 5px #F8E7C7; } }
+.phase-h { font-size:.74rem; font-weight:750; text-transform:uppercase; color:var(--muted); margin:12px 0 -2px; }
+.livebar { display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; background:var(--white);
+    border:1px solid var(--line); border-left:4px solid var(--saffron); border-radius:7px; padding:10px 14px;
+    margin:4px 0 12px; font-size:.92rem; }
+.livebar .now { font-weight:700; }
+.livebar a { margin-left:auto; font-weight:700; color:var(--green); text-decoration:none; white-space:nowrap; }
+.livelink { font-size:.86rem; font-weight:700; color:var(--green); text-decoration:none; }
 .sendcard { border-radius:8px; padding:18px 20px; margin:6px 0 14px; color:#fff;
         background:var(--green); border-left:6px solid #8BC5A6; }
 .sendcard.none { background:#83520D; border-left-color:#F0B24F; }
@@ -252,12 +267,9 @@ def contacts_section(s: dict) -> None:
 
 
 def resume_or_fail(graph_module, edits: dict) -> None:
-    """Continue the paused graph; if the AI is unavailable, stop and say so (no fallback letter)."""
-    try:
-        st.session_state["state"] = graph_module.resume(st.session_state["thread"], edits)
-    except AIUnavailable as e:
-        st.session_state["workflow_failed"] = f"ai:{e}"
-        st.session_state.pop("state", None)
+    """Continue the paused graph in the background; the main page shows its progress (and any AI outage)."""
+    thread = st.session_state["thread"]
+    start_job(thread, graph_module.resume, thread, edits)
 
 
 def safety_banner(safety: dict) -> None:
@@ -313,8 +325,7 @@ def clarify_dialog(s: dict, graph_module) -> None:
         answer = st.text_area(payload.get("question") or "What is the complaint about, and against whom?", height=90)
         go = st.form_submit_button("Continue", type="primary", width="stretch")
     if go:
-        with st.spinner("Finding the right complaint route…"):
-            resume_or_fail(graph_module, {"answer": answer})
+        resume_or_fail(graph_module, {"answer": answer})
         st.rerun()
 
 
@@ -364,8 +375,7 @@ def details_dialog(s: dict, graph_module) -> None:
         edits = {"fills": {k: v for k, v in fills.items() if v.strip()},
                  "case_answers": {k: v for k, v in answers.items() if v.strip()},
                  "complainant": {k: v for k, v in me.items() if v.strip()}, "letter_language": letter_lang}
-        with st.spinner("Writing your letter with your answers…"):
-            resume_or_fail(graph_module, edits)
+        resume_or_fail(graph_module, edits)
         st.rerun()
     if st.button("Back to complaint details", key="details_back"):
         st.session_state.pop("state", None)
@@ -407,8 +417,7 @@ def review_dialog(s: dict, graph_module) -> None:
                                          help="Nothing is sent - you get the final letter to send yourself.")
     if approved:
         edits = {"draft": draft, "subject": subject, "complainant": {k: v for k, v in me.items() if v}}
-        with st.spinner("Preparing your final complaint…"):
-            resume_or_fail(graph_module, edits)
+        resume_or_fail(graph_module, edits)
         st.rerun()
     if st.button("Back to complaint details", key="review_back"):
         st.session_state.pop("state", None)
@@ -471,7 +480,231 @@ sources.</div></div>""", unsafe_allow_html=True)
             st.caption("No precedents or forum found (or searches were skipped).")
 
 
+
+# --------------------------------------------------------------------------- background runs + Live view
+# A complaint runs on a background thread, so the page stays responsive and a second tab can watch it live
+# (saathi.events). Nothing waits on the Live view: it only reads the event log the run writes anyway.
+
+THREAD_RE = re.compile(r"[0-9a-f]{6,32}")
+NODE_ICON = {"safety_router": "🛟", "intake_planner": "🧭", "clarify": "❓", "case_research": "🔎", "frame": "🗺️",
+             "grievance": "📇", "precedents": "📰", "local_forum": "📍", "gap_check": "🧩",
+             "escalation_planner": "🪜", "registry": "🏛️", "verifier": "🛡️", "legal_rag": "📚",
+             "ask_details": "📝", "reassess": "🔁", "drafter": "✍️", "critic": "🧐", "human_review": "🙋",
+             "finalize": "📦"}
+
+
+@st.cache_resource
+def _jobs() -> dict:
+    """thread id -> {status: running | done | failed, state, error}; shared by every session of this server."""
+    return {}
+
+
+def start_job(thread: str, fn, *args) -> None:
+    job = {"status": "running"}
+    _jobs()[thread] = job
+
+    def work():
+        try:
+            job["state"] = fn(*args)
+            job["status"] = "done"
+        except AIUnavailable as e:  # no silent fallback letter: say so plainly
+            job.update(status="failed", error=f"ai:{e}")
+        except Exception:
+            LOGGER.exception("Complaint workflow failed")
+            job.update(status="failed", error=True)
+
+    threading.Thread(target=work, daemon=True, name=f"saathi-{thread}").start()
+    st.session_state["running"] = thread
+
+
+def collect_job() -> None:
+    """A finished background run becomes the page's state (or its error)."""
+    thread = st.session_state.get("running")
+    if not thread:
+        return
+    job = _jobs().get(thread)
+    if job and job["status"] == "running":
+        return
+    st.session_state.pop("running", None)
+    _jobs().pop(thread, None)
+    state = (job or {}).get("state")
+    if state and ("__interrupt__" in state or state.get("final")):
+        st.session_state.update(thread=thread, state=state)
+    else:  # an error, the AI unavailable, or the server restarted mid-run
+        st.session_state.pop("state", None)
+        st.session_state["workflow_failed"] = (job or {}).get("error") or True
+
+
+def live_href(thread: str) -> str:
+    return f"?view=live&thread={urllib.parse.quote(thread)}"
+
+
+def _phase_of(node_name: str) -> tuple[str, str]:
+    from saathi.graph import PHASES
+    for phase, steps in PHASES:
+        for n, desc, _ in steps:
+            if n == node_name:
+                return phase, desc
+    return "", node_name
+
+
+@st.fragment(run_every=1.0)
+def progress_strip(thread: str) -> None:
+    """Main page while a run works: one line - where it is now - and the link to the Live view."""
+    from saathi import events
+    job = _jobs().get(thread)
+    if not job or job["status"] != "running":
+        st.rerun()  # the run is done: show its result
+    summ = events.summarize(events.read(thread))
+    now = [n for n in summ["current"] if summ["nodes"][n]["state"] == "running"]
+    if now:
+        phase = _phase_of(now[0])[0]
+        what = " · ".join(_phase_of(n)[1] for n in now[:3]) + (f" +{len(now) - 3}" if len(now) > 3 else "")
+    else:
+        phase, what = "Starting", "Getting ready"
+    done = sum(v["state"] in ("done", "warn") for v in summ["nodes"].values())
+    st.markdown(f"<div class='livebar'><span>⏳</span><span class='now'>{E(phase)}:</span><span>{E(what)}</span>"
+                f"<span class='muted'>{done} steps done · {summ['active_s']:.0f}s</span>"
+                f"<a href='{live_href(thread)}' target='_blank' rel='noopener'>🔍 Watch it live ↗</a></div>",
+                unsafe_allow_html=True)
+
+
+def _stage_card(name: str, desc: str, always: bool, summ: dict) -> str:
+    n = summ["nodes"].get(name)
+    over = summ["status"] in ("finished", "failed")
+    runs = f" ×{n['runs']}" if n and n["runs"] > 1 else ""
+    if not n:
+        cls, text = ("skip", "skipped") if over else ("todo", "pending" if always else "may run")
+    elif n["state"] == "running":
+        cls, text = "run", f"running… {time.time() - n['since']:.0f}s{runs}"
+    elif n["state"] == "waiting":
+        cls, text = "wait", "waiting for you"
+    elif n["state"] == "failed":
+        cls, text = "fail", "failed"
+    else:
+        cls, text = ("warn" if n["state"] == "warn" else "done"), f"✓ {n['ms'] / 1000:.1f}s{runs}"
+    tip = desc + ("" if not n or not n["errors"] else " — " + "; ".join(n["errors"])[:200])
+    return (f"<div class='stage {cls}' title='{E(tip)}'><div class='ico'>{NODE_ICON.get(name, '•')}</div>"
+            f"<div class='nm'>{E(name.replace('_', ' '))}</div><div class='st'>{E(text)}</div>"
+            f"<div class='muted' style='font-size:.68rem;margin-top:3px'>{E(desc)}</div></div>")
+
+
+CALL_LABEL = {"serp": "🔎 search", "fetch": "📄 page", "llm": "🤖 AI", "rag": "📚 law", "init": "⚙️ setup"}
+
+
+def node_details(n: dict | None) -> None:
+    """Inside a node's card: its logs, the calls it made and the state it returned - one section per run."""
+    if not n or not n.get("history"):
+        return
+    runs = n["history"]
+    with st.expander("Logs & output" + (f" ({len(runs)} runs)" if len(runs) > 1 else "")):
+        for i, run in enumerate(runs, 1):
+            if len(runs) > 1:
+                st.markdown(f"**Run {i}**" + (f" · {run['ms'] / 1000:.1f}s" if run.get("ms") is not None else "")
+                            + f" · {run['state']}")
+            if run["trace"]:
+                st.markdown("<div class='tlog' style='max-height:220px'>"
+                            + "".join(f"<div>{E(line)}</div>" for line in run["trace"]) + "</div>",
+                            unsafe_allow_html=True)
+            for err in run["errors"]:
+                st.error(err, icon="⚠️")
+            if run["calls"]:
+                st.caption(f"Calls ({len(run['calls'])})")
+                st.markdown("\n".join(
+                    f"- {CALL_LABEL.get(c['call'], c['call'])} · {(c.get('ms') or 0) / 1000:.1f}s"
+                    + (" · cached" if c.get("cached") else "") + f" · `{(c.get('label') or '')[:110]}`"
+                    for c in run["calls"][:40]) + (f"\n- … +{len(run['calls']) - 40} more"
+                                                   if len(run["calls"]) > 40 else ""))
+            if run.get("asked"):
+                st.caption("Asked you (paused here)")
+                st.json(run["asked"], expanded=False)
+            if run.get("output"):
+                st.caption("State it returned")
+                st.json(run["output"], expanded=1)
+            elif run["state"] == "running":
+                st.caption("Still running…")
+            elif not run["trace"] and not run.get("asked"):
+                st.caption("No output recorded.")
+
+
+def live_view(thread: str) -> None:
+    """The Live view tab: where the run is, what is done and pending, every step and external call as it happens.
+    For a finished complaint it is a replay of the same log."""
+    from saathi import events
+    st.markdown('<div class="navbrand">📣 Shikayat Saathi · Live view</div>', unsafe_allow_html=True)
+    if not THREAD_RE.fullmatch(thread or "") or not events.path(thread).exists():
+        st.info("No live record for this complaint (yet). Start a complaint and use “Watch it live ↗”.")
+        return
+    over = events.summarize(events.read(thread))["status"] in ("finished", "failed")
+
+    @st.fragment(run_every=None if over else 1.0)
+    def body():
+        from saathi.graph import PHASES
+        evts = events.read(thread)
+        summ = events.summarize(evts)
+        status = summ["status"]
+        if not over and status in ("finished", "failed"):
+            st.rerun()  # the run has ended: redraw once and stop polling
+        if status == "running":
+            now = [n for n in summ["current"] if summ["nodes"][n]["state"] == "running"]
+            head = "🟠 Working: " + (", ".join(_phase_of(n)[1] for n in now) or "between steps")
+        elif status == "paused":
+            head = (f"⏸ Waiting for you: {events.STAGE_NAME.get(summ['stage'], 'your input')} "
+                    "— switch back to the main tab")
+        elif status == "finished":
+            head = "✅ Finished — a replay of how your complaint was prepared"
+        elif status == "failed":
+            head = f"✗ Stopped: {summ['error']}"
+        else:
+            head = "⏳ Starting…"
+        st.markdown(f"<h2 class='section-title'>{E(head)}</h2>", unsafe_allow_html=True)
+        started = time.strftime("%d %b %Y, %H:%M:%S", time.localtime(summ["started"])) if summ["started"] else ""
+        st.caption(f"Complaint {thread} · started {started} · this page only reads the run's log; "
+                   "the main tab is unaffected.")
+        calls = summ["calls"]
+
+        def count(kind):
+            total, cached = calls.get(kind, [0, 0])
+            return f"{total}" + (f" ({cached} cached)" if cached else "")
+        steps = [s for _, ss in PHASES for s in ss]
+        done = sum(v["state"] in ("done", "warn") for v in summ["nodes"].values())
+        m = st.columns(6)
+        m[0].metric("Steps done", done)
+        m[1].metric("Working time", f"{summ['active_s']:.0f}s")
+        m[2].metric("Web searches", count("serp"))
+        m[3].metric("Pages read", count("fetch"))
+        m[4].metric("AI calls", count("llm"))
+        m[5].metric("Law lookups", count("rag"))
+
+        left, right = st.columns([3, 2], gap="large")
+        with left:
+            st.markdown("**The flow**")
+            for phase, ss in PHASES:
+                st.markdown(f"<div class='phase-h'>{E(phase)}</div>", unsafe_allow_html=True)
+                for row in range(0, len(ss), 3):
+                    cols = st.columns(3)
+                    for col, (n, d, a) in zip(cols, ss[row:row + 3]):
+                        with col.container(border=True):
+                            st.markdown(_stage_card(n, d, a, summ), unsafe_allow_html=True)
+                            node_details(summ["nodes"].get(n))
+            if status in ("running", "paused", "starting"):
+                pending = [d for n, d, a in steps if a and n not in summ["nodes"]]
+                if pending:
+                    st.markdown("**Still to do**")
+                    st.markdown("\n".join(f"- {E(d)}" for d in pending))
+        with right:
+            st.markdown("**Activity** (newest first)")
+            lines = "".join(f"<div><span style='color:#8FA6B2'>{off:6.1f}s</span> {E(text)}</div>"
+                            for off, text in reversed(events.feed(evts)))
+            st.markdown(f"<div class='tlog' style='max-height:780px'>{lines or 'Waiting for the first step…'}</div>",
+                        unsafe_allow_html=True)
+    body()
+
 # --------------------------------------------------------------------------- pages
+
+if st.query_params.get("view") == "live":  # the Live view opens in its own tab
+    live_view(st.query_params.get("thread") or "")
+    st.stop()
 
 nav_brand, nav_links = st.columns([1, 1], vertical_alignment="center")
 nav_brand.markdown('<div class="navbrand">📣 Shikayat Saathi</div>', unsafe_allow_html=True)
@@ -482,16 +715,27 @@ if page == "New complaint":
     from saathi import graph as G
 
     hero()
+    collect_job()
     s = st.session_state.get("state")
-    if s and s.get("final"):
+    if st.session_state.get("running"):
+        journey_step(2 if s else 1)
+        st.markdown('<div class="eyebrow">Working on it</div><h2 class="section-title">'
+                    + ("Continuing with your answers" if s else "Preparing your complaint") + "</h2>",
+                    unsafe_allow_html=True)
+        st.caption("This usually takes under a minute. You can watch each step live in a new tab.")
+        progress_strip(st.session_state["running"])
+    elif s and s.get("final"):
         journey_step(3)
         safety_banner(s.get("safety") or {})
         st.markdown('<div class="eyebrow">Step 3 of 3</div><h2 class="section-title">Your complaint is ready</h2>',
                     unsafe_allow_html=True)
         header_chips(s)
+        if st.session_state.get("thread"):
+            st.markdown(f"<a class='livelink' href='{live_href(st.session_state['thread'])}' target='_blank' "
+                        "rel='noopener'>🔍 See how it was prepared ↗</a>", unsafe_allow_html=True)
         final_view(s)
         if st.button("Start another complaint", type="primary", width="stretch"):
-            for key in ("state", "thread", "workflow_failed", "complaint_input", "company_input", "city_input",
+            for key in ("state", "thread", "running", "workflow_failed", "complaint_input", "company_input", "city_input",
                         "name_input", "example", "_loaded_example"):
                 st.session_state.pop(key, None)
             st.rerun()
@@ -559,22 +803,10 @@ if page == "New complaint":
                 live = bool(SERPAPI_API_KEY)
                 serp.offline = not live
                 thread = G.new_thread()
-                try:
-                    with st.spinner("Finding the right complaint route and preparing your draft…"):
-                        state = G.run(G.initial_state(complaint, company=company, city=city,
-                                                      complainant={"name": name} if name else None, live=live),
-                                      thread)
-                    if "__interrupt__" not in state and not state.get("final"):
-                        raise RuntimeError("workflow ended before review")
-                    st.session_state.update(thread=thread, state=state)
-                    st.rerun()
-                except AIUnavailable as e:  # no silent fallback letter: say so plainly
-                    st.session_state["workflow_failed"] = f"ai:{e}"
-                    st.rerun()
-                except Exception:
-                    LOGGER.exception("Complaint workflow failed before review")
-                    st.session_state["workflow_failed"] = True
-                    st.rerun()
+                start_job(thread, G.run, G.initial_state(complaint, company=company, city=city,
+                                                         complainant={"name": name} if name else None, live=live),
+                          thread)
+                st.rerun()
 
 elif page == "Past complaints":
     st.markdown('<div class="eyebrow">Your space</div><h2 class="section-title">Past complaints</h2>',
@@ -588,6 +820,10 @@ elif page == "Past complaints":
                          f"{cases[i]['complaint'][:80]}")
         c = cases[i]
         header_chips(c)
+        from saathi import events
+        if THREAD_RE.fullmatch(c.get("thread_id") or "") and events.path(c["thread_id"]).exists():
+            st.markdown(f"<a class='livelink' href='{live_href(c['thread_id'])}' target='_blank' rel='noopener'>"
+                        "▶ Replay timeline ↗</a>", unsafe_allow_html=True)
         final_view(c)
 
 st.markdown("<div class='muted' style='text-align:center;margin-top:28px'>Information, not legal advice.</div>",

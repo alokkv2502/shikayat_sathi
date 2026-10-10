@@ -1,0 +1,3917 @@
+{
+ "complaint": "IndiGo cancelled my flight 6E-2143 on 2 Oct 2026 and has not refunded Rs 7,400 after 30 days.",
+ "company_hint": "IndiGo",
+ "city": "Mumbai",
+ "complainant": {},
+ "live": true,
+ "language": "en",
+ "complaint_en": "IndiGo cancelled my flight 6E-2143 on 2 Oct 2026 and has not refunded Rs 7,400 after 30 days.",
+ "sector": "other",
+ "tier": "A",
+ "route": {
+  "domain_free_text": "airline flight cancellation refund",
+  "matched_playbook": "other",
+  "confidence": 0.8,
+  "reason": "Airline services fall under general consumer services, which is covered by the 'other' playbook.",
+  "mode": "matched",
+  "question": "",
+  "route_key": "airline",
+  "state": "Maharashtra",
+  "authority_type": "private_company",
+  "queries": [
+   "IndiGo grievance redressal officer",
+   "DGCA air passenger grievance portal",
+   "Air Sewa portal complaint"
+  ]
+ },
+ "ladder": {
+  "steps": [
+   {
+    "name": "The organisation's own grievance cell",
+    "level": "company",
+    "channel": "email / grievance page",
+    "url": null,
+    "phone": null,
+    "timeline": null,
+    "source": "verified contact search (see contacts)",
+    "when_to_use": "First. Complain in writing and keep the complaint / docket number."
+   },
+   {
+    "name": "DGCA (via AirSewa)",
+    "level": "sector_regulator_or_ombudsman",
+    "channel": "Portal: https://airsewa.gov.in",
+    "url": "https://airsewa.gov.in",
+    "phone": null,
+    "when_to_use": "If unresolved within 15 days of the airline complaint; mandatory for flight-related complaints.",
+    "timeline": "check the timeline in https://www.civilaviation.gov.in/ministry-documents/passenger-charter-of-rights",
+    "typical_wait": "check the timeline in https://www.civilaviation.gov.in/ministry-documents/passenger-charter-of-rights",
+    "source": "https://www.civilaviation.gov.in/ministry-documents/passenger-charter-of-rights"
+   }
+  ],
+  "fallback": false,
+  "note": "Under DGCA regulations, airlines are expected to refund within 7 working days for cancelled flights. Keep your original ticket, boarding pass, and all communication records as evidence for your complaint.",
+  "notes": [
+   "dropped “IndiGo Customer Care”: its source is stated only by a non-official page (getnyay.in)",
+   "dropped “Nodal Officer, IndiGo”: its source is stated only by a non-official page (indiacustomercare.com)",
+   "dropped “Appellate Authority, IndiGo”: its source is stated only by a non-official page (indiacustomercare.com)",
+   "replaced timeline “15 days” of “DGCA (via AirSewa)”: its source does not state it",
+   "dropped “Consumer Commission”: its source is stated only by a non-official page (getnyay.in)",
+   "verified “DGCA (via AirSewa)” on civilaviation.gov.in by a direct search"
+  ],
+  "sources": [
+   "https://www.civilaviation.gov.in/ministry-documents/passenger-charter-of-rights"
+  ],
+  "key": "airline:maharashtra:indigo",
+  "cached": false,
+  "evidence_pages": 8,
+  "official_pages": 6,
+  "evidence": [
+   {
+    "url": "https://www.civilaviation.gov.in/rti/public-grievance",
+    "official": true,
+    "chars": 2467
+   },
+   {
+    "url": "https://airsewa.gov.in/",
+    "official": true,
+    "chars": 119
+   },
+   {
+    "url": "https://airsewa.gov.in/grievance/grievance-redressal",
+    "official": true,
+    "chars": 139
+   },
+   {
+    "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1486184",
+    "official": true,
+    "chars": 2469
+   },
+   {
+    "url": "https://airsewa.gov.in/grievance?utm",
+    "official": true,
+    "chars": 139
+   },
+   {
+    "url": "https://getnyay.in/directory/indigo-airlines-complaint-escalation",
+    "official": false,
+    "chars": 6000
+   },
+   {
+    "url": "https://www.indiacustomercare.com/indigo-customer-care-contact-call-center-numbers",
+    "official": false,
+    "chars": 6000
+   },
+   {
+    "url": "https://www.civilaviation.gov.in/ministry-documents/passenger-charter-of-rights",
+    "official": true,
+    "chars": 2060
+   }
+  ],
+  "clauses": [
+   "Reserve Bank – Integrated Ombudsman Scheme, 2026, Salient features, para 2",
+   "Insurance Ombudsman Rules, 2017, Rule 14(4)–(6)",
+   "Telecom Consumers Complaint Redressal Regulations, 2012, Regulation 9",
+   "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 20"
+  ]
+ },
+ "safety": {
+  "level": "none",
+  "categories": [],
+  "method": "rules",
+  "helplines": [],
+  "numbers": [],
+  "messages": []
+ },
+ "case_entities": [],
+ "case_brief": {},
+ "eligibility_checks": [],
+ "gap_questions": [],
+ "extra_questions": [
+  "Have you already raised a formal complaint with IndiGo's customer support, and if so, what was their response?",
+  "Do you have any email or ticket reference number from your previous communication with the airline?",
+  "Did you book this ticket directly through the IndiGo website or via a third-party travel agent?"
+ ],
+ "eligibility": {
+  "status": "no_conditions",
+  "message": ""
+ },
+ "company": "IndiGo",
+ "company_domain": null,
+ "official_domains": [],
+ "domain_basis": null,
+ "facts": {
+  "product_or_service": "Flight ticket",
+  "issue": "The airline cancelled the flight and failed to process the refund after 30 days.",
+  "what_user_wants": "Refund of the ticket amount",
+  "order_id": "6E-2143",
+  "reference_id": "",
+  "amount": "7400",
+  "date": "2 Oct 2026",
+  "city": "Mumbai",
+  "place": "",
+  "police_station": "",
+  "details": {}
+ },
+ "issue_types": [
+  "refund"
+ ],
+ "missing_facts": [],
+ "search_plan": [
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "IndiGo grievance officer email"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_forums",
+   "q": "IndiGo IndiGo flight refund complaint resolved"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_news",
+   "q": "IndiGo IndiGo flight refund consumer court"
+  },
+  {
+   "worker": "local_forum",
+   "engine": "google_maps",
+   "q": "District Consumer Disputes Redressal Commission Mumbai"
+  }
+ ],
+ "search_keywords": "IndiGo flight refund",
+ "urgent_note": null,
+ "contacts": [
+  {
+   "type": "phone",
+   "value": "9355194242",
+   "role": "customer_care",
+   "name": "",
+   "timeline": "",
+   "evidence": "Chat with one of our customer care executives online or call us at 09910383838. +919355194242",
+   "source_url": "https://www.goindigo.in/information/international-connections.html",
+   "source_domain": "goindigo.in",
+   "page_title": "International Connections",
+   "via": "snippet",
+   "email": "",
+   "phone": "9355194242",
+   "url": "https://www.goindigo.in/information/international-connections.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9910383838",
+   "role": "customer_care",
+   "name": "",
+   "timeline": "",
+   "evidence": "Chat with one of our customer care executives online or call us at 09910383838. +919355194242",
+   "source_url": "https://www.goindigo.in/information/international-connections.html",
+   "source_domain": "goindigo.in",
+   "page_title": "International Connections",
+   "via": "snippet",
+   "email": "",
+   "phone": "9910383838",
+   "url": "https://www.goindigo.in/information/international-connections.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "1244973838",
+   "role": "customer_care",
+   "name": "",
+   "timeline": "",
+   "evidence": "Chat with us Questions? We are here to help. Call us We're just a ring away. India : 0124-6173838, 0124-4973838 connecting millions of people across the globe. ...",
+   "source_url": "https://www.goindigo.in/information/purchase-requirement.html",
+   "source_domain": "goindigo.in",
+   "page_title": "Purchase Requirements | IndiGo Airlines",
+   "via": "snippet",
+   "email": "",
+   "phone": "1244973838",
+   "url": "https://www.goindigo.in/information/purchase-requirement.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "1246173838",
+   "role": "customer_care",
+   "name": "",
+   "timeline": "",
+   "evidence": "Chat with us Questions? We are here to help. Call us We're just a ring away. India : 0124-6173838, 0124-4973838 connecting millions of people across the globe. ...",
+   "source_url": "https://www.goindigo.in/information/purchase-requirement.html",
+   "source_domain": "goindigo.in",
+   "page_title": "Purchase Requirements | IndiGo Airlines",
+   "via": "snippet",
+   "email": "",
+   "phone": "1246173838",
+   "url": "https://www.goindigo.in/information/purchase-requirement.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "abuse@hostindia.net",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "vce.officer@hiox.com 18 HOSTAO L.L.C. Feby Hanna Ste 1200, 1309 Coffeen Ave, Sheridan, WY 82801, United States +13237447383 febyhanna@hostao.com 19 Hostin Services Pvt. Ltd Rahul S Kurkure Pune, Maharashtra +91-20-66080101 rahul@hostinservices.com / abuse@hostindia.net 20 India Links Web Hosting Pvt Ltd Yogini Chandarana Mumbai, Maharashtra - abuse@indialinks.com 21 Instra Corporation Volker A. Gr",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "abuse@hostindia.net",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "abuse@indialinks.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": ", United States +13237447383 febyhanna@hostao.com 19 Hostin Services Pvt. Ltd Rahul S Kurkure Pune, Maharashtra +91-20-66080101 rahul@hostinservices.com / abuse@hostindia.net 20 India Links Web Hosting Pvt Ltd Yogini Chandarana Mumbai, Maharashtra - abuse@indialinks.com 21 Instra Corporation Volker A. Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 22 K",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "abuse@indialinks.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "abuse@key-systems.net",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "l 1 1&1 IONOS SE Markus Schmitt 57 ElgendorferStrasse,Montab aur,hineland- Palatine,56410,Germany (+49) (0) 2602 96 15 23 grievanceofficer-domains@ionos.com 2 1API GmbH Volker A. Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 3 AppCroNix Infotech Private Limited Pritam Pawar Flat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "abuse@key-systems.net",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "abuse@namecheap.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "-5740 Chris.niemi@markmonitor.com 25 MOTHERSOFT TECHNOLOGIES Ramnath Chennai, Tamilnadu +91 9884824733 kramnath@mothersoft.in 26 NameCheap Inc Abuse Team 4600 East Washington Street, Suite 305,Phoenix,AZ,85034,USA +1 310.312.9573 / +1 (917) 566-3723 abuse@namecheap.com 27 NameSilo LLC Kristaps Ronka 5322 E Anderson Dr,Scottsdale,AZ,85254- 5891,USA (602) 492-8198 (602) 492-8198 kristaps@namesilo.co",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "abuse@namecheap.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "abuse@whois.co.kr",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "ains LLC Karen Gaydos 2150 E Warner Rd,Tempe,AZ,85284,USA (319) 294-9806 (319) 294-9806 toshea@godaddy.com 46 YesNIC Co., Ltd. Whois Corp. 10th floor, 43, Digital-ro 34- gil, Guro-gu , Seoul (Kolon Science Valley 1), Seoul , South Korea +82.15884259 abuse@whois.co.kr 47 Zybosys Networks India Private Limited Sidharth Nair Kolkata, West Bengal +91-9645725888 , +91-9037137091 grievance@zybosys.com B",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "abuse@whois.co.kr",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "atul.sharma@cyfuture.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "Technologies Pvt, Ltd Meena Singhal Mumbai, Maharashtra +91-22-66912876/77 meena@cybersitesindia.com 9 Cyfuture India Private Limited Atul Sharma Plot No. 197/198, Noida Special Economic Zone (NSEZ) Noida Phase II, Noida Dadri Road, Noida - 201305 - atul.sharma@cyfuture.com 10 Data Ingenious Global Limited Grievance Officer Station Road, Durgapura, Jaipur - 302018 0141 - 2554970/71 grievance@dil.i",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "atul.sharma@cyfuture.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "bajaj.vikram@gmail.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": ") 566-3723 abuse@namecheap.com 27 NameSilo LLC Kristaps Ronka 5322 E Anderson Dr,Scottsdale,AZ,85254- 5891,USA (602) 492-8198 (602) 492-8198 kristaps@namesilo.com 28 Net 4 India Vikram Bajaj D-25, Sector-3,Noida,Uttar Pradesh,201301,India 9999989408 bajaj.vikram@gmail.com 29 NetBharat Technology Manish Pal Mumbai, Maharashtra - info@netbharat.com 30 NETIM Bruno Vincent 264 av arthur notebart,Lille",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "bajaj.vikram@gmail.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "bhagwati.jamnal@csc.gov.in",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "pore 022-67209095 prabhat.k@endurance.com 7 CSC E- Governance Services India Limited Bhagwati Jamnal Ministry of Electronics & Information Technology, Electronics Niketan, 3rd Floor, DeitY, 6, CGO, Complex, Lodhi Road, New Delhi-110003 +919654034882 bhagwati.jamnal@csc.gov.in 8 Cybersites India Technologies Pvt, Ltd Meena Singhal Mumbai, Maharashtra +91-22-66912876/77 meena@cybersitesindia.com 9 C",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "bhagwati.jamnal@csc.gov.in",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "chris.niemi@markmonitor.com",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "many +49-6894 93 96 850 abuse@key-systems.net 23 Laxweb Technologies Pvt. Ltd. Arpita Saha Kolkata, West Bengal - grievance@laxwebtechnologies.com 24 MarkMonitor. com Chris Niemi 3540 E Longwing Ln Ste 300,Meridian,ID,83646- 1104,USA +1 208 389-5740 Chris.niemi@markmonitor.com 25 MOTHERSOFT TECHNOLOGIES Ramnath Chennai, Tamilnadu +91 9884824733 kramnath@mothersoft.in 26 NameCheap Inc Abuse Team 46",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "chris.niemi@markmonitor.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "compliance@tucows.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "rar Solutions Ltd. Volker A. Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 40 Tucows Inc. Reg Levy Head of Compliance 1337 Services LLC, P.O. Box 590, Charlestown Saint Kitts and Nevis +1 (416) 535- 0123 compliance@tucows.com 41 V2 Technosys dba BookYour.IN Vinay Murarka Mumbai, Maharashtra +91-9870005533 vinay@v2technosys. com 42 Vebonix Pritam Pawar",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "compliance@tucows.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "compliance_abuse@webnic.cc",
+   "role": "grievance_officer",
+   "name": "",
+   "timeline": "",
+   "evidence": "xt 6) Grievances@VEBONIX.email 43 Vifi Solutions and Technologies Private Limited M SUBRAMANI Bangalore, Karnataka +91 9148551692 official@vizitdomains.com 44 Web Commerce Communications Limited dba WebNic.cc Grievance Officer Singapore +60.189836788 compliance_abuse@webnic.cc 45 Wild West Domains LLC Karen Gaydos 2150 E Warner Rd,Tempe,AZ,85284,USA (319) 294-9806 (319) 294-9806 toshea@godaddy.com",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "compliance_abuse@webnic.cc",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "domain.grievance@sifycorp.com",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": " • 13003 Marseille • France +33 (0)488662212 m.aubert@safebrands.com 36 Secura GmbH Robert Sucher Frohnhofweg 18 D-50858 Koeln +49 221 2571213 complaints@domai nregistry.de 37 Sify Digital Services Limited M. Sudhakar Chennai , Tamil Nadu 9543439136 domain.grievance@sifycorp.com 38 Suryanandan.net Dinesh Pratihari Plot-1942,Santoshi Bhawan,Nayapalli Opp. CBI Colony, Bhubaneswar-12,Orissa 943731371",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "domain.grievance@sifycorp.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "febyhanna@hostao.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "o 7AF Ganesha Complex Campus N K Palayam Road Singanallur ,Coimbatore,Tamil Nadu,641005,India (770) 800-9900 770860883 grievanvce.officer@hiox.com 18 HOSTAO L.L.C. Feby Hanna Ste 1200, 1309 Coffeen Ave, Sheridan, WY 82801, United States +13237447383 febyhanna@hostao.com 19 Hostin Services Pvt. Ltd Rahul S Kurkure Pune, Maharashtra +91-20-66080101 rahul@hostinservices.com / abuse@hostindia.net 20 I",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "febyhanna@hostao.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "grievance-officier@netim.net",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "ia Vikram Bajaj D-25, Sector-3,Noida,Uttar Pradesh,201301,India 9999989408 bajaj.vikram@gmail.com 29 NetBharat Technology Manish Pal Mumbai, Maharashtra - info@netbharat.com 30 NETIM Bruno Vincent 264 av arthur notebart,Lille,59160,France 33.97230747 grievance-officier@netim.net 31 Own Web Solution Pvt. Ltd. Karthik Iyer 602, Avior Nirmal Galaxy, LBS Road Opposite Johnson & Johnson, Mulund (West),",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "grievance-officier@netim.net",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "grievance@dil.in",
+   "role": "grievance_officer",
+   "name": "",
+   "timeline": "",
+   "evidence": "tul Sharma Plot No. 197/198, Noida Special Economic Zone (NSEZ) Noida Phase II, Noida Dadri Road, Noida - 201305 - atul.sharma@cyfuture.com 10 Data Ingenious Global Limited Grievance Officer Station Road, Durgapura, Jaipur - 302018 0141 - 2554970/71 grievance@dil.in 11 Dreamscape Networks Prabhat Kamat 3 Irving Road, #09-01 Tai Seng Centre,Singapore ,369522,Singapore 022-67209095 prabhat.k@enduran",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "grievance@dil.in",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "grievance@domainsfort.com",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": " (West), Mumbai, Maharashtra India 400080 - grievance@owspl.in 32 PrimeCrown Technologies Pvt Ltd Donia Sebastian Kochi, Kerala - grievance@primecrown.com 33 Rey Del Mercado Online Services Srinivasan S SIVAKASI, Tamil Nadu +91-7867892000/7867891000 grievance@domainsfort.com 34 S.G.S. Technologie Pvt Ltd dba Netandhost.com Sengottuvel Old No.8, New No.17, Ground Floor, 3rd Street, Poes Road, Teyna",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "grievance@domainsfort.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "grievance@laxwebtechnologies.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "ert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 22 Key-Systems GmbH Volker A. Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 23 Laxweb Technologies Pvt. Ltd. Arpita Saha Kolkata, West Bengal - grievance@laxwebtechnologies.com 24 MarkMonitor. com Chris Niemi 3540 E Longwing Ln Ste 300,Meridian,ID,83646- 1104,USA +1 208 389-5740 Chris.niemi@ma",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "grievance@laxwebtechnologies.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "grievance@netandhost.com",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "nline Services Srinivasan S SIVAKASI, Tamil Nadu +91-7867892000/7867891000 grievance@domainsfort.com 34 S.G.S. Technologie Pvt Ltd dba Netandhost.com Sengottuvel Old No.8, New No.17, Ground Floor, 3rd Street, Poes Road, Teynampet, Chennai - 600018 - grievance@netandhost.com 35 SafeBrands SAS Matthieu Aubert Pôle Média de la Belle de Mai • 37 rue Guibal • 13003 Marseille • France +33 (0)488662212 m",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "grievance@netandhost.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "grievance@owspl.in",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "no Vincent 264 av arthur notebart,Lille,59160,France 33.97230747 grievance-officier@netim.net 31 Own Web Solution Pvt. Ltd. Karthik Iyer 602, Avior Nirmal Galaxy, LBS Road Opposite Johnson & Johnson, Mulund (West), Mumbai, Maharashtra India 400080 - grievance@owspl.in 32 PrimeCrown Technologies Pvt Ltd Donia Sebastian Kochi, Kerala - grievance@primecrown.com 33 Rey Del Mercado Online Services Srin",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "grievance@owspl.in",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "grievance@primecrown.com",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "tim.net 31 Own Web Solution Pvt. Ltd. Karthik Iyer 602, Avior Nirmal Galaxy, LBS Road Opposite Johnson & Johnson, Mulund (West), Mumbai, Maharashtra India 400080 - grievance@owspl.in 32 PrimeCrown Technologies Pvt Ltd Donia Sebastian Kochi, Kerala - grievance@primecrown.com 33 Rey Del Mercado Online Services Srinivasan S SIVAKASI, Tamil Nadu +91-7867892000/7867891000 grievance@domainsfort.com 34 S",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "grievance@primecrown.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "grievance@suryanandan.net",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "s@domai nregistry.de 37 Sify Digital Services Limited M. Sudhakar Chennai , Tamil Nadu 9543439136 domain.grievance@sifycorp.com 38 Suryanandan.net Dinesh Pratihari Plot-1942,Santoshi Bhawan,Nayapalli Opp. CBI Colony, Bhubaneswar-12,Orissa 9437313714 grievance@suryanandan.net 39 TLD Registrar Solutions Ltd. Volker A. Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-s",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "grievance@suryanandan.net",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "grievance@zybosys.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "Whois Corp. 10th floor, 43, Digital-ro 34- gil, Guro-gu , Seoul (Kolon Science Valley 1), Seoul , South Korea +82.15884259 abuse@whois.co.kr 47 Zybosys Networks India Private Limited Sidharth Nair Kolkata, West Bengal +91-9645725888 , +91-9037137091 grievance@zybosys.com B-901 9th Floor, Tower B,World Trade Center, Nauroji Nagar New Delhi 110029, India Phone: +91-11-48202008 Email: support@nixi.in",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "grievance@zybosys.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "grievanceofficer-domains@ionos.com",
+   "role": "grievance_officer",
+   "name": "",
+   "timeline": "",
+   "evidence": "FAQ's .IN Registry Home / BUSINESS / REGISTRAR Grievance Officers List # Registrar Name Grievance Officer Name Address Phone Email 1 1&1 IONOS SE Markus Schmitt 57 ElgendorferStrasse,Montab aur,hineland- Palatine,56410,Germany (+49) (0) 2602 96 15 23 grievanceofficer-domains@ionos.com 2 1API GmbH Volker A. Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "grievanceofficer-domains@ionos.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "grievances@vebonix.email",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "rk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 3 AppCroNix Infotech Private Limited Pritam Pawar Flat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune,Maharashtra, 411030,India +91751025252 5 (ext 6) Grievances@VEBONIX.email 4 BE Software Solutions dba Aapkadomain.com Pawan Kumar New Delhi, Delhi - pawan.kumar@bessnet.com 5 Bengalwebhosting AMIT RO",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "grievances@vebonix.email",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "grievanvce.officer@hiox.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "SetLive Private Limited Sheshagiri Anegondi Plot No. 189, Sector 16A, Nerul (West), Navi Mumbai Maharashtra, India 400706 +91- 9820409745 sheshagiri@getsetlive.com 16 HIOX SOFTWARES PRIVATE LIMITED Senthil Kumar Coimbatore, Tamil Nadu +91-7708608883 grievanvce.officer@hiox.com 17 Hiox Softwares Pvt Ltd Senthil Kumar No 7AF Ganesha Complex Campus N K Palayam Road Singanallur ,Coimbatore,Tamil Nadu,",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "grievanvce.officer@hiox.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "info@netbharat.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "r,Scottsdale,AZ,85254- 5891,USA (602) 492-8198 (602) 492-8198 kristaps@namesilo.com 28 Net 4 India Vikram Bajaj D-25, Sector-3,Noida,Uttar Pradesh,201301,India 9999989408 bajaj.vikram@gmail.com 29 NetBharat Technology Manish Pal Mumbai, Maharashtra - info@netbharat.com 30 NETIM Bruno Vincent 264 av arthur notebart,Lille,59160,France 33.97230747 grievance-officier@netim.net 31 Own Web Solution Pvt.",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "info@netbharat.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "info@njal.la",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "ndurance.com 12 Dynadot LLC Alexander Levit 210 S Ellsworth Ave #345 San Mateo, CA 94401 US 1-650-338-0450 nixi-grievance-officer@dynadot.com 13 EPAG DomainServices Njalla 1337 Services LLC P.O. Box 590 Charlestown Saint Kitts and Nevis +1.4259064769 info@njal.la 14 Epik Inc. Sarah Frank 1100 Bellevue Way NE Ste 8A- 601,Bellevue,WA,98004,US A +1.206-826- 2345 s.frank@epik.com 15 GetSetLive Private",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "info@njal.la",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "kramnath@mothersoft.in",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "a, West Bengal - grievance@laxwebtechnologies.com 24 MarkMonitor. com Chris Niemi 3540 E Longwing Ln Ste 300,Meridian,ID,83646- 1104,USA +1 208 389-5740 Chris.niemi@markmonitor.com 25 MOTHERSOFT TECHNOLOGIES Ramnath Chennai, Tamilnadu +91 9884824733 kramnath@mothersoft.in 26 NameCheap Inc Abuse Team 4600 East Washington Street, Suite 305,Phoenix,AZ,85034,USA +1 310.312.9573 / +1 (917) 566-3723 abu",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "kramnath@mothersoft.in",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "kristaps@namesilo.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "ameCheap Inc Abuse Team 4600 East Washington Street, Suite 305,Phoenix,AZ,85034,USA +1 310.312.9573 / +1 (917) 566-3723 abuse@namecheap.com 27 NameSilo LLC Kristaps Ronka 5322 E Anderson Dr,Scottsdale,AZ,85254- 5891,USA (602) 492-8198 (602) 492-8198 kristaps@namesilo.com 28 Net 4 India Vikram Bajaj D-25, Sector-3,Noida,Uttar Pradesh,201301,India 9999989408 bajaj.vikram@gmail.com 29 NetBharat Techn",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "kristaps@namesilo.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "legal@bengalwebhosting.in",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "htra, 411030,India +91751025252 5 (ext 6) Grievances@VEBONIX.email 4 BE Software Solutions dba Aapkadomain.com Pawan Kumar New Delhi, Delhi - pawan.kumar@bessnet.com 5 Bengalwebhosting AMIT ROY Chakdaha,Nadia, West Bengal, India,741238 +919073533686 legal@bengalwebhosting.in 6 Crazy Domains FZ- LLC Prabhat Kamat 3 Irving Road, #09-01 Tai Seng Centre,Singapore,Singapore ,369522,Singapore 022-672090",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "legal@bengalwebhosting.in",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "m.aubert@safebrands.com",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": " Sengottuvel Old No.8, New No.17, Ground Floor, 3rd Street, Poes Road, Teynampet, Chennai - 600018 - grievance@netandhost.com 35 SafeBrands SAS Matthieu Aubert Pôle Média de la Belle de Mai • 37 rue Guibal • 13003 Marseille • France +33 (0)488662212 m.aubert@safebrands.com 36 Secura GmbH Robert Sucher Frohnhofweg 18 D-50858 Koeln +49 221 2571213 complaints@domai nregistry.de 37 Sify Digital Servic",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "m.aubert@safebrands.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "meena@cybersitesindia.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "ics & Information Technology, Electronics Niketan, 3rd Floor, DeitY, 6, CGO, Complex, Lodhi Road, New Delhi-110003 +919654034882 bhagwati.jamnal@csc.gov.in 8 Cybersites India Technologies Pvt, Ltd Meena Singhal Mumbai, Maharashtra +91-22-66912876/77 meena@cybersitesindia.com 9 Cyfuture India Private Limited Atul Sharma Plot No. 197/198, Noida Special Economic Zone (NSEZ) Noida Phase II, Noida Dadr",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "meena@cybersitesindia.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "nixi-grievance-officer@dynadot.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "rievance@dil.in 11 Dreamscape Networks Prabhat Kamat 3 Irving Road, #09-01 Tai Seng Centre,Singapore ,369522,Singapore 022-67209095 prabhat.k@endurance.com 12 Dynadot LLC Alexander Levit 210 S Ellsworth Ave #345 San Mateo, CA 94401 US 1-650-338-0450 nixi-grievance-officer@dynadot.com 13 EPAG DomainServices Njalla 1337 Services LLC P.O. Box 590 Charlestown Saint Kitts and Nevis +1.4259064769 info@n",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "nixi-grievance-officer@dynadot.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "official@vizitdomains.com",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "lat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune,Maharashtra, 411030,India +917510252525 (ext 6) Grievances@VEBONIX.email 43 Vifi Solutions and Technologies Private Limited M SUBRAMANI Bangalore, Karnataka +91 9148551692 official@vizitdomains.com 44 Web Commerce Communications Limited dba WebNic.cc Grievance Officer Singapore +60.189836788 compliance_abuse@webnic.cc 45",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "official@vizitdomains.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "pawan.kumar@bessnet.com",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "e Limited Pritam Pawar Flat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune,Maharashtra, 411030,India +91751025252 5 (ext 6) Grievances@VEBONIX.email 4 BE Software Solutions dba Aapkadomain.com Pawan Kumar New Delhi, Delhi - pawan.kumar@bessnet.com 5 Bengalwebhosting AMIT ROY Chakdaha,Nadia, West Bengal, India,741238 +919073533686 legal@bengalwebhosting.in 6 Crazy Domains",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "pawan.kumar@bessnet.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "prabhat.k@endurance.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "@bessnet.com 5 Bengalwebhosting AMIT ROY Chakdaha,Nadia, West Bengal, India,741238 +919073533686 legal@bengalwebhosting.in 6 Crazy Domains FZ- LLC Prabhat Kamat 3 Irving Road, #09-01 Tai Seng Centre,Singapore,Singapore ,369522,Singapore 022-67209095 prabhat.k@endurance.com 7 CSC E- Governance Services India Limited Bhagwati Jamnal Ministry of Electronics & Information Technology, Electronics Niket",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "prabhat.k@endurance.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "rahul@hostinservices.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": " 800-9900 770860883 grievanvce.officer@hiox.com 18 HOSTAO L.L.C. Feby Hanna Ste 1200, 1309 Coffeen Ave, Sheridan, WY 82801, United States +13237447383 febyhanna@hostao.com 19 Hostin Services Pvt. Ltd Rahul S Kurkure Pune, Maharashtra +91-20-66080101 rahul@hostinservices.com / abuse@hostindia.net 20 India Links Web Hosting Pvt Ltd Yogini Chandarana Mumbai, Maharashtra - abuse@indialinks.com 21 Inst",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "rahul@hostinservices.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "s.frank@epik.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "-grievance-officer@dynadot.com 13 EPAG DomainServices Njalla 1337 Services LLC P.O. Box 590 Charlestown Saint Kitts and Nevis +1.4259064769 info@njal.la 14 Epik Inc. Sarah Frank 1100 Bellevue Way NE Ste 8A- 601,Bellevue,WA,98004,US A +1.206-826- 2345 s.frank@epik.com 15 GetSetLive Private Limited Sheshagiri Anegondi Plot No. 189, Sector 16A, Nerul (West), Navi Mumbai Maharashtra, India 400706 +91-",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "s.frank@epik.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "sheshagiri@getsetlive.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "nc. Sarah Frank 1100 Bellevue Way NE Ste 8A- 601,Bellevue,WA,98004,US A +1.206-826- 2345 s.frank@epik.com 15 GetSetLive Private Limited Sheshagiri Anegondi Plot No. 189, Sector 16A, Nerul (West), Navi Mumbai Maharashtra, India 400706 +91- 9820409745 sheshagiri@getsetlive.com 16 HIOX SOFTWARES PRIVATE LIMITED Senthil Kumar Coimbatore, Tamil Nadu +91-7708608883 grievanvce.officer@hiox.com 17 Hiox So",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "sheshagiri@getsetlive.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "support@nixi.in",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "co.kr 47 Zybosys Networks India Private Limited Sidharth Nair Kolkata, West Bengal +91-9645725888 , +91-9037137091 grievance@zybosys.com B-901 9th Floor, Tower B,World Trade Center, Nauroji Nagar New Delhi 110029, India Phone: +91-11-48202008 Email: support@nixi.in Copyright © 2026 Registry.in. All rights reserved. Public Grievance Visitor Counter: 291256 Find A Perfect Domain For Your Business En",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "support@nixi.in",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "support[at]nixi[dot]in",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "support[at]nixi[dot]in",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "toshea@godaddy.com",
+   "role": "grievance_officer",
+   "name": "",
+   "timeline": "",
+   "evidence": "ficial@vizitdomains.com 44 Web Commerce Communications Limited dba WebNic.cc Grievance Officer Singapore +60.189836788 compliance_abuse@webnic.cc 45 Wild West Domains LLC Karen Gaydos 2150 E Warner Rd,Tempe,AZ,85284,USA (319) 294-9806 (319) 294-9806 toshea@godaddy.com 46 YesNIC Co., Ltd. Whois Corp. 10th floor, 43, Digital-ro 34- gil, Guro-gu , Seoul (Kolon Science Valley 1), Seoul , South Korea +",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "toshea@godaddy.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "1148202008",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "884259 abuse@whois.co.kr 47 Zybosys Networks India Private Limited Sidharth Nair Kolkata, West Bengal +91-9645725888 , +91-9037137091 grievance@zybosys.com B-901 9th Floor, Tower B,World Trade Center, Nauroji Nagar New Delhi 110029, India Phone: +91-11-48202008 Email: support@nixi.in Copyright © 2026 Registry.in. All rights reserved. Public Grievance Visitor Counter: 291256 Find A Perfect Domain F",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "1148202008",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "198",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": ", Lodhi Road, New Delhi-110003 +919654034882 bhagwati.jamnal@csc.gov.in 8 Cybersites India Technologies Pvt, Ltd Meena Singhal Mumbai, Maharashtra +91-22-66912876/77 meena@cybersitesindia.com 9 Cyfuture India Private Limited Atul Sharma Plot No. 197/198, Noida Special Economic Zone (NSEZ) Noida Phase II, Noida Dadri Road, Noida - 201305 - atul.sharma@cyfuture.com 10 Data Ingenious Global Limited G",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "198",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "2066080101",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": ",India (770) 800-9900 770860883 grievanvce.officer@hiox.com 18 HOSTAO L.L.C. Feby Hanna Ste 1200, 1309 Coffeen Ave, Sheridan, WY 82801, United States +13237447383 febyhanna@hostao.com 19 Hostin Services Pvt. Ltd Rahul S Kurkure Pune, Maharashtra +91-20-66080101 rahul@hostinservices.com / abuse@hostindia.net 20 India Links Web Hosting Pvt Ltd Yogini Chandarana Mumbai, Maharashtra - abuse@indialinks",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "2066080101",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "2266912876",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "try of Electronics & Information Technology, Electronics Niketan, 3rd Floor, DeitY, 6, CGO, Complex, Lodhi Road, New Delhi-110003 +919654034882 bhagwati.jamnal@csc.gov.in 8 Cybersites India Technologies Pvt, Ltd Meena Singhal Mumbai, Maharashtra +91-22-66912876/77 meena@cybersitesindia.com 9 Cyfuture India Private Limited Atul Sharma Plot No. 197/198, Noida Special Economic Zone (NSEZ) Noida Phase",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "2266912876",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "2267209095",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": " pawan.kumar@bessnet.com 5 Bengalwebhosting AMIT ROY Chakdaha,Nadia, West Bengal, India,741238 +919073533686 legal@bengalwebhosting.in 6 Crazy Domains FZ- LLC Prabhat Kamat 3 Irving Road, #09-01 Tai Seng Centre,Singapore,Singapore ,369522,Singapore 022-67209095 prabhat.k@endurance.com 7 CSC E- Governance Services India Limited Bhagwati Jamnal Ministry of Electronics & Information Technology, Elect",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "2267209095",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "7510252525",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "reimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 3 AppCroNix Infotech Private Limited Pritam Pawar Flat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune,Maharashtra, 411030,India +91751025252 5 (ext 6) Grievances@VEBONIX.email 4 BE Software Solutions dba Aapkadomain.com Pawan Kumar New Delhi, Delhi - pawan.kumar@bessnet.com 5 Beng",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "7510252525",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "7708608883",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": ".com 15 GetSetLive Private Limited Sheshagiri Anegondi Plot No. 189, Sector 16A, Nerul (West), Navi Mumbai Maharashtra, India 400706 +91- 9820409745 sheshagiri@getsetlive.com 16 HIOX SOFTWARES PRIVATE LIMITED Senthil Kumar Coimbatore, Tamil Nadu +91-7708608883 grievanvce.officer@hiox.com 17 Hiox Softwares Pvt Ltd Senthil Kumar No 7AF Ganesha Complex Campus N K Palayam Road Singanallur ,Coimbatore,",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "7708608883",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "7867891000",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "nson & Johnson, Mulund (West), Mumbai, Maharashtra India 400080 - grievance@owspl.in 32 PrimeCrown Technologies Pvt Ltd Donia Sebastian Kochi, Kerala - grievance@primecrown.com 33 Rey Del Mercado Online Services Srinivasan S SIVAKASI, Tamil Nadu +91-7867892000/7867891000 grievance@domainsfort.com 34 S.G.S. Technologie Pvt Ltd dba Netandhost.com Sengottuvel Old No.8, New No.17, Ground Floor, 3rd St",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "7867891000",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "7867892000",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "nson & Johnson, Mulund (West), Mumbai, Maharashtra India 400080 - grievance@owspl.in 32 PrimeCrown Technologies Pvt Ltd Donia Sebastian Kochi, Kerala - grievance@primecrown.com 33 Rey Del Mercado Online Services Srinivasan S SIVAKASI, Tamil Nadu +91-7867892000/7867891000 grievance@domainsfort.com 34 S.G.S. Technologie Pvt Ltd dba Netandhost.com Sengottuvel Old No.8, New No.17, Ground Floor, 3rd St",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "7867892000",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9037137091",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": " Co., Ltd. Whois Corp. 10th floor, 43, Digital-ro 34- gil, Guro-gu , Seoul (Kolon Science Valley 1), Seoul , South Korea +82.15884259 abuse@whois.co.kr 47 Zybosys Networks India Private Limited Sidharth Nair Kolkata, West Bengal +91-9645725888 , +91-9037137091 grievance@zybosys.com B-901 9th Floor, Tower B,World Trade Center, Nauroji Nagar New Delhi 110029, India Phone: +91-11-48202008 Email: supp",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "9037137091",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9073533686",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "une,Maharashtra, 411030,India +91751025252 5 (ext 6) Grievances@VEBONIX.email 4 BE Software Solutions dba Aapkadomain.com Pawan Kumar New Delhi, Delhi - pawan.kumar@bessnet.com 5 Bengalwebhosting AMIT ROY Chakdaha,Nadia, West Bengal, India,741238 +919073533686 legal@bengalwebhosting.in 6 Crazy Domains FZ- LLC Prabhat Kamat 3 Irving Road, #09-01 Tai Seng Centre,Singapore,Singapore ,369522,Singapore",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "9073533686",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9148551692",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "tam Pawar Flat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune,Maharashtra, 411030,India +917510252525 (ext 6) Grievances@VEBONIX.email 43 Vifi Solutions and Technologies Private Limited M SUBRAMANI Bangalore, Karnataka +91 9148551692 official@vizitdomains.com 44 Web Commerce Communications Limited dba WebNic.cc Grievance Officer Singapore +60.189836788 compliance_abuse@w",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "9148551692",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "91751025252",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": " Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 3 AppCroNix Infotech Private Limited Pritam Pawar Flat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune,Maharashtra, 411030,India +91751025252 5 (ext 6) Grievances@VEBONIX.email 4 BE Software Solutions dba Aapkadomain.com Pawan Kumar New Delhi, Delhi - pawan.kumar@bessnet.com 5 Be",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "91751025252",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9437313714",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "13 complaints@domai nregistry.de 37 Sify Digital Services Limited M. Sudhakar Chennai , Tamil Nadu 9543439136 domain.grievance@sifycorp.com 38 Suryanandan.net Dinesh Pratihari Plot-1942,Santoshi Bhawan,Nayapalli Opp. CBI Colony, Bhubaneswar-12,Orissa 9437313714 grievance@suryanandan.net 39 TLD Registrar Solutions Ltd. Volker A. Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "9437313714",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9543439136",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": " rue Guibal • 13003 Marseille • France +33 (0)488662212 m.aubert@safebrands.com 36 Secura GmbH Robert Sucher Frohnhofweg 18 D-50858 Koeln +49 221 2571213 complaints@domai nregistry.de 37 Sify Digital Services Limited M. Sudhakar Chennai , Tamil Nadu 9543439136 domain.grievance@sifycorp.com 38 Suryanandan.net Dinesh Pratihari Plot-1942,Santoshi Bhawan,Nayapalli Opp. CBI Colony, Bhubaneswar-12,Oriss",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "9543439136",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9645725888",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "ddy.com 46 YesNIC Co., Ltd. Whois Corp. 10th floor, 43, Digital-ro 34- gil, Guro-gu , Seoul (Kolon Science Valley 1), Seoul , South Korea +82.15884259 abuse@whois.co.kr 47 Zybosys Networks India Private Limited Sidharth Nair Kolkata, West Bengal +91-9645725888 , +91-9037137091 grievance@zybosys.com B-901 9th Floor, Tower B,World Trade Center, Nauroji Nagar New Delhi 110029, India Phone: +91-11-482",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "9645725888",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9654034882",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "69522,Singapore 022-67209095 prabhat.k@endurance.com 7 CSC E- Governance Services India Limited Bhagwati Jamnal Ministry of Electronics & Information Technology, Electronics Niketan, 3rd Floor, DeitY, 6, CGO, Complex, Lodhi Road, New Delhi-110003 +919654034882 bhagwati.jamnal@csc.gov.in 8 Cybersites India Technologies Pvt, Ltd Meena Singhal Mumbai, Maharashtra +91-22-66912876/77 meena@cybersitesin",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "9654034882",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9820409745",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "a 14 Epik Inc. Sarah Frank 1100 Bellevue Way NE Ste 8A- 601,Bellevue,WA,98004,US A +1.206-826- 2345 s.frank@epik.com 15 GetSetLive Private Limited Sheshagiri Anegondi Plot No. 189, Sector 16A, Nerul (West), Navi Mumbai Maharashtra, India 400706 +91- 9820409745 sheshagiri@getsetlive.com 16 HIOX SOFTWARES PRIVATE LIMITED Senthil Kumar Coimbatore, Tamil Nadu +91-7708608883 grievanvce.officer@hiox.com",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "9820409745",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9870005533",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": " 96 850 abuse@key-systems.net 40 Tucows Inc. Reg Levy Head of Compliance 1337 Services LLC, P.O. Box 590, Charlestown Saint Kitts and Nevis +1 (416) 535- 0123 compliance@tucows.com 41 V2 Technosys dba BookYour.IN Vinay Murarka Mumbai, Maharashtra +91-9870005533 vinay@v2technosys. com 42 Vebonix Pritam Pawar Flat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune,Maharashtra,",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "9870005533",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9884824733",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "Saha Kolkata, West Bengal - grievance@laxwebtechnologies.com 24 MarkMonitor. com Chris Niemi 3540 E Longwing Ln Ste 300,Meridian,ID,83646- 1104,USA +1 208 389-5740 Chris.niemi@markmonitor.com 25 MOTHERSOFT TECHNOLOGIES Ramnath Chennai, Tamilnadu +91 9884824733 kramnath@mothersoft.in 26 NameCheap Inc Abuse Team 4600 East Washington Street, Suite 305,Phoenix,AZ,85034,USA +1 310.312.9573 / +1 (917) 5",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "9884824733",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9999989408",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "3 / +1 (917) 566-3723 abuse@namecheap.com 27 NameSilo LLC Kristaps Ronka 5322 E Anderson Dr,Scottsdale,AZ,85254- 5891,USA (602) 492-8198 (602) 492-8198 kristaps@namesilo.com 28 Net 4 India Vikram Bajaj D-25, Sector-3,Noida,Uttar Pradesh,201301,India 9999989408 bajaj.vikram@gmail.com 29 NetBharat Technology Manish Pal Mumbai, Maharashtra - info@netbharat.com 30 NETIM Bruno Vincent 264 av arthur not",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "page",
+   "email": "",
+   "phone": "9999989408",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "s@vebonix.email",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "grievanceofficer-domains@ionos.com ・ 850 abuse@key-systems.net. Grievances@VEBONIX.email 4 ・ 1-650-338-0450 ・ s@VEBONIX.email (319) 294-9806",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_domain": "registry.in",
+   "page_title": "Registry",
+   "via": "snippet",
+   "email": "s@vebonix.email",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "salimaslammohamed@rediffmail.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "egards Merwyn Thomas Customer Relations InterGlobe Aviation Limited(\"IndiGo\") Level 5 Tower D Global Business Park M G Road Gurgaon Haryana 122002 India F +91-124-4068536 www.goindigo.in ------------------- Original Message ------------------- From: salimaslammohamed@rediffmail.com Received: 3/27/2014 4:06 PM To: ; Customer _Relations; customer relations; Indigo Customer Relations Cc: salimaslammo",
+   "owner": "unknown",
+   "source_url": "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html",
+   "source_domain": "icomplaints.in",
+   "page_title": "INDIGO AIRLINE OFFLOADED ME DUE SILLY REASON.-IndiGo Airlines- iComplaints.in",
+   "via": "page",
+   "email": "salimaslammohamed@rediffmail.com",
+   "phone": "",
+   "url": "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "1244068536",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "nderstand the need of our policy and would request you to kindly adhere to the same. Best Regards Merwyn Thomas Customer Relations InterGlobe Aviation Limited(\"IndiGo\") Level 5 Tower D Global Business Park M G Road Gurgaon Haryana 122002 India F +91-124-4068536 www.goindigo.in ------------------- Original Message ------------------- From: salimaslammohamed@rediffmail.com Received: 3/27/2014 4:06 P",
+   "owner": "unknown",
+   "source_url": "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html",
+   "source_domain": "icomplaints.in",
+   "page_title": "INDIGO AIRLINE OFFLOADED ME DUE SILLY REASON.-IndiGo Airlines- iComplaints.in",
+   "via": "page",
+   "email": "",
+   "phone": "1244068536",
+   "url": "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "1246613838",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "alidity of three months (travel date could be for later period). May we request your acceptance on the travel voucher to enable us to share the voucher details with you. For further assistance you can contact our call center at +91 9910 383838 or at 0124 6613838 or visit our website www.goindigo.in . Thank you for taking the time to communicate with us. Best Regards Sagar Nagpal Customer Relations",
+   "owner": "unknown",
+   "source_url": "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html",
+   "source_domain": "icomplaints.in",
+   "page_title": "INDIGO AIRLINE OFFLOADED ME DUE SILLY REASON.-IndiGo Airlines- iComplaints.in",
+   "via": "page",
+   "email": "",
+   "phone": "1246613838",
+   "url": "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9910383838",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": " with the maximum validity of three months (travel date could be for later period). May we request your acceptance on the travel voucher to enable us to share the voucher details with you. For further assistance you can contact our call center at +91 9910 383838 or at 0124 6613838 or visit our website www.goindigo.in . Thank you for taking the time to communicate with us. Best Regards Sagar Nagpal",
+   "owner": "unknown",
+   "source_url": "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html",
+   "source_domain": "icomplaints.in",
+   "page_title": "INDIGO AIRLINE OFFLOADED ME DUE SILLY REASON.-IndiGo Airlines- iComplaints.in",
+   "via": "page",
+   "email": "",
+   "phone": "9910383838",
+   "url": "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "7631502035",
+   "role": "customer_care",
+   "name": "",
+   "timeline": "",
+   "evidence": "Indigo Airlines Main Terminal, Kempegowda International Airport Rd, A - Block, Bangalore Phone : 07631502035",
+   "own": true,
+   "organisation": "Indigo Airlines",
+   "owner": "company",
+   "source_url": "https://bengaluruurban.nic.in/en/public-utility/sahara-airways/",
+   "source_domain": "bengaluruurban.nic.in",
+   "page_title": "Indigo Airlines | District Bengaluru Urban, Government of Karnataka | India",
+   "via": "page",
+   "email": "",
+   "phone": "7631502035",
+   "url": "https://bengaluruurban.nic.in/en/public-utility/sahara-airways/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "appellateauthority@goindigo.in",
+   "role": "appellate_authority",
+   "name": "",
+   "timeline": "",
+   "evidence": "If you don't get a reply, you can escalate to the nodal officer at nodalofficer@goindigo.in or the appellate authority at appellateauthority@goindigo.in. Many ...",
+   "source_url": "https://www.facebook.com/fb-answers/indigo-customer-care-email/",
+   "source_domain": "facebook.com",
+   "page_title": "Error",
+   "via": "snippet",
+   "email": "appellateauthority@goindigo.in",
+   "phone": "",
+   "url": "https://www.facebook.com/fb-answers/indigo-customer-care-email/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "nodalofficer@goindigo.in",
+   "role": "appellate_authority",
+   "name": "",
+   "timeline": "",
+   "evidence": "If you don't get a reply, you can escalate to the nodal officer at nodalofficer@goindigo.in or the appellate authority at appellateauthority@goindigo.in. Many ...",
+   "source_url": "https://www.facebook.com/fb-answers/indigo-customer-care-email/",
+   "source_domain": "facebook.com",
+   "page_title": "Error",
+   "via": "snippet",
+   "email": "nodalofficer@goindigo.in",
+   "phone": "",
+   "url": "https://www.facebook.com/fb-answers/indigo-customer-care-email/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  }
+ ],
+ "precedents": [
+  {
+   "kind": "news",
+   "title": "Court Orders Indigo, Turkish Airlines To Pay Father-Son Rs 1.6 Lakh After Abrupt US Flight Cancellation",
+   "url": "https://www.ndtv.com/travel/court-orders-indigo-turkish-airlines-to-pay-father-son-rs-1-6-lakh-after-abrupt-us-flight-cancellation-11843027",
+   "source": "NDTV",
+   "date": "2026-07-30T07:00:00Z",
+   "snippet": "",
+   "how_resolved": "consumer court"
+  }
+ ],
+ "local_forum": {
+  "name": "District Consumer Dispute Redressal Forum, South Mumbai",
+  "address": "Plot No. CS-4/296, 2nd Floor, PT Parel Shewri Division S. S. Road Near, Mahatma Gandhi Hospital, Maharashtra 400012",
+  "phone": "022 2417 1360",
+  "website": null,
+  "maps_link": "https://www.google.com/maps/search/?api=1&query=18.9982059,72.8419297",
+  "city": "Mumbai",
+  "kind": "Consumer commission"
+ },
+ "blocked_hallucinations": 0,
+ "errors": [
+  "precedents: IndiGo flight refund complaint resolved: skipped after 8s"
+ ],
+ "verified_contacts": [
+  {
+   "email": "",
+   "phone": "9910383838",
+   "url": "https://www.goindigo.in/information/international-connections.html",
+   "source_url": "https://www.goindigo.in/information/international-connections.html",
+   "source_type": "third_party",
+   "verified": true,
+   "reason": "confirmed by 2 independent sources",
+   "type": "phone",
+   "value": "9910383838",
+   "role": "customer_care",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "verified",
+   "basis": "confirmed by 2 independent sources",
+   "warnings": [],
+   "checks": [
+    "sources: goindigo.in, icomplaints.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.goindigo.in/information/international-connections.html",
+    "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html"
+   ],
+   "evidence": "Chat with one of our customer care executives online or call us at 09910383838. +919355194242"
+  }
+ ],
+ "unverified_contacts": [
+  {
+   "email": "compliance_abuse@webnic.cc",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "compliance_abuse@webnic.cc",
+   "role": "grievance_officer",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on webnic.cc, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "xt 6) Grievances@VEBONIX.email 43 Vifi Solutions and Technologies Private Limited M SUBRAMANI Bangalore, Karnataka +91 9148551692 official@vizitdomains.com 44 Web Commerce Communications Limited dba WebNic.cc Grievance Officer Singapore +60.189836788 compliance_abuse@webnic.cc 45 Wild West Domains LLC Karen Gaydos 2150 E Warner Rd,Tempe,AZ,85284,USA (319) 294-9806 (319) 294-9806 toshea@godaddy.com"
+  },
+  {
+   "email": "grievance@dil.in",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "grievance@dil.in",
+   "role": "grievance_officer",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on dil.in, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "tul Sharma Plot No. 197/198, Noida Special Economic Zone (NSEZ) Noida Phase II, Noida Dadri Road, Noida - 201305 - atul.sharma@cyfuture.com 10 Data Ingenious Global Limited Grievance Officer Station Road, Durgapura, Jaipur - 302018 0141 - 2554970/71 grievance@dil.in 11 Dreamscape Networks Prabhat Kamat 3 Irving Road, #09-01 Tai Seng Centre,Singapore ,369522,Singapore 022-67209095 prabhat.k@enduran"
+  },
+  {
+   "email": "grievanceofficer-domains@ionos.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "grievanceofficer-domains@ionos.com",
+   "role": "grievance_officer",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on ionos.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "FAQ's .IN Registry Home / BUSINESS / REGISTRAR Grievance Officers List # Registrar Name Grievance Officer Name Address Phone Email 1 1&1 IONOS SE Markus Schmitt 57 ElgendorferStrasse,Montab aur,hineland- Palatine,56410,Germany (+49) (0) 2602 96 15 23 grievanceofficer-domains@ionos.com 2 1API GmbH Volker A. Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net"
+  },
+  {
+   "email": "toshea@godaddy.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "toshea@godaddy.com",
+   "role": "grievance_officer",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on godaddy.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "ficial@vizitdomains.com 44 Web Commerce Communications Limited dba WebNic.cc Grievance Officer Singapore +60.189836788 compliance_abuse@webnic.cc 45 Wild West Domains LLC Karen Gaydos 2150 E Warner Rd,Tempe,AZ,85284,USA (319) 294-9806 (319) 294-9806 toshea@godaddy.com 46 YesNIC Co., Ltd. Whois Corp. 10th floor, 43, Digital-ro 34- gil, Guro-gu , Seoul (Kolon Science Valley 1), Seoul , South Korea +"
+  },
+  {
+   "email": "appellateauthority@goindigo.in",
+   "phone": "",
+   "url": "https://www.facebook.com/fb-answers/indigo-customer-care-email/",
+   "source_url": "https://www.facebook.com/fb-answers/indigo-customer-care-email/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "appellateauthority@goindigo.in",
+   "role": "appellate_authority",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on goindigo.in, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: facebook.com"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.facebook.com/fb-answers/indigo-customer-care-email/"
+   ],
+   "evidence": "If you don't get a reply, you can escalate to the nodal officer at nodalofficer@goindigo.in or the appellate authority at appellateauthority@goindigo.in. Many ..."
+  },
+  {
+   "email": "nodalofficer@goindigo.in",
+   "phone": "",
+   "url": "https://www.facebook.com/fb-answers/indigo-customer-care-email/",
+   "source_url": "https://www.facebook.com/fb-answers/indigo-customer-care-email/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "nodalofficer@goindigo.in",
+   "role": "appellate_authority",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on goindigo.in, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: facebook.com"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.facebook.com/fb-answers/indigo-customer-care-email/"
+   ],
+   "evidence": "If you don't get a reply, you can escalate to the nodal officer at nodalofficer@goindigo.in or the appellate authority at appellateauthority@goindigo.in. Many ..."
+  },
+  {
+   "email": "abuse@key-systems.net",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "abuse@key-systems.net",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on key-systems.net, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "l 1 1&1 IONOS SE Markus Schmitt 57 ElgendorferStrasse,Montab aur,hineland- Palatine,56410,Germany (+49) (0) 2602 96 15 23 grievanceofficer-domains@ionos.com 2 1API GmbH Volker A. Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 3 AppCroNix Infotech Private Limited Pritam Pawar Flat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune"
+  },
+  {
+   "email": "chris.niemi@markmonitor.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "chris.niemi@markmonitor.com",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on markmonitor.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "many +49-6894 93 96 850 abuse@key-systems.net 23 Laxweb Technologies Pvt. Ltd. Arpita Saha Kolkata, West Bengal - grievance@laxwebtechnologies.com 24 MarkMonitor. com Chris Niemi 3540 E Longwing Ln Ste 300,Meridian,ID,83646- 1104,USA +1 208 389-5740 Chris.niemi@markmonitor.com 25 MOTHERSOFT TECHNOLOGIES Ramnath Chennai, Tamilnadu +91 9884824733 kramnath@mothersoft.in 26 NameCheap Inc Abuse Team 46"
+  },
+  {
+   "email": "domain.grievance@sifycorp.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "domain.grievance@sifycorp.com",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on sifycorp.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": " • 13003 Marseille • France +33 (0)488662212 m.aubert@safebrands.com 36 Secura GmbH Robert Sucher Frohnhofweg 18 D-50858 Koeln +49 221 2571213 complaints@domai nregistry.de 37 Sify Digital Services Limited M. Sudhakar Chennai , Tamil Nadu 9543439136 domain.grievance@sifycorp.com 38 Suryanandan.net Dinesh Pratihari Plot-1942,Santoshi Bhawan,Nayapalli Opp. CBI Colony, Bhubaneswar-12,Orissa 943731371"
+  },
+  {
+   "email": "grievance@domainsfort.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "grievance@domainsfort.com",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on domainsfort.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": " (West), Mumbai, Maharashtra India 400080 - grievance@owspl.in 32 PrimeCrown Technologies Pvt Ltd Donia Sebastian Kochi, Kerala - grievance@primecrown.com 33 Rey Del Mercado Online Services Srinivasan S SIVAKASI, Tamil Nadu +91-7867892000/7867891000 grievance@domainsfort.com 34 S.G.S. Technologie Pvt Ltd dba Netandhost.com Sengottuvel Old No.8, New No.17, Ground Floor, 3rd Street, Poes Road, Teyna"
+  },
+  {
+   "email": "grievance@netandhost.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "grievance@netandhost.com",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on netandhost.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "nline Services Srinivasan S SIVAKASI, Tamil Nadu +91-7867892000/7867891000 grievance@domainsfort.com 34 S.G.S. Technologie Pvt Ltd dba Netandhost.com Sengottuvel Old No.8, New No.17, Ground Floor, 3rd Street, Poes Road, Teynampet, Chennai - 600018 - grievance@netandhost.com 35 SafeBrands SAS Matthieu Aubert Pôle Média de la Belle de Mai • 37 rue Guibal • 13003 Marseille • France +33 (0)488662212 m"
+  },
+  {
+   "email": "grievance@owspl.in",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "grievance@owspl.in",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on owspl.in, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "no Vincent 264 av arthur notebart,Lille,59160,France 33.97230747 grievance-officier@netim.net 31 Own Web Solution Pvt. Ltd. Karthik Iyer 602, Avior Nirmal Galaxy, LBS Road Opposite Johnson & Johnson, Mulund (West), Mumbai, Maharashtra India 400080 - grievance@owspl.in 32 PrimeCrown Technologies Pvt Ltd Donia Sebastian Kochi, Kerala - grievance@primecrown.com 33 Rey Del Mercado Online Services Srin"
+  },
+  {
+   "email": "grievance@primecrown.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "grievance@primecrown.com",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on primecrown.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "tim.net 31 Own Web Solution Pvt. Ltd. Karthik Iyer 602, Avior Nirmal Galaxy, LBS Road Opposite Johnson & Johnson, Mulund (West), Mumbai, Maharashtra India 400080 - grievance@owspl.in 32 PrimeCrown Technologies Pvt Ltd Donia Sebastian Kochi, Kerala - grievance@primecrown.com 33 Rey Del Mercado Online Services Srinivasan S SIVAKASI, Tamil Nadu +91-7867892000/7867891000 grievance@domainsfort.com 34 S"
+  },
+  {
+   "email": "grievance@suryanandan.net",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "grievance@suryanandan.net",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on suryanandan.net, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "s@domai nregistry.de 37 Sify Digital Services Limited M. Sudhakar Chennai , Tamil Nadu 9543439136 domain.grievance@sifycorp.com 38 Suryanandan.net Dinesh Pratihari Plot-1942,Santoshi Bhawan,Nayapalli Opp. CBI Colony, Bhubaneswar-12,Orissa 9437313714 grievance@suryanandan.net 39 TLD Registrar Solutions Ltd. Volker A. Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-s"
+  },
+  {
+   "email": "info@njal.la",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "info@njal.la",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on njal.la, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "ndurance.com 12 Dynadot LLC Alexander Levit 210 S Ellsworth Ave #345 San Mateo, CA 94401 US 1-650-338-0450 nixi-grievance-officer@dynadot.com 13 EPAG DomainServices Njalla 1337 Services LLC P.O. Box 590 Charlestown Saint Kitts and Nevis +1.4259064769 info@njal.la 14 Epik Inc. Sarah Frank 1100 Bellevue Way NE Ste 8A- 601,Bellevue,WA,98004,US A +1.206-826- 2345 s.frank@epik.com 15 GetSetLive Private"
+  },
+  {
+   "email": "legal@bengalwebhosting.in",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "legal@bengalwebhosting.in",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on bengalwebhosting.in, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "htra, 411030,India +91751025252 5 (ext 6) Grievances@VEBONIX.email 4 BE Software Solutions dba Aapkadomain.com Pawan Kumar New Delhi, Delhi - pawan.kumar@bessnet.com 5 Bengalwebhosting AMIT ROY Chakdaha,Nadia, West Bengal, India,741238 +919073533686 legal@bengalwebhosting.in 6 Crazy Domains FZ- LLC Prabhat Kamat 3 Irving Road, #09-01 Tai Seng Centre,Singapore,Singapore ,369522,Singapore 022-672090"
+  },
+  {
+   "email": "m.aubert@safebrands.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "m.aubert@safebrands.com",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on safebrands.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": " Sengottuvel Old No.8, New No.17, Ground Floor, 3rd Street, Poes Road, Teynampet, Chennai - 600018 - grievance@netandhost.com 35 SafeBrands SAS Matthieu Aubert Pôle Média de la Belle de Mai • 37 rue Guibal • 13003 Marseille • France +33 (0)488662212 m.aubert@safebrands.com 36 Secura GmbH Robert Sucher Frohnhofweg 18 D-50858 Koeln +49 221 2571213 complaints@domai nregistry.de 37 Sify Digital Servic"
+  },
+  {
+   "email": "official@vizitdomains.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "official@vizitdomains.com",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on vizitdomains.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "lat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune,Maharashtra, 411030,India +917510252525 (ext 6) Grievances@VEBONIX.email 43 Vifi Solutions and Technologies Private Limited M SUBRAMANI Bangalore, Karnataka +91 9148551692 official@vizitdomains.com 44 Web Commerce Communications Limited dba WebNic.cc Grievance Officer Singapore +60.189836788 compliance_abuse@webnic.cc 45"
+  },
+  {
+   "email": "pawan.kumar@bessnet.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "pawan.kumar@bessnet.com",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on bessnet.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "e Limited Pritam Pawar Flat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune,Maharashtra, 411030,India +91751025252 5 (ext 6) Grievances@VEBONIX.email 4 BE Software Solutions dba Aapkadomain.com Pawan Kumar New Delhi, Delhi - pawan.kumar@bessnet.com 5 Bengalwebhosting AMIT ROY Chakdaha,Nadia, West Bengal, India,741238 +919073533686 legal@bengalwebhosting.in 6 Crazy Domains"
+  },
+  {
+   "email": "support@nixi.in",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "support@nixi.in",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on nixi.in, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "co.kr 47 Zybosys Networks India Private Limited Sidharth Nair Kolkata, West Bengal +91-9645725888 , +91-9037137091 grievance@zybosys.com B-901 9th Floor, Tower B,World Trade Center, Nauroji Nagar New Delhi 110029, India Phone: +91-11-48202008 Email: support@nixi.in Copyright © 2026 Registry.in. All rights reserved. Public Grievance Visitor Counter: 291256 Find A Perfect Domain For Your Business En"
+  },
+  {
+   "email": "s@vebonix.email",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "s@vebonix.email",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on vebonix.email, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "grievanceofficer-domains@ionos.com ・ 850 abuse@key-systems.net. Grievances@VEBONIX.email 4 ・ 1-650-338-0450 ・ s@VEBONIX.email (319) 294-9806"
+  },
+  {
+   "email": "",
+   "phone": "1148202008",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "1148202008",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "884259 abuse@whois.co.kr 47 Zybosys Networks India Private Limited Sidharth Nair Kolkata, West Bengal +91-9645725888 , +91-9037137091 grievance@zybosys.com B-901 9th Floor, Tower B,World Trade Center, Nauroji Nagar New Delhi 110029, India Phone: +91-11-48202008 Email: support@nixi.in Copyright © 2026 Registry.in. All rights reserved. Public Grievance Visitor Counter: 291256 Find A Perfect Domain F"
+  },
+  {
+   "email": "",
+   "phone": "7867891000",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "7867891000",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "nson & Johnson, Mulund (West), Mumbai, Maharashtra India 400080 - grievance@owspl.in 32 PrimeCrown Technologies Pvt Ltd Donia Sebastian Kochi, Kerala - grievance@primecrown.com 33 Rey Del Mercado Online Services Srinivasan S SIVAKASI, Tamil Nadu +91-7867892000/7867891000 grievance@domainsfort.com 34 S.G.S. Technologie Pvt Ltd dba Netandhost.com Sengottuvel Old No.8, New No.17, Ground Floor, 3rd St"
+  },
+  {
+   "email": "",
+   "phone": "7867892000",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "7867892000",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "nson & Johnson, Mulund (West), Mumbai, Maharashtra India 400080 - grievance@owspl.in 32 PrimeCrown Technologies Pvt Ltd Donia Sebastian Kochi, Kerala - grievance@primecrown.com 33 Rey Del Mercado Online Services Srinivasan S SIVAKASI, Tamil Nadu +91-7867892000/7867891000 grievance@domainsfort.com 34 S.G.S. Technologie Pvt Ltd dba Netandhost.com Sengottuvel Old No.8, New No.17, Ground Floor, 3rd St"
+  },
+  {
+   "email": "",
+   "phone": "9073533686",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9073533686",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "une,Maharashtra, 411030,India +91751025252 5 (ext 6) Grievances@VEBONIX.email 4 BE Software Solutions dba Aapkadomain.com Pawan Kumar New Delhi, Delhi - pawan.kumar@bessnet.com 5 Bengalwebhosting AMIT ROY Chakdaha,Nadia, West Bengal, India,741238 +919073533686 legal@bengalwebhosting.in 6 Crazy Domains FZ- LLC Prabhat Kamat 3 Irving Road, #09-01 Tai Seng Centre,Singapore,Singapore ,369522,Singapore"
+  },
+  {
+   "email": "",
+   "phone": "9148551692",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9148551692",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "tam Pawar Flat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune,Maharashtra, 411030,India +917510252525 (ext 6) Grievances@VEBONIX.email 43 Vifi Solutions and Technologies Private Limited M SUBRAMANI Bangalore, Karnataka +91 9148551692 official@vizitdomains.com 44 Web Commerce Communications Limited dba WebNic.cc Grievance Officer Singapore +60.189836788 compliance_abuse@w"
+  },
+  {
+   "email": "",
+   "phone": "9437313714",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9437313714",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "13 complaints@domai nregistry.de 37 Sify Digital Services Limited M. Sudhakar Chennai , Tamil Nadu 9543439136 domain.grievance@sifycorp.com 38 Suryanandan.net Dinesh Pratihari Plot-1942,Santoshi Bhawan,Nayapalli Opp. CBI Colony, Bhubaneswar-12,Orissa 9437313714 grievance@suryanandan.net 39 TLD Registrar Solutions Ltd. Volker A. Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850"
+  },
+  {
+   "email": "",
+   "phone": "9543439136",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9543439136",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": " rue Guibal • 13003 Marseille • France +33 (0)488662212 m.aubert@safebrands.com 36 Secura GmbH Robert Sucher Frohnhofweg 18 D-50858 Koeln +49 221 2571213 complaints@domai nregistry.de 37 Sify Digital Services Limited M. Sudhakar Chennai , Tamil Nadu 9543439136 domain.grievance@sifycorp.com 38 Suryanandan.net Dinesh Pratihari Plot-1942,Santoshi Bhawan,Nayapalli Opp. CBI Colony, Bhubaneswar-12,Oriss"
+  },
+  {
+   "email": "",
+   "phone": "9355194242",
+   "url": "https://www.goindigo.in/information/international-connections.html",
+   "source_url": "https://www.goindigo.in/information/international-connections.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9355194242",
+   "role": "customer_care",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: goindigo.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.goindigo.in/information/international-connections.html"
+   ],
+   "evidence": "Chat with one of our customer care executives online or call us at 09910383838. +919355194242"
+  },
+  {
+   "email": "",
+   "phone": "1244973838",
+   "url": "https://www.goindigo.in/information/purchase-requirement.html",
+   "source_url": "https://www.goindigo.in/information/purchase-requirement.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "1244973838",
+   "role": "customer_care",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: goindigo.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.goindigo.in/information/purchase-requirement.html"
+   ],
+   "evidence": "Chat with us Questions? We are here to help. Call us We're just a ring away. India : 0124-6173838, 0124-4973838 connecting millions of people across the globe. ..."
+  },
+  {
+   "email": "",
+   "phone": "1246173838",
+   "url": "https://www.goindigo.in/information/purchase-requirement.html",
+   "source_url": "https://www.goindigo.in/information/purchase-requirement.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "1246173838",
+   "role": "customer_care",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: goindigo.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.goindigo.in/information/purchase-requirement.html"
+   ],
+   "evidence": "Chat with us Questions? We are here to help. Call us We're just a ring away. India : 0124-6173838, 0124-4973838 connecting millions of people across the globe. ..."
+  },
+  {
+   "email": "",
+   "phone": "7631502035",
+   "url": "https://bengaluruurban.nic.in/en/public-utility/sahara-airways/",
+   "source_url": "https://bengaluruurban.nic.in/en/public-utility/sahara-airways/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "7631502035",
+   "role": "customer_care",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: bengaluruurban.nic.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://bengaluruurban.nic.in/en/public-utility/sahara-airways/"
+   ],
+   "evidence": "Indigo Airlines Main Terminal, Kempegowda International Airport Rd, A - Block, Bangalore Phone : 07631502035"
+  },
+  {
+   "email": "abuse@hostindia.net",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "abuse@hostindia.net",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on hostindia.net, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "vce.officer@hiox.com 18 HOSTAO L.L.C. Feby Hanna Ste 1200, 1309 Coffeen Ave, Sheridan, WY 82801, United States +13237447383 febyhanna@hostao.com 19 Hostin Services Pvt. Ltd Rahul S Kurkure Pune, Maharashtra +91-20-66080101 rahul@hostinservices.com / abuse@hostindia.net 20 India Links Web Hosting Pvt Ltd Yogini Chandarana Mumbai, Maharashtra - abuse@indialinks.com 21 Instra Corporation Volker A. Gr"
+  },
+  {
+   "email": "abuse@indialinks.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "abuse@indialinks.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on indialinks.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": ", United States +13237447383 febyhanna@hostao.com 19 Hostin Services Pvt. Ltd Rahul S Kurkure Pune, Maharashtra +91-20-66080101 rahul@hostinservices.com / abuse@hostindia.net 20 India Links Web Hosting Pvt Ltd Yogini Chandarana Mumbai, Maharashtra - abuse@indialinks.com 21 Instra Corporation Volker A. Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 22 K"
+  },
+  {
+   "email": "abuse@namecheap.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "abuse@namecheap.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on namecheap.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "-5740 Chris.niemi@markmonitor.com 25 MOTHERSOFT TECHNOLOGIES Ramnath Chennai, Tamilnadu +91 9884824733 kramnath@mothersoft.in 26 NameCheap Inc Abuse Team 4600 East Washington Street, Suite 305,Phoenix,AZ,85034,USA +1 310.312.9573 / +1 (917) 566-3723 abuse@namecheap.com 27 NameSilo LLC Kristaps Ronka 5322 E Anderson Dr,Scottsdale,AZ,85254- 5891,USA (602) 492-8198 (602) 492-8198 kristaps@namesilo.co"
+  },
+  {
+   "email": "abuse@whois.co.kr",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "abuse@whois.co.kr",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on whois.co.kr, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "ains LLC Karen Gaydos 2150 E Warner Rd,Tempe,AZ,85284,USA (319) 294-9806 (319) 294-9806 toshea@godaddy.com 46 YesNIC Co., Ltd. Whois Corp. 10th floor, 43, Digital-ro 34- gil, Guro-gu , Seoul (Kolon Science Valley 1), Seoul , South Korea +82.15884259 abuse@whois.co.kr 47 Zybosys Networks India Private Limited Sidharth Nair Kolkata, West Bengal +91-9645725888 , +91-9037137091 grievance@zybosys.com B"
+  },
+  {
+   "email": "atul.sharma@cyfuture.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "atul.sharma@cyfuture.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on cyfuture.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "Technologies Pvt, Ltd Meena Singhal Mumbai, Maharashtra +91-22-66912876/77 meena@cybersitesindia.com 9 Cyfuture India Private Limited Atul Sharma Plot No. 197/198, Noida Special Economic Zone (NSEZ) Noida Phase II, Noida Dadri Road, Noida - 201305 - atul.sharma@cyfuture.com 10 Data Ingenious Global Limited Grievance Officer Station Road, Durgapura, Jaipur - 302018 0141 - 2554970/71 grievance@dil.i"
+  },
+  {
+   "email": "bajaj.vikram@gmail.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "bajaj.vikram@gmail.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "free webmail address - companies don't handle grievances from gmail/yahoo"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": ") 566-3723 abuse@namecheap.com 27 NameSilo LLC Kristaps Ronka 5322 E Anderson Dr,Scottsdale,AZ,85254- 5891,USA (602) 492-8198 (602) 492-8198 kristaps@namesilo.com 28 Net 4 India Vikram Bajaj D-25, Sector-3,Noida,Uttar Pradesh,201301,India 9999989408 bajaj.vikram@gmail.com 29 NetBharat Technology Manish Pal Mumbai, Maharashtra - info@netbharat.com 30 NETIM Bruno Vincent 264 av arthur notebart,Lille"
+  },
+  {
+   "email": "bhagwati.jamnal@csc.gov.in",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "bhagwati.jamnal@csc.gov.in",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on csc.gov.in, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "pore 022-67209095 prabhat.k@endurance.com 7 CSC E- Governance Services India Limited Bhagwati Jamnal Ministry of Electronics & Information Technology, Electronics Niketan, 3rd Floor, DeitY, 6, CGO, Complex, Lodhi Road, New Delhi-110003 +919654034882 bhagwati.jamnal@csc.gov.in 8 Cybersites India Technologies Pvt, Ltd Meena Singhal Mumbai, Maharashtra +91-22-66912876/77 meena@cybersitesindia.com 9 C"
+  },
+  {
+   "email": "compliance@tucows.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "compliance@tucows.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on tucows.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "rar Solutions Ltd. Volker A. Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 40 Tucows Inc. Reg Levy Head of Compliance 1337 Services LLC, P.O. Box 590, Charlestown Saint Kitts and Nevis +1 (416) 535- 0123 compliance@tucows.com 41 V2 Technosys dba BookYour.IN Vinay Murarka Mumbai, Maharashtra +91-9870005533 vinay@v2technosys. com 42 Vebonix Pritam Pawar"
+  },
+  {
+   "email": "febyhanna@hostao.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "febyhanna@hostao.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on hostao.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "o 7AF Ganesha Complex Campus N K Palayam Road Singanallur ,Coimbatore,Tamil Nadu,641005,India (770) 800-9900 770860883 grievanvce.officer@hiox.com 18 HOSTAO L.L.C. Feby Hanna Ste 1200, 1309 Coffeen Ave, Sheridan, WY 82801, United States +13237447383 febyhanna@hostao.com 19 Hostin Services Pvt. Ltd Rahul S Kurkure Pune, Maharashtra +91-20-66080101 rahul@hostinservices.com / abuse@hostindia.net 20 I"
+  },
+  {
+   "email": "grievance-officier@netim.net",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "grievance-officier@netim.net",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on netim.net, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "ia Vikram Bajaj D-25, Sector-3,Noida,Uttar Pradesh,201301,India 9999989408 bajaj.vikram@gmail.com 29 NetBharat Technology Manish Pal Mumbai, Maharashtra - info@netbharat.com 30 NETIM Bruno Vincent 264 av arthur notebart,Lille,59160,France 33.97230747 grievance-officier@netim.net 31 Own Web Solution Pvt. Ltd. Karthik Iyer 602, Avior Nirmal Galaxy, LBS Road Opposite Johnson & Johnson, Mulund (West),"
+  },
+  {
+   "email": "grievance@laxwebtechnologies.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "grievance@laxwebtechnologies.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on laxwebtechnologies.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "ert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 22 Key-Systems GmbH Volker A. Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 23 Laxweb Technologies Pvt. Ltd. Arpita Saha Kolkata, West Bengal - grievance@laxwebtechnologies.com 24 MarkMonitor. com Chris Niemi 3540 E Longwing Ln Ste 300,Meridian,ID,83646- 1104,USA +1 208 389-5740 Chris.niemi@ma"
+  },
+  {
+   "email": "grievance@zybosys.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "grievance@zybosys.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on zybosys.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "Whois Corp. 10th floor, 43, Digital-ro 34- gil, Guro-gu , Seoul (Kolon Science Valley 1), Seoul , South Korea +82.15884259 abuse@whois.co.kr 47 Zybosys Networks India Private Limited Sidharth Nair Kolkata, West Bengal +91-9645725888 , +91-9037137091 grievance@zybosys.com B-901 9th Floor, Tower B,World Trade Center, Nauroji Nagar New Delhi 110029, India Phone: +91-11-48202008 Email: support@nixi.in"
+  },
+  {
+   "email": "grievances@vebonix.email",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "grievances@vebonix.email",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on vebonix.email, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "rk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 3 AppCroNix Infotech Private Limited Pritam Pawar Flat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune,Maharashtra, 411030,India +91751025252 5 (ext 6) Grievances@VEBONIX.email 4 BE Software Solutions dba Aapkadomain.com Pawan Kumar New Delhi, Delhi - pawan.kumar@bessnet.com 5 Bengalwebhosting AMIT RO"
+  },
+  {
+   "email": "grievanvce.officer@hiox.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "grievanvce.officer@hiox.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on hiox.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "SetLive Private Limited Sheshagiri Anegondi Plot No. 189, Sector 16A, Nerul (West), Navi Mumbai Maharashtra, India 400706 +91- 9820409745 sheshagiri@getsetlive.com 16 HIOX SOFTWARES PRIVATE LIMITED Senthil Kumar Coimbatore, Tamil Nadu +91-7708608883 grievanvce.officer@hiox.com 17 Hiox Softwares Pvt Ltd Senthil Kumar No 7AF Ganesha Complex Campus N K Palayam Road Singanallur ,Coimbatore,Tamil Nadu,"
+  },
+  {
+   "email": "info@netbharat.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "info@netbharat.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on netbharat.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "r,Scottsdale,AZ,85254- 5891,USA (602) 492-8198 (602) 492-8198 kristaps@namesilo.com 28 Net 4 India Vikram Bajaj D-25, Sector-3,Noida,Uttar Pradesh,201301,India 9999989408 bajaj.vikram@gmail.com 29 NetBharat Technology Manish Pal Mumbai, Maharashtra - info@netbharat.com 30 NETIM Bruno Vincent 264 av arthur notebart,Lille,59160,France 33.97230747 grievance-officier@netim.net 31 Own Web Solution Pvt."
+  },
+  {
+   "email": "kramnath@mothersoft.in",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "kramnath@mothersoft.in",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on mothersoft.in, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "a, West Bengal - grievance@laxwebtechnologies.com 24 MarkMonitor. com Chris Niemi 3540 E Longwing Ln Ste 300,Meridian,ID,83646- 1104,USA +1 208 389-5740 Chris.niemi@markmonitor.com 25 MOTHERSOFT TECHNOLOGIES Ramnath Chennai, Tamilnadu +91 9884824733 kramnath@mothersoft.in 26 NameCheap Inc Abuse Team 4600 East Washington Street, Suite 305,Phoenix,AZ,85034,USA +1 310.312.9573 / +1 (917) 566-3723 abu"
+  },
+  {
+   "email": "kristaps@namesilo.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "kristaps@namesilo.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on namesilo.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "ameCheap Inc Abuse Team 4600 East Washington Street, Suite 305,Phoenix,AZ,85034,USA +1 310.312.9573 / +1 (917) 566-3723 abuse@namecheap.com 27 NameSilo LLC Kristaps Ronka 5322 E Anderson Dr,Scottsdale,AZ,85254- 5891,USA (602) 492-8198 (602) 492-8198 kristaps@namesilo.com 28 Net 4 India Vikram Bajaj D-25, Sector-3,Noida,Uttar Pradesh,201301,India 9999989408 bajaj.vikram@gmail.com 29 NetBharat Techn"
+  },
+  {
+   "email": "meena@cybersitesindia.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "meena@cybersitesindia.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on cybersitesindia.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "ics & Information Technology, Electronics Niketan, 3rd Floor, DeitY, 6, CGO, Complex, Lodhi Road, New Delhi-110003 +919654034882 bhagwati.jamnal@csc.gov.in 8 Cybersites India Technologies Pvt, Ltd Meena Singhal Mumbai, Maharashtra +91-22-66912876/77 meena@cybersitesindia.com 9 Cyfuture India Private Limited Atul Sharma Plot No. 197/198, Noida Special Economic Zone (NSEZ) Noida Phase II, Noida Dadr"
+  },
+  {
+   "email": "nixi-grievance-officer@dynadot.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "nixi-grievance-officer@dynadot.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on dynadot.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "rievance@dil.in 11 Dreamscape Networks Prabhat Kamat 3 Irving Road, #09-01 Tai Seng Centre,Singapore ,369522,Singapore 022-67209095 prabhat.k@endurance.com 12 Dynadot LLC Alexander Levit 210 S Ellsworth Ave #345 San Mateo, CA 94401 US 1-650-338-0450 nixi-grievance-officer@dynadot.com 13 EPAG DomainServices Njalla 1337 Services LLC P.O. Box 590 Charlestown Saint Kitts and Nevis +1.4259064769 info@n"
+  },
+  {
+   "email": "prabhat.k@endurance.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "prabhat.k@endurance.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on endurance.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "@bessnet.com 5 Bengalwebhosting AMIT ROY Chakdaha,Nadia, West Bengal, India,741238 +919073533686 legal@bengalwebhosting.in 6 Crazy Domains FZ- LLC Prabhat Kamat 3 Irving Road, #09-01 Tai Seng Centre,Singapore,Singapore ,369522,Singapore 022-67209095 prabhat.k@endurance.com 7 CSC E- Governance Services India Limited Bhagwati Jamnal Ministry of Electronics & Information Technology, Electronics Niket"
+  },
+  {
+   "email": "rahul@hostinservices.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "rahul@hostinservices.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on hostinservices.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": " 800-9900 770860883 grievanvce.officer@hiox.com 18 HOSTAO L.L.C. Feby Hanna Ste 1200, 1309 Coffeen Ave, Sheridan, WY 82801, United States +13237447383 febyhanna@hostao.com 19 Hostin Services Pvt. Ltd Rahul S Kurkure Pune, Maharashtra +91-20-66080101 rahul@hostinservices.com / abuse@hostindia.net 20 India Links Web Hosting Pvt Ltd Yogini Chandarana Mumbai, Maharashtra - abuse@indialinks.com 21 Inst"
+  },
+  {
+   "email": "s.frank@epik.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "s.frank@epik.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on epik.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "-grievance-officer@dynadot.com 13 EPAG DomainServices Njalla 1337 Services LLC P.O. Box 590 Charlestown Saint Kitts and Nevis +1.4259064769 info@njal.la 14 Epik Inc. Sarah Frank 1100 Bellevue Way NE Ste 8A- 601,Bellevue,WA,98004,US A +1.206-826- 2345 s.frank@epik.com 15 GetSetLive Private Limited Sheshagiri Anegondi Plot No. 189, Sector 16A, Nerul (West), Navi Mumbai Maharashtra, India 400706 +91-"
+  },
+  {
+   "email": "sheshagiri@getsetlive.com",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "sheshagiri@getsetlive.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on getsetlive.com, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "nc. Sarah Frank 1100 Bellevue Way NE Ste 8A- 601,Bellevue,WA,98004,US A +1.206-826- 2345 s.frank@epik.com 15 GetSetLive Private Limited Sheshagiri Anegondi Plot No. 189, Sector 16A, Nerul (West), Navi Mumbai Maharashtra, India 400706 +91- 9820409745 sheshagiri@getsetlive.com 16 HIOX SOFTWARES PRIVATE LIMITED Senthil Kumar Coimbatore, Tamil Nadu +91-7708608883 grievanvce.officer@hiox.com 17 Hiox So"
+  },
+  {
+   "email": "support[at]nixi[dot]in",
+   "phone": "",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "support[at]nixi[dot]in",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "the address is on support[at]nixi[dot]in, not the company's own domain - check it is IndiGo's contact and not another organisation listed on the page"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": true,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": ""
+  },
+  {
+   "email": "salimaslammohamed@rediffmail.com",
+   "phone": "",
+   "url": "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html",
+   "source_url": "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "salimaslammohamed@rediffmail.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "free webmail address - companies don't handle grievances from gmail/yahoo"
+   ],
+   "checks": [
+    "sources: icomplaints.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html"
+   ],
+   "evidence": "egards Merwyn Thomas Customer Relations InterGlobe Aviation Limited(\"IndiGo\") Level 5 Tower D Global Business Park M G Road Gurgaon Haryana 122002 India F +91-124-4068536 www.goindigo.in ------------------- Original Message ------------------- From: salimaslammohamed@rediffmail.com Received: 3/27/2014 4:06 PM To: ; Customer _Relations; customer relations; Indigo Customer Relations Cc: salimaslammo"
+  },
+  {
+   "email": "",
+   "phone": "2066080101",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "2066080101",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": ",India (770) 800-9900 770860883 grievanvce.officer@hiox.com 18 HOSTAO L.L.C. Feby Hanna Ste 1200, 1309 Coffeen Ave, Sheridan, WY 82801, United States +13237447383 febyhanna@hostao.com 19 Hostin Services Pvt. Ltd Rahul S Kurkure Pune, Maharashtra +91-20-66080101 rahul@hostinservices.com / abuse@hostindia.net 20 India Links Web Hosting Pvt Ltd Yogini Chandarana Mumbai, Maharashtra - abuse@indialinks"
+  },
+  {
+   "email": "",
+   "phone": "2266912876",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "2266912876",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "try of Electronics & Information Technology, Electronics Niketan, 3rd Floor, DeitY, 6, CGO, Complex, Lodhi Road, New Delhi-110003 +919654034882 bhagwati.jamnal@csc.gov.in 8 Cybersites India Technologies Pvt, Ltd Meena Singhal Mumbai, Maharashtra +91-22-66912876/77 meena@cybersitesindia.com 9 Cyfuture India Private Limited Atul Sharma Plot No. 197/198, Noida Special Economic Zone (NSEZ) Noida Phase"
+  },
+  {
+   "email": "",
+   "phone": "2267209095",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "2267209095",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": " pawan.kumar@bessnet.com 5 Bengalwebhosting AMIT ROY Chakdaha,Nadia, West Bengal, India,741238 +919073533686 legal@bengalwebhosting.in 6 Crazy Domains FZ- LLC Prabhat Kamat 3 Irving Road, #09-01 Tai Seng Centre,Singapore,Singapore ,369522,Singapore 022-67209095 prabhat.k@endurance.com 7 CSC E- Governance Services India Limited Bhagwati Jamnal Ministry of Electronics & Information Technology, Elect"
+  },
+  {
+   "email": "",
+   "phone": "7510252525",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "7510252525",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "reimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 3 AppCroNix Infotech Private Limited Pritam Pawar Flat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune,Maharashtra, 411030,India +91751025252 5 (ext 6) Grievances@VEBONIX.email 4 BE Software Solutions dba Aapkadomain.com Pawan Kumar New Delhi, Delhi - pawan.kumar@bessnet.com 5 Beng"
+  },
+  {
+   "email": "",
+   "phone": "7708608883",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "7708608883",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": ".com 15 GetSetLive Private Limited Sheshagiri Anegondi Plot No. 189, Sector 16A, Nerul (West), Navi Mumbai Maharashtra, India 400706 +91- 9820409745 sheshagiri@getsetlive.com 16 HIOX SOFTWARES PRIVATE LIMITED Senthil Kumar Coimbatore, Tamil Nadu +91-7708608883 grievanvce.officer@hiox.com 17 Hiox Softwares Pvt Ltd Senthil Kumar No 7AF Ganesha Complex Campus N K Palayam Road Singanallur ,Coimbatore,"
+  },
+  {
+   "email": "",
+   "phone": "9037137091",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9037137091",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": " Co., Ltd. Whois Corp. 10th floor, 43, Digital-ro 34- gil, Guro-gu , Seoul (Kolon Science Valley 1), Seoul , South Korea +82.15884259 abuse@whois.co.kr 47 Zybosys Networks India Private Limited Sidharth Nair Kolkata, West Bengal +91-9645725888 , +91-9037137091 grievance@zybosys.com B-901 9th Floor, Tower B,World Trade Center, Nauroji Nagar New Delhi 110029, India Phone: +91-11-48202008 Email: supp"
+  },
+  {
+   "email": "",
+   "phone": "91751025252",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "91751025252",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": " Greimann Im Oberen Werk 1,St. Ingbert,66386,Germany +49-6894 93 96 850 abuse@key-systems.net 3 AppCroNix Infotech Private Limited Pritam Pawar Flat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune,Maharashtra, 411030,India +91751025252 5 (ext 6) Grievances@VEBONIX.email 4 BE Software Solutions dba Aapkadomain.com Pawan Kumar New Delhi, Delhi - pawan.kumar@bessnet.com 5 Be"
+  },
+  {
+   "email": "",
+   "phone": "9645725888",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9645725888",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "ddy.com 46 YesNIC Co., Ltd. Whois Corp. 10th floor, 43, Digital-ro 34- gil, Guro-gu , Seoul (Kolon Science Valley 1), Seoul , South Korea +82.15884259 abuse@whois.co.kr 47 Zybosys Networks India Private Limited Sidharth Nair Kolkata, West Bengal +91-9645725888 , +91-9037137091 grievance@zybosys.com B-901 9th Floor, Tower B,World Trade Center, Nauroji Nagar New Delhi 110029, India Phone: +91-11-482"
+  },
+  {
+   "email": "",
+   "phone": "9654034882",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9654034882",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "69522,Singapore 022-67209095 prabhat.k@endurance.com 7 CSC E- Governance Services India Limited Bhagwati Jamnal Ministry of Electronics & Information Technology, Electronics Niketan, 3rd Floor, DeitY, 6, CGO, Complex, Lodhi Road, New Delhi-110003 +919654034882 bhagwati.jamnal@csc.gov.in 8 Cybersites India Technologies Pvt, Ltd Meena Singhal Mumbai, Maharashtra +91-22-66912876/77 meena@cybersitesin"
+  },
+  {
+   "email": "",
+   "phone": "9820409745",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9820409745",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "a 14 Epik Inc. Sarah Frank 1100 Bellevue Way NE Ste 8A- 601,Bellevue,WA,98004,US A +1.206-826- 2345 s.frank@epik.com 15 GetSetLive Private Limited Sheshagiri Anegondi Plot No. 189, Sector 16A, Nerul (West), Navi Mumbai Maharashtra, India 400706 +91- 9820409745 sheshagiri@getsetlive.com 16 HIOX SOFTWARES PRIVATE LIMITED Senthil Kumar Coimbatore, Tamil Nadu +91-7708608883 grievanvce.officer@hiox.com"
+  },
+  {
+   "email": "",
+   "phone": "9870005533",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9870005533",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": " 96 850 abuse@key-systems.net 40 Tucows Inc. Reg Levy Head of Compliance 1337 Services LLC, P.O. Box 590, Charlestown Saint Kitts and Nevis +1 (416) 535- 0123 compliance@tucows.com 41 V2 Technosys dba BookYour.IN Vinay Murarka Mumbai, Maharashtra +91-9870005533 vinay@v2technosys. com 42 Vebonix Pritam Pawar Flat No 4, Laxmi Mahal Apartment, 2163 Sadashiv Peth, Near Nilayam Cinema,Pune,Maharashtra,"
+  },
+  {
+   "email": "",
+   "phone": "9884824733",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9884824733",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "Saha Kolkata, West Bengal - grievance@laxwebtechnologies.com 24 MarkMonitor. com Chris Niemi 3540 E Longwing Ln Ste 300,Meridian,ID,83646- 1104,USA +1 208 389-5740 Chris.niemi@markmonitor.com 25 MOTHERSOFT TECHNOLOGIES Ramnath Chennai, Tamilnadu +91 9884824733 kramnath@mothersoft.in 26 NameCheap Inc Abuse Team 4600 East Washington Street, Suite 305,Phoenix,AZ,85034,USA +1 310.312.9573 / +1 (917) 5"
+  },
+  {
+   "email": "",
+   "phone": "9999989408",
+   "url": "https://www.registry.in/officer-list",
+   "source_url": "https://www.registry.in/officer-list",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9999989408",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: registry.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.registry.in/officer-list"
+   ],
+   "evidence": "3 / +1 (917) 566-3723 abuse@namecheap.com 27 NameSilo LLC Kristaps Ronka 5322 E Anderson Dr,Scottsdale,AZ,85254- 5891,USA (602) 492-8198 (602) 492-8198 kristaps@namesilo.com 28 Net 4 India Vikram Bajaj D-25, Sector-3,Noida,Uttar Pradesh,201301,India 9999989408 bajaj.vikram@gmail.com 29 NetBharat Technology Manish Pal Mumbai, Maharashtra - info@netbharat.com 30 NETIM Bruno Vincent 264 av arthur not"
+  },
+  {
+   "email": "",
+   "phone": "1244068536",
+   "url": "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html",
+   "source_url": "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "1244068536",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: icomplaints.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html"
+   ],
+   "evidence": "nderstand the need of our policy and would request you to kindly adhere to the same. Best Regards Merwyn Thomas Customer Relations InterGlobe Aviation Limited(\"IndiGo\") Level 5 Tower D Global Business Park M G Road Gurgaon Haryana 122002 India F +91-124-4068536 www.goindigo.in ------------------- Original Message ------------------- From: salimaslammohamed@rediffmail.com Received: 3/27/2014 4:06 P"
+  },
+  {
+   "email": "",
+   "phone": "1246613838",
+   "url": "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html",
+   "source_url": "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "1246613838",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: icomplaints.in"
+   ],
+   "off_brand": false,
+   "sources": [
+    "https://www.icomplaints.in/indigo-airline-offloaded-me-due-silly-reason.-028200.html"
+   ],
+   "evidence": "alidity of three months (travel date could be for later period). May we request your acceptance on the travel voucher to enable us to share the voucher details with you. For further assistance you can contact our call center at +91 9910 383838 or at 0124 6613838 or visit our website www.goindigo.in . Thank you for taking the time to communicate with us. Best Regards Sagar Nagpal Customer Relations"
+  }
+ ],
+ "recommended": null,
+ "verify_attempts": 2,
+ "grievance_attempts": 2,
+ "clauses": [
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 2(10)–(11)",
+   "title": "Definitions",
+   "citation": "Consumer Protection Act, 2019, Section 2(10)–(11)",
+   "text": "(ii) the right to be informed about the quality, quantity, potency, purity, standard and price of goods, products or services, as the case may be, so as to protect the consumer against unfair trade practices; 4 THE GAZETTE OF INDIA EXTRAORDINARY [P ART II— (iii) the right to be assured, wherever possible, access to a variety of goods, products or services at competitive prices; (iv) the right to be heard and to be assured that consumer's interests will receive due consideration at appropriate fora; (v) the right to seek redressal against unfair trade practice or restrictive trade practices or unscrupulous exploitation of consumers; and (vi) the right to consumer awareness; (10) \"defect\" means any fault, imperfection or shortcoming in the quality, quantity, potency, purity or standard which is required to be maintained by or under any law for the time being in force or under any contract, express or implied or as is claimed by the trader in any manner whatsoever in relation to any goods or product and the expression \"defective\" shall be construed accordingly; (11) \"deficiency\" means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance which is required to be maintained by or under any law for the time being in force or has been undertaken to be performed by a person in pursuance of a contract or otherwise in relation to any service and includes— (i) any act of negligence or omission or commission by such person which causes loss or injury to the consumer; and (ii) deliberate withholding of relevant information by such person to the consumer; ",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.625,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 2(10)–(11)",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+   "tag": "C1"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 88",
+   "title": "Whoever, fails to comply with any direction of the Central Authority under",
+   "citation": "Consumer Protection Act, 2019, Section 88",
+   "text": "88. Whoever, fails to comply with any direction of the Central Authority under sections 20 and 21, shall be punished with imprisonment for a term which may extend to six months or with fine which may extend to twenty lakh rupees, or with both.",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.666,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 88",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "refund of consideration within time; consumer right to seek redressal; unfair trade practice The airline cancelled the flight and failed to process the refund after 30 days.",
+   "tag": "C2"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 85",
+   "title": "Liability of product service provider",
+   "citation": "Consumer Protection Act, 2019, Section 85",
+   "text": "85. A product service provider shall be liable in a product liability action, if— (a) the service provided by him was faulty or imperfect or deficient or inadequate in quality, nature or manner of performance which is required to be provided by or under any law for the time being in force, or pursuant to any contract or otherwise; or (b) there was an act of omission or commission or negligence or conscious withholding any information which caused harm; or (c) the service provider did not issue adequate instructions or warnings to prevent any harm; or (d) the service did not conform to express warranty or the terms and conditions of the contract.",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.599,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 85",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+   "tag": "C3"
+  },
+  {
+   "doc_id": "ccr",
+   "doc_title": "Consumer Protection (Consumer Disputes Redressal Commissions) Rules, 2020",
+   "ref": "Rule 14(6)–(7)",
+   "title": "Pro cedure for filing and hearing of appeal before National Commission -(1) A Memorandum s",
+   "citation": "Consumer Protection (Consumer Disputes Redressal Commissions) Rules, 2020, Rule 14(6)–(7)",
+   "text": "(6) On the date of hearing or on any other day to which hearing may be adjourned, the parties or their authorised agents shall appear before the National Commission, and where- (a) the appellant or his authorised agent fails to appear, the National Commission may, in its discretion, either dismiss the appeal or decide it ex-parte on the merits of the case; (b) the respondent or his authorised agent fails to appear, the National Commission shall proceed ex-parte and shall decide the appeal on the merits of the case. (7) The appellant shall not, except by the leave of the National Commission, urge or be heard in support of any ground of appeal not set forth in the memorandum but the National Commission, in deciding the appeal, may not be confined to the grounds of appeal set forth in the memorandum or taken by leave of the National Commission under this rule: Provided that the National Commission shall not rest its decision on any other grounds unless the party who may be affected thereby, has been given, at least the opportunity of being heard by the National Commission. ",
+   "source_url": "https://consumeraffairs.nic.in/acts-and-rules/consumer-protection",
+   "score": 0.654,
+   "act": "Consumer Protection (Consumer Disputes Redressal Commissions) Rules, 2020",
+   "section": "Rule 14(6)–(7)",
+   "source_file": "Consumer Commission Rules & General Rules_1732703661.pdf",
+   "page": null,
+   "query": "refund of consideration within time; consumer right to seek redressal; unfair trade practice The airline cancelled the flight and failed to process the refund after 30 days.",
+   "tag": "C4"
+  }
+ ],
+ "draft": "I am writing to formally lodge a grievance regarding the cancellation of my flight 6E-2143, which was scheduled for 2 October 2026. Despite the cancellation, IndiGo has failed to process the refund of Rs 7,400, even after 30 days have elapsed. This failure to refund the amount for a service that was not provided constitutes a clear deficiency in service. Under [C3], a service provider is liable in a product liability action if the service provided was faulty, imperfect, or deficient in the manner of performance required by the contract. The withholding of my funds without justification is unacceptable. I request the immediate processing of the full refund of Rs 7,400 to my original payment method. If this matter is not resolved by 9 November 2026, I will be compelled to escalate this grievance to the DGCA via the AirSewa portal.",
+ "subject": "Grievance regarding non-refund for cancelled flight 6E-2143",
+ "summary": "You are writing to IndiGo to demand a refund of Rs 7,400 for your cancelled flight 6E-2143. You have noted that the refund has not been processed after 30 days. You have requested a resolution by 9 November 2026, after which you will escalate the matter to the DGCA via AirSewa.",
+ "escalation": [
+  {
+   "name": "The organisation's own grievance cell",
+   "level": "company",
+   "channel": "email / grievance page",
+   "url": null,
+   "phone": null,
+   "timeline": null,
+   "source": "verified contact search (see contacts)",
+   "when_to_use": "First. Complain in writing and keep the complaint / docket number.",
+   "reply_within": {
+    "n": 30,
+    "unit": "days",
+    "kind": "requested",
+    "basis": "a reasonable time to resolve it (no rule fixes one for this service)"
+   },
+   "reply_by": "9 November 2026"
+  },
+  {
+   "name": "DGCA (via AirSewa)",
+   "level": "sector_regulator_or_ombudsman",
+   "channel": "Portal: https://airsewa.gov.in",
+   "url": "https://airsewa.gov.in",
+   "phone": null,
+   "when_to_use": "If unresolved within 15 days of the airline complaint; mandatory for flight-related complaints.",
+   "timeline": "check the timeline in https://www.civilaviation.gov.in/ministry-documents/passenger-charter-of-rights",
+   "typical_wait": "check the timeline in https://www.civilaviation.gov.in/ministry-documents/passenger-charter-of-rights",
+   "source": "https://www.civilaviation.gov.in/ministry-documents/passenger-charter-of-rights",
+   "from_date": "9 November 2026"
+  }
+ ],
+ "critic_notes": [],
+ "draft_attempts": 2,
+ "draft_method": "Gemini (gemini-3.1-flash-lite, generate_content)",
+ "deadline": {
+  "date": "9 November 2026",
+  "basis": "a reasonable time to resolve it (no rule fixes one for this service)",
+  "source": "",
+  "kind": "requested"
+ },
+ "user_edits": {
+  "approved": true
+ },
+ "case_answers": {},
+ "fills": {},
+ "drafted_answers": {},
+ "user_draft": "",
+ "review_rounds": 1,
+ "redraft": false,
+ "trace": [
+  "🛟 Safety: no immediate danger detected",
+  "🧭 Intake (Gemini (gemini-3.1-flash-lite, generate_content)): language=en, domain=other (tier A: draft and escalate), company=IndiGo, issues=refund; route: matched (0.8)",
+  "🌐 Official domain: not resolved",
+  "🔎 Case research: no named scheme, policy or product to research",
+  "🗺️ Frame: other route confirmed",
+  "🔎 Grievance search #1: 1 queries (IndiGo grievance officer email) → 8 results, 8 pages read, 68 contact mentions (0 on the official domain)",
+  "📰 Precedents: 1 relevant forum/news item(s) (Gemini (gemini-3.1-flash-lite, generate_content)); 1 search(es) failed",
+  "📍 Local forum (Consumer commission): District Consumer Dispute Redressal Forum, South Mumbai",
+  "🧩 Gap check (no conditions): 0 met, 0 to confirm, 0 may not be met; 3 other question(s)",
+  "🪜 Escalation planner (1 sourced step(s) from 6 official page(s) / 4 clause(s)): The organisation's own grievance cell → DGCA (via AirSewa)",
+  "   ✗ dropped “IndiGo Customer Care”: its source is stated only by a non-official page (getnyay.in)",
+  "   ✗ dropped “Nodal Officer, IndiGo”: its source is stated only by a non-official page (indiacustomercare.com)",
+  "   ✗ dropped “Appellate Authority, IndiGo”: its source is stated only by a non-official page (indiacustomercare.com)",
+  "   ✗ replaced timeline “15 days” of “DGCA (via AirSewa)”: its source does not state it",
+  "🛡️ Verifier #1: 0 verified, 67 unverified — 67 contact(s) found only on third-party sites — retrying search with “nodal officer”, “escalation”",
+  "🔎 Grievance retry #2: 2 queries (IndiGo nodal officer email; IndiGo escalation email) → 16 results, 8 pages read, 7 contact mentions (0 on the official domain)",
+  "🛡️ Verifier #2: 1 verified, 72 unverified — no verified grievance email (72 unverified contact(s) kept aside)",
+  "📚 Legal RAG: 4 clause(s) — Consumer Protection Act, 2019, Section 2(10)–(11); Consumer Protection Act, 2019, Section 88; Consumer Protection Act, 2019, Section 85; Consumer Protection (Consumer Disputes Redressal Commissions) Rules, 2020, Rule 14(6)–(7)",
+  "📝 Details form: 0 answer(s), 0 detail(s) filled of 3 question(s) and 0 missing fact(s)",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 1 issue(s) → back to drafter",
+  "   • Reviewer: The letter cites [C1] (Consumer Protection Act, 2019, Section 2(10)–(11)) as defining 'deficiency in service', but the provided text for [C1] only lists consumer rights and does not define deficiency in service.",
+  "✍️ Drafter #2 (Gemini (gemini-3.1-flash-lite, generate_content)): revising for 1 critic note(s)",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): passed — every claim is cited, no invented facts",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 4,
+ "final": {
+  "to": null,
+  "to_name": "The organisation's own grievance cell",
+  "tier": "A",
+  "safety": {
+   "level": "none",
+   "categories": [],
+   "method": "rules",
+   "helplines": [],
+   "numbers": [],
+   "messages": []
+  },
+  "subject": "Grievance regarding non-refund for cancelled flight 6E-2143",
+  "letter": "To,\nThe organisation's own grievance cell\nIndiGo\n\nDate: 10 October 2026\n\nSubject: Grievance regarding non-refund for cancelled flight 6E-2143\n\nDear Sir/Madam,\n\nI am writing to formally lodge a grievance regarding the cancellation of my flight 6E-2143, which was scheduled for 2 October 2026. Despite the cancellation, IndiGo has failed to process the refund of Rs 7,400, even after 30 days have elapsed. This failure to refund the amount for a service that was not provided constitutes a clear deficiency in service. Under [C3], a service provider is liable in a product liability action if the service provided was faulty, imperfect, or deficient in the manner of performance required by the contract. The withholding of my funds without justification is unacceptable. I request the immediate processing of the full refund of Rs 7,400 to my original payment method. If this matter is not resolved by 9 November 2026, I will be compelled to escalate this grievance to the DGCA via the AirSewa portal.\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C3] Consumer Protection Act, 2019, Section 85 — Liability of product service provider",
+  "markdown": "# Grievance regarding non-refund for cancelled flight 6E-2143\n\n**To:** The organisation's own grievance cell (no verified email - use the official complaint form)\n\nYou are writing to IndiGo to demand a refund of Rs 7,400 for your cancelled flight 6E-2143. You have noted that the refund has not been processed after 30 days. You have requested a resolution by 9 November 2026, after which you will escalate the matter to the DGCA via AirSewa.\n\n```\nTo,\nThe organisation's own grievance cell\nIndiGo\n\nDate: 10 October 2026\n\nSubject: Grievance regarding non-refund for cancelled flight 6E-2143\n\nDear Sir/Madam,\n\nI am writing to formally lodge a grievance regarding the cancellation of my flight 6E-2143, which was scheduled for 2 October 2026. Despite the cancellation, IndiGo has failed to process the refund of Rs 7,400, even after 30 days have elapsed. This failure to refund the amount for a service that was not provided constitutes a clear deficiency in service. Under [C3], a service provider is liable in a product liability action if the service provided was faulty, imperfect, or deficient in the manner of performance required by the contract. The withholding of my funds without justification is unacceptable. I request the immediate processing of the full refund of Rs 7,400 to my original payment method. If this matter is not resolved by 9 November 2026, I will be compelled to escalate this grievance to the DGCA via the AirSewa portal.\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C3] Consumer Protection Act, 2019, Section 85 — Liability of product service provider\n```\n\n## If there's no reply\n**Reply due by 9 November 2026** — a reasonable time to resolve it (no rule fixes one for this service).\n\n1. **The organisation's own grievance cell** (email / grievance page) — First. Complain in writing and keep the complaint / docket number.\n   📅 reply due by 9 November 2026\n   🔗 source: verified contact search (see contacts)\n2. **DGCA (via AirSewa)** (Portal: https://airsewa.gov.in) — If unresolved within 15 days of the airline complaint; mandatory for flight-related complaints. https://airsewa.gov.in\n   📅 you can go here from 9 November 2026 if unresolved\n   🔗 source: https://www.civilaviation.gov.in/ministry-documents/passenger-charter-of-rights\n\n_Information, not legal advice._\n",
+  "summary": "You are writing to IndiGo to demand a refund of Rs 7,400 for your cancelled flight 6E-2143. You have noted that the refund has not been processed after 30 days. You have requested a resolution by 9 November 2026, after which you will escalate the matter to the DGCA via AirSewa.",
+  "escalation": [
+   {
+    "name": "The organisation's own grievance cell",
+    "level": "company",
+    "channel": "email / grievance page",
+    "url": null,
+    "phone": null,
+    "timeline": null,
+    "source": "verified contact search (see contacts)",
+    "when_to_use": "First. Complain in writing and keep the complaint / docket number.",
+    "reply_within": {
+     "n": 30,
+     "unit": "days",
+     "kind": "requested",
+     "basis": "a reasonable time to resolve it (no rule fixes one for this service)"
+    },
+    "reply_by": "9 November 2026"
+   },
+   {
+    "name": "DGCA (via AirSewa)",
+    "level": "sector_regulator_or_ombudsman",
+    "channel": "Portal: https://airsewa.gov.in",
+    "url": "https://airsewa.gov.in",
+    "phone": null,
+    "when_to_use": "If unresolved within 15 days of the airline complaint; mandatory for flight-related complaints.",
+    "timeline": "check the timeline in https://www.civilaviation.gov.in/ministry-documents/passenger-charter-of-rights",
+    "typical_wait": "check the timeline in https://www.civilaviation.gov.in/ministry-documents/passenger-charter-of-rights",
+    "source": "https://www.civilaviation.gov.in/ministry-documents/passenger-charter-of-rights",
+    "from_date": "9 November 2026"
+   }
+  ],
+  "deadline": {
+   "date": "9 November 2026",
+   "basis": "a reasonable time to resolve it (no rule fixes one for this service)",
+   "source": "",
+   "kind": "requested"
+  },
+  "cited": [
+   {
+    "doc_id": "cpa",
+    "doc_title": "Consumer Protection Act, 2019",
+    "ref": "Section 85",
+    "title": "Liability of product service provider",
+    "citation": "Consumer Protection Act, 2019, Section 85",
+    "text": "85. A product service provider shall be liable in a product liability action, if— (a) the service provided by him was faulty or imperfect or deficient or inadequate in quality, nature or manner of performance which is required to be provided by or under any law for the time being in force, or pursuant to any contract or otherwise; or (b) there was an act of omission or commission or negligence or conscious withholding any information which caused harm; or (c) the service provider did not issue adequate instructions or warnings to prevent any harm; or (d) the service did not conform to express warranty or the terms and conditions of the contract.",
+    "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+    "score": 0.599,
+    "act": "Consumer Protection Act, 2019",
+    "section": "Section 85",
+    "source_file": "cpa_2019.pdf",
+    "page": null,
+    "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+    "tag": "C3"
+   }
+  ],
+  "removed_citations": [],
+  "case_brief": {},
+  "case_answers": {},
+  "eligibility": {
+   "status": "no_conditions",
+   "message": ""
+  },
+  "eligibility_checks": [],
+  "unresolved_critic_notes": []
+ },
+ "thread_id": "113b81d5bc54"
+}

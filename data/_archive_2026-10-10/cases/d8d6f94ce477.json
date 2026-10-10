@@ -1,0 +1,889 @@
+{
+ "complaint": "I was eligible for Pradhan Mantri Viksit Bharat Yojgar Yojna.\nYet I didnt receive my 1 st installment of 6 months.\nI tried calling epfo portal yet nothing worked",
+ "company_hint": "EPFO",
+ "city": null,
+ "complainant": {},
+ "live": true,
+ "language": "en",
+ "sector": "other",
+ "company": "EPFO",
+ "company_domain": "epfo.gov.in",
+ "official_domains": [
+  "epfo.gov.in"
+ ],
+ "domain_basis": "top-1 result for “EPFO official website”, brand match",
+ "facts": {
+  "product_or_service": "Pradhan Mantri Viksit Bharat Yojgar Yojna installment",
+  "issue": "The user has not received the first installment of the Pradhan Mantri Viksit Bharat Yojgar Yojna despite being eligible.",
+  "what_user_wants": "Receipt of the installment",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "",
+  "date": "",
+  "city": ""
+ },
+ "issue_types": [
+  "deficiency"
+ ],
+ "missing_facts": [
+  {
+   "fact": "reference_id",
+   "placeholder": "[BOOKING / REFERENCE NUMBER]"
+  },
+  {
+   "fact": "date",
+   "placeholder": "[DATE]"
+  },
+  {
+   "fact": "amount",
+   "placeholder": "[AMOUNT]"
+  }
+ ],
+ "search_plan": [
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "site:epfo.gov.in grievance officer"
+  },
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "site:epfo.gov.in customer care"
+  },
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "EPFO grievance officer email"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_forums",
+   "q": "EPFO EPFO installment not received complaint resolved"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_news",
+   "q": "EPFO EPFO installment not received consumer court"
+  }
+ ],
+ "search_keywords": "EPFO installment not received",
+ "urgent_note": null,
+ "contacts": [
+  {
+   "type": "phone",
+   "value": "9738010000",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "urgaon Call Center in Ahmedabad Call Center in Kolkata KAP Call Center Pvt. Ltd. No 25, S.V Arcade, 1st Floor, South End Road, Jayanagar 9th Block, Above Reliance Trends, Near Ragiguda Temple, Bangalore – 560069 Sales : +91 99620 59933 Support : +91 97380 10000 Sitemap Industries Infrastructure Privacy Policy Terms of Service Call Center Glossary Copyright © 2017- 2026 by Kap Call Center Made with",
+   "source_url": "https://bestcallcenter.in/glossary/c/what-is-customer-care/",
+   "source_domain": "bestcallcenter.in",
+   "page_title": "What Is Customer Care In Call Centers",
+   "via": "page",
+   "email": "",
+   "phone": "9738010000",
+   "url": "https://bestcallcenter.in/glossary/c/what-is-customer-care/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9962059933",
+   "role": "customer_care",
+   "name": "",
+   "timeline": "",
+   "evidence": "l Fill out the Form below to get Free 7 Days Trial Send Now Free Consultation Need Help with Call Center Setup? Get a free consultation with our call center experts. Learn how to optimize your customer service and increase efficiency. Call us on +91 99620 59933 Cold Calling Services Telemarketing Services Lead Generation Services Outbound Call Center Sales Process Outsourcing Technical Support Out",
+   "source_url": "https://bestcallcenter.in/glossary/c/what-is-customer-care/",
+   "source_domain": "bestcallcenter.in",
+   "page_title": "What Is Customer Care In Call Centers",
+   "via": "page",
+   "email": "",
+   "phone": "9962059933",
+   "url": "https://bestcallcenter.in/glossary/c/what-is-customer-care/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "iccmbda@gmail.com",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "Email the response team\nOpens your email app, addressed to\niccmbda@gmail.com",
+   "source_url": "https://www.mbda.gov.in/greivances/",
+   "source_domain": "mbda.gov.in",
+   "page_title": "Grievances",
+   "via": "page",
+   "email": "iccmbda@gmail.com",
+   "phone": "",
+   "url": "https://www.mbda.gov.in/greivances/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "knowledge.mbda@gov.in",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "Website of Meghalaya Basin Development Authority, Government of Meghalaya, India Note: Content on this website is published and managed by Meghalaya Basin Development Authority For any query regarding this Website, please contact the Web Information Manager Wankit K. Swer (Sr. Manager) E-mail ID - knowledge.mbda@gov.in Last updated: 10/7/2026, 12:47:57 PM",
+   "source_url": "https://www.mbda.gov.in/greivances/",
+   "source_domain": "mbda.gov.in",
+   "page_title": "Grievances",
+   "via": "page",
+   "email": "knowledge.mbda@gov.in",
+   "phone": "",
+   "url": "https://www.mbda.gov.in/greivances/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9692291760",
+   "role": "customer_care",
+   "name": "",
+   "timeline": "",
+   "evidence": "ut.me. Please upgrade to a newer browser by downloading one here . Get started for free Get your page Features Pricing Log In Home Features Pricing Customer Helpline support Available 24 hrs , Contact Us , and Toll free in India helpline Number Call 9692291760 Helpline Customer. an Available 24 hrs. India helpline Number . Online shopping, Online customer care, and Register Complaint. All informat",
+   "source_url": "https://about.me/customer.helplinesupport",
+   "source_domain": "about.me",
+   "page_title": "Customer Helpline support - India helpline Number  | about.me",
+   "via": "page",
+   "email": "",
+   "phone": "9692291760",
+   "url": "https://about.me/customer.helplinesupport",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "0000037171",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "f signaling receptor activity regulation of apoptotic process regulation of MAPK cascade signal transduction Sources: Amigo / QuickGO Orthologs Databases NCBI : entry ; OMA : entry Species Human Mouse Entrez 4838 18119 Ensembl ENSG00000156574 ENSMUSG00000037171 UniProt Q96S42 P43021 RefSeq (mRNA) NM_018055 NM_001329906 NM_013611 RefSeq (protein) NP_001316835 NP_060525 NP_038639 Location (UCSC) Chr",
+   "source_url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_domain": "wikipedia.org",
+   "page_title": "Nodal homolog - Wikipedia",
+   "via": "page",
+   "email": "",
+   "phone": "0000037171",
+   "url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "0000156574",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "pment regulation of signaling receptor activity regulation of apoptotic process regulation of MAPK cascade signal transduction Sources: Amigo / QuickGO Orthologs Databases NCBI : entry ; OMA : entry Species Human Mouse Entrez 4838 18119 Ensembl ENSG00000156574 ENSMUSG00000037171 UniProt Q96S42 P43021 RefSeq (mRNA) NM_018055 NM_001329906 NM_013611 RefSeq (protein) NP_001316835 NP_060525 NP_038639 L",
+   "source_url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_domain": "wikipedia.org",
+   "page_title": "Nodal homolog - Wikipedia",
+   "via": "page",
+   "email": "",
+   "phone": "0000156574",
+   "url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "001316835",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "duction Sources: Amigo / QuickGO Orthologs Databases NCBI : entry ; OMA : entry Species Human Mouse Entrez 4838 18119 Ensembl ENSG00000156574 ENSMUSG00000037171 UniProt Q96S42 P43021 RefSeq (mRNA) NM_018055 NM_001329906 NM_013611 RefSeq (protein) NP_001316835 NP_060525 NP_038639 Location (UCSC) Chr 10: 70.43 – 70.45 Mb Chr 10: 61.25 – 61.26 Mb PubMed search [ 3 ] [ 4 ] Wikidata View/Edit Human Vie",
+   "source_url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_domain": "wikipedia.org",
+   "page_title": "Nodal homolog - Wikipedia",
+   "via": "page",
+   "email": "",
+   "phone": "001316835",
+   "url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "001329906",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "s regulation of MAPK cascade signal transduction Sources: Amigo / QuickGO Orthologs Databases NCBI : entry ; OMA : entry Species Human Mouse Entrez 4838 18119 Ensembl ENSG00000156574 ENSMUSG00000037171 UniProt Q96S42 P43021 RefSeq (mRNA) NM_018055 NM_001329906 NM_013611 RefSeq (protein) NP_001316835 NP_060525 NP_038639 Location (UCSC) Chr 10: 70.43 – 70.45 Mb Chr 10: 61.25 – 61.26 Mb PubMed search",
+   "source_url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_domain": "wikipedia.org",
+   "page_title": "Nodal homolog - Wikipedia",
+   "via": "page",
+   "email": "",
+   "phone": "001329906",
+   "url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "0802159105",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": " signaling in two axis conversions during asymmetric morphogenesis of the zebrafish heart\" . Proceedings of the National Academy of Sciences of the United States of America . 105 (37): 13924– 13929. Bibcode : 2008PNAS..10513924B . doi : 10.1073/pnas.0802159105 . PMC 2544555 . PMID 18784369 . ↑ Luxardi G, Marchal L, Thomé V, Kodjabachian L (February 2010). \"Distinct Xenopus Nodal ligands sequential",
+   "source_url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_domain": "wikipedia.org",
+   "page_title": "Nodal homolog - Wikipedia",
+   "via": "page",
+   "email": "",
+   "phone": "0802159105",
+   "url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "18002100080",
+   "role": "customer_care",
+   "name": "",
+   "timeline": "''",
+   "evidence": "mework w.e.f. April 1, 2026, Click Here. NPSCRA – Informational website of CRA has migrated from https://www.npscra.nsdl.co.in to https://www.npscra.proteantech.in Toll Free Number - 1800 889 1030 of Atal Pension Yojana (New NPS-CRA toll-free number 1800 210 0080) Go Paperless: Opt for an Email Annual Transaction Statement Protean CRA Migration: https://enps.nps-proteantech.in Click Here for Aadha",
+   "source_url": "https://www.npscra.proteantech.in/nodal-office-corner-state.php",
+   "source_domain": "proteantech.in",
+   "page_title": "Nodal Office Corner",
+   "via": "page",
+   "email": "",
+   "phone": "18002100080",
+   "url": "https://www.npscra.proteantech.in/nodal-office-corner-state.php",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "18008891030",
+   "role": "other",
+   "name": "Atal Pension Yojana",
+   "timeline": "''",
+   "evidence": "frda.org.in/pride-calculator Implementation of the Multiple NAVs framework w.e.f. April 1, 2026, Click Here. NPSCRA – Informational website of CRA has migrated from https://www.npscra.nsdl.co.in to https://www.npscra.proteantech.in Toll Free Number - 1800 889 1030 of Atal Pension Yojana (New NPS-CRA toll-free number 1800 210 0080) Go Paperless: Opt for an Email Annual Transaction Statement Protean",
+   "source_url": "https://www.npscra.proteantech.in/nodal-office-corner-state.php",
+   "source_domain": "proteantech.in",
+   "page_title": "Nodal Office Corner",
+   "via": "page",
+   "email": "",
+   "phone": "18008891030",
+   "url": "https://www.npscra.proteantech.in/nodal-office-corner-state.php",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "phone",
+   "value": "9619817343",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "s under NPS Gallery Photos Videos Circular Acts & Regulations PFRDA Circulars Advisory, Orders & Notices Ministry of Finance Login Nodal Office POP / POP-SP Subscribers - NPS Regular Aggregators NLCC NEW! Manage your NPS on WhatsApp — Send 'Start' to 9619817343 DSC Signing Service (NSS) Utility Please click here to download Access and review performance of schemes and Pension Funds available under",
+   "source_url": "https://www.npscra.proteantech.in/nodal-office-corner-state.php",
+   "source_domain": "proteantech.in",
+   "page_title": "Nodal Office Corner",
+   "via": "page",
+   "email": "",
+   "phone": "9619817343",
+   "url": "https://www.npscra.proteantech.in/nodal-office-corner-state.php",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  }
+ ],
+ "precedents": [],
+ "local_forum": null,
+ "blocked_hallucinations": 0,
+ "errors": [],
+ "verified_contacts": [],
+ "unverified_contacts": [
+  {
+   "email": "iccmbda@gmail.com",
+   "phone": "",
+   "url": "https://www.mbda.gov.in/greivances/",
+   "source_url": "https://www.mbda.gov.in/greivances/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "iccmbda@gmail.com",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "free webmail address - companies don't handle grievances from gmail/yahoo"
+   ],
+   "checks": [
+    "sources: mbda.gov.in"
+   ],
+   "sources": [
+    "https://www.mbda.gov.in/greivances/"
+   ],
+   "evidence": "Email the response team\nOpens your email app, addressed to\niccmbda@gmail.com"
+  },
+  {
+   "email": "",
+   "phone": "9962059933",
+   "url": "https://bestcallcenter.in/glossary/c/what-is-customer-care/",
+   "source_url": "https://bestcallcenter.in/glossary/c/what-is-customer-care/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9962059933",
+   "role": "customer_care",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: bestcallcenter.in"
+   ],
+   "sources": [
+    "https://bestcallcenter.in/glossary/c/what-is-customer-care/"
+   ],
+   "evidence": "l Fill out the Form below to get Free 7 Days Trial Send Now Free Consultation Need Help with Call Center Setup? Get a free consultation with our call center experts. Learn how to optimize your customer service and increase efficiency. Call us on +91 99620 59933 Cold Calling Services Telemarketing Services Lead Generation Services Outbound Call Center Sales Process Outsourcing Technical Support Out"
+  },
+  {
+   "email": "",
+   "phone": "9692291760",
+   "url": "https://about.me/customer.helplinesupport",
+   "source_url": "https://about.me/customer.helplinesupport",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9692291760",
+   "role": "customer_care",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: about.me"
+   ],
+   "sources": [
+    "https://about.me/customer.helplinesupport"
+   ],
+   "evidence": "ut.me. Please upgrade to a newer browser by downloading one here . Get started for free Get your page Features Pricing Log In Home Features Pricing Customer Helpline support Available 24 hrs , Contact Us , and Toll free in India helpline Number Call 9692291760 Helpline Customer. an Available 24 hrs. India helpline Number . Online shopping, Online customer care, and Register Complaint. All informat"
+  },
+  {
+   "email": "",
+   "phone": "18002100080",
+   "url": "https://www.npscra.proteantech.in/nodal-office-corner-state.php",
+   "source_url": "https://www.npscra.proteantech.in/nodal-office-corner-state.php",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "18002100080",
+   "role": "customer_care",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "''",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: proteantech.in"
+   ],
+   "sources": [
+    "https://www.npscra.proteantech.in/nodal-office-corner-state.php"
+   ],
+   "evidence": "mework w.e.f. April 1, 2026, Click Here. NPSCRA – Informational website of CRA has migrated from https://www.npscra.nsdl.co.in to https://www.npscra.proteantech.in Toll Free Number - 1800 889 1030 of Atal Pension Yojana (New NPS-CRA toll-free number 1800 210 0080) Go Paperless: Opt for an Email Annual Transaction Statement Protean CRA Migration: https://enps.nps-proteantech.in Click Here for Aadha"
+  },
+  {
+   "email": "knowledge.mbda@gov.in",
+   "phone": "",
+   "url": "https://www.mbda.gov.in/greivances/",
+   "source_url": "https://www.mbda.gov.in/greivances/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "knowledge.mbda@gov.in",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "email domain gov.in is not the company's official domain"
+   ],
+   "checks": [
+    "sources: mbda.gov.in"
+   ],
+   "sources": [
+    "https://www.mbda.gov.in/greivances/"
+   ],
+   "evidence": "Website of Meghalaya Basin Development Authority, Government of Meghalaya, India Note: Content on this website is published and managed by Meghalaya Basin Development Authority For any query regarding this Website, please contact the Web Information Manager Wankit K. Swer (Sr. Manager) E-mail ID - knowledge.mbda@gov.in Last updated: 10/7/2026, 12:47:57 PM"
+  },
+  {
+   "email": "",
+   "phone": "9738010000",
+   "url": "https://bestcallcenter.in/glossary/c/what-is-customer-care/",
+   "source_url": "https://bestcallcenter.in/glossary/c/what-is-customer-care/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9738010000",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: bestcallcenter.in"
+   ],
+   "sources": [
+    "https://bestcallcenter.in/glossary/c/what-is-customer-care/"
+   ],
+   "evidence": "urgaon Call Center in Ahmedabad Call Center in Kolkata KAP Call Center Pvt. Ltd. No 25, S.V Arcade, 1st Floor, South End Road, Jayanagar 9th Block, Above Reliance Trends, Near Ragiguda Temple, Bangalore – 560069 Sales : +91 99620 59933 Support : +91 97380 10000 Sitemap Industries Infrastructure Privacy Policy Terms of Service Call Center Glossary Copyright © 2017- 2026 by Kap Call Center Made with"
+  },
+  {
+   "email": "",
+   "phone": "0000037171",
+   "url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "0000037171",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: wikipedia.org"
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/Nodal_homolog"
+   ],
+   "evidence": "f signaling receptor activity regulation of apoptotic process regulation of MAPK cascade signal transduction Sources: Amigo / QuickGO Orthologs Databases NCBI : entry ; OMA : entry Species Human Mouse Entrez 4838 18119 Ensembl ENSG00000156574 ENSMUSG00000037171 UniProt Q96S42 P43021 RefSeq (mRNA) NM_018055 NM_001329906 NM_013611 RefSeq (protein) NP_001316835 NP_060525 NP_038639 Location (UCSC) Chr"
+  },
+  {
+   "email": "",
+   "phone": "0000156574",
+   "url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "0000156574",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: wikipedia.org"
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/Nodal_homolog"
+   ],
+   "evidence": "pment regulation of signaling receptor activity regulation of apoptotic process regulation of MAPK cascade signal transduction Sources: Amigo / QuickGO Orthologs Databases NCBI : entry ; OMA : entry Species Human Mouse Entrez 4838 18119 Ensembl ENSG00000156574 ENSMUSG00000037171 UniProt Q96S42 P43021 RefSeq (mRNA) NM_018055 NM_001329906 NM_013611 RefSeq (protein) NP_001316835 NP_060525 NP_038639 L"
+  },
+  {
+   "email": "",
+   "phone": "001316835",
+   "url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "001316835",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: wikipedia.org"
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/Nodal_homolog"
+   ],
+   "evidence": "duction Sources: Amigo / QuickGO Orthologs Databases NCBI : entry ; OMA : entry Species Human Mouse Entrez 4838 18119 Ensembl ENSG00000156574 ENSMUSG00000037171 UniProt Q96S42 P43021 RefSeq (mRNA) NM_018055 NM_001329906 NM_013611 RefSeq (protein) NP_001316835 NP_060525 NP_038639 Location (UCSC) Chr 10: 70.43 – 70.45 Mb Chr 10: 61.25 – 61.26 Mb PubMed search [ 3 ] [ 4 ] Wikidata View/Edit Human Vie"
+  },
+  {
+   "email": "",
+   "phone": "001329906",
+   "url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "001329906",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: wikipedia.org"
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/Nodal_homolog"
+   ],
+   "evidence": "s regulation of MAPK cascade signal transduction Sources: Amigo / QuickGO Orthologs Databases NCBI : entry ; OMA : entry Species Human Mouse Entrez 4838 18119 Ensembl ENSG00000156574 ENSMUSG00000037171 UniProt Q96S42 P43021 RefSeq (mRNA) NM_018055 NM_001329906 NM_013611 RefSeq (protein) NP_001316835 NP_060525 NP_038639 Location (UCSC) Chr 10: 70.43 – 70.45 Mb Chr 10: 61.25 – 61.26 Mb PubMed search"
+  },
+  {
+   "email": "",
+   "phone": "0802159105",
+   "url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_url": "https://en.wikipedia.org/wiki/Nodal_homolog",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "0802159105",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: wikipedia.org"
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/Nodal_homolog"
+   ],
+   "evidence": " signaling in two axis conversions during asymmetric morphogenesis of the zebrafish heart\" . Proceedings of the National Academy of Sciences of the United States of America . 105 (37): 13924– 13929. Bibcode : 2008PNAS..10513924B . doi : 10.1073/pnas.0802159105 . PMC 2544555 . PMID 18784369 . ↑ Luxardi G, Marchal L, Thomé V, Kodjabachian L (February 2010). \"Distinct Xenopus Nodal ligands sequential"
+  },
+  {
+   "email": "",
+   "phone": "18008891030",
+   "url": "https://www.npscra.proteantech.in/nodal-office-corner-state.php",
+   "source_url": "https://www.npscra.proteantech.in/nodal-office-corner-state.php",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "18008891030",
+   "role": "other",
+   "name": "Atal Pension Yojana",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "''",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: proteantech.in"
+   ],
+   "sources": [
+    "https://www.npscra.proteantech.in/nodal-office-corner-state.php"
+   ],
+   "evidence": "frda.org.in/pride-calculator Implementation of the Multiple NAVs framework w.e.f. April 1, 2026, Click Here. NPSCRA – Informational website of CRA has migrated from https://www.npscra.nsdl.co.in to https://www.npscra.proteantech.in Toll Free Number - 1800 889 1030 of Atal Pension Yojana (New NPS-CRA toll-free number 1800 210 0080) Go Paperless: Opt for an Email Annual Transaction Statement Protean"
+  },
+  {
+   "email": "",
+   "phone": "9619817343",
+   "url": "https://www.npscra.proteantech.in/nodal-office-corner-state.php",
+   "source_url": "https://www.npscra.proteantech.in/nodal-office-corner-state.php",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "9619817343",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: proteantech.in"
+   ],
+   "sources": [
+    "https://www.npscra.proteantech.in/nodal-office-corner-state.php"
+   ],
+   "evidence": "s under NPS Gallery Photos Videos Circular Acts & Regulations PFRDA Circulars Advisory, Orders & Notices Ministry of Finance Login Nodal Office POP / POP-SP Subscribers - NPS Regular Aggregators NLCC NEW! Manage your NPS on WhatsApp — Send 'Start' to 9619817343 DSC Signing Service (NSS) Utility Please click here to download Access and review performance of schemes and Pension Funds available under"
+  }
+ ],
+ "recommended": null,
+ "verify_attempts": 2,
+ "grievance_attempts": 2,
+ "clauses": [
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 2(10)–(11)",
+   "title": "Definitions",
+   "citation": "Consumer Protection Act, 2019, Section 2(10)–(11)",
+   "text": "(ii) the right to be informed about the quality, quantity, potency, purity, standard and price of goods, products or services, as the case may be, so as to protect the consumer against unfair trade practices; 4 THE GAZETTE OF INDIA EXTRAORDINARY [P ART II— (iii) the right to be assured, wherever possible, access to a variety of goods, products or services at competitive prices; (iv) the right to be heard and to be assured that consumer's interests will receive due consideration at appropriate fora; (v) the right to seek redressal against unfair trade practice or restrictive trade practices or unscrupulous exploitation of consumers; and (vi) the right to consumer awareness; (10) \"defect\" means any fault, imperfection or shortcoming in the quality, quantity, potency, purity or standard which is required to be maintained by or under any law for the time being in force or under any contract, express or implied or as is claimed by the trader in any manner whatsoever in relation to any goods or product and the expression \"defective\" shall be construed accordingly; (11) \"deficiency\" means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance which is required to be maintained by or under any law for the time being in force or has been undertaken to be performed by a person in pursuance of a contract or otherwise in relation to any service and includes— (i) any act of negligence or omission or commission by such person which causes loss or injury to the consumer; and (ii) deliberate withholding of relevant information by such person to the consumer; ",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.625,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 2(10)–(11)",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+   "tag": "C1"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 85",
+   "title": "Liability of product service provider",
+   "citation": "Consumer Protection Act, 2019, Section 85",
+   "text": "85. A product service provider shall be liable in a product liability action, if— (a) the service provided by him was faulty or imperfect or deficient or inadequate in quality, nature or manner of performance which is required to be provided by or under any law for the time being in force, or pursuant to any contract or otherwise; or (b) there was an act of omission or commission or negligence or conscious withholding any information which caused harm; or (c) the service provider did not issue adequate instructions or warnings to prevent any harm; or (d) the service did not conform to express warranty or the terms and conditions of the contract.",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.599,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 85",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+   "tag": "C2"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 21(4)–(8)",
+   "title": "Power of Central Authority to issue directions and penalties against false or misleading advertisements",
+   "citation": "Consumer Protection Act, 2019, Section 21(4)–(8)",
+   "text": "(4) Where the Central Authority is satisfied after investigation that any person is found to publish, or is a party to the publication of, a misleading advertisement, it may impose on such person a penalty which may extend to ten lakh rupees. (5) No endorser shall be liable to a penalty under sub-sections ( 2) and (3) if he has exercised due diligence to verify the veracity of the claims made in the advertisement regarding the product or service being endorsed by him. (6) No person shall be liable to such penalty if he proves that he had published or arranged for the publication of such advertisement in the ordinary course of his business: Provided that no such defence shall be available to such person if he had previous knowledge of the order passed by the Central Authority for withdrawal or modification of such advertisement. (7) While determining the penalty under this section, regard shall be had to the following, namely:— (a) the population and the area impacted or affected by such offence; (b) the frequency and duration of such offence; (c) the vulnerability of the class of persons likely to be adversely affected by such offence; and (d) the gross revenue from the sales effected by virtue of such offence. (8) The Central Authority shall give the person an opportunity of being heard before an order under this section is passed.",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.602,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 21(4)–(8)",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency in service fault imperfection shortcoming inadequacy in quality of performance The user has not received the first installment of the Pradhan Mantri Viksit Bharat Yojgar Yojna despite being eligible.",
+   "tag": "C3"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 39(1)",
+   "title": "Findings of District Commission",
+   "citation": "Consumer Protection Act, 2019, Section 39(1)",
+   "text": "39. (1) Where the District Commission is satisfied that the goods complained against suffer from any of the defects specified in the complaint or that any of the allegations contained in the complaint about the services or any unfair trade practices, or claims for compensation under product liability are proved, it shall issue an order to the opposite party directing him to do one or more of the following, namely:— (a) to remove the defect pointed out by the appropriate laboratory from the goods in question; (b) to replace the goods with new goods of similar description which shall be free from any defect; (c) to return to the complainant the price, or, as the case may be, the charges paid by the complainant along with such interest on such price or charges as may be decided; (d) to pay such amount as may be awarded by it as compensation to the consumer for any loss or injury suffered by the consumer due to the negligence of the opposite party: Provided that the District Commission shall have the power to grant punitive damages in such circumstances as it deems fit; (e) to pay such amount as may be awarded by it as compensation in a product liability action under Chapter VI; (f) to remove the defects in goods or deficiencies in the services in question; (g) to discontinue the unfair trade practice or restrictive trade practice and not to repeat them; (h) not to offer the hazardous or unsafe goods for sale; ",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.583,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 39(1)",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+   "tag": "C4"
+  }
+ ],
+ "draft": "I am an eligible beneficiary of the Pradhan Mantri Viksit Bharat Yojgar Yojna. Despite my eligibility, I have not received the first installment of 6 months, amounting to [AMOUNT]. My attempts to resolve this issue through the EPFO portal have been unsuccessful. This failure to credit the installment constitutes a deficiency in service as defined under [C1], which states that deficiency means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance. As per [C4], I am entitled to seek redressal for this deficiency. I request the immediate release of the first installment of [AMOUNT] due to me. Please resolve this matter within 7 days. If this issue remains unresolved, I will escalate this complaint to the National Consumer Helpline (NCH).",
+ "subject": "Complaint regarding non-receipt of Pradhan Mantri Viksit Bharat Yojgar Yojna installment",
+ "summary": "You are writing to EPFO to complain about the non-receipt of your first installment under the Pradhan Mantri Viksit Bharat Yojgar Yojna. You have cited the definition of deficiency in service to demand the release of your funds. If they do not respond within 7 days, you will escalate the matter to the National Consumer Helpline.",
+ "escalation": [
+  {
+   "name": "Company grievance contact",
+   "channel": "email / grievance page",
+   "url": null,
+   "phone": null,
+   "when_to_use": "First. Complain in writing and keep proof.",
+   "typical_wait": "30 days"
+  },
+  {
+   "name": "National Consumer Helpline (NCH)",
+   "channel": "portal / phone / WhatsApp",
+   "url": "https://consumerhelpline.gov.in",
+   "phone": "1915 · WhatsApp 8800001915",
+   "when_to_use": "If the company does not resolve it.",
+   "typical_wait": "about 30-45 days"
+  },
+  {
+   "name": "District Consumer Disputes Redressal Commission",
+   "channel": "online filing (e-Jagriti)",
+   "url": "https://e-jagriti.gov.in",
+   "phone": null,
+   "when_to_use": "File within two years of the cause of action.",
+   "typical_wait": "months"
+  }
+ ],
+ "critic_notes": [
+  "The reference id is unknown - write the placeholder [BOOKING / REFERENCE NUMBER].",
+  "The date is unknown - write the placeholder [DATE].",
+  "Reviewer: The letter cites [C1] as defining 'deficiency in service' and containing the text 'deficiency means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance,' but the provided text for [C1] does not contain this definition.",
+  "Reviewer: The letter claims an amount is due ('amounting to [AMOUNT]'), but the original complaint did not specify a monetary amount."
+ ],
+ "draft_attempts": 2,
+ "draft_method": "Gemini (gemini-3.1-flash-lite, interactions)",
+ "user_edits": {
+  "draft": "I am an eligible beneficiary of the Pradhan Mantri Viksit Bharat Yojgar Yojna. Despite my eligibility, I have not received the first installment of 6 months, amounting to [AMOUNT]. My attempts to resolve this issue through the EPFO portal have been unsuccessful. This failure to credit the installment constitutes a deficiency in service as defined under [C1], which states that deficiency means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance. As per [C4], I am entitled to seek redressal for this deficiency. I request the immediate release of the first installment of [AMOUNT] due to me. Please resolve this matter within 7 days. If this issue remains unresolved, I will escalate this complaint to the National Consumer Helpline (NCH).",
+  "subject": "Complaint regarding non-receipt of Pradhan Mantri Viksit Bharat Yojgar Yojna installment",
+  "fills": {},
+  "complainant": {}
+ },
+ "trace": [
+  "🧭 Intake (Gemini (gemini-3.1-flash-lite, interactions)): language=en, sector=other, company=EPFO, issues=deficiency; missing: reference_id, date, amount",
+  "🌐 Official domain: epfo.gov.in (top-1 result for “EPFO official website”, brand match)",
+  "🔎 Grievance search #1: 3 queries (site:epfo.gov.in grievance officer; site:epfo.gov.in customer care; EPFO grievance officer email) → 24 results, 8 pages read, 5 contact mentions (0 on the official domain)",
+  "📰 Precedents: 0 relevant forum/news item(s) (Gemini (gemini-3.1-flash-lite, interactions))",
+  "📍 Local forum: skipped — no city given",
+  "🛡️ Verifier #1: 0 verified, 5 unverified — 5 contact(s) found only on third-party sites — retrying search with “nodal officer”, “escalation”",
+  "🔎 Grievance retry #2: 2 queries (site:epfo.gov.in nodal officer; site:epfo.gov.in escalation) → 16 results, 8 pages read, 8 contact mentions (0 on the official domain)",
+  "🛡️ Verifier #2: 0 verified, 13 unverified — no verified grievance email (13 unverified contact(s) kept aside)",
+  "📚 Legal RAG: 4 clause(s) — Consumer Protection Act, 2019, Section 2(10)–(11); Consumer Protection Act, 2019, Section 85; Consumer Protection Act, 2019, Section 21(4)–(8); Consumer Protection Act, 2019, Section 39(1)",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, interactions))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, interactions)): 2 issue(s) → back to drafter",
+  "   • Reviewer: The letter cites [C1] as defining 'deficiency in service' as 'any fault, imperfection, or shortcoming in the manner of performance of a service,' but the provided text for [C1] only lists consumer rights (right to be informed, right to be heard, etc.) and does not contain that definition.",
+  "   • Reviewer: The letter claims that [C2] holds a service provider liable for 'such deficient performance,' but the provided text for [C2] refers specifically to 'product liability action' and 'product service provider,' which may not be applicable to a government welfare scheme installment.",
+  "✍️ Drafter #2 (Gemini (gemini-3.1-flash-lite, interactions)): revising for 2 critic note(s)",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, interactions)): 4 issue(s) remain after 2 drafts → finalize will strip unsupported citations",
+  "   • The reference id is unknown - write the placeholder [BOOKING / REFERENCE NUMBER].",
+  "   • The date is unknown - write the placeholder [DATE].",
+  "   • Reviewer: The letter cites [C1] as defining 'deficiency in service' and containing the text 'deficiency means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance,' but the provided text for [C1] does not contain this definition.",
+  "   • Reviewer: The letter claims an amount is due ('amounting to [AMOUNT]'), but the original complaint did not specify a monetary amount.",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 8,
+ "final": {
+  "to": null,
+  "to_name": "Company grievance contact",
+  "subject": "Complaint regarding non-receipt of Pradhan Mantri Viksit Bharat Yojgar Yojna installment",
+  "letter": "To,\nCompany grievance contact\nEPFO\n\nDate: 09 October 2026\n\nSubject: Complaint regarding non-receipt of Pradhan Mantri Viksit Bharat Yojgar Yojna installment\n\nDear Sir/Madam,\n\nI am an eligible beneficiary of the Pradhan Mantri Viksit Bharat Yojgar Yojna. Despite my eligibility, I have not received the first installment of 6 months, amounting to [AMOUNT]. My attempts to resolve this issue through the EPFO portal have been unsuccessful. This failure to credit the installment constitutes a deficiency in service as defined under [C1], which states that deficiency means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance. As per [C4], I am entitled to seek redressal for this deficiency. I request the immediate release of the first installment of [AMOUNT] due to me. Please resolve this matter within 7 days. If this issue remains unresolved, I will escalate this complaint to the National Consumer Helpline (NCH).\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Consumer Protection Act, 2019, Section 2(10)–(11) — Definitions\n[C4] Consumer Protection Act, 2019, Section 39(1) — Findings of District Commission",
+  "markdown": "# Complaint regarding non-receipt of Pradhan Mantri Viksit Bharat Yojgar Yojna installment\n\n**To:** Company grievance contact (no verified email - use the official complaint form)\n\nYou are writing to EPFO to complain about the non-receipt of your first installment under the Pradhan Mantri Viksit Bharat Yojgar Yojna. You have cited the definition of deficiency in service to demand the release of your funds. If they do not respond within 7 days, you will escalate the matter to the National Consumer Helpline.\n\n```\nTo,\nCompany grievance contact\nEPFO\n\nDate: 09 October 2026\n\nSubject: Complaint regarding non-receipt of Pradhan Mantri Viksit Bharat Yojgar Yojna installment\n\nDear Sir/Madam,\n\nI am an eligible beneficiary of the Pradhan Mantri Viksit Bharat Yojgar Yojna. Despite my eligibility, I have not received the first installment of 6 months, amounting to [AMOUNT]. My attempts to resolve this issue through the EPFO portal have been unsuccessful. This failure to credit the installment constitutes a deficiency in service as defined under [C1], which states that deficiency means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance. As per [C4], I am entitled to seek redressal for this deficiency. I request the immediate release of the first installment of [AMOUNT] due to me. Please resolve this matter within 7 days. If this issue remains unresolved, I will escalate this complaint to the National Consumer Helpline (NCH).\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Consumer Protection Act, 2019, Section 2(10)–(11) — Definitions\n[C4] Consumer Protection Act, 2019, Section 39(1) — Findings of District Commission\n```\n\n## If there's no reply\n1. **Company grievance contact** (email / grievance page) — First. Complain in writing and keep proof.\n2. **National Consumer Helpline (NCH)** (portal / phone / WhatsApp) — If the company does not resolve it. https://consumerhelpline.gov.in · 1915 · WhatsApp 8800001915\n3. **District Consumer Disputes Redressal Commission** (online filing (e-Jagriti)) — File within two years of the cause of action. https://e-jagriti.gov.in\n\n_Information, not legal advice._\n",
+  "summary": "You are writing to EPFO to complain about the non-receipt of your first installment under the Pradhan Mantri Viksit Bharat Yojgar Yojna. You have cited the definition of deficiency in service to demand the release of your funds. If they do not respond within 7 days, you will escalate the matter to the National Consumer Helpline.",
+  "escalation": [
+   {
+    "name": "Company grievance contact",
+    "channel": "email / grievance page",
+    "url": null,
+    "phone": null,
+    "when_to_use": "First. Complain in writing and keep proof.",
+    "typical_wait": "30 days"
+   },
+   {
+    "name": "National Consumer Helpline (NCH)",
+    "channel": "portal / phone / WhatsApp",
+    "url": "https://consumerhelpline.gov.in",
+    "phone": "1915 · WhatsApp 8800001915",
+    "when_to_use": "If the company does not resolve it.",
+    "typical_wait": "about 30-45 days"
+   },
+   {
+    "name": "District Consumer Disputes Redressal Commission",
+    "channel": "online filing (e-Jagriti)",
+    "url": "https://e-jagriti.gov.in",
+    "phone": null,
+    "when_to_use": "File within two years of the cause of action.",
+    "typical_wait": "months"
+   }
+  ],
+  "cited": [
+   {
+    "doc_id": "cpa",
+    "doc_title": "Consumer Protection Act, 2019",
+    "ref": "Section 2(10)–(11)",
+    "title": "Definitions",
+    "citation": "Consumer Protection Act, 2019, Section 2(10)–(11)",
+    "text": "(ii) the right to be informed about the quality, quantity, potency, purity, standard and price of goods, products or services, as the case may be, so as to protect the consumer against unfair trade practices; 4 THE GAZETTE OF INDIA EXTRAORDINARY [P ART II— (iii) the right to be assured, wherever possible, access to a variety of goods, products or services at competitive prices; (iv) the right to be heard and to be assured that consumer's interests will receive due consideration at appropriate fora; (v) the right to seek redressal against unfair trade practice or restrictive trade practices or unscrupulous exploitation of consumers; and (vi) the right to consumer awareness; (10) \"defect\" means any fault, imperfection or shortcoming in the quality, quantity, potency, purity or standard which is required to be maintained by or under any law for the time being in force or under any contract, express or implied or as is claimed by the trader in any manner whatsoever in relation to any goods or product and the expression \"defective\" shall be construed accordingly; (11) \"deficiency\" means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance which is required to be maintained by or under any law for the time being in force or has been undertaken to be performed by a person in pursuance of a contract or otherwise in relation to any service and includes— (i) any act of negligence or omission or commission by such person which causes loss or injury to the consumer; and (ii) deliberate withholding of relevant information by such person to the consumer; ",
+    "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+    "score": 0.625,
+    "act": "Consumer Protection Act, 2019",
+    "section": "Section 2(10)–(11)",
+    "source_file": "cpa_2019.pdf",
+    "page": null,
+    "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+    "tag": "C1"
+   },
+   {
+    "doc_id": "cpa",
+    "doc_title": "Consumer Protection Act, 2019",
+    "ref": "Section 39(1)",
+    "title": "Findings of District Commission",
+    "citation": "Consumer Protection Act, 2019, Section 39(1)",
+    "text": "39. (1) Where the District Commission is satisfied that the goods complained against suffer from any of the defects specified in the complaint or that any of the allegations contained in the complaint about the services or any unfair trade practices, or claims for compensation under product liability are proved, it shall issue an order to the opposite party directing him to do one or more of the following, namely:— (a) to remove the defect pointed out by the appropriate laboratory from the goods in question; (b) to replace the goods with new goods of similar description which shall be free from any defect; (c) to return to the complainant the price, or, as the case may be, the charges paid by the complainant along with such interest on such price or charges as may be decided; (d) to pay such amount as may be awarded by it as compensation to the consumer for any loss or injury suffered by the consumer due to the negligence of the opposite party: Provided that the District Commission shall have the power to grant punitive damages in such circumstances as it deems fit; (e) to pay such amount as may be awarded by it as compensation in a product liability action under Chapter VI; (f) to remove the defects in goods or deficiencies in the services in question; (g) to discontinue the unfair trade practice or restrictive trade practice and not to repeat them; (h) not to offer the hazardous or unsafe goods for sale; ",
+    "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+    "score": 0.583,
+    "act": "Consumer Protection Act, 2019",
+    "section": "Section 39(1)",
+    "source_file": "cpa_2019.pdf",
+    "page": null,
+    "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+    "tag": "C4"
+   }
+  ],
+  "removed_citations": [],
+  "unresolved_critic_notes": [
+   "The reference id is unknown - write the placeholder [BOOKING / REFERENCE NUMBER].",
+   "The date is unknown - write the placeholder [DATE].",
+   "Reviewer: The letter cites [C1] as defining 'deficiency in service' and containing the text 'deficiency means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance,' but the provided text for [C1] does not contain this definition.",
+   "Reviewer: The letter claims an amount is due ('amounting to [AMOUNT]'), but the original complaint did not specify a monetary amount."
+  ]
+ },
+ "thread_id": "d8d6f94ce477"
+}

@@ -1,0 +1,291 @@
+{
+ "complaint": "MakeMyTrip took Rs 12,000 for a hotel booking that the hotel says it never received.",
+ "company_hint": null,
+ "city": null,
+ "complainant": {},
+ "live": false,
+ "language": "en",
+ "sector": "other",
+ "case_entities": [],
+ "case_brief": {},
+ "eligibility_checks": [],
+ "gap_questions": [],
+ "extra_questions": [],
+ "eligibility": {
+  "status": "no_conditions",
+  "message": ""
+ },
+ "company": "MakeMyTrip",
+ "company_domain": null,
+ "official_domains": [],
+ "domain_basis": null,
+ "facts": {
+  "product_or_service": "",
+  "issue": "MakeMyTrip took Rs 12,000 for a hotel booking that the hotel says it never received.",
+  "what_user_wants": "",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "12000",
+  "date": "",
+  "city": "",
+  "details": {}
+ },
+ "issue_types": [
+  "other"
+ ],
+ "missing_facts": [
+  {
+   "fact": "reference_id",
+   "placeholder": "[BOOKING / REFERENCE NUMBER]"
+  },
+  {
+   "fact": "date",
+   "placeholder": "[DATE]"
+  }
+ ],
+ "search_plan": [
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "MakeMyTrip grievance officer email"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_forums",
+   "q": "MakeMyTrip complaint complaint resolved"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_news",
+   "q": "MakeMyTrip complaint consumer court"
+  }
+ ],
+ "search_keywords": "complaint",
+ "urgent_note": null,
+ "contacts": [],
+ "precedents": [],
+ "local_forum": null,
+ "blocked_hallucinations": 0,
+ "errors": [],
+ "verified_contacts": [],
+ "unverified_contacts": [],
+ "recommended": null,
+ "verify_attempts": 1,
+ "grievance_attempts": 1,
+ "clauses": [
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 2(10)–(11)",
+   "title": "Definitions",
+   "citation": "Consumer Protection Act, 2019, Section 2(10)–(11)",
+   "text": "(ii) the right to be informed about the quality, quantity, potency, purity, standard and price of goods, products or services, as the case may be, so as to protect the consumer against unfair trade practices; 4 THE GAZETTE OF INDIA EXTRAORDINARY [P ART II— (iii) the right to be assured, wherever possible, access to a variety of goods, products or services at competitive prices; (iv) the right to be heard and to be assured that consumer's interests will receive due consideration at appropriate fora; (v) the right to seek redressal against unfair trade practice or restrictive trade practices or unscrupulous exploitation of consumers; and (vi) the right to consumer awareness; (10) \"defect\" means any fault, imperfection or shortcoming in the quality, quantity, potency, purity or standard which is required to be maintained by or under any law for the time being in force or under any contract, express or implied or as is claimed by the trader in any manner whatsoever in relation to any goods or product and the expression \"defective\" shall be construed accordingly; (11) \"deficiency\" means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance which is required to be maintained by or under any law for the time being in force or has been undertaken to be performed by a person in pursuance of a contract or otherwise in relation to any service and includes— (i) any act of negligence or omission or commission by such person which causes loss or injury to the consumer; and (ii) deliberate withholding of relevant information by such person to the consumer; ",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.625,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 2(10)–(11)",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+   "tag": "C1"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 2(46)–(47)",
+   "title": "Definitions",
+   "citation": "Consumer Protection Act, 2019, Section 2(46)–(47)",
+   "text": "(46) \"unfair contract\" means a contract between a manufacturer or trader or service provider on one hand, and a consumer on the other, having such terms which 8 THE GAZETTE OF INDIA EXTRAORDINARY [P ART II— cause significant change in the rights of such consumer, including the following, namely:— (i) requiring manifestly excessive security deposits to be given by a consumer for the performance of contractual obligations; or (ii) imposing any penalty on the consumer, for the breach of contract thereof which is wholly disproportionate to the loss occurred due to such breach to the other party to the contract; or (iii) refusing to accept early repayment of debts on payment of applicable penalty; or (iv) entitling a party to the contract to terminate such contract unilaterally, without reasonable cause; or (v) permitting or has the effect of permitting one party to assign the contract to the detriment of the other party who is a consumer, without his consent; or (vi) imposing on the consumer any unreasonable charge, obligation or condition which puts such consumer to disadvantage; (47) \"unfair trade practice\" means a trade practice which, for the purpose of promoting the sale, use or supply of any goods or for the provision of any service, adopts any unfair method or unfair or deceptive practice including any of the following practices, namely:— ",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.714,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 2(46)–(47)",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "consumer rights to be heard and seek redressal against unfair trade practice MakeMyTrip took Rs 12,000 for a hotel booking that the hotel says it never received.",
+   "tag": "C2"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 85",
+   "title": "Liability of product service provider",
+   "citation": "Consumer Protection Act, 2019, Section 85",
+   "text": "85. A product service provider shall be liable in a product liability action, if— (a) the service provided by him was faulty or imperfect or deficient or inadequate in quality, nature or manner of performance which is required to be provided by or under any law for the time being in force, or pursuant to any contract or otherwise; or (b) there was an act of omission or commission or negligence or conscious withholding any information which caused harm; or (c) the service provider did not issue adequate instructions or warnings to prevent any harm; or (d) the service did not conform to express warranty or the terms and conditions of the contract.",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.599,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 85",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+   "tag": "C3"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 2(7)",
+   "title": "Definitions",
+   "citation": "Consumer Protection Act, 2019, Section 2(7)",
+   "text": "(i) an unfair contract or unfair trade practice or a restrictive trade practice has been adopted by any trader or service provider; (ii) the goods bought by him or agreed to be bought by him suffer from one or more defects; (iii) the services hired or availed of or agreed to be hired or availed of by him suffer from any deficiency; (iv) a trader or a service provider, as the case may be, has charged for the goods or for the services mentioned in the complaint, a price in excess of the price— (a) fixed by or under any law for the time being in force; or Definitions. SEC. 1] THE GAZETTE OF INDIA EXTRAORDINARY 3 (b) displayed on the goods or any package containing such goods; or (c) displayed on the price list exhibited by him by or under any law for the time being in force; or (d) agreed between the parties; (v) the goods, which are hazardous to life and safety when used, are being offered for sale to the public— (a) in contravention of standards relating to safety of such goods as required to be complied with, by or under any law for the time being in force; (b) where the trader knows that the goods so offered are unsafe to the public; (vi) the services which are hazardous or likely to be hazardous to life and safety of the public when used, are being offered by a person who provides any service and who knows it to be injurious to life and safety; (vii) a claim for product liability action lies against the product manufacturer, product seller or product service provider, as the case may be; (7) \"consumer\" means any person who— ",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.71,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 2(7)",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "consumer rights to be heard and seek redressal against unfair trade practice MakeMyTrip took Rs 12,000 for a hotel booking that the hotel says it never received.",
+   "tag": "C4"
+  }
+ ],
+ "draft": "I am writing to formally complain about your product/service (reference [BOOKING / REFERENCE NUMBER], dated [DATE], amount ₹12000).\n\nWhat happened: MakeMyTrip took Rs 12,000 for a hotel booking that the hotel says it never received.\n\nThis is contrary to the consumer-protection rules that apply to you, including: Definitions [C1]; Definitions [C2]; Liability of product service provider [C3].\n\nI request: [REMEDY - e.g. full refund / replacement / reversal].\n\nPlease acknowledge this complaint and resolve it within 30 days. If it is not resolved, I will escalate it to National Consumer Helpline (NCH).",
+ "subject": "Complaint: MakeMyTrip took Rs 12,000 for a hotel booking that the hotel says it n — [BOOKING / REFERENCE NUMBER]",
+ "summary": "Your complaint is against MakeMyTrip. Send this letter to the Company grievance contact first; if there's no fix in 30 days, go to National Consumer Helpline (NCH).",
+ "escalation": [
+  {
+   "name": "Company grievance contact",
+   "channel": "email / grievance page",
+   "url": null,
+   "phone": null,
+   "when_to_use": "First. Complain in writing and keep proof.",
+   "typical_wait": "30 days"
+  },
+  {
+   "name": "National Consumer Helpline (NCH)",
+   "channel": "portal / phone / WhatsApp",
+   "url": "https://consumerhelpline.gov.in",
+   "phone": "1915 · WhatsApp 8800001915",
+   "when_to_use": "If the company does not resolve it.",
+   "typical_wait": "about 30-45 days"
+  },
+  {
+   "name": "District Consumer Disputes Redressal Commission",
+   "channel": "online filing (e-Jagriti)",
+   "url": "https://e-jagriti.gov.in",
+   "phone": null,
+   "when_to_use": "File within two years of the cause of action.",
+   "typical_wait": "months"
+  }
+ ],
+ "critic_notes": [],
+ "draft_attempts": 1,
+ "draft_method": "template",
+ "user_edits": {
+  "approved": true
+ },
+ "case_answers": {},
+ "fills": {},
+ "drafted_answers": {},
+ "user_draft": "",
+ "review_rounds": 1,
+ "redraft": false,
+ "trace": [
+  "🧭 Intake (rules): language=en, sector=other, company=MakeMyTrip, issues=other; missing: reference_id, date",
+  "🌐 Official domain: not resolved",
+  "🔎 Case research: no named scheme, policy or product to research",
+  "🧩 Gap check (rules): no published conditions to compare",
+  "🔎 Grievance search #1: 1 queries (MakeMyTrip grievance officer email) → 0 results, 0 pages read, 0 contact mentions (0 on the official domain)",
+  "📰 Precedents: 0 relevant forum/news item(s) (rules)",
+  "📍 Local forum: skipped — no city given",
+  "🛡️ Verifier #1: 0 verified, 0 unverified — no verified grievance email (0 unverified contact(s) kept aside)",
+  "📚 Legal RAG: 4 clause(s) — Consumer Protection Act, 2019, Section 2(10)–(11); Consumer Protection Act, 2019, Section 2(46)–(47); Consumer Protection Act, 2019, Section 85; Consumer Protection Act, 2019, Section 2(7)",
+  "✍️ Drafter #1 (template)",
+  "🧐 Critic (rules): passed — every claim is cited, no invented facts",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 0,
+ "final": {
+  "to": null,
+  "to_name": "Company grievance contact",
+  "subject": "Complaint: MakeMyTrip took Rs 12,000 for a hotel booking that the hotel says it n — [BOOKING / REFERENCE NUMBER]",
+  "letter": "To,\nCompany grievance contact\nMakeMyTrip\n\nDate: 09 October 2026\n\nSubject: Complaint: MakeMyTrip took Rs 12,000 for a hotel booking that the hotel says it n — [BOOKING / REFERENCE NUMBER]\n\nDear Sir/Madam,\n\nI am writing to formally complain about your product/service (reference [BOOKING / REFERENCE NUMBER], dated [DATE], amount ₹12000).\n\nWhat happened: MakeMyTrip took Rs 12,000 for a hotel booking that the hotel says it never received.\n\nThis is contrary to the consumer-protection rules that apply to you, including: Definitions [C1]; Definitions [C2]; Liability of product service provider [C3].\n\nI request: [REMEDY - e.g. full refund / replacement / reversal].\n\nPlease acknowledge this complaint and resolve it within 30 days. If it is not resolved, I will escalate it to National Consumer Helpline (NCH).\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Consumer Protection Act, 2019, Section 2(10)–(11) — Definitions\n[C2] Consumer Protection Act, 2019, Section 2(46)–(47) — Definitions\n[C3] Consumer Protection Act, 2019, Section 85 — Liability of product service provider",
+  "markdown": "# Complaint: MakeMyTrip took Rs 12,000 for a hotel booking that the hotel says it n — [BOOKING / REFERENCE NUMBER]\n\n**To:** Company grievance contact (no verified email - use the official complaint form)\n\nYour complaint is against MakeMyTrip. Send this letter to the Company grievance contact first; if there's no fix in 30 days, go to National Consumer Helpline (NCH).\n\n```\nTo,\nCompany grievance contact\nMakeMyTrip\n\nDate: 09 October 2026\n\nSubject: Complaint: MakeMyTrip took Rs 12,000 for a hotel booking that the hotel says it n — [BOOKING / REFERENCE NUMBER]\n\nDear Sir/Madam,\n\nI am writing to formally complain about your product/service (reference [BOOKING / REFERENCE NUMBER], dated [DATE], amount ₹12000).\n\nWhat happened: MakeMyTrip took Rs 12,000 for a hotel booking that the hotel says it never received.\n\nThis is contrary to the consumer-protection rules that apply to you, including: Definitions [C1]; Definitions [C2]; Liability of product service provider [C3].\n\nI request: [REMEDY - e.g. full refund / replacement / reversal].\n\nPlease acknowledge this complaint and resolve it within 30 days. If it is not resolved, I will escalate it to National Consumer Helpline (NCH).\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Consumer Protection Act, 2019, Section 2(10)–(11) — Definitions\n[C2] Consumer Protection Act, 2019, Section 2(46)–(47) — Definitions\n[C3] Consumer Protection Act, 2019, Section 85 — Liability of product service provider\n```\n\n## If there's no reply\n1. **Company grievance contact** (email / grievance page) — First. Complain in writing and keep proof.\n2. **National Consumer Helpline (NCH)** (portal / phone / WhatsApp) — If the company does not resolve it. https://consumerhelpline.gov.in · 1915 · WhatsApp 8800001915\n3. **District Consumer Disputes Redressal Commission** (online filing (e-Jagriti)) — File within two years of the cause of action. https://e-jagriti.gov.in\n\n_Information, not legal advice._\n",
+  "summary": "Your complaint is against MakeMyTrip. Send this letter to the Company grievance contact first; if there's no fix in 30 days, go to National Consumer Helpline (NCH).",
+  "escalation": [
+   {
+    "name": "Company grievance contact",
+    "channel": "email / grievance page",
+    "url": null,
+    "phone": null,
+    "when_to_use": "First. Complain in writing and keep proof.",
+    "typical_wait": "30 days"
+   },
+   {
+    "name": "National Consumer Helpline (NCH)",
+    "channel": "portal / phone / WhatsApp",
+    "url": "https://consumerhelpline.gov.in",
+    "phone": "1915 · WhatsApp 8800001915",
+    "when_to_use": "If the company does not resolve it.",
+    "typical_wait": "about 30-45 days"
+   },
+   {
+    "name": "District Consumer Disputes Redressal Commission",
+    "channel": "online filing (e-Jagriti)",
+    "url": "https://e-jagriti.gov.in",
+    "phone": null,
+    "when_to_use": "File within two years of the cause of action.",
+    "typical_wait": "months"
+   }
+  ],
+  "cited": [
+   {
+    "doc_id": "cpa",
+    "doc_title": "Consumer Protection Act, 2019",
+    "ref": "Section 2(10)–(11)",
+    "title": "Definitions",
+    "citation": "Consumer Protection Act, 2019, Section 2(10)–(11)",
+    "text": "(ii) the right to be informed about the quality, quantity, potency, purity, standard and price of goods, products or services, as the case may be, so as to protect the consumer against unfair trade practices; 4 THE GAZETTE OF INDIA EXTRAORDINARY [P ART II— (iii) the right to be assured, wherever possible, access to a variety of goods, products or services at competitive prices; (iv) the right to be heard and to be assured that consumer's interests will receive due consideration at appropriate fora; (v) the right to seek redressal against unfair trade practice or restrictive trade practices or unscrupulous exploitation of consumers; and (vi) the right to consumer awareness; (10) \"defect\" means any fault, imperfection or shortcoming in the quality, quantity, potency, purity or standard which is required to be maintained by or under any law for the time being in force or under any contract, express or implied or as is claimed by the trader in any manner whatsoever in relation to any goods or product and the expression \"defective\" shall be construed accordingly; (11) \"deficiency\" means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance which is required to be maintained by or under any law for the time being in force or has been undertaken to be performed by a person in pursuance of a contract or otherwise in relation to any service and includes— (i) any act of negligence or omission or commission by such person which causes loss or injury to the consumer; and (ii) deliberate withholding of relevant information by such person to the consumer; ",
+    "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+    "score": 0.625,
+    "act": "Consumer Protection Act, 2019",
+    "section": "Section 2(10)–(11)",
+    "source_file": "cpa_2019.pdf",
+    "page": null,
+    "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+    "tag": "C1"
+   },
+   {
+    "doc_id": "cpa",
+    "doc_title": "Consumer Protection Act, 2019",
+    "ref": "Section 2(46)–(47)",
+    "title": "Definitions",
+    "citation": "Consumer Protection Act, 2019, Section 2(46)–(47)",
+    "text": "(46) \"unfair contract\" means a contract between a manufacturer or trader or service provider on one hand, and a consumer on the other, having such terms which 8 THE GAZETTE OF INDIA EXTRAORDINARY [P ART II— cause significant change in the rights of such consumer, including the following, namely:— (i) requiring manifestly excessive security deposits to be given by a consumer for the performance of contractual obligations; or (ii) imposing any penalty on the consumer, for the breach of contract thereof which is wholly disproportionate to the loss occurred due to such breach to the other party to the contract; or (iii) refusing to accept early repayment of debts on payment of applicable penalty; or (iv) entitling a party to the contract to terminate such contract unilaterally, without reasonable cause; or (v) permitting or has the effect of permitting one party to assign the contract to the detriment of the other party who is a consumer, without his consent; or (vi) imposing on the consumer any unreasonable charge, obligation or condition which puts such consumer to disadvantage; (47) \"unfair trade practice\" means a trade practice which, for the purpose of promoting the sale, use or supply of any goods or for the provision of any service, adopts any unfair method or unfair or deceptive practice including any of the following practices, namely:— ",
+    "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+    "score": 0.714,
+    "act": "Consumer Protection Act, 2019",
+    "section": "Section 2(46)–(47)",
+    "source_file": "cpa_2019.pdf",
+    "page": null,
+    "query": "consumer rights to be heard and seek redressal against unfair trade practice MakeMyTrip took Rs 12,000 for a hotel booking that the hotel says it never received.",
+    "tag": "C2"
+   },
+   {
+    "doc_id": "cpa",
+    "doc_title": "Consumer Protection Act, 2019",
+    "ref": "Section 85",
+    "title": "Liability of product service provider",
+    "citation": "Consumer Protection Act, 2019, Section 85",
+    "text": "85. A product service provider shall be liable in a product liability action, if— (a) the service provided by him was faulty or imperfect or deficient or inadequate in quality, nature or manner of performance which is required to be provided by or under any law for the time being in force, or pursuant to any contract or otherwise; or (b) there was an act of omission or commission or negligence or conscious withholding any information which caused harm; or (c) the service provider did not issue adequate instructions or warnings to prevent any harm; or (d) the service did not conform to express warranty or the terms and conditions of the contract.",
+    "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+    "score": 0.599,
+    "act": "Consumer Protection Act, 2019",
+    "section": "Section 85",
+    "source_file": "cpa_2019.pdf",
+    "page": null,
+    "query": "deficiency means any fault imperfection shortcoming or inadequacy in the quality nature and manner of performance of service",
+    "tag": "C3"
+   }
+  ],
+  "removed_citations": [],
+  "case_brief": {},
+  "case_answers": {},
+  "eligibility": {
+   "status": "no_conditions",
+   "message": ""
+  },
+  "eligibility_checks": [],
+  "unresolved_critic_notes": []
+ },
+ "thread_id": "eval-14-1791528096"
+}

@@ -1,0 +1,231 @@
+{
+ "complaint": "Mera phone Sarojini market mein chori ho gaya. Police station gaya to unhone FIR nahi likhi, bole “lost report” online daal do. Phone mein bank apps aur UPI hai. Kya FIR zaroori hai aur wo mana kar sakte hain?",
+ "company_hint": null,
+ "city": null,
+ "complainant": {
+  "name": "Alok",
+  "email": "alok930528@gmail.com"
+ },
+ "live": true,
+ "language": "hinglish",
+ "complaint_en": "My phone was stolen in Sarojini market. When I went to the police station, they did not file an FIR, saying I should file a \"lost report\" online. The phone has bank apps and UPI. Is an FIR necessary and can they refuse to file it?",
+ "sector": "police",
+ "tier": "B",
+ "safety": {
+  "level": "none",
+  "categories": [],
+  "method": "rules",
+  "helplines": [],
+  "numbers": [],
+  "messages": []
+ },
+ "case_entities": [],
+ "case_brief": {},
+ "eligibility_checks": [],
+ "gap_questions": [],
+ "extra_questions": [
+  "Police station ka naam kya hai jahan aap gaye the?"
+ ],
+ "eligibility": {
+  "status": "no_conditions",
+  "message": ""
+ },
+ "company": "",
+ "company_domain": null,
+ "official_domains": [],
+ "domain_basis": null,
+ "facts": {
+  "product_or_service": "Mobile phone",
+  "issue": "The complainant's phone was stolen, and the police refused to register an FIR, advising a lost report instead.",
+  "what_user_wants": "Guidance on whether an FIR is necessary and if the police can refuse to file one.",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "",
+  "date": "24 september, 1 pm",
+  "city": "Delhi",
+  "place": "Sarojini market",
+  "police_station": "Sarojini Nagar Police Station",
+  "details": {}
+ },
+ "issue_types": [
+  "cyber_fraud",
+  "other"
+ ],
+ "missing_facts": [],
+ "search_plan": [],
+ "search_keywords": "stolen phone FIR refusal",
+ "urgent_note": "Money lost to fraud? Call 1930 and your bank right now - the first hours matter most for freezing the money.",
+ "contacts": [],
+ "precedents": [],
+ "local_forum": {
+  "name": "Delhi Police Crime Branch Cyber cell",
+  "address": "110006, Old Delhi, Daryaganj, New Delhi, Delhi, 110002",
+  "phone": "011 2089 2633",
+  "website": null,
+  "maps_link": "https://www.google.com/maps/search/?api=1&query=28.6498301,77.2429569",
+  "city": "Delhi",
+  "kind": "Cyber crime police station"
+ },
+ "blocked_hallucinations": 0,
+ "errors": [],
+ "verified_contacts": [],
+ "unverified_contacts": [],
+ "recommended": null,
+ "verify_attempts": 1,
+ "grievance_attempts": 0,
+ "clauses": [],
+ "draft": "I am writing to formally report the theft of my mobile phone, which occurred on 24 September at approximately 1 PM at Sarojini Market. When I approached the Sarojini Nagar Police Station to report this incident, the officers on duty refused to register an FIR and instead advised me to file a 'lost report' online. I am deeply concerned about this refusal. My mobile phone contains sensitive financial information, including active bank applications and UPI accounts. While I have already notified my bank and UPI provider regarding the theft to secure my accounts, I have not yet blocked the IMEI number of the device. Given the potential for unauthorized access and financial fraud, it is critical that an FIR is registered to initiate a proper investigation and to facilitate the necessary security measures. I request you to kindly register an FIR regarding this theft, provide me with a free copy of the same, and initiate an investigation to trace the device. Please acknowledge this written complaint with a stamp and signature.",
+ "subject": "Formal Complaint regarding theft of mobile phone at Sarojini Market",
+ "summary": "Aapka phone Sarojini market mein chori hua hai aur police ne FIR likhne se mana kar diya hai. Is letter mein humne request ki hai ki FIR register ho kyunki aapke phone mein bank apps hain aur IMEI abhi tak block nahi hua hai. Aap ise police station mein submit karke stamped receipt zaroor lein.",
+ "escalation": [
+  {
+   "name": "National Cyber Crime Helpline 1930 / cybercrime.gov.in",
+   "channel": "call 1930 · report on cybercrime.gov.in · call your bank to block the account/card",
+   "url": "https://cybercrime.gov.in",
+   "phone": "1930",
+   "when_to_use": "Immediately — within hours if possible, so the money can be traced and frozen. Note the acknowledgement number and quote it in your police complaint.",
+   "typical_wait": "immediate"
+  },
+  {
+   "name": "Station House Officer (SHO), Sarojini Nagar Police Station",
+   "channel": "written complaint at the police station · e-FIR on your state police citizen portal where available",
+   "url": null,
+   "phone": "112",
+   "when_to_use": "Give your written complaint at the police station. For a cognizable offence the police must register an FIR; you can report at any police station (zero FIR) and you are entitled to a free copy. Get a signed and stamped receipt for your written complaint.",
+   "typical_wait": "same day"
+  },
+  {
+   "name": "Superintendent of Police / Deputy Commissioner of Police",
+   "channel": "complaint in writing by registered post or in person",
+   "url": null,
+   "phone": null,
+   "when_to_use": "If the SHO refuses to register an FIR: send the substance of your complaint in writing to the SP/DCP (BNSS, 2023, s.173(4)). Keep the postal receipt.",
+   "typical_wait": "about 2 weeks"
+  },
+  {
+   "name": "Judicial Magistrate",
+   "channel": "application through a lawyer or the District Legal Services Authority (free if eligible)",
+   "url": "https://nalsa.gov.in",
+   "phone": "15100",
+   "when_to_use": "If the police still do not act: apply to the Magistrate to direct registration and investigation (BNSS, 2023, s.175(3)).",
+   "typical_wait": "weeks"
+  }
+ ],
+ "critic_notes": [
+  "Reviewer: The letter fails to mention the specific legal requirement or right to file an FIR for a cognizable offense (theft), which is the core of the user's query regarding whether police can refuse to file one."
+ ],
+ "draft_attempts": 2,
+ "draft_method": "Gemini (gemini-3.1-flash-lite, generate_content)",
+ "deadline": {},
+ "user_edits": {
+  "draft": "I am writing to formally report the theft of my mobile phone, which occurred on 24 September at approximately 1 PM at Sarojini Market. When I approached the Sarojini Nagar Police Station to report this incident, the officers on duty refused to register an FIR and instead advised me to file a 'lost report' online. I am deeply concerned about this refusal. My mobile phone contains sensitive financial information, including active bank applications and UPI accounts. While I have already notified my bank and UPI provider regarding the theft to secure my accounts, I have not yet blocked the IMEI number of the device. Given the potential for unauthorized access and financial fraud, it is critical that an FIR is registered to initiate a proper investigation and to facilitate the necessary security measures. I request you to kindly register an FIR regarding this theft, provide me with a free copy of the same, and initiate an investigation to trace the device. Please acknowledge this written complaint with a stamp and signature.",
+  "subject": "Formal Complaint regarding theft of mobile phone at Sarojini Market",
+  "complainant": {
+   "name": "Alok",
+   "email": "alok930528@gmail.com"
+  }
+ },
+ "case_answers": {
+  "Kya aapne apne bank ya UPI provider ko fraud ki report di hai?": "yes",
+  "Kya aapne apne phone ka IMEI number block karwaya hai?": "no"
+ },
+ "fills": {
+  "[DATE AND TIME OF INCIDENT]": "24 september, 1 pm",
+  "[POLICE STATION]": "Sarojini Nagar Police Station"
+ },
+ "drafted_answers": {
+  "Kya aapne apne bank ya UPI provider ko fraud ki report di hai?": "yes",
+  "Kya aapne apne phone ka IMEI number block karwaya hai?": "no"
+ },
+ "user_draft": "",
+ "review_rounds": 1,
+ "redraft": false,
+ "trace": [
+  "🧭 Intake (Gemini (gemini-3.1-flash-lite, generate_content)): language=hinglish, domain=police (tier B: draft and route urgently), company=?, issues=cyber_fraud, other; missing: date, police_station",
+  "🛟 Safety: no immediate danger detected",
+  "🔎 Case research: no named scheme, policy or product to research",
+  "🗺️ Frame: police route confirmed",
+  "📍 Local forum (Cyber crime police station): Delhi Police Crime Branch Cyber cell",
+  "🧩 Gap check (no conditions): 0 met, 0 to confirm, 0 may not be met; 3 other question(s)",
+  "🛡️ Verifier #1: 0 verified, 0 unverified — no company identified - nothing to verify",
+  "📚 Legal RAG: skipped — no indexed law applies to the police route (no citations will be made)",
+  "📝 Details form: 2 answer(s), 2 detail(s) filled of 3 question(s) and 2 missing fact(s)",
+  "🔁 Reassess (no conditions): 2 answer(s) — no published conditions → drafting",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 1 issue(s) → back to drafter",
+  "   • Reviewer: The letter fails to mention that the IMEI number has not been blocked, which is a critical security step for a stolen device containing financial apps.",
+  "✍️ Drafter #2 (Gemini (gemini-3.1-flash-lite, generate_content)): revising for 1 critic note(s)",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 1 issue(s) remain after 2 drafts → finalize will strip unsupported citations",
+  "   • Reviewer: The letter fails to mention the specific legal requirement or right to file an FIR for a cognizable offense (theft), which is the core of the user's query regarding whether police can refuse to file one.",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 0,
+ "final": {
+  "to": null,
+  "to_name": "The Station House Officer\nSarojini Nagar Police Station Police Station",
+  "tier": "B",
+  "safety": {
+   "level": "none",
+   "categories": [],
+   "method": "rules",
+   "helplines": [],
+   "numbers": [],
+   "messages": []
+  },
+  "subject": "Formal Complaint regarding theft of mobile phone at Sarojini Market",
+  "letter": "To,\nThe Station House Officer\nSarojini Nagar Police Station Police Station\n\n\nDate: 09 October 2026\n\nSubject: Formal Complaint regarding theft of mobile phone at Sarojini Market\n\nDear Sir/Madam,\n\nI am writing to formally report the theft of my mobile phone, which occurred on 24 September at approximately 1 PM at Sarojini Market. When I approached the Sarojini Nagar Police Station to report this incident, the officers on duty refused to register an FIR and instead advised me to file a 'lost report' online. I am deeply concerned about this refusal. My mobile phone contains sensitive financial information, including active bank applications and UPI accounts. While I have already notified my bank and UPI provider regarding the theft to secure my accounts, I have not yet blocked the IMEI number of the device. Given the potential for unauthorized access and financial fraud, it is critical that an FIR is registered to initiate a proper investigation and to facilitate the necessary security measures. I request you to kindly register an FIR regarding this theft, provide me with a free copy of the same, and initiate an investigation to trace the device. Please acknowledge this written complaint with a stamp and signature.\n\nYours faithfully,\nAlok\n[PHONE]\nalok930528@gmail.com\n[ADDRESS]\n\nKeep a copy and ask for a signed, stamped receipt (or the FIR copy) when you submit this.",
+  "markdown": "# Formal Complaint regarding theft of mobile phone at Sarojini Market\n\n**To:** The Station House Officer, Sarojini Nagar Police Station Police Station (submit at the police station or on your state police portal)\n\nAapka phone Sarojini market mein chori hua hai aur police ne FIR likhne se mana kar diya hai. Is letter mein humne request ki hai ki FIR register ho kyunki aapke phone mein bank apps hain aur IMEI abhi tak block nahi hua hai. Aap ise police station mein submit karke stamped receipt zaroor lein.\n\n```\nTo,\nThe Station House Officer\nSarojini Nagar Police Station Police Station\n\n\nDate: 09 October 2026\n\nSubject: Formal Complaint regarding theft of mobile phone at Sarojini Market\n\nDear Sir/Madam,\n\nI am writing to formally report the theft of my mobile phone, which occurred on 24 September at approximately 1 PM at Sarojini Market. When I approached the Sarojini Nagar Police Station to report this incident, the officers on duty refused to register an FIR and instead advised me to file a 'lost report' online. I am deeply concerned about this refusal. My mobile phone contains sensitive financial information, including active bank applications and UPI accounts. While I have already notified my bank and UPI provider regarding the theft to secure my accounts, I have not yet blocked the IMEI number of the device. Given the potential for unauthorized access and financial fraud, it is critical that an FIR is registered to initiate a proper investigation and to facilitate the necessary security measures. I request you to kindly register an FIR regarding this theft, provide me with a free copy of the same, and initiate an investigation to trace the device. Please acknowledge this written complaint with a stamp and signature.\n\nYours faithfully,\nAlok\n[PHONE]\nalok930528@gmail.com\n[ADDRESS]\n\nKeep a copy and ask for a signed, stamped receipt (or the FIR copy) when you submit this.\n```\n\n## Where to report, and if the police don't act\n1. **National Cyber Crime Helpline 1930 / cybercrime.gov.in** (call 1930 · report on cybercrime.gov.in · call your bank to block the account/card) — Immediately — within hours if possible, so the money can be traced and frozen. Note the acknowledgement number and quote it in your police complaint. https://cybercrime.gov.in · 1930\n2. **Station House Officer (SHO), Sarojini Nagar Police Station** (written complaint at the police station · e-FIR on your state police citizen portal where available) — Give your written complaint at the police station. For a cognizable offence the police must register an FIR; you can report at any police station (zero FIR) and you are entitled to a free copy. Get a signed and stamped receipt for your written complaint. · 112\n3. **Superintendent of Police / Deputy Commissioner of Police** (complaint in writing by registered post or in person) — If the SHO refuses to register an FIR: send the substance of your complaint in writing to the SP/DCP (BNSS, 2023, s.173(4)). Keep the postal receipt.\n4. **Judicial Magistrate** (application through a lawyer or the District Legal Services Authority (free if eligible)) — If the police still do not act: apply to the Magistrate to direct registration and investigation (BNSS, 2023, s.175(3)). https://nalsa.gov.in · 15100\n\n_Information, not legal advice._\n",
+  "summary": "Aapka phone Sarojini market mein chori hua hai aur police ne FIR likhne se mana kar diya hai. Is letter mein humne request ki hai ki FIR register ho kyunki aapke phone mein bank apps hain aur IMEI abhi tak block nahi hua hai. Aap ise police station mein submit karke stamped receipt zaroor lein.",
+  "escalation": [
+   {
+    "name": "National Cyber Crime Helpline 1930 / cybercrime.gov.in",
+    "channel": "call 1930 · report on cybercrime.gov.in · call your bank to block the account/card",
+    "url": "https://cybercrime.gov.in",
+    "phone": "1930",
+    "when_to_use": "Immediately — within hours if possible, so the money can be traced and frozen. Note the acknowledgement number and quote it in your police complaint.",
+    "typical_wait": "immediate"
+   },
+   {
+    "name": "Station House Officer (SHO), Sarojini Nagar Police Station",
+    "channel": "written complaint at the police station · e-FIR on your state police citizen portal where available",
+    "url": null,
+    "phone": "112",
+    "when_to_use": "Give your written complaint at the police station. For a cognizable offence the police must register an FIR; you can report at any police station (zero FIR) and you are entitled to a free copy. Get a signed and stamped receipt for your written complaint.",
+    "typical_wait": "same day"
+   },
+   {
+    "name": "Superintendent of Police / Deputy Commissioner of Police",
+    "channel": "complaint in writing by registered post or in person",
+    "url": null,
+    "phone": null,
+    "when_to_use": "If the SHO refuses to register an FIR: send the substance of your complaint in writing to the SP/DCP (BNSS, 2023, s.173(4)). Keep the postal receipt.",
+    "typical_wait": "about 2 weeks"
+   },
+   {
+    "name": "Judicial Magistrate",
+    "channel": "application through a lawyer or the District Legal Services Authority (free if eligible)",
+    "url": "https://nalsa.gov.in",
+    "phone": "15100",
+    "when_to_use": "If the police still do not act: apply to the Magistrate to direct registration and investigation (BNSS, 2023, s.175(3)).",
+    "typical_wait": "weeks"
+   }
+  ],
+  "deadline": {},
+  "cited": [],
+  "removed_citations": [],
+  "case_brief": {},
+  "case_answers": {
+   "Kya aapne apne bank ya UPI provider ko fraud ki report di hai?": "yes",
+   "Kya aapne apne phone ka IMEI number block karwaya hai?": "no"
+  },
+  "eligibility": {
+   "status": "no_conditions",
+   "message": ""
+  },
+  "eligibility_checks": [],
+  "unresolved_critic_notes": [
+   "Reviewer: The letter fails to mention the specific legal requirement or right to file an FIR for a cognizable offense (theft), which is the core of the user's query regarding whether police can refuse to file one."
+  ]
+ },
+ "thread_id": "67d2eeb66c8f"
+}

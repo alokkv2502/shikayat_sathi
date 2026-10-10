@@ -868,3 +868,64 @@ def test_hindi_letter_is_hindi_end_to_end(mocked):
                              "addressee_lines": ["State-specific Food and Civil Supplies Department portals"]},
                             None, "A", L)
     assert block == ["The Grievance Redressal Officer", "Food and Civil Supplies Department, Bihar"]  # no portal
+
+
+# --------------------------------------------------------------------------- Live view
+
+def test_live_view_phases_cover_every_graph_node():
+    shown = [n for _, steps in G.PHASES for n, _, _ in steps]
+    assert len(shown) == len(set(shown))
+    assert set(shown) == set(G.build().get_graph().nodes) - {"__start__", "__end__"}
+
+
+def test_run_writes_a_live_event_log(mocked):
+    from saathi import events
+    app, t, s, _ = run_graph("Kartify refused a refund for my damaged phone, order KT12345678, Rs 15,000.",
+                             company="Kartify", city="Pune")
+    evts = events.read(t)
+    kinds = [e["kind"] for e in evts]
+    assert kinds[0] == "run_start" and kinds.count("run_paused") >= 1
+    started = {e["node"] for e in evts if e["kind"] == "node_start"}
+    assert {"safety_router", "intake_planner", "grievance", "verifier", "drafter", "critic"} <= started
+    assert any(e["kind"] == "node_waiting" and e["node"] == "human_review" for e in evts)
+    assert any(e["kind"] == "call" and e["call"] == "rag" and e["node"] == "legal_rag" for e in evts)
+    summ = events.summarize(evts)
+    assert summ["status"] == "paused" and summ["stage"] == "review"
+    assert summ["nodes"]["human_review"]["state"] == "waiting" and summ["nodes"]["grievance"]["state"] == "done"
+    intake = summ["nodes"]["intake_planner"]["history"][-1]  # each card shows its node's logs and returned state
+    assert intake["trace"] and intake["output"]["sector"] == "ecommerce"
+    assert summ["nodes"]["legal_rag"]["history"][-1]["calls"]                    # and the calls it made
+    assert summ["nodes"]["human_review"]["history"][-1]["asked"]["stage"] == "review"
+    assert len(summ["nodes"]["ask_details"]["history"]) == 2                     # paused, then resumed
+    G.resume(t, {"approved": True}, app=app)
+    summ = events.summarize(events.read(t))
+    assert summ["status"] == "finished" and summ["nodes"]["finalize"]["state"] == "done"
+    assert summ["current"] == [] and summ["active_s"] >= 0
+    assert any("Finished" in line for _, line in events.feed(events.read(t)))
+
+
+def test_live_preview_is_bounded():
+    from saathi import events
+    p = events.preview({"pages": [{"text": "x" * 5000}] * 30, "deep": {"a": {"b": {"c": {"d": 1}}}}})
+    assert len(p["pages"]) == 9 and p["pages"][-1] == "… +22 more" and len(p["pages"][0]["text"]) < 450
+    assert isinstance(p["deep"]["a"]["b"], str)
+
+
+def test_live_summary_marks_running_and_failed_nodes():
+    from saathi import events
+    evts = [{"t": 1.0, "kind": "run_start"}, {"t": 1.1, "kind": "node_start", "node": "grievance", "label": "x"},
+            {"t": 1.2, "kind": "call", "call": "serp", "cached": True, "label": "q", "ms": 5},
+            {"t": 1.3, "kind": "node_start", "node": "precedents"},
+            {"t": 1.4, "kind": "node_end", "node": "precedents", "ms": 100, "errors": ["boom"]}]
+    summ = events.summarize(evts, now=3.0)
+    assert summ["status"] == "running" and summ["current"] == ["grievance"] and summ["active_s"] == 2.0
+    assert summ["nodes"]["precedents"]["state"] == "warn" and summ["calls"]["serp"] == [1, 1]
+    summ = events.summarize(evts + [{"t": 2.0, "kind": "run_failed", "error": "AI unavailable"}])
+    assert summ["status"] == "failed" and summ["nodes"]["grievance"]["state"] == "failed" and summ["current"] == []
+
+
+def test_live_events_never_break_a_run(monkeypatch):
+    from saathi import events
+    monkeypatch.setattr(events, "RUNS_DIR", events.RUNS_DIR / "missing" / "dir")  # writes fail
+    events.emit("abc123", "run_start")  # must not raise
+    assert events.read("abc123") == []

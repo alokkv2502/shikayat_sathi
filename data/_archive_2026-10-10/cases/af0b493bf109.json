@@ -1,0 +1,407 @@
+{
+ "complaint": "Recovery agents of the KreditBee app are calling my relatives and threatening me though my EMI is only 3 days late.",
+ "company_hint": "KreditBee",
+ "city": "Hyderabad",
+ "complainant": {},
+ "live": true,
+ "language": "en",
+ "sector": "loan_app",
+ "company": "KreditBee",
+ "company_domain": "kreditbee.in",
+ "official_domains": [
+  "kreditbee.in"
+ ],
+ "domain_basis": "top-1 result for “KreditBee official website”, brand match",
+ "facts": {
+  "product_or_service": "Loan",
+  "issue": "Recovery agents are calling relatives and threatening the user due to a 3-day late EMI payment.",
+  "what_user_wants": "Stop harassment",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "",
+  "date": "",
+  "city": "Hyderabad"
+ },
+ "issue_types": [
+  "harassment"
+ ],
+ "missing_facts": [
+  {
+   "fact": "reference_id",
+   "placeholder": "[LOAN ACCOUNT NUMBER]"
+  },
+  {
+   "fact": "date",
+   "placeholder": "[DATE OF CALLS]"
+  }
+ ],
+ "search_plan": [
+  {
+   "worker": "registry",
+   "engine": "LoanLens (RBI DLA directory)",
+   "q": "KreditBee"
+  },
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "site:kreditbee.in grievance redressal officer"
+  },
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "site:kreditbee.in nodal officer"
+  },
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "KreditBee grievance redressal officer email"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_forums",
+   "q": "KreditBee KreditBee recovery harassment complaint resolved"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_news",
+   "q": "KreditBee KreditBee recovery harassment consumer court"
+  },
+  {
+   "worker": "local_forum",
+   "engine": "google_maps",
+   "q": "District Consumer Disputes Redressal Commission Hyderabad"
+  }
+ ],
+ "search_keywords": "KreditBee recovery harassment",
+ "urgent_note": "Harassment, threats or misuse of photos/contacts is a crime: report on cybercrime.gov.in / 1930.",
+ "contacts": [
+  {
+   "type": "phone",
+   "value": "18007710663",
+   "role": "grievance_cell",
+   "name": "",
+   "timeline": "",
+   "evidence": "other groups of colleagues with grounds for an appeal and they should contact us if they wish to submit an application or a complaint. If you would like to learn more about the ALACD, our programs or coming on board as a Partner, please contact us at 1800-771-0663 or visit our website at www.ala.ca. Whether you're buying a new home, renewing your mortgage or planning a renovation, contact us today",
+   "source_url": "https://www.wordhippo.com/what-is/sentences-with-the-word/contact_us.html",
+   "source_domain": "wordhippo.com",
+   "page_title": "How to use \"contact us\" in a sentence",
+   "via": "page",
+   "email": "",
+   "phone": "18007710663",
+   "url": "https://www.wordhippo.com/what-is/sentences-with-the-word/contact_us.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "iccmbda@gmail.com",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": " Conduct Report sexual harassment If you've experienced or witnessed sexual harassment at work, you can reach our response team directly. Reports are handled confidentially by trained staff. Email the response team Opens your email app, addressed to iccmbda@gmail.com Grievance Form For any other inquiries, please use this form. Name * : Email * : To prevent spam, please verify your email by genera",
+   "source_url": "https://www.mbda.gov.in/greivances/",
+   "source_domain": "mbda.gov.in",
+   "page_title": "Grievances",
+   "via": "page",
+   "email": "iccmbda@gmail.com",
+   "phone": "",
+   "url": "https://www.mbda.gov.in/greivances/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  },
+  {
+   "type": "email",
+   "value": "knowledge.mbda@gov.in",
+   "role": "other",
+   "name": "",
+   "timeline": "",
+   "evidence": "Website of Meghalaya Basin Development Authority, Government of Meghalaya, India Note: Content on this website is published and managed by Meghalaya Basin Development Authority For any query regarding this Website, please contact the Web Information Manager Wankit K. Swer (Sr. Manager) E-mail ID - knowledge.mbda@gov.in Last updated: 10/7/2026, 12:47:57 PM",
+   "source_url": "https://www.mbda.gov.in/greivances/",
+   "source_domain": "mbda.gov.in",
+   "page_title": "Grievances",
+   "via": "page",
+   "email": "knowledge.mbda@gov.in",
+   "phone": "",
+   "url": "https://www.mbda.gov.in/greivances/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": ""
+  }
+ ],
+ "precedents": [],
+ "local_forum": {
+  "name": "Telangana State Consumer Commission",
+  "address": "Eruvaka, Anand Nagar Colony Rd, Khairtabad, Hyderabad, Telangana 500004",
+  "phone": "040 2339 4399",
+  "website": null,
+  "maps_link": "https://www.google.com/maps/search/?api=1&query=17.4132268,78.45861219999999",
+  "city": "Hyderabad"
+ },
+ "registry": {
+  "status": "unavailable",
+  "notes": [
+   "LoanLens registry not found at D:\\hackathon\\shikayat_sathi\\Loanlens"
+  ]
+ },
+ "blocked_hallucinations": 0,
+ "errors": [],
+ "verified_contacts": [],
+ "unverified_contacts": [
+  {
+   "email": "",
+   "phone": "18007710663",
+   "url": "https://www.wordhippo.com/what-is/sentences-with-the-word/contact_us.html",
+   "source_url": "https://www.wordhippo.com/what-is/sentences-with-the-word/contact_us.html",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "phone",
+   "value": "18007710663",
+   "role": "grievance_cell",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "fake customer-care numbers are a common scam: call only numbers from the official site"
+   ],
+   "checks": [
+    "sources: wordhippo.com"
+   ],
+   "sources": [
+    "https://www.wordhippo.com/what-is/sentences-with-the-word/contact_us.html"
+   ],
+   "evidence": "other groups of colleagues with grounds for an appeal and they should contact us if they wish to submit an application or a complaint. If you would like to learn more about the ALACD, our programs or coming on board as a Partner, please contact us at 1800-771-0663 or visit our website at www.ala.ca. Whether you're buying a new home, renewing your mortgage or planning a renovation, contact us today"
+  },
+  {
+   "email": "iccmbda@gmail.com",
+   "phone": "",
+   "url": "https://www.mbda.gov.in/greivances/",
+   "source_url": "https://www.mbda.gov.in/greivances/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "iccmbda@gmail.com",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "free webmail address - companies don't handle grievances from gmail/yahoo"
+   ],
+   "checks": [
+    "sources: mbda.gov.in"
+   ],
+   "sources": [
+    "https://www.mbda.gov.in/greivances/"
+   ],
+   "evidence": " Conduct Report sexual harassment If you've experienced or witnessed sexual harassment at work, you can reach our response team directly. Reports are handled confidentially by trained staff. Email the response team Opens your email app, addressed to iccmbda@gmail.com Grievance Form For any other inquiries, please use this form. Name * : Email * : To prevent spam, please verify your email by genera"
+  },
+  {
+   "email": "knowledge.mbda@gov.in",
+   "phone": "",
+   "url": "https://www.mbda.gov.in/greivances/",
+   "source_url": "https://www.mbda.gov.in/greivances/",
+   "source_type": "third_party",
+   "verified": false,
+   "reason": "only 1 independent source(s); not on the official site",
+   "type": "email",
+   "value": "knowledge.mbda@gov.in",
+   "role": "other",
+   "name": "",
+   "name_verified": false,
+   "designation": "",
+   "timeline": "",
+   "status": "unverified",
+   "basis": "only 1 independent source(s); not on the official site",
+   "warnings": [
+    "email domain gov.in is not the company's official domain"
+   ],
+   "checks": [
+    "sources: mbda.gov.in"
+   ],
+   "sources": [
+    "https://www.mbda.gov.in/greivances/"
+   ],
+   "evidence": "Website of Meghalaya Basin Development Authority, Government of Meghalaya, India Note: Content on this website is published and managed by Meghalaya Basin Development Authority For any query regarding this Website, please contact the Web Information Manager Wankit K. Swer (Sr. Manager) E-mail ID - knowledge.mbda@gov.in Last updated: 10/7/2026, 12:47:57 PM"
+  }
+ ],
+ "recommended": null,
+ "verify_attempts": 2,
+ "grievance_attempts": 2,
+ "clauses": [
+  {
+   "doc_id": "dl",
+   "doc_title": "RBI (Digital Lending) Directions, 2025",
+   "ref": "Para 11",
+   "title": "Grievance redressal",
+   "citation": "RBI (Digital Lending) Directions, 2025, Para 11",
+   "text": "11. Grievance redressal i. The RE, and the LSP which has an interface with the borrower, shall designate nodal grievance redressal officers to deal with digital lending related complaints/ issues raised by the borrower. ii. Contact details of the nodal grievance redressal officers shall be prominently displayed on the websites of the RE, its LSP and on the DLA, as well as in the KFS provided to the borrower. iii. The facility of lodging complaint shall also be made available on the DLA and on the website as stated above. It is reiterated that responsibility of grievance redressal shall continue to remain with the RE. iv. If any complaint lodged by the borrower against the RE or the LSP engaged by the RE is rejected wholly or partly by the RE, or the borrower is not satisfied with the reply; or the borrower has not received any reply within 30 days of receipt of complaint by the RE, the said borrower can lodge a complaint over the Complaint Management System (CMS) portal under the Reserve Bank-Integrated Ombudsman Scheme (RB-IOS) or send a physical complaint to “Centralised Receipt and Processing Centre, 4th Floor, Reserve Bank of India, Sector-17, Central Vista, Chandigarh - 160017” as per the grievance redressal mechanism prescribed by the Reserve Bank. This information shall be suitably conveyed to the borrower. Chapter IV: Technology and Data Requirement",
+   "source_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12848",
+   "score": 0.863,
+   "act": "RBI (Digital Lending) Directions, 2025",
+   "section": "Para 11",
+   "source_file": "rbi_digital_lending_directions_2025.html",
+   "page": null,
+   "query": "nodal grievance redressal officer digital lending complaints",
+   "tag": "C1"
+  },
+  {
+   "doc_id": "dl",
+   "doc_title": "RBI (Digital Lending) Directions, 2025",
+   "ref": "Para 8 (contd.)",
+   "title": "Disclosures to borrowers",
+   "citation": "RBI (Digital Lending) Directions, 2025, Para 8 (contd.)",
+   "text": "In case of a loan default, when a recovery agent is assigned for recovery or there is a change in the recovery agent already assigned, the particulars of such recovery agent authorised to approach the borrower for recovery shall be communicated to the borrower through email/ SMS before the recovery agent contacts the borrower for recovery.",
+   "source_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12848",
+   "score": 0.715,
+   "act": "RBI (Digital Lending) Directions, 2025",
+   "section": "Para 8 (contd.)",
+   "source_file": "rbi_digital_lending_directions_2025.html",
+   "page": null,
+   "query": "recovery agents harassment intimidation; grievance redressal; data access contacts Recovery agents are calling relatives and threatening the user due to a 3-day late EMI payment.",
+   "tag": "C2"
+  }
+ ],
+ "draft": "I am writing regarding my loan account [LOAN ACCOUNT NUMBER] in Hyderabad. My EMI payment is 3 days late. On [DATE OF CALLS], your recovery agents contacted my relatives and threatened me. This conduct violates [C2], which mandates that particulars of any recovery agent assigned must be communicated to the borrower before they make contact. I have received no such communication. Under [C1], I am lodging this formal grievance. I request you to immediately stop this harassment and ensure that no further calls are made to my relatives or myself in a threatening manner. Please resolve this issue within 30 days. If I do not receive a satisfactory response or if this complaint is rejected, I will escalate this matter to the RBI Ombudsman under the Reserve Bank-Integrated Ombudsman Scheme (RB-IOS) as provided in [C1].",
+ "subject": "Formal Complaint: Harassment by Recovery Agents - Loan Account [LOAN ACCOUNT NUMBER]",
+ "summary": "You are filing a formal complaint against KreditBee for harassment by recovery agents who are contacting your relatives regarding a 3-day late EMI payment. You have cited the RBI's digital lending directions to demand an immediate stop to this behavior. If the company fails to resolve this within 30 days, you are prepared to escalate the matter to the RBI Ombudsman.",
+ "escalation": [
+  {
+   "name": "Lender's Grievance Redressal Officer (from RBI's DLA directory)",
+   "channel": "email / phone",
+   "url": null,
+   "phone": null,
+   "when_to_use": "If the app is in RBI's Digital Lending App directory, write to the GRO the lender declared to RBI.",
+   "typical_wait": "30 days"
+  },
+  {
+   "name": "RBI Ombudsman (RB-IOS, 2026)",
+   "channel": "RBI CMS portal",
+   "url": "https://cms.rbi.org.in",
+   "phone": "14448",
+   "when_to_use": "For apps of RBI-regulated lenders, after 30 days without resolution.",
+   "typical_wait": "weeks"
+  },
+  {
+   "name": "Cyber Crime / Sachet",
+   "channel": "cybercrime.gov.in · police · sachet.rbi.org.in",
+   "url": "https://cybercrime.gov.in",
+   "phone": "1930",
+   "when_to_use": "Threats, harassment, misuse of photos/contacts, or an app NOT in RBI's directory (report it on sachet.rbi.org.in).",
+   "typical_wait": "immediate"
+  }
+ ],
+ "critic_notes": [
+  "Reviewer: The letter claims that the RBI Ombudsman escalation process is provided in [C1], but [C1] only discusses the designation of grievance redressal officers and the facility for lodging complaints; it does not mention the RBI Ombudsman or the RB-IOS."
+ ],
+ "draft_attempts": 2,
+ "draft_method": "Gemini (gemini-3.1-flash-lite, interactions)",
+ "user_edits": {
+  "draft": "I am writing regarding my loan account [LOAN ACCOUNT NUMBER] in Hyderabad. My EMI payment is 3 days late. On [DATE OF CALLS], your recovery agents contacted my relatives and threatened me. This conduct violates [C2], which mandates that particulars of any recovery agent assigned must be communicated to the borrower before they make contact. I have received no such communication. Under [C1], I am lodging this formal grievance. I request you to immediately stop this harassment and ensure that no further calls are made to my relatives or myself in a threatening manner. Please resolve this issue within 30 days. If I do not receive a satisfactory response or if this complaint is rejected, I will escalate this matter to the RBI Ombudsman under the Reserve Bank-Integrated Ombudsman Scheme (RB-IOS) as provided in [C1].",
+  "subject": "Formal Complaint: Harassment by Recovery Agents - Loan Account [LOAN ACCOUNT NUMBER]",
+  "fills": {},
+  "complainant": {}
+ },
+ "trace": [
+  "🧭 Intake (Gemini (gemini-3.1-flash-lite, interactions)): language=en, sector=loan_app, company=KreditBee, issues=harassment; missing: reference_id, date",
+  "🌐 Official domain: kreditbee.in (top-1 result for “KreditBee official website”, brand match)",
+  "🔎 Grievance search #1: 3 queries (site:kreditbee.in grievance redressal officer; site:kreditbee.in nodal officer; KreditBee grievance redressal officer email) → 24 results, 8 pages read, 0 contact mentions (0 on the official domain)",
+  "📰 Precedents: 0 relevant forum/news item(s) (rules)",
+  "🏛️ Registry (LoanLens): KreditBee → unavailable",
+  "📍 Local forum: Telangana State Consumer Commission",
+  "🛡️ Verifier #1: 0 verified, 0 unverified — no grievance contact found — retrying search with “grievance officer”, “contact us”",
+  "🔎 Grievance retry #2: 2 queries (site:kreditbee.in grievance officer; site:kreditbee.in contact us) → 16 results, 8 pages read, 3 contact mentions (0 on the official domain)",
+  "🛡️ Verifier #2: 0 verified, 3 unverified — no verified grievance email (3 unverified contact(s) kept aside)",
+  "📚 Legal RAG: 2 clause(s) — RBI (Digital Lending) Directions, 2025, Para 11; RBI (Digital Lending) Directions, 2025, Para 8 (contd.)",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, interactions))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, interactions)): 1 issue(s) → back to drafter",
+  "   • Reviewer: The letter claims that the escalation to the RBI Ombudsman is provided in [C1], but [C1] only discusses the designation of grievance redressal officers and the facility for lodging complaints, not the RBI Ombudsman process.",
+  "✍️ Drafter #2 (Gemini (gemini-3.1-flash-lite, interactions)): revising for 1 critic note(s)",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, interactions)): 1 issue(s) remain after 2 drafts → finalize will strip unsupported citations",
+  "   • Reviewer: The letter claims that the RBI Ombudsman escalation process is provided in [C1], but [C1] only discusses the designation of grievance redressal officers and the facility for lodging complaints; it does not mention the RBI Ombudsman or the RB-IOS.",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 9,
+ "final": {
+  "to": null,
+  "to_name": "Lender's Grievance Redressal Officer (from RBI's DLA directory)",
+  "subject": "Formal Complaint: Harassment by Recovery Agents - Loan Account [LOAN ACCOUNT NUMBER]",
+  "letter": "To,\nLender's Grievance Redressal Officer (from RBI's DLA directory)\nKreditBee\n\nDate: 09 October 2026\n\nSubject: Formal Complaint: Harassment by Recovery Agents - Loan Account [LOAN ACCOUNT NUMBER]\n\nDear Sir/Madam,\n\nI am writing regarding my loan account [LOAN ACCOUNT NUMBER] in Hyderabad. My EMI payment is 3 days late. On [DATE OF CALLS], your recovery agents contacted my relatives and threatened me. This conduct violates [C2], which mandates that particulars of any recovery agent assigned must be communicated to the borrower before they make contact. I have received no such communication. Under [C1], I am lodging this formal grievance. I request you to immediately stop this harassment and ensure that no further calls are made to my relatives or myself in a threatening manner. Please resolve this issue within 30 days. If I do not receive a satisfactory response or if this complaint is rejected, I will escalate this matter to the RBI Ombudsman under the Reserve Bank-Integrated Ombudsman Scheme (RB-IOS) as provided in [C1].\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] RBI (Digital Lending) Directions, 2025, Para 11 — Grievance redressal\n[C2] RBI (Digital Lending) Directions, 2025, Para 8 (contd.) — Disclosures to borrowers",
+  "markdown": "# Formal Complaint: Harassment by Recovery Agents - Loan Account [LOAN ACCOUNT NUMBER]\n\n**To:** Lender's Grievance Redressal Officer (from RBI's DLA directory) (no verified email - use the official complaint form)\n\nYou are filing a formal complaint against KreditBee for harassment by recovery agents who are contacting your relatives regarding a 3-day late EMI payment. You have cited the RBI's digital lending directions to demand an immediate stop to this behavior. If the company fails to resolve this within 30 days, you are prepared to escalate the matter to the RBI Ombudsman.\n\n```\nTo,\nLender's Grievance Redressal Officer (from RBI's DLA directory)\nKreditBee\n\nDate: 09 October 2026\n\nSubject: Formal Complaint: Harassment by Recovery Agents - Loan Account [LOAN ACCOUNT NUMBER]\n\nDear Sir/Madam,\n\nI am writing regarding my loan account [LOAN ACCOUNT NUMBER] in Hyderabad. My EMI payment is 3 days late. On [DATE OF CALLS], your recovery agents contacted my relatives and threatened me. This conduct violates [C2], which mandates that particulars of any recovery agent assigned must be communicated to the borrower before they make contact. I have received no such communication. Under [C1], I am lodging this formal grievance. I request you to immediately stop this harassment and ensure that no further calls are made to my relatives or myself in a threatening manner. Please resolve this issue within 30 days. If I do not receive a satisfactory response or if this complaint is rejected, I will escalate this matter to the RBI Ombudsman under the Reserve Bank-Integrated Ombudsman Scheme (RB-IOS) as provided in [C1].\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] RBI (Digital Lending) Directions, 2025, Para 11 — Grievance redressal\n[C2] RBI (Digital Lending) Directions, 2025, Para 8 (contd.) — Disclosures to borrowers\n```\n\n## If there's no reply\n1. **Lender's Grievance Redressal Officer (from RBI's DLA directory)** (email / phone) — If the app is in RBI's Digital Lending App directory, write to the GRO the lender declared to RBI.\n2. **RBI Ombudsman (RB-IOS, 2026)** (RBI CMS portal) — For apps of RBI-regulated lenders, after 30 days without resolution. https://cms.rbi.org.in · 14448\n3. **Cyber Crime / Sachet** (cybercrime.gov.in · police · sachet.rbi.org.in) — Threats, harassment, misuse of photos/contacts, or an app NOT in RBI's directory (report it on sachet.rbi.org.in). https://cybercrime.gov.in · 1930\n\n_Information, not legal advice._\n",
+  "summary": "You are filing a formal complaint against KreditBee for harassment by recovery agents who are contacting your relatives regarding a 3-day late EMI payment. You have cited the RBI's digital lending directions to demand an immediate stop to this behavior. If the company fails to resolve this within 30 days, you are prepared to escalate the matter to the RBI Ombudsman.",
+  "escalation": [
+   {
+    "name": "Lender's Grievance Redressal Officer (from RBI's DLA directory)",
+    "channel": "email / phone",
+    "url": null,
+    "phone": null,
+    "when_to_use": "If the app is in RBI's Digital Lending App directory, write to the GRO the lender declared to RBI.",
+    "typical_wait": "30 days"
+   },
+   {
+    "name": "RBI Ombudsman (RB-IOS, 2026)",
+    "channel": "RBI CMS portal",
+    "url": "https://cms.rbi.org.in",
+    "phone": "14448",
+    "when_to_use": "For apps of RBI-regulated lenders, after 30 days without resolution.",
+    "typical_wait": "weeks"
+   },
+   {
+    "name": "Cyber Crime / Sachet",
+    "channel": "cybercrime.gov.in · police · sachet.rbi.org.in",
+    "url": "https://cybercrime.gov.in",
+    "phone": "1930",
+    "when_to_use": "Threats, harassment, misuse of photos/contacts, or an app NOT in RBI's directory (report it on sachet.rbi.org.in).",
+    "typical_wait": "immediate"
+   }
+  ],
+  "cited": [
+   {
+    "doc_id": "dl",
+    "doc_title": "RBI (Digital Lending) Directions, 2025",
+    "ref": "Para 11",
+    "title": "Grievance redressal",
+    "citation": "RBI (Digital Lending) Directions, 2025, Para 11",
+    "text": "11. Grievance redressal i. The RE, and the LSP which has an interface with the borrower, shall designate nodal grievance redressal officers to deal with digital lending related complaints/ issues raised by the borrower. ii. Contact details of the nodal grievance redressal officers shall be prominently displayed on the websites of the RE, its LSP and on the DLA, as well as in the KFS provided to the borrower. iii. The facility of lodging complaint shall also be made available on the DLA and on the website as stated above. It is reiterated that responsibility of grievance redressal shall continue to remain with the RE. iv. If any complaint lodged by the borrower against the RE or the LSP engaged by the RE is rejected wholly or partly by the RE, or the borrower is not satisfied with the reply; or the borrower has not received any reply within 30 days of receipt of complaint by the RE, the said borrower can lodge a complaint over the Complaint Management System (CMS) portal under the Reserve Bank-Integrated Ombudsman Scheme (RB-IOS) or send a physical complaint to “Centralised Receipt and Processing Centre, 4th Floor, Reserve Bank of India, Sector-17, Central Vista, Chandigarh - 160017” as per the grievance redressal mechanism prescribed by the Reserve Bank. This information shall be suitably conveyed to the borrower. Chapter IV: Technology and Data Requirement",
+    "source_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12848",
+    "score": 0.863,
+    "act": "RBI (Digital Lending) Directions, 2025",
+    "section": "Para 11",
+    "source_file": "rbi_digital_lending_directions_2025.html",
+    "page": null,
+    "query": "nodal grievance redressal officer digital lending complaints",
+    "tag": "C1"
+   },
+   {
+    "doc_id": "dl",
+    "doc_title": "RBI (Digital Lending) Directions, 2025",
+    "ref": "Para 8 (contd.)",
+    "title": "Disclosures to borrowers",
+    "citation": "RBI (Digital Lending) Directions, 2025, Para 8 (contd.)",
+    "text": "In case of a loan default, when a recovery agent is assigned for recovery or there is a change in the recovery agent already assigned, the particulars of such recovery agent authorised to approach the borrower for recovery shall be communicated to the borrower through email/ SMS before the recovery agent contacts the borrower for recovery.",
+    "source_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=12848",
+    "score": 0.715,
+    "act": "RBI (Digital Lending) Directions, 2025",
+    "section": "Para 8 (contd.)",
+    "source_file": "rbi_digital_lending_directions_2025.html",
+    "page": null,
+    "query": "recovery agents harassment intimidation; grievance redressal; data access contacts Recovery agents are calling relatives and threatening the user due to a 3-day late EMI payment.",
+    "tag": "C2"
+   }
+  ],
+  "removed_citations": [],
+  "unresolved_critic_notes": [
+   "Reviewer: The letter claims that the RBI Ombudsman escalation process is provided in [C1], but [C1] only discusses the designation of grievance redressal officers and the facility for lodging complaints; it does not mention the RBI Ombudsman or the RB-IOS."
+  ]
+ },
+ "thread_id": "af0b493bf109"
+}

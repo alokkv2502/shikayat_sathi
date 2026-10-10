@@ -1,0 +1,331 @@
+{
+ "complaint": "IndiGo ne meri Delhi–Patna flight cancel kar di, bas SMS aaya. Refund maanga to credit shell de diya, bolte hain refund nahi milega. Ticket ₹6,800 ka tha.",
+ "company_hint": null,
+ "city": null,
+ "complainant": {},
+ "live": true,
+ "language": "hinglish",
+ "complaint_en": "IndiGo cancelled my Delhi–Patna flight, I only received an SMS. When I asked for a refund, they gave me a credit shell and said a refund would not be provided. The ticket cost ₹6,800.",
+ "sector": "govt_scheme",
+ "tier": "A",
+ "safety": {
+  "level": "none",
+  "categories": [],
+  "method": "rules",
+  "helplines": [],
+  "numbers": [],
+  "messages": []
+ },
+ "case_entities": [
+  "credit shell"
+ ],
+ "case_brief": {
+  "subject": "Letter of Credit (LC) Mode of Payment",
+  "aliases": [
+   "LC"
+  ],
+  "administering_body": "Railway Board / Indian Railway Electronic Procurement System (IREPS)",
+  "what_it_is": "A payment method for works or service tenders invited by railways through e-tendering on IREPS. It allows contractors to receive payments from Railways through a letter of credit arrangement.",
+  "complaint_type": "govt_scheme",
+  "entitlement": "The contractor receives payment for works or services passed by the Railway Accounts Office, released by the issuing bank (SBI) to the contractor's advising bank. The Railway (employer) issues a Document of Authorisation to enable the contractor to claim the authorized amount.",
+  "conditions": [
+   "The tender must have an advertised value of Rs 10 lakh or above.",
+   "The contractor must exercise the option to take payment through LC at the time of bidding in IREPS.",
+   "The contractor must bear the incidental costs towards the issue and operation of the LC.",
+   "The contractor must select an advising/negotiating bank."
+  ],
+  "common_failure_reasons": [],
+  "official_grievance_channel": "",
+  "documents_needed": [
+   "Document of Authorisation",
+   "Bill of Exchange",
+   "Bill"
+  ],
+  "sources": [
+   "https://ireps.gov.in/ireps/upload/files/67578357/ProcedureforLetterofCredit.pdf"
+  ]
+ },
+ "eligibility_checks": [
+  {
+   "condition": "The tender must have an advertised value of Rs 10 lakh or above.",
+   "status": "not_met",
+   "evidence": "The complainant stated the ticket cost was 7800, which is below the 10 lakh threshold.",
+   "question": ""
+  },
+  {
+   "condition": "The contractor must exercise the option to take payment through LC at the time of bidding in IREPS.",
+   "status": "unknown",
+   "evidence": "",
+   "question": "This condition relates to a tender process; could you clarify if this complaint is regarding a government tender or a flight ticket issue?"
+  },
+  {
+   "condition": "The contractor must bear the incidental costs towards the issue and operation of the LC.",
+   "status": "unknown",
+   "evidence": "",
+   "question": "Are you willing to bear the incidental costs associated with the Letter of Credit (LC) for this transaction?"
+  },
+  {
+   "condition": "The contractor must select an advising/negotiating bank.",
+   "status": "unknown",
+   "evidence": "",
+   "question": "Have you selected an advising or negotiating bank for this transaction?"
+  }
+ ],
+ "gap_questions": [
+  "This condition relates to a tender process; could you clarify if this complaint is regarding a government tender or a flight ticket issue?",
+  "Are you willing to bear the incidental costs associated with the Letter of Credit (LC) for this transaction?",
+  "Have you selected an advising or negotiating bank for this transaction?"
+ ],
+ "extra_questions": [
+  "Kya aapne IndiGo ki customer support team se baat ki hai?",
+  "Kya aapke paas koi cancellation reference number ya email hai?",
+  "Unhone refund dene se mana karne ka kya reason diya?",
+  "What is the date on which the flight was cancelled?"
+ ],
+ "eligibility": {
+  "status": "may_not_qualify",
+  "message": "From what you've told us, you may not meet: The tender must have an advertised value of Rs 10 lakh or above. The letter will ask the office to check its records and explain, not claim the benefit as due."
+ },
+ "company": "Railway Board / Indian Railway Electronic Procurement System (IREPS)",
+ "company_domain": "ireps.gov.in",
+ "official_domains": [
+  "ireps.gov.in"
+ ],
+ "domain_basis": "official government source of the case brief",
+ "facts": {
+  "product_or_service": "Flight ticket (Delhi–Patna)",
+  "issue": "The airline cancelled the flight and provided a credit shell instead of a monetary refund.",
+  "what_user_wants": "Monetary refund",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "6800",
+  "date": "",
+  "city": "Delhi",
+  "place": "",
+  "police_station": "",
+  "details": {}
+ },
+ "issue_types": [
+  "refund"
+ ],
+ "missing_facts": [],
+ "search_plan": [
+  {
+   "worker": "precedents",
+   "engine": "google_forums",
+   "q": "IndiGo IndiGo flight cancellation refund complaint resolved"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_news",
+   "q": "IndiGo IndiGo flight cancellation refund consumer court"
+  }
+ ],
+ "search_keywords": "IndiGo flight cancellation refund",
+ "urgent_note": null,
+ "contacts": [],
+ "precedents": [],
+ "local_forum": null,
+ "blocked_hallucinations": 0,
+ "errors": [
+  "precedents: Railway Board / Indian Railway Electronic Procurement System (IREPS) IndiGo flight cancellation refund complaint resolved: skipped after 8s"
+ ],
+ "verified_contacts": [],
+ "unverified_contacts": [],
+ "recommended": null,
+ "verify_attempts": 1,
+ "grievance_attempts": 0,
+ "clauses": [],
+ "draft": "I am writing to formally register a grievance regarding the cancellation of my Delhi-Patna flight by IndiGo. Upon cancellation, the airline unilaterally issued a credit shell instead of providing a monetary refund. The total cost of the ticket was ₹6,800. Under the Consumer Protection Act 2019, forcing a consumer to accept a credit shell for a service that the airline failed to provide constitutes an unfair trade practice [C1]. As the service was not rendered, I am entitled to a full refund to my original payment method. I request that you process the refund of ₹6,800 immediately. Please resolve this matter within 7 days. If I do not receive a satisfactory response, I will be compelled to escalate this grievance to the National Consumer Helpline and the relevant Consumer Commission.",
+ "subject": "Grievance regarding flight cancellation and denial of monetary refund",
+ "summary": "IndiGo ne meri Delhi-Patna flight cancel kar di aur refund ke badle credit shell de diya. Maine Consumer Protection Act ke under monetary refund maanga hai. Agar 7 din mein refund nahi mila, toh main National Consumer Helpline par complain karunga.",
+ "escalation": [
+  {
+   "name": "Scheme grievance portal",
+   "channel": "Official portal listed in the case brief",
+   "url": null,
+   "phone": null,
+   "when_to_use": "First. Use the administering department's official scheme or service grievance portal.",
+   "typical_wait": "Follow the portal's acknowledgement and resolution timeline."
+  },
+  {
+   "name": "Centralized Public Grievance Redress and Monitoring System (CPGRAMS)",
+   "channel": "Department of Administrative Reforms and Public Grievances",
+   "url": "https://pgportal.gov.in",
+   "phone": null,
+   "when_to_use": "Escalate an unresolved grievance about a central government department or scheme.",
+   "typical_wait": "Use the timeline shown on CPGRAMS."
+  }
+ ],
+ "critic_notes": [
+  "Cites clause tags that were not retrieved: [C1]. Use only .",
+  "Use at least 4 of the 4 explicit case-specific facts; the current draft uses 2.",
+  "Uses a consumer-law/consumer-helpline frame for a government scheme; route through the scheme's administering department instead.",
+  "Reviewer: The letter incorrectly frames a private airline flight cancellation as a government scheme grievance related to Railway Letter of Credit (LC) payments.",
+  "Reviewer: The letter cites the Consumer Protection Act 2019, which contradicts the instruction to avoid consumer-law framing for this specific grievance type.",
+  "Reviewer: The letter threatens escalation to the National Consumer Helpline, which is explicitly prohibited by the instructions for this case.",
+  "Reviewer: The letter fails to address the actual subject matter (Railway Letter of Credit) and instead focuses on a flight ticket refund, which is irrelevant to the provided case brief.",
+  "Reviewer: The letter ignores the condition check failure regarding the tender value threshold (Rs 10 lakh), as the user's transaction is only Rs 6,800."
+ ],
+ "draft_attempts": 2,
+ "draft_method": "Gemini (gemini-3.1-flash-lite, generate_content)",
+ "deadline": {},
+ "user_edits": {
+  "draft": "I am writing to formally register a grievance regarding the cancellation of my Delhi-Patna flight by IndiGo. Upon cancellation, the airline unilaterally issued a credit shell instead of providing a monetary refund. The total cost of the ticket was ₹6,800. Under the Consumer Protection Act 2019, forcing a consumer to accept a credit shell for a service that the airline failed to provide constitutes an unfair trade practice [C1]. As the service was not rendered, I am entitled to a full refund to my original payment method. I request that you process the refund of ₹6,800 immediately. Please resolve this matter within 7 days. If I do not receive a satisfactory response, I will be compelled to escalate this grievance to the National Consumer Helpline and the relevant Consumer Commission.",
+  "subject": "Grievance regarding flight cancellation and denial of monetary refund",
+  "complainant": {}
+ },
+ "case_answers": {
+  "The tender must have an advertised value of Rs 10 lakh or above.": "7800",
+  "The contractor must exercise the option to take payment through LC at the time of bidding in IREPS.": "yes"
+ },
+ "fills": {},
+ "drafted_answers": {
+  "The tender must have an advertised value of Rs 10 lakh or above.": "7800",
+  "The contractor must exercise the option to take payment through LC at the time of bidding in IREPS.": "yes"
+ },
+ "user_draft": "",
+ "review_rounds": 1,
+ "redraft": false,
+ "trace": [
+  "🛟 Safety: no immediate danger detected",
+  "🧭 Intake (Gemini (gemini-3.1-flash-lite, generate_content)): language=hinglish, domain=other (tier A: draft and escalate), company=IndiGo, issues=refund; to research: credit shell; missing: reference_id, date",
+  "🌐 Official domain: not resolved",
+  "🔎 Case research: Letter of Credit (LC) Mode of Payment — 4 condition(s) from 1 source(s) (1 official page(s) read)",
+  "🗺️ Frame: route → govt_scheme (tier A)",
+  "📰 Precedents: 0 relevant forum/news item(s) (rules); 1 search(es) failed",
+  "📍 Local forum: not needed for this domain",
+  "🧩 Gap check (Gemini (gemini-3.1-flash-lite, generate_content)): 0 met, 4 to confirm, 0 may not be met; 4 other question(s)",
+  "🛡️ Verifier #1: 0 verified, 0 unverified — no verified grievance email (0 unverified contact(s) kept aside)",
+  "📚 Legal RAG: skipped — no indexed law applies to the govt_scheme route (no citations will be made)",
+  "📝 Details form: 2 answer(s), 0 detail(s) filled of 8 question(s) and 0 missing fact(s)",
+  "🔁 Reassess (Gemini (gemini-3.1-flash-lite, generate_content)): 2 answer(s) — 0 met, 3 to confirm, 1 may not be met; 4 other question(s) · may not qualify → drafting",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 6 issue(s) → back to drafter",
+  "   • Name the researched scheme, policy, or product (Letter of Credit (LC) Mode of Payment).",
+  "   • Use at least 4 of the 4 explicit case-specific facts; the current draft uses 1.",
+  "   • Reviewer: The letter incorrectly frames a flight ticket refund issue as a Railway Board/IREPS Letter of Credit (LC) grievance, which is entirely irrelevant to the user's actual problem of an airline credit shell.",
+  "   • Reviewer: The letter attempts to apply government tender eligibility criteria (Rs 10 lakh threshold) to a private flight ticket transaction, which is logically incoherent.",
+  "   • Reviewer: The letter fails to address the actual grievance, which is a request for a monetary refund from an airline for a cancelled flight.",
+  "✍️ Drafter #2 (Gemini (gemini-3.1-flash-lite, generate_content)): revising for 6 critic note(s)",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 8 issue(s) remain after 2 drafts → finalize will strip unsupported citations",
+  "   • Cites clause tags that were not retrieved: [C1]. Use only .",
+  "   • Use at least 4 of the 4 explicit case-specific facts; the current draft uses 2.",
+  "   • Uses a consumer-law/consumer-helpline frame for a government scheme; route through the scheme's administering department instead.",
+  "   • Reviewer: The letter incorrectly frames a private airline flight cancellation as a government scheme grievance related to Railway Letter of Credit (LC) payments.",
+  "   • Reviewer: The letter cites the Consumer Protection Act 2019, which contradicts the instruction to avoid consumer-law framing for this specific grievance type.",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 3,
+ "final": {
+  "to": null,
+  "to_name": "Scheme grievance portal",
+  "tier": "A",
+  "safety": {
+   "level": "none",
+   "categories": [],
+   "method": "rules",
+   "helplines": [],
+   "numbers": [],
+   "messages": []
+  },
+  "subject": "Grievance regarding flight cancellation and denial of monetary refund",
+  "letter": "To,\nScheme grievance portal\nRailway Board / Indian Railway Electronic Procurement System (IREPS)\n\nDate: 09 October 2026\n\nSubject: Grievance regarding flight cancellation and denial of monetary refund\n\nDear Sir/Madam,\n\nI am writing to formally register a grievance regarding the cancellation of my Delhi-Patna flight by IndiGo. Upon cancellation, the airline unilaterally issued a credit shell instead of providing a monetary refund. The total cost of the ticket was ₹6,800. Under the Consumer Protection Act 2019, forcing a consumer to accept a credit shell for a service that the airline failed to provide constitutes an unfair trade practice . As the service was not rendered, I am entitled to a full refund to my original payment method. I request that you process the refund of ₹6,800 immediately. Please resolve this matter within 7 days. If I do not receive a satisfactory response, I will be compelled to escalate this grievance to the National Consumer Helpline and the relevant Consumer Commission.\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nScheme and case sources:\n- https://ireps.gov.in/ireps/upload/files/67578357/ProcedureforLetterofCredit.pdf",
+  "markdown": "# Grievance regarding flight cancellation and denial of monetary refund\n\n**To:** Scheme grievance portal (no verified email - use the official complaint form)\n\nIndiGo ne meri Delhi-Patna flight cancel kar di aur refund ke badle credit shell de diya. Maine Consumer Protection Act ke under monetary refund maanga hai. Agar 7 din mein refund nahi mila, toh main National Consumer Helpline par complain karunga.\n\n```\nTo,\nScheme grievance portal\nRailway Board / Indian Railway Electronic Procurement System (IREPS)\n\nDate: 09 October 2026\n\nSubject: Grievance regarding flight cancellation and denial of monetary refund\n\nDear Sir/Madam,\n\nI am writing to formally register a grievance regarding the cancellation of my Delhi-Patna flight by IndiGo. Upon cancellation, the airline unilaterally issued a credit shell instead of providing a monetary refund. The total cost of the ticket was ₹6,800. Under the Consumer Protection Act 2019, forcing a consumer to accept a credit shell for a service that the airline failed to provide constitutes an unfair trade practice . As the service was not rendered, I am entitled to a full refund to my original payment method. I request that you process the refund of ₹6,800 immediately. Please resolve this matter within 7 days. If I do not receive a satisfactory response, I will be compelled to escalate this grievance to the National Consumer Helpline and the relevant Consumer Commission.\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nScheme and case sources:\n- https://ireps.gov.in/ireps/upload/files/67578357/ProcedureforLetterofCredit.pdf\n```\n\n## If there's no reply\n1. **Scheme grievance portal** (Official portal listed in the case brief) — First. Use the administering department's official scheme or service grievance portal.\n2. **Centralized Public Grievance Redress and Monitoring System (CPGRAMS)** (Department of Administrative Reforms and Public Grievances) — Escalate an unresolved grievance about a central government department or scheme. https://pgportal.gov.in\n\n_Information, not legal advice._\n",
+  "summary": "IndiGo ne meri Delhi-Patna flight cancel kar di aur refund ke badle credit shell de diya. Maine Consumer Protection Act ke under monetary refund maanga hai. Agar 7 din mein refund nahi mila, toh main National Consumer Helpline par complain karunga.",
+  "escalation": [
+   {
+    "name": "Scheme grievance portal",
+    "channel": "Official portal listed in the case brief",
+    "url": null,
+    "phone": null,
+    "when_to_use": "First. Use the administering department's official scheme or service grievance portal.",
+    "typical_wait": "Follow the portal's acknowledgement and resolution timeline."
+   },
+   {
+    "name": "Centralized Public Grievance Redress and Monitoring System (CPGRAMS)",
+    "channel": "Department of Administrative Reforms and Public Grievances",
+    "url": "https://pgportal.gov.in",
+    "phone": null,
+    "when_to_use": "Escalate an unresolved grievance about a central government department or scheme.",
+    "typical_wait": "Use the timeline shown on CPGRAMS."
+   }
+  ],
+  "deadline": {},
+  "cited": [],
+  "removed_citations": [
+   "[C1]"
+  ],
+  "case_brief": {
+   "subject": "Letter of Credit (LC) Mode of Payment",
+   "aliases": [
+    "LC"
+   ],
+   "administering_body": "Railway Board / Indian Railway Electronic Procurement System (IREPS)",
+   "what_it_is": "A payment method for works or service tenders invited by railways through e-tendering on IREPS. It allows contractors to receive payments from Railways through a letter of credit arrangement.",
+   "complaint_type": "govt_scheme",
+   "entitlement": "The contractor receives payment for works or services passed by the Railway Accounts Office, released by the issuing bank (SBI) to the contractor's advising bank. The Railway (employer) issues a Document of Authorisation to enable the contractor to claim the authorized amount.",
+   "conditions": [
+    "The tender must have an advertised value of Rs 10 lakh or above.",
+    "The contractor must exercise the option to take payment through LC at the time of bidding in IREPS.",
+    "The contractor must bear the incidental costs towards the issue and operation of the LC.",
+    "The contractor must select an advising/negotiating bank."
+   ],
+   "common_failure_reasons": [],
+   "official_grievance_channel": "",
+   "documents_needed": [
+    "Document of Authorisation",
+    "Bill of Exchange",
+    "Bill"
+   ],
+   "sources": [
+    "https://ireps.gov.in/ireps/upload/files/67578357/ProcedureforLetterofCredit.pdf"
+   ]
+  },
+  "case_answers": {
+   "The tender must have an advertised value of Rs 10 lakh or above.": "7800",
+   "The contractor must exercise the option to take payment through LC at the time of bidding in IREPS.": "yes"
+  },
+  "eligibility": {
+   "status": "may_not_qualify",
+   "message": "From what you've told us, you may not meet: The tender must have an advertised value of Rs 10 lakh or above. The letter will ask the office to check its records and explain, not claim the benefit as due."
+  },
+  "eligibility_checks": [
+   {
+    "condition": "The tender must have an advertised value of Rs 10 lakh or above.",
+    "status": "not_met",
+    "evidence": "The complainant stated the ticket cost was 7800, which is below the 10 lakh threshold.",
+    "question": ""
+   },
+   {
+    "condition": "The contractor must exercise the option to take payment through LC at the time of bidding in IREPS.",
+    "status": "unknown",
+    "evidence": "",
+    "question": "This condition relates to a tender process; could you clarify if this complaint is regarding a government tender or a flight ticket issue?"
+   },
+   {
+    "condition": "The contractor must bear the incidental costs towards the issue and operation of the LC.",
+    "status": "unknown",
+    "evidence": "",
+    "question": "Are you willing to bear the incidental costs associated with the Letter of Credit (LC) for this transaction?"
+   },
+   {
+    "condition": "The contractor must select an advising/negotiating bank.",
+    "status": "unknown",
+    "evidence": "",
+    "question": "Have you selected an advising or negotiating bank for this transaction?"
+   }
+  ],
+  "unresolved_critic_notes": [
+   "Cites clause tags that were not retrieved: [C1]. Use only .",
+   "Use at least 4 of the 4 explicit case-specific facts; the current draft uses 2.",
+   "Uses a consumer-law/consumer-helpline frame for a government scheme; route through the scheme's administering department instead.",
+   "Reviewer: The letter incorrectly frames a private airline flight cancellation as a government scheme grievance related to Railway Letter of Credit (LC) payments.",
+   "Reviewer: The letter cites the Consumer Protection Act 2019, which contradicts the instruction to avoid consumer-law framing for this specific grievance type.",
+   "Reviewer: The letter threatens escalation to the National Consumer Helpline, which is explicitly prohibited by the instructions for this case.",
+   "Reviewer: The letter fails to address the actual subject matter (Railway Letter of Credit) and instead focuses on a flight ticket refund, which is irrelevant to the provided case brief.",
+   "Reviewer: The letter ignores the condition check failure regarding the tender value threshold (Rs 10 lakh), as the user's transaction is only Rs 6,800."
+  ]
+ },
+ "thread_id": "e17d4ba4920e"
+}

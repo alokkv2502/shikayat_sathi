@@ -1,0 +1,295 @@
+{
+ "complaint": "मेरे SBI खाते से 5000 रुपये काट लिए गए, बैंक जवाब नहीं दे रहा है।",
+ "company_hint": null,
+ "city": null,
+ "complainant": {},
+ "live": false,
+ "language": "hi",
+ "sector": "bank",
+ "case_entities": [],
+ "case_brief": {},
+ "eligibility_checks": [],
+ "gap_questions": [],
+ "extra_questions": [],
+ "eligibility": {
+  "status": "no_conditions",
+  "message": ""
+ },
+ "company": "SBI",
+ "company_domain": null,
+ "official_domains": [],
+ "domain_basis": null,
+ "facts": {
+  "product_or_service": "",
+  "issue": "मेरे SBI खाते से 5000 रुपये काट लिए गए, बैंक जवाब नहीं दे रहा है।",
+  "what_user_wants": "",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "",
+  "date": "",
+  "city": "",
+  "details": {}
+ },
+ "issue_types": [
+  "other"
+ ],
+ "missing_facts": [
+  {
+   "fact": "reference_id",
+   "placeholder": "[TRANSACTION / COMPLAINT REFERENCE]"
+  },
+  {
+   "fact": "date",
+   "placeholder": "[TRANSACTION DATE]"
+  },
+  {
+   "fact": "amount",
+   "placeholder": "[AMOUNT]"
+  }
+ ],
+ "search_plan": [
+  {
+   "worker": "grievance",
+   "engine": "google",
+   "q": "SBI principal nodal officer email"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_forums",
+   "q": "SBI complaint complaint resolved"
+  },
+  {
+   "worker": "precedents",
+   "engine": "google_news",
+   "q": "SBI complaint consumer court"
+  }
+ ],
+ "search_keywords": "complaint",
+ "urgent_note": null,
+ "contacts": [],
+ "precedents": [],
+ "local_forum": null,
+ "blocked_hallucinations": 0,
+ "errors": [],
+ "verified_contacts": [],
+ "unverified_contacts": [],
+ "recommended": null,
+ "verify_attempts": 1,
+ "grievance_attempts": 1,
+ "clauses": [
+  {
+   "doc_id": "ios",
+   "doc_title": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+   "ref": "Clause 9",
+   "title": "Grounds of Complaint",
+   "citation": "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 9",
+   "text": "9. Grounds of Complaint Any customer aggrieved by an act or omission of a Bank resulting in deficiency in service may file a complaint under the Scheme personally or through an authorised representative as defined under clause 3(1)(c).",
+   "source_url": "https://website.rbi.org.in/documents/d/rbi/reserve-bank-integrated-ombudsman-scheme-2026-160126",
+   "score": 0.856,
+   "act": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+   "section": "Clause 9",
+   "source_file": "rbi_ios_2026.pdf",
+   "page": null,
+   "query": "grounds of complaint act or omission of bank resulting in deficiency in service",
+   "tag": "C1"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 18(2)",
+   "title": "Powers and functions of Central Authority",
+   "citation": "Consumer Protection Act, 2019, Section 18(2)",
+   "text": "(2) Without prejudice to the generality of the provisions contained in sub-section (1), the Central Authority may, for any of the purposes aforesaid,— (a) inquire or cause an inquiry or investigation to be made into violations of consumer rights or unfair trade practices, either suo motu or on a complaint received or on the directions from the Central Government; (b) file complaints before the District Commission, the State Commission or the National Commission, as the case may be, under this Act; (c) intervene in any proceedings before the District Commission or the State Commission or the National Commission, as the case may be, in respect of any allegation of violation of consumer rights or unfair trade practices; (d) review the matters relating to, and the factors inhibiting enjoyment of, consumer rights, including safeguards provided for the protection of consumers under any other law for the time being in force and recommend appropriate remedial measures for their effective implementation; (e) recommend adoption of international covenants and best international practices on consumer rights to ensure effective enforcement of consumer rights; (f) undertake and promote research in the field of consumer rights; (g) spread and promote awareness on consumer rights; (h) encourage non-Governmental organisations and other institutions working in the field of consumer rights to co-operate and work with consumer protection agencies; ",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.749,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 18(2)",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "consumer rights to be heard and seek redressal against unfair trade practice SBI 5000 ,",
+   "tag": "C2"
+  },
+  {
+   "doc_id": "ios",
+   "doc_title": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+   "ref": "Clause 3(1)",
+   "title": "Definitions",
+   "citation": "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 3(1)",
+   "text": "(i) “Deficiency in service” means a shortcoming or an inadequacy in any service, which the Bank is required to provide statutorily or otherwise, which may or may not result in financial loss or damage to the customer; (j) “Non-Banking Financial Company” (NBFC) means an NBFC as defined in Section 45-I (f) of the Reserve Bank of India Act, 1934 and registered with the Reserve Bank, to the extent included under the Scheme but does not include, an NBFC in resolution or winding up/liquidation, or under Directions of Reserve Bank of India; (k) “Non- bank Prepaid Payment Instruments Issuer” means a company, as defined in the Companies Act, 2013 (18 of 2013), which has been granted a Certificate of Authorisation by the Reserve Bank of India under Section 7(1) of the Payment and Settlement Systems Act, 2007 (51 of 2007) to operate as a Prepaid Payment Instrument Issuer; (l) “RBI Deputy Ombudsman” means a person appointed by the Reserve Bank as such under Clause 4 of the Scheme; (m) “RBI Ombudsman” means a person appointed by the Reserve Bank as such under Clause 4 of the Scheme; (n) “Regulated Entity” means a bank or a Non-Banking Financial Company, or a Non - bank Prepaid Payment Instruments Issuer or a Credit Information Company as defined in the Scheme, or any other entity as may be specified by the Reserve Bank from time to time, to the extent not excluded under the Scheme; This is Public document. (o) “Rejected Complaints” means complaints that are closed under the provisions as specified in clause 16 of the Scheme. (p) “Settlement” means an outcome of the processes under clause 14 of the Scheme; (q) “The Reserve Bank” means Reserve Bank of India constituted under Section 3 of the Reserve Bank of India Act, 1934. ",
+   "source_url": "https://website.rbi.org.in/documents/d/rbi/reserve-bank-integrated-ombudsman-scheme-2026-160126",
+   "score": 0.773,
+   "act": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+   "section": "Clause 3(1)",
+   "source_file": "rbi_ios_2026.pdf",
+   "page": null,
+   "query": "grounds of complaint act or omission of bank resulting in deficiency in service",
+   "tag": "C3"
+  },
+  {
+   "doc_id": "cpa",
+   "doc_title": "Consumer Protection Act, 2019",
+   "ref": "Section 94",
+   "title": "Measures to prevent unfair trade practices in e-commerce, direct selling, etc.",
+   "citation": "Consumer Protection Act, 2019, Section 94",
+   "text": "94. For the purposes of preventing unfair trade practices in e-commerce, direct selling and also to protect the interest and rights of consumers, the Central Government may take such measures in the manner as may be prescribed.",
+   "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+   "score": 0.744,
+   "act": "Consumer Protection Act, 2019",
+   "section": "Section 94",
+   "source_file": "cpa_2019.pdf",
+   "page": null,
+   "query": "consumer rights to be heard and seek redressal against unfair trade practice SBI 5000 ,",
+   "tag": "C4"
+  }
+ ],
+ "draft": "I am writing to formally complain about your product/service (reference [TRANSACTION / COMPLAINT REFERENCE], dated [TRANSACTION DATE], amount [AMOUNT]).\n\nWhat happened: मेरे SBI खाते से 5000 रुपये काट लिए गए, बैंक जवाब नहीं दे रहा है।\n\nThis is contrary to the consumer-protection rules that apply to you, including: Grounds of Complaint [C1]; Powers and functions of Central Authority [C2]; Definitions [C3].\n\nI request: [REMEDY - e.g. full refund / replacement / reversal].\n\nPlease acknowledge this complaint and resolve it within 30 days. If it is not resolved, I will escalate it to RBI Ombudsman (RB-IOS, 2026).",
+ "subject": "Complaint: मेरे SBI खाते से 5000 रुपये काट लिए गए, बैंक जवाब नहीं दे रहा है। — [TRANSACTION / COMPLAINT REFERENCE]",
+ "summary": "आपकी शिकायत SBI के ख़िलाफ़ है। पहले Bank grievance cell → Principal Nodal Officer को यह पत्र भेजें; 30 दिन में जवाब न मिले तो RBI Ombudsman (RB-IOS, 2026) पर जाएँ।",
+ "escalation": [
+  {
+   "name": "Bank grievance cell → Principal Nodal Officer",
+   "channel": "email / bank complaint portal",
+   "url": null,
+   "phone": null,
+   "when_to_use": "First. Complain in writing and keep the complaint number; escalate to the Principal Nodal Officer if unresolved.",
+   "typical_wait": "30 days"
+  },
+  {
+   "name": "RBI Ombudsman (RB-IOS, 2026)",
+   "channel": "RBI CMS portal / email",
+   "url": "https://cms.rbi.org.in",
+   "phone": "14448 (RBI contact centre)",
+   "when_to_use": "No reply within 30 days, or the reply is unsatisfactory. Also crpc@rbi.org.in. No fee.",
+   "typical_wait": "weeks"
+  },
+  {
+   "name": "District Consumer Commission",
+   "channel": "online filing (e-Jagriti)",
+   "url": "https://e-jagriti.gov.in",
+   "phone": null,
+   "when_to_use": "Deficiency in banking service is also a consumer dispute.",
+   "typical_wait": "months"
+  }
+ ],
+ "critic_notes": [],
+ "draft_attempts": 1,
+ "draft_method": "template",
+ "user_edits": {
+  "approved": true
+ },
+ "case_answers": {},
+ "fills": {},
+ "drafted_answers": {},
+ "user_draft": "",
+ "review_rounds": 1,
+ "redraft": false,
+ "trace": [
+  "🧭 Intake (rules): language=hi, sector=bank, company=SBI, issues=other; missing: reference_id, date, amount",
+  "🌐 Official domain: not resolved",
+  "🔎 Case research: no named scheme, policy or product to research",
+  "🧩 Gap check (rules): no published conditions to compare",
+  "🔎 Grievance search #1: 1 queries (SBI principal nodal officer email) → 0 results, 0 pages read, 0 contact mentions (0 on the official domain)",
+  "📰 Precedents: 0 relevant forum/news item(s) (rules)",
+  "📍 Local forum: skipped — no city given",
+  "🛡️ Verifier #1: 0 verified, 0 unverified — no verified grievance email (0 unverified contact(s) kept aside)",
+  "📚 Legal RAG: 4 clause(s) — Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 9; Consumer Protection Act, 2019, Section 18(2); Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 3(1); Consumer Protection Act, 2019, Section 94",
+  "✍️ Drafter #1 (template)",
+  "🧐 Critic (rules): passed — every claim is cited, no invented facts",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 0,
+ "final": {
+  "to": null,
+  "to_name": "Bank grievance cell → Principal Nodal Officer",
+  "subject": "Complaint: मेरे SBI खाते से 5000 रुपये काट लिए गए, बैंक जवाब नहीं दे रहा है। — [TRANSACTION / COMPLAINT REFERENCE]",
+  "letter": "To,\nBank grievance cell → Principal Nodal Officer\nSBI\n\nDate: 09 October 2026\n\nSubject: Complaint: मेरे SBI खाते से 5000 रुपये काट लिए गए, बैंक जवाब नहीं दे रहा है। — [TRANSACTION / COMPLAINT REFERENCE]\n\nDear Sir/Madam,\n\nI am writing to formally complain about your product/service (reference [TRANSACTION / COMPLAINT REFERENCE], dated [TRANSACTION DATE], amount [AMOUNT]).\n\nWhat happened: मेरे SBI खाते से 5000 रुपये काट लिए गए, बैंक जवाब नहीं दे रहा है।\n\nThis is contrary to the consumer-protection rules that apply to you, including: Grounds of Complaint [C1]; Powers and functions of Central Authority [C2]; Definitions [C3].\n\nI request: [REMEDY - e.g. full refund / replacement / reversal].\n\nPlease acknowledge this complaint and resolve it within 30 days. If it is not resolved, I will escalate it to RBI Ombudsman (RB-IOS, 2026).\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 9 — Grounds of Complaint\n[C2] Consumer Protection Act, 2019, Section 18(2) — Powers and functions of Central Authority\n[C3] Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 3(1) — Definitions",
+  "markdown": "# Complaint: मेरे SBI खाते से 5000 रुपये काट लिए गए, बैंक जवाब नहीं दे रहा है। — [TRANSACTION / COMPLAINT REFERENCE]\n\n**To:** Bank grievance cell → Principal Nodal Officer (no verified email - use the official complaint form)\n\nआपकी शिकायत SBI के ख़िलाफ़ है। पहले Bank grievance cell → Principal Nodal Officer को यह पत्र भेजें; 30 दिन में जवाब न मिले तो RBI Ombudsman (RB-IOS, 2026) पर जाएँ।\n\n```\nTo,\nBank grievance cell → Principal Nodal Officer\nSBI\n\nDate: 09 October 2026\n\nSubject: Complaint: मेरे SBI खाते से 5000 रुपये काट लिए गए, बैंक जवाब नहीं दे रहा है। — [TRANSACTION / COMPLAINT REFERENCE]\n\nDear Sir/Madam,\n\nI am writing to formally complain about your product/service (reference [TRANSACTION / COMPLAINT REFERENCE], dated [TRANSACTION DATE], amount [AMOUNT]).\n\nWhat happened: मेरे SBI खाते से 5000 रुपये काट लिए गए, बैंक जवाब नहीं दे रहा है।\n\nThis is contrary to the consumer-protection rules that apply to you, including: Grounds of Complaint [C1]; Powers and functions of Central Authority [C2]; Definitions [C3].\n\nI request: [REMEDY - e.g. full refund / replacement / reversal].\n\nPlease acknowledge this complaint and resolve it within 30 days. If it is not resolved, I will escalate it to RBI Ombudsman (RB-IOS, 2026).\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nLegal basis cited:\n[C1] Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 9 — Grounds of Complaint\n[C2] Consumer Protection Act, 2019, Section 18(2) — Powers and functions of Central Authority\n[C3] Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 3(1) — Definitions\n```\n\n## If there's no reply\n1. **Bank grievance cell → Principal Nodal Officer** (email / bank complaint portal) — First. Complain in writing and keep the complaint number; escalate to the Principal Nodal Officer if unresolved.\n2. **RBI Ombudsman (RB-IOS, 2026)** (RBI CMS portal / email) — No reply within 30 days, or the reply is unsatisfactory. Also crpc@rbi.org.in. No fee. https://cms.rbi.org.in · 14448 (RBI contact centre)\n3. **District Consumer Commission** (online filing (e-Jagriti)) — Deficiency in banking service is also a consumer dispute. https://e-jagriti.gov.in\n\n_Information, not legal advice._\n",
+  "summary": "आपकी शिकायत SBI के ख़िलाफ़ है। पहले Bank grievance cell → Principal Nodal Officer को यह पत्र भेजें; 30 दिन में जवाब न मिले तो RBI Ombudsman (RB-IOS, 2026) पर जाएँ।",
+  "escalation": [
+   {
+    "name": "Bank grievance cell → Principal Nodal Officer",
+    "channel": "email / bank complaint portal",
+    "url": null,
+    "phone": null,
+    "when_to_use": "First. Complain in writing and keep the complaint number; escalate to the Principal Nodal Officer if unresolved.",
+    "typical_wait": "30 days"
+   },
+   {
+    "name": "RBI Ombudsman (RB-IOS, 2026)",
+    "channel": "RBI CMS portal / email",
+    "url": "https://cms.rbi.org.in",
+    "phone": "14448 (RBI contact centre)",
+    "when_to_use": "No reply within 30 days, or the reply is unsatisfactory. Also crpc@rbi.org.in. No fee.",
+    "typical_wait": "weeks"
+   },
+   {
+    "name": "District Consumer Commission",
+    "channel": "online filing (e-Jagriti)",
+    "url": "https://e-jagriti.gov.in",
+    "phone": null,
+    "when_to_use": "Deficiency in banking service is also a consumer dispute.",
+    "typical_wait": "months"
+   }
+  ],
+  "cited": [
+   {
+    "doc_id": "ios",
+    "doc_title": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+    "ref": "Clause 9",
+    "title": "Grounds of Complaint",
+    "citation": "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 9",
+    "text": "9. Grounds of Complaint Any customer aggrieved by an act or omission of a Bank resulting in deficiency in service may file a complaint under the Scheme personally or through an authorised representative as defined under clause 3(1)(c).",
+    "source_url": "https://website.rbi.org.in/documents/d/rbi/reserve-bank-integrated-ombudsman-scheme-2026-160126",
+    "score": 0.856,
+    "act": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+    "section": "Clause 9",
+    "source_file": "rbi_ios_2026.pdf",
+    "page": null,
+    "query": "grounds of complaint act or omission of bank resulting in deficiency in service",
+    "tag": "C1"
+   },
+   {
+    "doc_id": "cpa",
+    "doc_title": "Consumer Protection Act, 2019",
+    "ref": "Section 18(2)",
+    "title": "Powers and functions of Central Authority",
+    "citation": "Consumer Protection Act, 2019, Section 18(2)",
+    "text": "(2) Without prejudice to the generality of the provisions contained in sub-section (1), the Central Authority may, for any of the purposes aforesaid,— (a) inquire or cause an inquiry or investigation to be made into violations of consumer rights or unfair trade practices, either suo motu or on a complaint received or on the directions from the Central Government; (b) file complaints before the District Commission, the State Commission or the National Commission, as the case may be, under this Act; (c) intervene in any proceedings before the District Commission or the State Commission or the National Commission, as the case may be, in respect of any allegation of violation of consumer rights or unfair trade practices; (d) review the matters relating to, and the factors inhibiting enjoyment of, consumer rights, including safeguards provided for the protection of consumers under any other law for the time being in force and recommend appropriate remedial measures for their effective implementation; (e) recommend adoption of international covenants and best international practices on consumer rights to ensure effective enforcement of consumer rights; (f) undertake and promote research in the field of consumer rights; (g) spread and promote awareness on consumer rights; (h) encourage non-Governmental organisations and other institutions working in the field of consumer rights to co-operate and work with consumer protection agencies; ",
+    "source_url": "https://www.indiacode.nic.in/bitstream/123456789/18964/1/cpa.pdf",
+    "score": 0.749,
+    "act": "Consumer Protection Act, 2019",
+    "section": "Section 18(2)",
+    "source_file": "cpa_2019.pdf",
+    "page": null,
+    "query": "consumer rights to be heard and seek redressal against unfair trade practice SBI 5000 ,",
+    "tag": "C2"
+   },
+   {
+    "doc_id": "ios",
+    "doc_title": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+    "ref": "Clause 3(1)",
+    "title": "Definitions",
+    "citation": "Reserve Bank – Integrated Ombudsman Scheme, 2026, Clause 3(1)",
+    "text": "(i) “Deficiency in service” means a shortcoming or an inadequacy in any service, which the Bank is required to provide statutorily or otherwise, which may or may not result in financial loss or damage to the customer; (j) “Non-Banking Financial Company” (NBFC) means an NBFC as defined in Section 45-I (f) of the Reserve Bank of India Act, 1934 and registered with the Reserve Bank, to the extent included under the Scheme but does not include, an NBFC in resolution or winding up/liquidation, or under Directions of Reserve Bank of India; (k) “Non- bank Prepaid Payment Instruments Issuer” means a company, as defined in the Companies Act, 2013 (18 of 2013), which has been granted a Certificate of Authorisation by the Reserve Bank of India under Section 7(1) of the Payment and Settlement Systems Act, 2007 (51 of 2007) to operate as a Prepaid Payment Instrument Issuer; (l) “RBI Deputy Ombudsman” means a person appointed by the Reserve Bank as such under Clause 4 of the Scheme; (m) “RBI Ombudsman” means a person appointed by the Reserve Bank as such under Clause 4 of the Scheme; (n) “Regulated Entity” means a bank or a Non-Banking Financial Company, or a Non - bank Prepaid Payment Instruments Issuer or a Credit Information Company as defined in the Scheme, or any other entity as may be specified by the Reserve Bank from time to time, to the extent not excluded under the Scheme; This is Public document. (o) “Rejected Complaints” means complaints that are closed under the provisions as specified in clause 16 of the Scheme. (p) “Settlement” means an outcome of the processes under clause 14 of the Scheme; (q) “The Reserve Bank” means Reserve Bank of India constituted under Section 3 of the Reserve Bank of India Act, 1934. ",
+    "source_url": "https://website.rbi.org.in/documents/d/rbi/reserve-bank-integrated-ombudsman-scheme-2026-160126",
+    "score": 0.773,
+    "act": "Reserve Bank – Integrated Ombudsman Scheme, 2026",
+    "section": "Clause 3(1)",
+    "source_file": "rbi_ios_2026.pdf",
+    "page": null,
+    "query": "grounds of complaint act or omission of bank resulting in deficiency in service",
+    "tag": "C3"
+   }
+  ],
+  "removed_citations": [],
+  "case_brief": {},
+  "case_answers": {},
+  "eligibility": {
+   "status": "no_conditions",
+   "message": ""
+  },
+  "eligibility_checks": [],
+  "unresolved_critic_notes": []
+ },
+ "thread_id": "eval-6-1791528094"
+}

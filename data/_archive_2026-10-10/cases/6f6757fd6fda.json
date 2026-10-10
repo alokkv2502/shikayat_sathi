@@ -1,0 +1,293 @@
+{
+ "complaint": "Papa ka zameen ka case Lucknow civil court mein 6 saal se chal raha hai. Har baar agli date mil jaati hai. Vakeel phone nahi uthata, aur naya vakeel karne ke paise nahi hain. Kya kar sakte hain?",
+ "company_hint": null,
+ "city": null,
+ "complainant": {},
+ "live": true,
+ "language": "hinglish",
+ "sector": "legal",
+ "tier": "C",
+ "safety": {
+  "level": "none",
+  "categories": [],
+  "method": "rules",
+  "helplines": [],
+  "numbers": [],
+  "messages": []
+ },
+ "case_entities": [],
+ "case_brief": {},
+ "eligibility_checks": [
+  {
+   "condition": "You are a woman or a child.",
+   "status": "met",
+   "evidence": "child",
+   "question": ""
+  },
+  {
+   "condition": "You belong to a Scheduled Caste or Scheduled Tribe.",
+   "status": "not_met",
+   "evidence": "no",
+   "question": ""
+  },
+  {
+   "condition": "You are a person with a disability.",
+   "status": "not_met",
+   "evidence": "no",
+   "question": ""
+  },
+  {
+   "condition": "You are an industrial workman.",
+   "status": "unknown",
+   "evidence": "",
+   "question": "Are you currently employed as an industrial workman?"
+  },
+  {
+   "condition": "You are a victim of trafficking or forced labour (begar).",
+   "status": "unknown",
+   "evidence": "",
+   "question": "Are you a victim of trafficking or forced labour?"
+  },
+  {
+   "condition": "You are a victim of a mass disaster, ethnic or caste violence, flood, drought, earthquake or industrial disaster.",
+   "status": "unknown",
+   "evidence": "",
+   "question": "Are you a victim of a mass disaster, ethnic or caste violence, flood, drought, earthquake or industrial disaster?"
+  },
+  {
+   "condition": "You are in custody (including a protective home, juvenile home or psychiatric hospital).",
+   "status": "unknown",
+   "evidence": "",
+   "question": "Are you currently in custody, such as a protective home, juvenile home, or psychiatric hospital?"
+  },
+  {
+   "condition": "Your annual income is below the limit your state has set for free legal aid.",
+   "status": "unknown",
+   "evidence": "",
+   "question": "What is your total annual family income?"
+  }
+ ],
+ "gap_questions": [
+  "Are you currently employed as an industrial workman?",
+  "Are you a victim of trafficking or forced labour?",
+  "Are you a victim of a mass disaster, ethnic or caste violence, flood, drought, earthquake or industrial disaster?",
+  "Are you currently in custody, such as a protective home, juvenile home, or psychiatric hospital?",
+  "What is your total annual family income?"
+ ],
+ "extra_questions": [
+  "What is the case number or diary number of the land dispute in the Lucknow Civil Court?",
+  "What is the name of the lawyer currently handling the case?",
+  "Have you attempted to contact the District Legal Services Authority (DLSA) in Lucknow for assistance?"
+ ],
+ "eligibility": {
+  "status": "meets_listed",
+  "message": "You appear to qualify for free legal aid: You are a woman or a child."
+ },
+ "company": "",
+ "company_domain": null,
+ "official_domains": [],
+ "domain_basis": null,
+ "facts": {
+  "product_or_service": "Civil court case regarding land dispute",
+  "issue": "The complainant's father's land case has been pending in Lucknow Civil Court for 6 years with repeated adjournments, and the lawyer is unresponsive.",
+  "what_user_wants": "Guidance on how to proceed with the case without funds for a new lawyer",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "",
+  "date": "",
+  "city": "Lucknow",
+  "place": "",
+  "police_station": "",
+  "details": {}
+ },
+ "issue_types": [
+  "other"
+ ],
+ "missing_facts": [],
+ "search_plan": [],
+ "search_keywords": "civil court delay lawyer unresponsive",
+ "urgent_note": null,
+ "contacts": [],
+ "precedents": [],
+ "local_forum": null,
+ "blocked_hallucinations": 0,
+ "errors": [],
+ "verified_contacts": [],
+ "unverified_contacts": [],
+ "recommended": null,
+ "verify_attempts": 1,
+ "grievance_attempts": 0,
+ "clauses": [],
+ "draft": "Aapke father ka land case jo Lucknow Civil Court mein 6 saal se pending hai, uske liye aap eCourts website ya 'eCourts Services' mobile app ka use kar sakte hain. Wahan aap apne case ka 16-character CNR number daal kar latest status, next hearing date, aur court orders check kar sakte hain. Agar aapke paas CNR number nahi hai, toh aap court, case type, case number, aur year ka use karke bhi search kar sakte hain. Kyunki aap child hain, aap free legal aid ke liye eligible ho sakte hain. Aap apne district ki District Legal Services Authority (DLSA) se contact karein. Aap unki helpline number 15100 par call karke free legal advice aur lawyer ke baare mein pooch sakte hain. Iske alawa, aap Lok Adalat ya mediation ka option bhi explore kar sakte hain, jahan cases jaldi settle ho sakte hain. Apne case se jude saare documents, jaise ki purane orders aur notices, hamesha ready rakhein taaki jab aap DLSA ya kisi naye lawyer se baat karein, toh unhe puri jankari mil sake.",
+ "subject": "Guidance on your pending land case in Lucknow",
+ "summary": "Aap eCourts website par CNR number se apne case ka status check kar sakte hain. Aap child hone ke naate free legal aid ke liye eligible ho sakte hain, isliye Lucknow DLSA (helpline 15100) se sampark karein. Lok Adalat ya mediation bhi case jaldi suljhane ke acche raste ho sakte hain.",
+ "escalation": [
+  {
+   "name": "District Legal Services Authority (DLSA)",
+   "channel": "DLSA office at your district court · NALSA legal-aid helpline",
+   "url": "https://nalsa.gov.in",
+   "phone": "15100",
+   "when_to_use": "First. Free legal advice, and a free lawyer if you are eligible; DLSA also runs Lok Adalats for settling disputes without a trial.",
+   "typical_wait": "a few days"
+  },
+  {
+   "name": "eCourts case status",
+   "channel": "eCourts Services website / app",
+   "url": "https://services.ecourts.gov.in",
+   "phone": null,
+   "when_to_use": "If you already have a case: check its status, next hearing date and orders with the 16-character CNR number, or with the court, case type, number and year.",
+   "typical_wait": "instant"
+  }
+ ],
+ "critic_notes": [],
+ "draft_attempts": 1,
+ "draft_method": "Gemini (gemini-3.1-flash-lite, generate_content)",
+ "user_edits": {
+  "draft": "Aapke father ka land case jo Lucknow Civil Court mein 6 saal se pending hai, uske liye aap eCourts website ya 'eCourts Services' mobile app ka use kar sakte hain. Wahan aap apne case ka 16-character CNR number daal kar latest status, next hearing date, aur court orders check kar sakte hain. Agar aapke paas CNR number nahi hai, toh aap court, case type, case number, aur year ka use karke bhi search kar sakte hain. Kyunki aap child hain, aap free legal aid ke liye eligible ho sakte hain. Aap apne district ki District Legal Services Authority (DLSA) se contact karein. Aap unki helpline number 15100 par call karke free legal advice aur lawyer ke baare mein pooch sakte hain. Iske alawa, aap Lok Adalat ya mediation ka option bhi explore kar sakte hain, jahan cases jaldi settle ho sakte hain. Apne case se jude saare documents, jaise ki purane orders aur notices, hamesha ready rakhein taaki jab aap DLSA ya kisi naye lawyer se baat karein, toh unhe puri jankari mil sake.",
+  "subject": "Guidance on your pending land case in Lucknow",
+  "fills": {},
+  "case_answers": {},
+  "complainant": {}
+ },
+ "case_answers": {
+  "You are a woman or a child.": "child",
+  "You belong to a Scheduled Caste or Scheduled Tribe.": "no",
+  "You are a person with a disability.": "no",
+  "Have you received any written notices or orders from the court in the last 6 months?": "yes",
+  "Is the land in question located within the jurisdiction of the Lucknow Civil Court?": "yes"
+ },
+ "fills": {},
+ "drafted_answers": {
+  "You are a woman or a child.": "child",
+  "You belong to a Scheduled Caste or Scheduled Tribe.": "no",
+  "You are a person with a disability.": "no",
+  "Have you received any written notices or orders from the court in the last 6 months?": "yes",
+  "Is the land in question located within the jurisdiction of the Lucknow Civil Court?": "yes"
+ },
+ "user_draft": "",
+ "review_rounds": 3,
+ "redraft": false,
+ "trace": [
+  "🧭 Intake (Gemini (gemini-3.1-flash-lite, generate_content)): language=hinglish, domain=legal (tier C: explain and refer), company=?, issues=other",
+  "🛟 Safety: no immediate danger detected",
+  "🔎 Case research: no named scheme, policy or product to research",
+  "🗺️ Frame: legal route confirmed",
+  "📍 Local forum: no free legal aid (dlsa) found for Lucknow",
+  "🧩 Gap check (Gemini (gemini-3.1-flash-lite, generate_content)): 0 met, 8 to confirm, 0 may not be met; 3 other question(s)",
+  "🛡️ Verifier #1: 0 verified, 0 unverified — no company identified - nothing to verify",
+  "📚 Legal RAG: skipped — no indexed law applies to the legal route (no citations will be made)",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): passed — every claim is cited, no invented facts",
+  "🙋 Human review: 3 new answer(s) → reassess and redraft",
+  "🔁 Reassess (Gemini (gemini-3.1-flash-lite, generate_content)): 3 answer(s) — 1 met, 5 to confirm, 2 may not be met; 3 other question(s) · meets listed → redrafting",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): passed — every claim is cited, no invented facts",
+  "🙋 Human review: 2 new answer(s) → reassess and redraft",
+  "🔁 Reassess (Gemini (gemini-3.1-flash-lite, generate_content)): 5 answer(s) — 1 met, 5 to confirm, 2 may not be met; 3 other question(s) · meets listed → redrafting",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): passed — every claim is cited, no invented facts",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 1,
+ "final": {
+  "to": null,
+  "to_name": "You",
+  "tier": "C",
+  "safety": {
+   "level": "none",
+   "categories": [],
+   "method": "rules",
+   "helplines": [],
+   "numbers": [],
+   "messages": []
+  },
+  "subject": "Guidance on your pending land case in Lucknow",
+  "letter": "Guidance on your pending land case in Lucknow\n09 October 2026\n\nAapke father ka land case jo Lucknow Civil Court mein 6 saal se pending hai, uske liye aap eCourts website ya 'eCourts Services' mobile app ka use kar sakte hain. Wahan aap apne case ka 16-character CNR number daal kar latest status, next hearing date, aur court orders check kar sakte hain. Agar aapke paas CNR number nahi hai, toh aap court, case type, case number, aur year ka use karke bhi search kar sakte hain. Kyunki aap child hain, aap free legal aid ke liye eligible ho sakte hain. Aap apne district ki District Legal Services Authority (DLSA) se contact karein. Aap unki helpline number 15100 par call karke free legal advice aur lawyer ke baare mein pooch sakte hain. Iske alawa, aap Lok Adalat ya mediation ka option bhi explore kar sakte hain, jahan cases jaldi settle ho sakte hain. Apne case se jude saare documents, jaise ki purane orders aur notices, hamesha ready rakhein taaki jab aap DLSA ya kisi naye lawyer se baat karein, toh unhe puri jankari mil sake.\n\nThis is general information to help you take the next step. It is not legal advice; a lawyer or the District Legal Services Authority can advise on your situation.",
+  "markdown": "# Guidance on your pending land case in Lucknow\n\nAap eCourts website par CNR number se apne case ka status check kar sakte hain. Aap child hone ke naate free legal aid ke liye eligible ho sakte hain, isliye Lucknow DLSA (helpline 15100) se sampark karein. Lok Adalat ya mediation bhi case jaldi suljhane ke acche raste ho sakte hain.\n\n```\nGuidance on your pending land case in Lucknow\n09 October 2026\n\nAapke father ka land case jo Lucknow Civil Court mein 6 saal se pending hai, uske liye aap eCourts website ya 'eCourts Services' mobile app ka use kar sakte hain. Wahan aap apne case ka 16-character CNR number daal kar latest status, next hearing date, aur court orders check kar sakte hain. Agar aapke paas CNR number nahi hai, toh aap court, case type, case number, aur year ka use karke bhi search kar sakte hain. Kyunki aap child hain, aap free legal aid ke liye eligible ho sakte hain. Aap apne district ki District Legal Services Authority (DLSA) se contact karein. Aap unki helpline number 15100 par call karke free legal advice aur lawyer ke baare mein pooch sakte hain. Iske alawa, aap Lok Adalat ya mediation ka option bhi explore kar sakte hain, jahan cases jaldi settle ho sakte hain. Apne case se jude saare documents, jaise ki purane orders aur notices, hamesha ready rakhein taaki jab aap DLSA ya kisi naye lawyer se baat karein, toh unhe puri jankari mil sake.\n\nThis is general information to help you take the next step. It is not legal advice; a lawyer or the District Legal Services Authority can advise on your situation.\n```\n\n## Where to get help\n1. **District Legal Services Authority (DLSA)** (DLSA office at your district court · NALSA legal-aid helpline) — First. Free legal advice, and a free lawyer if you are eligible; DLSA also runs Lok Adalats for settling disputes without a trial. https://nalsa.gov.in · 15100\n2. **eCourts case status** (eCourts Services website / app) — If you already have a case: check its status, next hearing date and orders with the 16-character CNR number, or with the court, case type, number and year. https://services.ecourts.gov.in\n\n_Information, not legal advice._\n",
+  "summary": "Aap eCourts website par CNR number se apne case ka status check kar sakte hain. Aap child hone ke naate free legal aid ke liye eligible ho sakte hain, isliye Lucknow DLSA (helpline 15100) se sampark karein. Lok Adalat ya mediation bhi case jaldi suljhane ke acche raste ho sakte hain.",
+  "escalation": [
+   {
+    "name": "District Legal Services Authority (DLSA)",
+    "channel": "DLSA office at your district court · NALSA legal-aid helpline",
+    "url": "https://nalsa.gov.in",
+    "phone": "15100",
+    "when_to_use": "First. Free legal advice, and a free lawyer if you are eligible; DLSA also runs Lok Adalats for settling disputes without a trial.",
+    "typical_wait": "a few days"
+   },
+   {
+    "name": "eCourts case status",
+    "channel": "eCourts Services website / app",
+    "url": "https://services.ecourts.gov.in",
+    "phone": null,
+    "when_to_use": "If you already have a case: check its status, next hearing date and orders with the 16-character CNR number, or with the court, case type, number and year.",
+    "typical_wait": "instant"
+   }
+  ],
+  "cited": [],
+  "removed_citations": [],
+  "case_brief": {},
+  "case_answers": {
+   "You are a woman or a child.": "child",
+   "You belong to a Scheduled Caste or Scheduled Tribe.": "no",
+   "You are a person with a disability.": "no",
+   "Have you received any written notices or orders from the court in the last 6 months?": "yes",
+   "Is the land in question located within the jurisdiction of the Lucknow Civil Court?": "yes"
+  },
+  "eligibility": {
+   "status": "meets_listed",
+   "message": "You appear to qualify for free legal aid: You are a woman or a child."
+  },
+  "eligibility_checks": [
+   {
+    "condition": "You are a woman or a child.",
+    "status": "met",
+    "evidence": "child",
+    "question": ""
+   },
+   {
+    "condition": "You belong to a Scheduled Caste or Scheduled Tribe.",
+    "status": "not_met",
+    "evidence": "no",
+    "question": ""
+   },
+   {
+    "condition": "You are a person with a disability.",
+    "status": "not_met",
+    "evidence": "no",
+    "question": ""
+   },
+   {
+    "condition": "You are an industrial workman.",
+    "status": "unknown",
+    "evidence": "",
+    "question": "Are you currently employed as an industrial workman?"
+   },
+   {
+    "condition": "You are a victim of trafficking or forced labour (begar).",
+    "status": "unknown",
+    "evidence": "",
+    "question": "Are you a victim of trafficking or forced labour?"
+   },
+   {
+    "condition": "You are a victim of a mass disaster, ethnic or caste violence, flood, drought, earthquake or industrial disaster.",
+    "status": "unknown",
+    "evidence": "",
+    "question": "Are you a victim of a mass disaster, ethnic or caste violence, flood, drought, earthquake or industrial disaster?"
+   },
+   {
+    "condition": "You are in custody (including a protective home, juvenile home or psychiatric hospital).",
+    "status": "unknown",
+    "evidence": "",
+    "question": "Are you currently in custody, such as a protective home, juvenile home, or psychiatric hospital?"
+   },
+   {
+    "condition": "Your annual income is below the limit your state has set for free legal aid.",
+    "status": "unknown",
+    "evidence": "",
+    "question": "What is your total annual family income?"
+   }
+  ],
+  "unresolved_critic_notes": []
+ },
+ "thread_id": "6f6757fd6fda"
+}

@@ -1,0 +1,256 @@
+{
+ "complaint": "I didnt get my benefit of pradhan mantri awaas yojna ",
+ "company_hint": null,
+ "city": null,
+ "complainant": {},
+ "live": true,
+ "language": "en",
+ "sector": "govt_scheme",
+ "tier": "A",
+ "safety": {
+  "level": "none",
+  "categories": [],
+  "method": "rules",
+  "helplines": [],
+  "numbers": [],
+  "messages": []
+ },
+ "case_entities": [
+  "Pradhan Mantri Awaas Yojana"
+ ],
+ "case_brief": {
+  "subject": "Pradhan Mantri Awaas Yojana",
+  "aliases": [
+   "PMAY",
+   "PMAY(U)",
+   "PMAY-G",
+   "Pradhan Mantri Awaas Yojana - Gramin"
+  ],
+  "administering_body": "Ministry of Housing and Urban Affairs",
+  "what_it_is": "Pradhan Mantri Awaas Yojana is a government initiative aimed at providing affordable housing to eligible beneficiaries in urban and rural areas of India. It includes components like the Credit Linked Subsidy Scheme and Gramin housing assistance.",
+  "complaint_type": "govt_scheme",
+  "entitlement": "Eligible beneficiaries receive financial assistance or interest subsidy on home loans for the construction or purchase of a house.",
+  "conditions": [
+   "Must meet the specific eligibility criteria defined for the Urban or Gramin components of the scheme."
+  ],
+  "common_failure_reasons": [],
+  "official_grievance_channel": "https://pmay-urban.gov.in/ or support-myscheme@digitalindia.gov.in",
+  "documents_needed": [],
+  "sources": [
+   "https://pmay-urban.gov.in/statewisepmayhouses/21/CLSS",
+   "https://pmay-urban.gov.in/statewisepmayhouses/9/CLSS",
+   "https://www.myscheme.gov.in/hi/schemes/pmay-g"
+  ]
+ },
+ "eligibility_checks": [
+  {
+   "condition": "Must meet the specific eligibility criteria defined for the Urban or Gramin components of the scheme.",
+   "status": "met",
+   "evidence": "The complainant confirmed they meet the eligibility criteria.",
+   "question": ""
+  }
+ ],
+ "gap_questions": [],
+ "extra_questions": [
+  "What is your current residential address?",
+  "Have you checked your application status on the official PMAY portal?",
+  "Did you receive any rejection notice or reason for the delay?"
+ ],
+ "eligibility": {
+  "status": "meets_listed",
+  "message": "Your details match all 1 published condition(s) we found. The office may still check its own records."
+ },
+ "company": "Ministry of Housing and Urban Affairs",
+ "company_domain": "pmay-urban.gov.in",
+ "official_domains": [
+  "pmay-urban.gov.in",
+  "myscheme.gov.in"
+ ],
+ "domain_basis": "official government source of the case brief",
+ "facts": {
+  "product_or_service": "Pradhan Mantri Awaas Yojana",
+  "issue": "The user has not received the benefits of the Pradhan Mantri Awaas Yojana.",
+  "what_user_wants": "Receipt of scheme benefits",
+  "order_id": "",
+  "reference_id": "",
+  "amount": "",
+  "date": "",
+  "city": "",
+  "place": "",
+  "police_station": "",
+  "details": {}
+ },
+ "issue_types": [
+  "deficiency"
+ ],
+ "missing_facts": [],
+ "search_plan": [],
+ "search_keywords": "Pradhan Mantri Awaas Yojana benefit",
+ "urgent_note": null,
+ "contacts": [],
+ "precedents": [],
+ "local_forum": null,
+ "blocked_hallucinations": 0,
+ "errors": [],
+ "verified_contacts": [],
+ "unverified_contacts": [],
+ "recommended": null,
+ "verify_attempts": 1,
+ "grievance_attempts": 0,
+ "clauses": [],
+ "draft": "I am writing to formally report that I have not received the benefits entitled to me under the Pradhan Mantri Awaas Yojana. As a beneficiary, I have confirmed that I meet the specific eligibility criteria defined for the Urban or Gramin components of the scheme. Despite this, the financial assistance or interest subsidy has not been disbursed to me. I request the Ministry of Housing and Urban Affairs to review my application and confirm the current status of my file. Please identify the specific record, documentation, or administrative condition that is currently blocking the release of my benefits. If there is any further information or correction required from my end, kindly provide clear instructions so that I may comply. I look forward to your prompt response regarding the status of my entitlement through the official grievance portal at https://pmay-urban.gov.in/. If this matter remains unresolved, I will escalate this grievance through the Centralized Public Grievance Redress and Monitoring System (CPGRAMS).",
+ "subject": "Grievance regarding non-receipt of Pradhan Mantri Awaas Yojana benefits",
+ "summary": "You are writing to the Ministry of Housing and Urban Affairs to report that you have not received your Pradhan Mantri Awaas Yojana benefits despite meeting the eligibility criteria. You are asking them to identify any specific records or conditions blocking your payment. If the issue is not resolved, you plan to escalate the matter to CPGRAMS.",
+ "escalation": [
+  {
+   "name": "Scheme grievance portal",
+   "channel": "https://pmay-urban.gov.in/ or support-myscheme@digitalindia.gov.in",
+   "url": "https://pmay-urban.gov.in/",
+   "phone": null,
+   "when_to_use": "First. Use the administering department's official scheme or service grievance portal.",
+   "typical_wait": "Follow the portal's acknowledgement and resolution timeline."
+  },
+  {
+   "name": "Centralized Public Grievance Redress and Monitoring System (CPGRAMS)",
+   "channel": "Department of Administrative Reforms and Public Grievances",
+   "url": "https://pgportal.gov.in",
+   "phone": null,
+   "when_to_use": "Escalate an unresolved grievance about a central government department or scheme.",
+   "typical_wait": "Use the timeline shown on CPGRAMS."
+  }
+ ],
+ "critic_notes": [
+  "Use at least 2 of the 2 explicit case-specific facts; the current draft uses 1."
+ ],
+ "draft_attempts": 2,
+ "draft_method": "Gemini (gemini-3.1-flash-lite, generate_content)",
+ "user_edits": {
+  "draft": "I am writing to formally report that I have not received the benefits entitled to me under the Pradhan Mantri Awaas Yojana. As a beneficiary, I have confirmed that I meet the specific eligibility criteria defined for the Urban or Gramin components of the scheme. Despite this, the financial assistance or interest subsidy has not been disbursed to me. I request the Ministry of Housing and Urban Affairs to review my application and confirm the current status of my file. Please identify the specific record, documentation, or administrative condition that is currently blocking the release of my benefits. If there is any further information or correction required from my end, kindly provide clear instructions so that I may comply. I look forward to your prompt response regarding the status of my entitlement through the official grievance portal at https://pmay-urban.gov.in/. If this matter remains unresolved, I will escalate this grievance through the Centralized Public Grievance Redress and Monitoring System (CPGRAMS).",
+  "subject": "Grievance regarding non-receipt of Pradhan Mantri Awaas Yojana benefits",
+  "fills": {},
+  "case_answers": {},
+  "complainant": {}
+ },
+ "case_answers": {
+  "Must meet the specific eligibility criteria defined for the Urban or Gramin components of the scheme.": "yes"
+ },
+ "fills": {},
+ "drafted_answers": {
+  "Must meet the specific eligibility criteria defined for the Urban or Gramin components of the scheme.": "yes"
+ },
+ "user_draft": "",
+ "review_rounds": 2,
+ "redraft": false,
+ "trace": [
+  "🧭 Intake (Gemini (gemini-3.1-flash-lite, generate_content)): language=en, domain=govt_scheme (tier A: draft and escalate), company=?, issues=deficiency; to research: Pradhan Mantri Awaas Yojana",
+  "🛟 Safety: no immediate danger detected",
+  "🔎 Case research: Pradhan Mantri Awaas Yojana — 1 condition(s) from 3 source(s) (3 official page(s) read)",
+  "🗺️ Frame: govt_scheme route confirmed",
+  "📍 Local forum: skipped — no city given",
+  "🧩 Gap check (Gemini (gemini-3.1-flash-lite, generate_content)): 0 met, 1 to confirm, 0 may not be met; 3 other question(s)",
+  "🛡️ Verifier #1: 0 verified, 0 unverified — no verified grievance email (0 unverified contact(s) kept aside)",
+  "📚 Legal RAG: skipped — no indexed law applies to the govt_scheme route (no citations will be made)",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 4 issue(s) → back to drafter",
+  "   • Email support-myscheme@digitalindia.gov.in is not a verified contact - remove it.",
+  "   • Use at least 2 of the 2 explicit case-specific facts; the current draft uses 1.",
+  "   • Reviewer: The letter fails to specify whether the application is for the Urban or Gramin component of the scheme, which is a critical eligibility condition identified in the case brief.",
+  "   • Reviewer: The letter lacks any personal identifiers (such as an application reference number, Aadhaar number, or contact details) necessary for the Ministry to locate the specific record.",
+  "✍️ Drafter #2 (Gemini (gemini-3.1-flash-lite, generate_content)): revising for 4 critic note(s)",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 3 issue(s) remain after 2 drafts → finalize will strip unsupported citations",
+  "   • Use at least 2 of the 2 explicit case-specific facts; the current draft uses 1.",
+  "   • Reviewer: The letter includes placeholders for an application reference number and Aadhaar number, but the user facts provided do not contain these details, making the letter incomplete.",
+  "   • Reviewer: The letter asks the Ministry to clarify whether the application is under the Urban or Gramin component, but the complainant should have specified this themselves as part of the eligibility criteria check.",
+  "🙋 Human review: 1 new answer(s) → reassess and redraft",
+  "🔁 Reassess (Gemini (gemini-3.1-flash-lite, generate_content)): 1 answer(s) — 1 met, 0 to confirm, 0 may not be met; 3 other question(s) · meets listed → redrafting",
+  "✍️ Drafter #1 (Gemini (gemini-3.1-flash-lite, generate_content))",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 2 issue(s) → back to drafter",
+  "   • Email support-myscheme@digitalindia.gov.in is not a verified contact - remove it.",
+  "   • Use at least 2 of the 2 explicit case-specific facts; the current draft uses 1.",
+  "✍️ Drafter #2 (Gemini (gemini-3.1-flash-lite, generate_content)): revising for 2 critic note(s)",
+  "🧐 Critic (rules + Gemini (gemini-3.1-flash-lite, generate_content)): 1 issue(s) remain after 2 drafts → finalize will strip unsupported citations",
+  "   • Use at least 2 of the 2 explicit case-specific facts; the current draft uses 1.",
+  "🙋 Human review: approved"
+ ],
+ "live_calls": 2,
+ "final": {
+  "to": null,
+  "to_name": "Scheme grievance portal",
+  "tier": "A",
+  "safety": {
+   "level": "none",
+   "categories": [],
+   "method": "rules",
+   "helplines": [],
+   "numbers": [],
+   "messages": []
+  },
+  "subject": "Grievance regarding non-receipt of Pradhan Mantri Awaas Yojana benefits",
+  "letter": "To,\nScheme grievance portal\nMinistry of Housing and Urban Affairs\n\nDate: 09 October 2026\n\nSubject: Grievance regarding non-receipt of Pradhan Mantri Awaas Yojana benefits\n\nDear Sir/Madam,\n\nI am writing to formally report that I have not received the benefits entitled to me under the Pradhan Mantri Awaas Yojana. As a beneficiary, I have confirmed that I meet the specific eligibility criteria defined for the Urban or Gramin components of the scheme. Despite this, the financial assistance or interest subsidy has not been disbursed to me. I request the Ministry of Housing and Urban Affairs to review my application and confirm the current status of my file. Please identify the specific record, documentation, or administrative condition that is currently blocking the release of my benefits. If there is any further information or correction required from my end, kindly provide clear instructions so that I may comply. I look forward to your prompt response regarding the status of my entitlement through the official grievance portal at https://pmay-urban.gov.in/. If this matter remains unresolved, I will escalate this grievance through the Centralized Public Grievance Redress and Monitoring System (CPGRAMS).\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nScheme and case sources:\n- https://pmay-urban.gov.in/statewisepmayhouses/21/CLSS\n- https://pmay-urban.gov.in/statewisepmayhouses/9/CLSS\n- https://www.myscheme.gov.in/hi/schemes/pmay-g",
+  "markdown": "# Grievance regarding non-receipt of Pradhan Mantri Awaas Yojana benefits\n\n**To:** Scheme grievance portal (no verified email - use the official complaint form)\n\nYou are writing to the Ministry of Housing and Urban Affairs to report that you have not received your Pradhan Mantri Awaas Yojana benefits despite meeting the eligibility criteria. You are asking them to identify any specific records or conditions blocking your payment. If the issue is not resolved, you plan to escalate the matter to CPGRAMS.\n\n```\nTo,\nScheme grievance portal\nMinistry of Housing and Urban Affairs\n\nDate: 09 October 2026\n\nSubject: Grievance regarding non-receipt of Pradhan Mantri Awaas Yojana benefits\n\nDear Sir/Madam,\n\nI am writing to formally report that I have not received the benefits entitled to me under the Pradhan Mantri Awaas Yojana. As a beneficiary, I have confirmed that I meet the specific eligibility criteria defined for the Urban or Gramin components of the scheme. Despite this, the financial assistance or interest subsidy has not been disbursed to me. I request the Ministry of Housing and Urban Affairs to review my application and confirm the current status of my file. Please identify the specific record, documentation, or administrative condition that is currently blocking the release of my benefits. If there is any further information or correction required from my end, kindly provide clear instructions so that I may comply. I look forward to your prompt response regarding the status of my entitlement through the official grievance portal at https://pmay-urban.gov.in/. If this matter remains unresolved, I will escalate this grievance through the Centralized Public Grievance Redress and Monitoring System (CPGRAMS).\n\nYours faithfully,\n[YOUR NAME]\n[PHONE]\n[EMAIL]\n[ADDRESS]\n\nScheme and case sources:\n- https://pmay-urban.gov.in/statewisepmayhouses/21/CLSS\n- https://pmay-urban.gov.in/statewisepmayhouses/9/CLSS\n- https://www.myscheme.gov.in/hi/schemes/pmay-g\n```\n\n## If there's no reply\n1. **Scheme grievance portal** (https://pmay-urban.gov.in/ or support-myscheme@digitalindia.gov.in) — First. Use the administering department's official scheme or service grievance portal. https://pmay-urban.gov.in/\n2. **Centralized Public Grievance Redress and Monitoring System (CPGRAMS)** (Department of Administrative Reforms and Public Grievances) — Escalate an unresolved grievance about a central government department or scheme. https://pgportal.gov.in\n\n_Information, not legal advice._\n",
+  "summary": "You are writing to the Ministry of Housing and Urban Affairs to report that you have not received your Pradhan Mantri Awaas Yojana benefits despite meeting the eligibility criteria. You are asking them to identify any specific records or conditions blocking your payment. If the issue is not resolved, you plan to escalate the matter to CPGRAMS.",
+  "escalation": [
+   {
+    "name": "Scheme grievance portal",
+    "channel": "https://pmay-urban.gov.in/ or support-myscheme@digitalindia.gov.in",
+    "url": "https://pmay-urban.gov.in/",
+    "phone": null,
+    "when_to_use": "First. Use the administering department's official scheme or service grievance portal.",
+    "typical_wait": "Follow the portal's acknowledgement and resolution timeline."
+   },
+   {
+    "name": "Centralized Public Grievance Redress and Monitoring System (CPGRAMS)",
+    "channel": "Department of Administrative Reforms and Public Grievances",
+    "url": "https://pgportal.gov.in",
+    "phone": null,
+    "when_to_use": "Escalate an unresolved grievance about a central government department or scheme.",
+    "typical_wait": "Use the timeline shown on CPGRAMS."
+   }
+  ],
+  "cited": [],
+  "removed_citations": [],
+  "case_brief": {
+   "subject": "Pradhan Mantri Awaas Yojana",
+   "aliases": [
+    "PMAY",
+    "PMAY(U)",
+    "PMAY-G",
+    "Pradhan Mantri Awaas Yojana - Gramin"
+   ],
+   "administering_body": "Ministry of Housing and Urban Affairs",
+   "what_it_is": "Pradhan Mantri Awaas Yojana is a government initiative aimed at providing affordable housing to eligible beneficiaries in urban and rural areas of India. It includes components like the Credit Linked Subsidy Scheme and Gramin housing assistance.",
+   "complaint_type": "govt_scheme",
+   "entitlement": "Eligible beneficiaries receive financial assistance or interest subsidy on home loans for the construction or purchase of a house.",
+   "conditions": [
+    "Must meet the specific eligibility criteria defined for the Urban or Gramin components of the scheme."
+   ],
+   "common_failure_reasons": [],
+   "official_grievance_channel": "https://pmay-urban.gov.in/ or support-myscheme@digitalindia.gov.in",
+   "documents_needed": [],
+   "sources": [
+    "https://pmay-urban.gov.in/statewisepmayhouses/21/CLSS",
+    "https://pmay-urban.gov.in/statewisepmayhouses/9/CLSS",
+    "https://www.myscheme.gov.in/hi/schemes/pmay-g"
+   ]
+  },
+  "case_answers": {
+   "Must meet the specific eligibility criteria defined for the Urban or Gramin components of the scheme.": "yes"
+  },
+  "eligibility": {
+   "status": "meets_listed",
+   "message": "Your details match all 1 published condition(s) we found. The office may still check its own records."
+  },
+  "eligibility_checks": [
+   {
+    "condition": "Must meet the specific eligibility criteria defined for the Urban or Gramin components of the scheme.",
+    "status": "met",
+    "evidence": "The complainant confirmed they meet the eligibility criteria.",
+    "question": ""
+   }
+  ],
+  "unresolved_critic_notes": [
+   "Use at least 2 of the 2 explicit case-specific facts; the current draft uses 1."
+  ]
+ },
+ "thread_id": "b81b2268416d"
+}
