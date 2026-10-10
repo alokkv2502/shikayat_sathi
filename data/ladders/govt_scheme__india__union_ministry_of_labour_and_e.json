@@ -1,0 +1,33 @@
+{
+ "steps": [
+  {
+   "name": "The organisation's own grievance cell",
+   "level": "company",
+   "channel": "email / grievance page",
+   "url": null,
+   "phone": null,
+   "timeline": null,
+   "source": "verified contact search (see contacts)",
+   "when_to_use": "First. Complain in writing and keep the complaint / docket number."
+  },
+  {
+   "name": "Public Grievance Officer, Ministry of Labour & Employment",
+   "level": "central_portal",
+   "channel": "Lodge a grievance via the Public Grievance portal",
+   "url": "https://clc.gov.in/",
+   "phone": null,
+   "when_to_use": "If the grievance remains unresolved after initial contact with the scheme portal.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "https://clc.gov.in/"
+  }
+ ],
+ "fallback": false,
+ "note": "The PM Viksit Bharat Rozgar Yojana is operated by the Ministry of Labour and Employment through the EPFO. The first installment is payable after 6 months of continuous service. Since you have completed 6 months, you should first verify your status on the official PM-VBRY portals. If you do not receive the benefit, you may escalate the matter through the Ministry of Labour and Employment's public grievance mechanism.",
+ "notes": [
+  "dropped “PM Viksit Bharat Rozgar Yojana Portal”: its source is stated only by a non-official page (angelone.in)"
+ ],
+ "sources": [
+  "https://clc.gov.in/"
+ ]
+}

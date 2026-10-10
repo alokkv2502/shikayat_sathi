@@ -1,0 +1,44 @@
+{
+ "steps": [
+  {
+   "name": "Grievance Redressal Officer, Ministry of Labour and Employment",
+   "level": "company",
+   "channel": "e-Shram Grievance Portal",
+   "url": "https://eshram.gov.in/grievance",
+   "phone": null,
+   "when_to_use": "When the benefit has not been received after completing the required service period (6 months).",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "https://eshram.gov.in/grievance"
+  },
+  {
+   "name": "Chief Labour Commissioner (Central)",
+   "level": "sector_regulator_or_ombudsman",
+   "channel": "Lodge a Grievance via the CLC website",
+   "url": "https://clc.gov.in/",
+   "phone": null,
+   "when_to_use": "If the grievance remains unresolved by the Ministry's internal grievance cell.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "https://clc.gov.in/"
+  },
+  {
+   "name": "CPGRAMS (Central Public Grievance Redress and Monitoring System)",
+   "level": "central_portal",
+   "channel": "CPGRAMS Portal",
+   "url": null,
+   "phone": null,
+   "when_to_use": "If the grievance remains unresolved after exhausting departmental and sector-specific channels.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "https://master-labour.digifootprint.gov.in/connect/grievance-redressal/details/Title=Public-Grievances-UTO4ATMtQWa"
+  }
+ ],
+ "fallback": false,
+ "note": "The PM Viksit Bharat Rozgar Yojana is operated by the Ministry of Labour and Employment through EPFO. Ensure you have your UAN and relevant employment documents ready before filing. The scheme requires 6 months of continuous service for the first installment.",
+ "notes": [],
+ "sources": [
+  "https://clc.gov.in/",
+  "https://master-labour.digifootprint.gov.in/connect/grievance-redressal/details/Title=Public-Grievances-UTO4ATMtQWa"
+ ]
+}

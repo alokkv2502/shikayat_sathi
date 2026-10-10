@@ -9,7 +9,7 @@ from saathi.nodes.common import live, node
 from saathi.state import PrecedentsOut, schema
 from saathi.tools.serp import CreditLimitReached, SerpApiError, serp
 
-PRECEDENTS_BUDGET_S = 8
+PRECEDENTS_BUDGET_S = 30
 RELEVANCE_SYSTEM = (
     "You judge search results about Indian consumer complaints. A result is relevant only if it is about this "
     "company and a similar problem. For relevant ones, say in a short phrase which channel resolved it (grievance "
