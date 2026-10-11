@@ -23,7 +23,7 @@ works in the background, and a **Live view** tab shows every step, call and outp
 
 _Information, not legal advice. Nothing is ever sent automatically._
 
-## Quick start
+## Quick start and Installation Steps
 
 ```bash
 cd shikayat_sathi
@@ -416,27 +416,16 @@ line per node and a summary table at each pause.
 - Many state government sites are JavaScript-heavy or poorly indexed, so official evidence is sometimes missing; the
   ladder then stays thin (or uses the labelled general route) rather than citing an unofficial page. In the test set
   this happened for Delhi Jal Board before official-page re-sourcing was added.
-- Code cannot yet tell which state an official page belongs to: a Bihar complaint once cited a West Bengal page as a
-  source. A law **named** in the letter text (rather than cited as a `[C#]` clause or "Section N") is not yet checked
-  against the retrieved law.
 - The seed ladders are traceable only to the playbook, not to a clause or URL per step.
 - "Two independent sources" could be gamed by coordinated spam — phone numbers seen only on third-party sites always
   carry a warning.
-- The law judge is an LLM: borderline clauses can differ between runs (identical inputs are served from the
-  cache). Code guarantees it can only cite retrieved clauses, not that it picked every useful one.
-- Airline and electricity complaints have no seed ladder: the planner finds AirSewa / the CGRF from search.
-- `CAR 3M2 Feb26.pdf` is indexed from OCR: one line of para 3(l) is illegible and marked as such. The
-  Electricity (Rights of Consumers) Rules are the 2020 text without later amendments. The 2019 RBI circular on
-  turn-around time for failed transactions is not in the corpus, so those complaints cite only the Ombudsman
-  Scheme.
+- Loan-app registry checks need the LoanLens project installed alongside.
 - The agents need the AI: without a Gemini key, or if Gemini fails after its retry, nothing is drafted.
 
 ## AI tools used
 
 - **Claude Code**: built the project.
-- **Gemini (`gemini-3.5-flash-lite`) via google-genai `generate_content`**: intake, case research, condition checks
-  and question writing, escalation planning, contact extraction, precedent relevance, judging which law applies,
-  drafting and review — all with schema-constrained JSON validated by pydantic, and checked by the code guards
-  above.
-- **RapidOCR** (one-time, offline): the text of the scanned DGCA refund CAR.
+- **Gemini (`gemini-3.1-flash-lite`) via google-genai `generate_content`**: intake, case research, condition checks,
+  escalation planning, contact extraction, precedent relevance, drafting and review — all with schema-constrained
+  JSON validated by pydantic, and checked by the code guards above.
 - **BAAI/bge-small-en-v1.5** (fastembed, local): embeds the legal corpus in Qdrant.
