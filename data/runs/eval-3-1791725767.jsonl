@@ -1,0 +1,7 @@
+{"t": 1791725767.704, "kind": "run_start", "resumed": false}
+{"t": 1791725767.706, "kind": "node_start", "node": "safety_router", "label": "🛟 Safety"}
+{"t": 1791725767.707, "kind": "node_end", "node": "safety_router", "ms": 0, "trace": ["🛟 Safety: no immediate danger detected"], "errors": [], "output": {"safety": {"tier": "normal", "flags": {"violence_ongoing": false, "threat_to_life": false, "children_at_risk": false, "self_harm": false, "domestic_violence": false, "sexual_violence": false, "missing_person": false, "medical": false}, "now": false, "method": "rules", "contacts": [], "numbers": [], "level": "none", "helplines": [], "categories": [], "messages": []}}}
+{"t": 1791725767.708, "kind": "node_start", "node": "intake_planner", "label": "🧭 Intake"}
+{"t": 1791725770.007, "kind": "call", "call": "llm", "label": "You triage Indian grievances written in English, Hindi or Hi · 1438 chars in · thinking medium", "node": "intake_planner", "ms": 2295, "cached": false}
+{"t": 1791725770.008, "kind": "node_failed", "node": "intake_planner", "ms": 2299, "error": "the AI service failed (ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and )"}
+{"t": 1791725770.011, "kind": "run_failed", "error": "AIUnavailable: the AI service failed (ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and )", "s": 2.3}

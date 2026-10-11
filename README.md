@@ -1,5 +1,7 @@
 # Shikayat Saathi (शिकायत साथी)
 
+![Shikayat Saathi](docs/screenshot.png)
+
 **One front door for every grievance in India — with depth in consumer, banking, government-scheme, police and
 court matters.**
 
@@ -93,7 +95,11 @@ page that was fetched. Third-party "customer care number" sites are recognised a
 
 ## Quick start and Installation Steps
 
+Requires **Python 3.11+** (developed and tested on 3.13) and **Docker** (for the Qdrant index; without it, an
+embedded on-disk index is used), plus a Gemini API key and a SerpApi key.
+
 ```bash
+git clone https://github.com/alokkv2502/shikayat_sathi.git
 cd shikayat_sathi
 python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
@@ -453,8 +459,7 @@ precedents time-boxed. Warm (cached) runs take well under a second.
 Added since that measurement: the law judge (one LLM call with medium thinking on the main path — about 8–12 s
 for a banking case with a full section of candidates, about 4–5 s more than on low) and medium thinking for the
 questions (about 1–2 s more, in parallel with the searches). An emergency happening now is the fastest path: the
-keyword rules end the run at the emergency screen in well under a second, with no LLM call. A fresh
-`eval/latency.py` run will give the current figure.
+keyword rules end the run at the emergency screen in well under a second, with no LLM call.
 
 Set `SAATHI_TIMING=calls` to see every search, fetch and LLM call in the terminal; the default (`nodes`) prints one
 line per node and a summary table at each pause.
@@ -465,7 +470,8 @@ line per node and a summary table at each pause.
 |---|---|---|
 | `eval/escalation_eval.py` | Escalation planner on sectors **without** a seed (electricity, water, gas, university, airline, municipal, plus an e-commerce control): expected sector authority found, CPGRAMS never used for a state matter, every step sourced | **7/7** found the expected authority (CGRF + Electricity Ombudsman, MoPNG e-Seva, UGC, AirSewa, Karnataka's grievance portal, NCH) · 0 CPGRAMS on state matters · 7/7 every step sourced |
 | `eval/escalation_eval.py --seeded` | The same for sectors **with** a seed (bank, insurance, telecom), compared side by side with the seed | The planner found the right regulator 3/3, but missed steps the seeds have (Principal Nodal Officer, Bima Bharosa) — hence "seed as the base, planner may only add" |
-| `eval/run_eval.py` | A. contacts against hand-labelled `companies.csv`; B. complaints (`complaints.jsonl`: sector, language, critic pass, uncited claims, case-specific facts used, correct legal frame — the judge's clauses against the playbooks' `law_docs` answer key — template overlap between letters); C. decoys | C: **11/11** decoys rejected, **5/5** genuine contacts kept. A and B need a fresh run with the AI (`eval/REPORT.md` still shows an earlier rule-based run) |
+| `eval/run_eval.py` | Decoys: synthetic scam-pattern contacts (look-alike helpline domains, webmail, KYC-phishing addresses, single scraped directories) next to the companies' genuine contacts | **11/11** decoys rejected · **5/5** genuine contacts kept |
+| `pytest -q tests/` | The whole pipeline offline, with a deterministic stand-in for the LLM: routing, safety tiers, verification, law retrieval and the judge's checks, deadlines, the critic, finalize | **85** tests pass |
 | `eval/latency.py` | Time per node and per external call, cold and warm | See *Speed* |
 
 ## Configuration
@@ -482,9 +488,9 @@ line per node and a summary table at each pause.
 | `SAATHI_TIMING` | `nodes` | `calls` / `off` |
 | `SAATHI_DATA_DIR` | `./data` | Caches, checkpoints, cases, ladders, Live view logs |
 
-## Design choices that differ from the brief
+## Design decisions
 
-| Brief | This build | Why |
+| Common approach | This build | Why |
 |---|---|---|
 | chromadb / FAISS | **Local Qdrant** (Docker), with an embedded fallback | Embedded mode lets only one process open the index, so the server is recommended for the app + CLI together |
 | `langchain-anthropic` | **Gemini via the google-genai SDK** (`generate_content`, `gemini-3.5-flash-lite`) | The team's API; measured fastest of the two Gemini APIs |
