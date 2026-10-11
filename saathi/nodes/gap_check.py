@@ -52,7 +52,22 @@ def asks_for_placeholder(question: str, placeholders: list[str]) -> bool:
             alt = re.sub(r"\s+(number|no\.?)$", "", alt.strip().lower())
             if len(alt) >= 3 and re.search(rf"\b{re.escape(alt)}\b", q):
                 return True
+        # or it asks for every distinctive word of the field: "What is the date on which you complained to State
+        # Bank…" ~ "[DATE OF COMPLAINT TO BANK]" (word stems; "when" counts as a date)
+        need = _stems(ph)
+        said = _stems(q) | ({"date"} if re.search(r"\bwhen\b|कब|\bkab\b", q) else set()) \
+            | ({"numbe"} if re.search(r"\b(?:ticket|reference|ref|no\.)", q) else set())
+        if len(need) >= 2 and need <= said:
+            return True
     return False
+
+
+_FIELD_STOP = {"details", "your", "this", "that", "with", "from", "what", "which", "have", "were", "there",
+               "about", "please", "the", "and", "you"}
+
+
+def _stems(text: str) -> set[str]:
+    return {w[:5] for w in re.findall(r"[a-z]+", text.lower()) if len(w) >= 4 and w not in _FIELD_STOP}
 
 
 def generic_question(condition: str) -> str:

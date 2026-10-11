@@ -10,6 +10,7 @@ from saathi.nodes.common import node
 from saathi.letter import LANGS
 from saathi.nodes.escalation import CPGRAMS, STATE_SIDE, general_route, merge_with_seed, seeded
 from saathi.playbooks import SECTORS, tier_of
+from saathi.nodes.legal_rag import split_tags
 from saathi.state import DraftOut, schema
 
 DRAFT_SYSTEM = (
@@ -122,8 +123,26 @@ def escalation_for(state: dict) -> list[dict]:
             else:  # the labelled general state route: the office's own cell, then the state's grievance portal
                 gr = [dict(s) for s in general_route(state)]
                 steps = (kept or gr[:1]) + [s for s in gr if s["level"] != "company"]
-    deadlines.annotate(steps, incident=deadlines.to_date((state.get("facts") or {}).get("date") or ""))
+    # Deadlines run from the complainant's own complaint to the company / bank when they already made one (the
+    # 30 days to the RBI Ombudsman start when the bank received the complaint, not today); otherwise from today.
+    facts = state.get("facts") or {}
+    deadlines.annotate(steps, start=deadlines.to_date(str(facts.get("complained_on") or "")),
+                       incident=deadlines.to_date(facts.get("date") or ""))
     return steps
+
+
+def clause_time_limits(clauses: list[dict]) -> list[dict]:
+    """The time limits the law judge found in the kept clauses (checked against each clause's text in legal_rag),
+    as rules for deadlines.case_dates - e.g. Para 72: shadow reversal within 10 working days of the report."""
+    out = []
+    for c in clauses:
+        d = c.get("deadline")
+        if d:
+            unit = d["unit"].replace("_", " ")
+            out.append({"label": f"{d['what']} due", "n": d["n"], "unit": d["unit"],
+                        "from": {"incident": "date"}.get(d["counted_from"], d["counted_from"]),
+                        "basis": f"{d['what']} within {d['n']} {unit}", "source": c["citation"]})
+    return out
 
 
 def reply_deadline(steps: list[dict]) -> dict:
@@ -131,7 +150,8 @@ def reply_deadline(steps: list[dict]) -> dict:
     s = steps[0] if steps else {}
     rw = s.get("reply_within")
     return {"date": s["reply_by"], "basis": rw["basis"], "source": rw.get("source", ""),
-            "kind": rw.get("kind", "statutory")} if rw and s.get("reply_by") else {}
+            "kind": rw.get("kind", "statutory"), "from_date": s.get("reply_from"),
+            "passed": bool(s.get("reply_passed"))} if rw and s.get("reply_by") else {}
 
 
 def outline_for(state: dict) -> list[str]:
@@ -168,6 +188,7 @@ def drafter(state: dict) -> dict:
     esc = escalation_for(state)
     dl = reply_deadline(esc) if tier == "A" else {}
     facts = state.get("facts") or {}
+    cdates = deadlines.case_dates(clause_time_limits(clauses), facts) if tier == "A" else []
     placeholders = "\n".join(f"- {m['fact']}: write {m['placeholder']}" for m in state.get("missing_facts") or [])
     notes = state.get("critic_notes") or []
     outline_context = (f"COMPLAINT TYPE: {(state.get('case_brief') or {}).get('complaint_type') or state.get('sector')}\n"
@@ -189,7 +210,13 @@ def drafter(state: dict) -> dict:
               "SUGGESTED STRUCTURE (adapt it to this case in your `outline`, then write the body from it):\n- "
               + "\n- ".join(outline_for(state)) + "\n\n"
               f"COMPLAINT (consumer's words):\n{state['complaint']}\n\n"
-              f"FACTS: {facts}\nCOMPANY: {state.get('company')}\n"
+              f"FACTS: {facts}\n"
+              "WHAT THE FACT KEYS MEAN: date = when it happened; complained_on = when the complainant reported it to "
+              "the company / bank itself (NOT the police or cyber-crime portal); complaint_no = the number the "
+              "company / bank gave; first_learned_on = when and how they first learned of it; alert_received = "
+              "whether the company's / bank's alert came. Reports elsewhere (cyber-crime portal, police) are separate "
+              "events - keep their own dates and numbers.\n"
+              f"COMPANY: {state.get('company')}\n"
               f"ELIGIBILITY: {(state.get('eligibility') or {}).get('message') or 'no published conditions'}\n"
               f"COMPLAINANT'S ANSWERS TO REVIEW QUESTIONS: {state.get('case_answers') or 'none'}\n"
               + (f"THE COMPLAINANT EDITED THE PREVIOUS DRAFT TO:\n{state['user_draft']}\n" if state.get("user_draft")
@@ -198,20 +225,45 @@ def drafter(state: dict) -> dict:
               f"ADDRESSED TO: {addressee(state, esc)}\n"
               f"NEXT FORUM IF UNRESOLVED: {esc[-1]['name'] if len(esc) < 2 else esc[1]['name']} — "
               f"{(esc[1] if len(esc) > 1 else esc[-1])['when_to_use']}\n"
-              + (f"REPLY DEADLINE (computed in code from the rules - write exactly this date, and no other "
-                 f"deadline): {deadlines.localize(dl['date'], lang)} — {dl['basis']}"
+              + (f"REPLY DEADLINE (computed in code - write exactly this date): "
+                 f"{deadlines.localize(dl['date'], lang)} — {dl['basis']}"
+                 + (f"; counted from the complainant's complaint of {deadlines.localize(dl['from_date'], lang)}"
+                    if dl.get("from_date") and facts.get("complained_on") else "")
                  + (" (a statutory time limit; you may mention the rule only via a [C#] clause that states it)"
-                    if dl["kind"] == "statutory" else " (a reasonable time we ask for; no rule fixes one)") + "\n"
-                 if dl else "") + "\n"
+                    if dl["kind"] == "statutory" else " (a reasonable time we ask for; no rule fixes one)")
+                 + (" - THIS DATE HAS ALREADY PASSED: say the period ended without a resolution and that you are "
+                    "now entitled to approach the next forum" if dl.get("passed") else "") + "\n"
+                 if dl else "")
+              + ("OTHER DATES COMPUTED IN CODE FROM THIS CASE'S FACTS (use exactly these; no other dates):\n"
+                 + "\n".join(f"- {d['label']}: {'about ' if d['approx'] else ''}{deadlines.localize(d['date'], lang)}"
+                             f" ({d['basis']}; counted from {deadlines.localize(d['from_date'], lang)}; "
+                             f"{d['source']})" + (" - ALREADY MISSED: say so plainly" if d["passed"] else "")
+                             for d in cdates) + "\n" if cdates else "")
+              + "REQUESTS: ask for what the cited clauses entitle the complainant to, for a written answer on any "
+                "liability or decision against them, and for the records the other side holds that would prove the "
+                "facts (e.g. transaction and authentication logs, or why an alert was not sent) - only what fits "
+                "this case.\n"
+              + "KEY FACTS TO STATE when the complainant gave them: whether an alert was received, when and how they "
+                "first learned of the problem, when they reported it and the complaint number - these decide "
+                "liability and deadlines. NEVER state when the complainant learned of, noticed or reported something "
+                "unless the FACTS or their ANSWERS give that date - use its [PLACEHOLDER] or leave it out.\n"
+              "CITATIONS: name each rule in words where you rely on it (e.g. 'paragraph 72 of the RBI (Commercial "
+              "Banks - Responsible Business Conduct) Directions, 2025') and put its tag right after it, e.g. "
+              "'... Directions, 2025 [C3]'. The tags are removed from the final letter. Do not start the body with "
+              "a salutation or the addressee - they are added for you.\n\n"
               + (f"{TIER_RULES[tier]}\n\n" if tier in TIER_RULES else "") +
-              "CLAUSES YOU MAY CITE:\n"
-              + "\n\n".join(f"[{c['tag']}] {c['citation']} — {c['title']}\n{c['text'][:1200]}" for c in clauses)
+              "CLAUSES YOU MAY CITE (each with its ROLE - use it accordingly: RIGHT_OR_DUTY and DEADLINE clauses are "
+              "the legal basis of the complaint, cite them where you say what was owed and by when; ESCALATION "
+              "clauses only where you say where you will go next; a DEFINITION only to name the wrong, never as the "
+              "rule that was broken; CONTEXT clauses only if needed):\n"
+              + "\n\n".join(f"[{c['tag']}] ROLE: {(c.get('role') or 'context').upper()} · {c['citation']} — "
+                            f"{c['title']}\n{c['text'][:1500]}" for c in clauses)
               + (("\n\nA REVIEWER FOUND THESE PROBLEMS IN YOUR PREVIOUS DRAFT - FIX ALL OF THEM:\n- "
                   + "\n- ".join(notes) + f"\n\nPREVIOUS DRAFT:\n{state.get('draft', '')}") if notes else ""))
     out = llm.validated(DraftOut, llm.json_call(DRAFT_SYSTEM, prompt, schema(DraftOut))).model_dump() |         {"method": llm.label()}
-    return {"draft": out["body"], "subject": out["subject"], "summary": out["summary"], "escalation": esc,
+    return {"draft": split_tags(out["body"]), "subject": out["subject"], "summary": out["summary"], "escalation": esc,
             "addressee_lines": [x.strip() for x in out.get("addressee_lines") or [] if x.strip()][:3],
-            "draft_attempts": attempt, "draft_method": out["method"], "deadline": dl,
+            "draft_attempts": attempt, "draft_method": out["method"], "deadline": dl, "case_dates": cdates,
             "drafted_answers": dict(state.get("case_answers") or {}),
             "trace": [f"✍️ Drafter #{attempt} ({out['method']})" + (f": revising for {len(notes)} critic note(s)"
                                                                    if notes and attempt > 1 else "")]}

@@ -23,13 +23,23 @@ def print_update(node: str, update: dict) -> None:
 
 
 def print_safety(safety: dict) -> None:
-    if (safety or {}).get("level") == "emergency":
+    if (safety or {}).get("tier") in ("emergency_now", "urgent"):
         print("\n" + "!" * 80 + "\n🆘 IF ANYONE IS IN DANGER RIGHT NOW, CALL FOR HELP FIRST")
-        for m in safety.get("messages") or []:
-            print("   " + m)
         for h in safety.get("helplines") or []:
             print("   ☎ " + h)
         print("!" * 80)
+
+
+def print_emergency(e: dict) -> None:
+    """The emergency screen: the run ended here - no questions, no letter."""
+    print("\n" + "!" * 80 + f"\n🆘 {e['headline']}")
+    for st in e.get("steps") or []:
+        print("   • " + st)
+    for n, label in e.get("contacts") or []:
+        print(f"   ☎ {n}: {label}")
+    for line in e.get("after") or []:
+        print("   " + line)
+    print(f"\n   {e['offer']}  (run again with --safe-now to write it)\n" + "!" * 80)
 
 
 LETTER_LANGUAGE = [""]  # --letter-language (en / hi); default: Hindi for Hindi complaints, else English
@@ -149,6 +159,8 @@ def main() -> None:
     ap.add_argument("--offline", action="store_true", help="cache only - no live SerpApi calls")
     ap.add_argument("--max-credits", type=int, help="live SerpApi calls for this complaint (0 = no cap)")
     ap.add_argument("--yes", action="store_true", help="approve the human-review step without prompting")
+    ap.add_argument("--safe-now", action="store_true",
+                    help="after an emergency screen: you are safe now and want the written (police) complaint")
     ap.add_argument("--resume", metavar="THREAD_ID", help="resume a paused complaint")
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args()
@@ -174,10 +186,13 @@ def main() -> None:
         print(f"thread_id: {thread}")
         state = G.run(G.initial_state(a.complaint, company=a.company, city=a.city,
                                       complainant={"name": a.name} if a.name else None, live=not a.offline,
-                                      letter_language=a.letter_language),
+                                      letter_language=a.letter_language, safety_acknowledged=a.safe_now),
                       thread, on_update=print_update)
         while "__interrupt__" in state:  # answers trigger a redraft and another review round
             state = G.resume(thread, ask_review(state["__interrupt__"], a.yes), on_update=print_update)
+    if state.get("emergency") and not a.json:
+        print_emergency(state["emergency"])
+        return
     if a.json:
         print(json.dumps({k: v for k, v in state.items() if k != "pages"}, indent=1, ensure_ascii=False,
                          default=str))

@@ -46,6 +46,9 @@ DOCS: dict[str, dict] = {
              "source_url": "https://consumeraffairs.nic.in/sites/default/files/E%20commerce%20rules.pdf"},
     "ios": {"title": "Reserve Bank – Integrated Ombudsman Scheme, 2026", "file": "rbi_ios_2026.pdf",
             "unit": "Clause", "parts": ["Clause", "Salient features, para"],  # the complaint-form annex is not law
+            # Clause 1: "come into force with effect from July 1, 2026" - a complaints procedure, so judged against
+            # the date the complaint is made
+            "effective_from": "2026-07-01", "effective_for": "complaint",
             "source_url": "https://website.rbi.org.in/documents/d/rbi/reserve-bank-integrated-ombudsman-scheme-2026-160126"},
     "trai": {"title": "Telecom Consumers Complaint Redressal Regulations, 2012", "file": "trai_tccrr_2012.pdf",
              "unit": "Regulation", "parts": ["Regulation"],  # the Explanatory Memorandum is not binding
@@ -87,10 +90,14 @@ DOCS: dict[str, dict] = {
     "rbc": {"title": "RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025",
             "file": "Consumer_liability.pdf", "unit": "Para",
             "start": "Chapter I – Preliminary", "start_occurrence": 2, "end": "Annex I - Format of Comprehensive",
+            "sections": "lettered",  # "D.1 …", "D.2 …": section D (Paras 64-76) is the customer-liability rules
             "source_url": "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx"},
     # Revised customer-liability rules for unauthorised electronic banking (transactions from 1 January 2027).
     "rbc26": {"title": "RBI (Commercial Banks - Responsible Business Conduct) Third Amendment Directions, 2026",
               "file": "Commercial_bank_conduct.pdf", "unit": "Para", "subrefs": False,
+              # Para 3(2): "shall apply in cases of electronic banking transactions undertaken … on or after
+              # January 1, 2027" - judged against the transaction's date
+              "effective_from": "2027-01-01", "effective_for": "event",
               "source_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx"},
     # DGCA Civil Aviation Requirements are numbered as an outline (3.2, 3.2.1 ...): chunk_outline cites "Para 3.2".
     "car_dbc": {"title": "DGCA CAR Section 3, Series M, Part IV (Facilities to passengers on denied boarding, "
@@ -103,6 +110,7 @@ DOCS: dict[str, dict] = {
     "car_refund": {"title": "DGCA CAR Section 3, Series M, Part II (Refund of airline tickets), Rev. 3, 2026",
                    "file": "CAR 3M2 Feb26.ocr.txt", "unit": "Para", "outline": True, "letters": True,
                    "start": "1. Introduction", "end": "(Faiz", "fix": lambda t: _drop_car_headers(t),
+                   "effective_from": "2026-03-26", "effective_for": "event",  # its header: "EFFECTIVE: 26 March 2026"
                    "source_url": "https://www.dgca.gov.in"},
     "elec": {"title": "Electricity (Rights of Consumers) Rules, 2020",
              "file": "Gazette_Electricity-Rights-of-Consumers-Rules-2020.pdf", "unit": "Rule",
@@ -344,10 +352,40 @@ def _client():
         return local
 
 
+SECTION_HEAD = re.compile(r"\b([A-Z])\.(\d{1,2})(?:\.\d{1,2})*\s+([A-Z][A-Za-z][^.;:]{3,80})")
+
+
+def annotate(doc_id: str, chunks: list[dict]) -> list[dict]:
+    """Add what retrieval needs beyond the text: `seq` (position in the document), `group` (the section a chunk
+    belongs to, so a good hit can pull in the rest of its rules) and the document's `effective_from` /
+    `effective_for` (event: the date of the transaction / incident; complaint: the date the complaint is made).
+
+    Groups: RBI directions mark sections inline - "D.1 Strengthening…", "D.2 Reporting…" - and each heading sits at
+    the end of the paragraph BEFORE the section it opens, so a chunk belongs to the last heading seen before it
+    (section D = Paras 64-76). Elsewhere a group is the parent Section / Rule / Para: "Rule 4(1)-(6)" and "Rule
+    4(7)-(10)" are one group, so are "Para 3(a)" … "Para 3(m)"."""
+    d = DOCS[doc_id]
+    letter, n, title = None, 0, ""
+    for i, c in enumerate(chunks):
+        c["seq"] = i
+        if d.get("sections") == "lettered":
+            c["group"], c["group_title"] = f"{doc_id}:{n}", title
+            heads = list(SECTION_HEAD.finditer(c["text"]))
+            if heads and heads[-1].group(1) != letter:  # the next chunk opens a new lettered section
+                letter, n = heads[-1].group(1), n + 1
+                title = f"{heads[-1].group(1)}.{heads[-1].group(2)} {heads[-1].group(3).strip()}"
+        else:
+            base = re.match(r"\w+ \d+[A-Z]?(?:\.\d+)?", c["ref"])
+            c["group"], c["group_title"] = f"{doc_id}:{base.group(0) if base else c['ref']}", c.get("title", "")
+        c["effective_from"], c["effective_for"] = d.get("effective_from", ""), d.get("effective_for", "")
+    return chunks
+
+
 def build_index() -> dict:
     from qdrant_client.models import Distance, PayloadSchemaType, PointStruct, VectorParams
 
-    chunks = [c for doc_id in DOCS if (LEGAL_DIR / DOCS[doc_id]["file"]).exists() for c in chunk_doc(doc_id)]
+    chunks = [c for doc_id in DOCS if (LEGAL_DIR / DOCS[doc_id]["file"]).exists()
+              for c in annotate(doc_id, chunk_doc(doc_id))]
     vecs = [list(map(float, v)) for v in embedder().passage_embed([f"{c['citation']}: {c['text']}" for c in chunks], batch_size=32)]
     c = client()
     if c.collection_exists(QDRANT_COLLECTION):
@@ -362,6 +400,7 @@ def build_index() -> dict:
     for start in range(0, len(points), 128):  # small requests: the client's 3 s timeout is sized for searches
         c.upsert(QDRANT_COLLECTION, points=points[start:start + 128])
     retrieve.cache_clear()
+    all_chunks.cache_clear()
     per_doc = {d: sum(ch["doc_id"] == d for ch in chunks) for d in DOCS}
     return {"chunks": len(chunks), "per_doc": per_doc, "collection": QDRANT_COLLECTION, "qdrant": client.mode}
 
@@ -383,6 +422,21 @@ def retrieve(query: str, docs: tuple[str, ...] = (), k: int = 3) -> tuple[dict, 
     flt = Filter(must=[FieldCondition(key="doc_id", match=MatchAny(any=list(docs)))]) if docs else None
     hits = client().query_points(QDRANT_COLLECTION, query=qv, limit=k, query_filter=flt, with_payload=True).points
     return tuple({**h.payload, "score": round(float(h.score), 3)} for h in hits)
+
+
+@lru_cache(maxsize=1)
+def all_chunks() -> tuple[dict, ...]:
+    """Every indexed chunk (payload only), in document order - for keyword search and section expansion."""
+    ensure_index()
+    out, offset = [], None
+    while True:
+        batch, offset = client().scroll(QDRANT_COLLECTION, limit=256, offset=offset, with_payload=True,
+                                        with_vectors=False)
+        out += [p.payload for p in batch]
+        if offset is None:
+            break
+    return tuple(sorted(out, key=lambda c: (list(DOCS).index(c["doc_id"]) if c["doc_id"] in DOCS else 99,
+                                            c.get("seq", 0))))
 
 
 def main() -> None:

@@ -110,10 +110,11 @@ python cli.py "Flipkart ne damaged phone ka refund reject kar diya, order 15 Sep
 python cli.py "…" --letter-language hi    # the whole letter in Hindi (default: Hindi for Hindi complaints)
 python cli.py "…" --yes                   # skip the questions and approve the letter without prompting
 python cli.py --resume <thread_id>        # resume a paused complaint from data/checkpoints.db
+python cli.py "…" --safe-now              # after an emergency screen: you are safe and want the police complaint
 python eval/run_eval.py                   # contacts / complaints / decoys → eval/REPORT.md (needs the AI)
 python eval/escalation_eval.py            # escalation planner test set → eval/ESCALATION_REPORT.md
 python eval/latency.py "<complaint>" --company X --city Y --warm   # per-node latency profile
-pytest -q tests/                          # 64 tests, offline (a deterministic stand-in for the LLM)
+pytest -q tests/                          # 85 tests, offline (a deterministic stand-in for the LLM)
 ```
 
 ## Architecture
@@ -161,7 +162,9 @@ If Gemini is unavailable, the run stops and says so — there is no rule-based s
 ```mermaid
 flowchart TD
   S([START]) --> SR[🛟 safety_router<br/>rules, instant]
+  SR -- "emergency now" --> EM[🆘 emergency_response] --> E2([END])
   SR --> I[🧭 intake_planner<br/>ONE LLM call]
+  I -- "emergency now (LLM)" --> EM
   I -- "very unclear" --> Q[❓ clarify<br/>one question] --> I
   I --> CR[🔎 case_research<br/>named schemes / products]
   CR --> FR[🗺️ frame]
@@ -182,16 +185,36 @@ flowchart TD
   H --> F[📦 finalize] --> E([END])
 ```
 
-1. **🛟 safety_router** (rules, instant). Immediate danger — violence, a missing or abducted person, self-harm
-   risk, sexual violence, a medical emergency — shows emergency numbers (112, 181, 1098, 14416, 108) before
-   anything else. The app runs the same check the moment you submit.
+1. **🛟 safety_router** (rules, instant) sorts the complaint into three tiers from typed flags
+   (violence_ongoing, threat_to_life, children_at_risk, self_harm, domestic_violence, sexual_violence,
+   missing_person, medical):
+   - **emergency_now** (violence happening now, an immediate threat to life, a medical emergency, self-harm) →
+     **🆘 emergency_response** and the run **ends**: what to do now ("stay in the locked room if it's safe; if you
+     can't talk, stay on the line or press SOS in the 112 India app"), the numbers this situation needs, and what
+     comes once safe (Domestic Violence Act protection orders, DLSA / 15100). No questions, no form, no letter;
+     "help me write a police complaint" is a button that reruns the case past the screen.
+   - **urgent** (threats to kill, past domestic or sexual violence, a missing person) → the numbers on top, then
+     the normal (police) flow.
+   - **normal** → the normal flow.
+
+   The numbers are built in code from the flags: 112 always; 181 only for domestic or sexual violence; 1098 only
+   when children are at risk; 14416 only when self-harm is mentioned; 108 for a medical emergency. The rules
+   (English, Hinglish, Hindi — "maar raha", "darwaza tod", "पति… मार", "बच्चों के साथ… बंद") are a backstop: the
+   LLM's assessment, part of intake's single call, can raise the tier or add a flag but never lower or remove one;
+   if it finds an emergency the rules missed, the run ends right after intake, before any search.
 2. **🧭 intake_planner** — one Gemini call that does all the understanding: language; the complaint **translated
    to English once** (everything downstream uses it); company and facts; issue types (e.g. `cyber_fraud`); the kind
    of problem in its own words and the matching verified playbook **only if one genuinely fits** (code trusts the
    match only at ≥ 0.6); the state, authority type and search queries for the escalation planner; an English legal
    search query; the facts this letter still needs; draft follow-up questions (gap_check refines them); and any
-   danger the rules missed (it can add, never remove). Code then resolves the official domain and plans the
-   searches.
+   danger the rules missed (it can add, never remove). **Intake decides the company and the city from the text**
+   (the form's Company / City fields are optional hints): the organisation's official name with its short form
+   ("Jaipur Vidyut Vitran Nigam Limited (JVVNL)", a local utility or municipal body identified from the city),
+   never a description like "the electricity board". If a complaint against a company names none that can be
+   identified, it asks "which organisation?" once, before any search. Code then resolves the official domain:
+   Google's knowledge graph, a top-3 result that carries the brand (including acronym domains such as
+   `sbi.bank.in`), or a government domain whose page title names the body (`mcgm.gov.in` for BMC); if the full
+   name finds nothing, the short form is searched once more. Then it plans the searches.
 3. **❓ clarify** — only for a very unclear complaint: one question, then intake runs again (asked once).
 4. **🔎 case_research** — for a named scheme, policy or product (e.g. PM-VBRY): searches official sources in the
    complainant's state, and the LLM builds a case brief (conditions, entitlement, grievance channel) from the
@@ -213,20 +236,49 @@ flowchart TD
    - **escalation_planner** — the ladder, proposed from evidence by the LLM and validated by code (below).
 7. **🛡️ verifier** (code) — a contact is verified only if it is on the official domain or on two independent
    sources. Nothing verified → one more grievance search with other wording.
-8. **📚 legal_rag** — searches the **whole** legal corpus (no per-sector filter): the sector's base query,
-   intake's legal query and the issue, up to 10 candidate clauses. One LLM call then judges which of them govern
-   *this* case — a rule on unauthorised transactions is rejected for a failed one, airline rules for a bus
-   operator — with a one-line reason each (visible in the Live view). Code checks the judge: it can only keep
-   retrieved clauses (at most 4), never add one; if none applies, the letter makes no legal claims.
-   (`law_docs` in the playbooks is now only the evaluation's answer key.)
-9. **📝 ask_details** — the first pause: **one form** with every missing fact, open condition and follow-up
-   question, your name, and the letter language. Skipped when there is nothing to ask.
+8. **📚 legal_rag** — finds the law that decides the case, over the **whole** corpus (no per-sector filter):
+   - **several searches**: intake writes 3–6 legal queries, one per right, duty, deadline, liability rule or
+     escalation route that could decide the case (e.g. "zero liability third party breach reported within three
+     working days", "shadow reversal credit within ten working days"), plus its overall query and the issue;
+   - **hybrid search** for each: embeddings + BM25 keywords (exact terms like "shadow reversal" that a small
+     embedding model misses), fused by reciprocal rank (`rag/hybrid.py`);
+   - **whole sections**: legal rules only make sense together, so a strong hit pulls in the rest of its section —
+     e.g. RBI's section D, Paras 64–76 (zero liability, limited liability, shadow reversal, burden of proof);
+   - **in force, in code, before the LLM**: law that did not apply on the relevant date is removed — the RBI Third
+     Amendment applies to transactions from 1 January 2027, so it cannot decide a September 2026 debit (judged by
+     the transaction date; complaint procedures such as the Ombudsman Scheme by the complaint date);
+   - **one LLM judge** (medium thinking) gets the case facts and dates and asks of each clause: *does it decide the
+     complainant's rights, the other side's duties, a deadline, or the escalation route?* Where the answer turns
+     on an unknown or disputed fact (no SMS alert received; payment method not stated), it keeps the clause for
+     each possible outcome, the most favourable first; an exemption that only helps the other side is dropped;
+   - each kept clause gets a **role** — right_or_duty, deadline, escalation, definition, context — and the
+     drafter uses it accordingly: rights and deadlines are the legal basis, escalation clauses only for next
+     steps, a definition only to name the wrong. Deadlines (3), escalation (2) and a definition (1) have reserved
+     places, so a long list of rights cannot crowd out, say, the shadow-reversal timeline;
+   - **time limits** stated in a kept clause are given by the judge (number, unit, what it counts from — "10
+     working days from the report"); code keeps one only if that number and unit are written in the clause, then
+     computes the date from the case's own dates (see *Deadlines and facts* below);
+   - **deciding facts**: the judge lists the facts its clauses turn on that the complaint does not state (was the
+     bank's alert received? when did you first learn of it? when did you report it?); they join the one details
+     form, and code adds a field for every date a kept time limit counts from.
+
+   Code checks the judge: it can only keep retrieved clauses (at most 8), never add one; if none applies, the
+   letter makes no legal claims. Every rejected clause and its reason is in the Live view. (`law_docs` in the
+   playbooks is only the evaluation's answer key.) Nothing case-specific is hardcoded in the playbooks: which
+   rules, deadlines and facts matter comes from the retrieved law.
+9. **📝 ask_details** — the first pause: **one form** with every missing fact (including the deciding facts the
+   law judge asked for), open condition and follow-up question, your name, and the letter language; a question that
+   only re-asks a field is dropped. Skipped when there is nothing to ask. (The form's inputs are keyed per
+   complaint, so one complaint's answers can never carry into the next.)
 10. **🔁 reassess** — folds your answers into the facts and re-checks the conditions (only if you answered).
-11. **✍️ drafter** — one LLM call plans and writes the letter: cites law only as `[C#]` tags (the clauses the judge
-    kept), uses the reply-by date computed in code, follows the tier rules, writes in the chosen language.
+11. **✍️ drafter** — one LLM call plans and writes the letter: names each rule in words with its `[C#]` tag (the
+    clauses the judge kept), uses only the dates computed in code (and says when one has already been missed),
+    asks for what the cited rules entitle the complainant to, follows the tier rules, writes in the chosen language.
 12. **🧐 critic** — code checks, then an LLM review; problems send the letter back (at most two drafts).
 13. **🙋 human_review** — the second pause: approve or edit. **14. 📦 finalize** — builds the letter, re-dates the
-    deadlines for today, strips anything uncited, and saves the case.
+    deadlines, strips anything uncited, turns `[C#]` tags into citations in words, removes a repeated salutation,
+    replaces any unsupported "learned of it on…" date or misattributed complaint number with a placeholder, and
+    saves the case.
 
 If the AI is unavailable at any step, the run stops and the app / CLI say so plainly — there is no rule-based
 stand-in that would quietly write a worse letter.
@@ -263,15 +315,30 @@ replace or remove one. Other sectors use the planner's ladder. If the planner fa
 labelled general route is used ("We couldn't find a sector-specific route. This is the general government route.").
 Verified ladders are cached in `data/ladders/` by sector + state (+ company).
 
-### Deadlines and consistency, in code
+### Deadlines and facts: the LLM finds them, code computes and checks
 
-- **Deadlines** come from rules checked against the indexed law: E-Commerce Rules Rule 4(5) (acknowledge in 48 h,
-  resolve in a month), RB-IOS Clause 10(1) (30 days, then the RBI Ombudsman), TRAI Reg 8 / 9(3), Insurance Ombudsman
-  Rule 14(3), Digital Lending Directions Para 11, CPA s.69 (file within two years). Code turns them into dates —
-  "reply due by 9 November 2026", "last date to file: 28 September 2028" — for the letter and the ladder. Sectors
-  without a statutory rule get no invented date (or a clearly labelled reasonable one).
+- **Escalation deadlines** come from rules checked against the indexed law: E-Commerce Rules Rule 4(5) (acknowledge
+  in 48 h, resolve in a month), RB-IOS Clause 10(1) (30 days, then the RBI Ombudsman), TRAI Reg 8 / 9(3), Insurance
+  Ombudsman Rule 14(3), Digital Lending Directions Para 11, CPA s.69 (file within two years). They run from **the day
+  the complainant already complained** to the company / bank when they did (30 days from a 21 September complaint is
+  21 October), otherwise from today; a date already passed is said to be passed.
+- **Time limits inside the cited law** are found by the law judge, not hardcoded: for each clause it keeps, it gives
+  any time limit the clause states (number, unit, and what it counts from — e.g. RBI Para 72: shadow reversal within
+  10 working days of the report). Code keeps it only if that number and unit are written in the clause, then computes
+  the date from the case's own dates (working days skip weekends; "about", since bank holidays are not known) and
+  marks it "already missed" when it is.
+- **The facts that decide the case** are asked before drafting: the law judge lists the facts its kept clauses turn
+  on (was the bank's alert received? when did you first learn of it? when did you report it?), and code adds a form
+  field for every date a kept time limit counts from. They are never overwritten or duplicated by generic fields.
+- **Intake's reading is checked**: a number written next to a cyber-portal or police report is that report's
+  acknowledgement, not the company's complaint number; a "first learned" date is kept only if the complaint says so.
 - **Consistency**: every ₹ amount and date in the letter (English or Hindi — "₹7,400", "7,400 रुपये", "9 नवंबर
-  2026") must match one the complainant gave or a computed deadline; the letter must carry the reply-by date.
+  2026") must match one the complainant gave or a computed date; the letter must carry the reply-by date. The critic
+  also rejects a payment method the complainant never mentioned (a "VISA" debit in a UPI case), a "learned of it on
+  <date>" they never gave, and a number presented as the company's complaint number that isn't theirs; finalize
+  replaces any that survive with a placeholder.
+- **Citations read like a letter**: rules are named in words ("paragraph 72 of the RBI … Directions, 2025"); the
+  internal [C#] tags used for checking are removed at finalize, and a repeated salutation or addressee is stripped.
 
 ### Letters: one language, professional layout
 
@@ -311,16 +378,19 @@ never affected. The log contains the complaint text and stays local, like `data/
 | Verified contacts: official domain / two independent sources; lookalike and webmail detection; partners' contacts on a company page are not the company's | `nodes/verifier.py`, `nodes/grievance.py`, `tools/domains.py` |
 | Escalation ladder validation (sources, links, timelines, order, CPGRAMS rule) | `nodes/escalation.py`, `nodes/drafter.py` |
 | Case briefs: only fetched sources; grievance links must be in the evidence | `nodes/case_research.py` |
-| Critic: uncited legal references, unverified contacts, invented IDs, amounts and dates, missing placeholders, eligibility claims the checks don't support (English and Hindi), consumer-law frame on a government scheme, FIR request for police, no court drafting, one language | `nodes/critic.py`, `letter.py` |
-| Law: the judge can keep only clauses that were retrieved (at most 4), never add one; none apply → no citations | `nodes/legal_rag.py` |
+| Safety: three tiers from typed flags; an emergency happening now ends the run at the emergency screen; the contacts are built from the flags; keyword backstop (English, Hinglish, Hindi) the LLM can raise but never lower | `nodes/safety.py` |
+| Intake's reading: a number next to a cyber-portal / police report is not the company's complaint number; a "first learned" date is kept only if the complaint says so | `nodes/intake.py` |
+| Critic: uncited legal references, unverified contacts, invented IDs, amounts and dates, missing placeholders, eligibility claims the checks don't support (English and Hindi), consumer-law frame on a government scheme, FIR request for police, no court drafting, one language, a payment method the complainant never mentioned, a "learned of it on <date>" they never gave, a number wrongly presented as the company's complaint number | `nodes/critic.py`, `letter.py` |
+| Law: the judge can keep only clauses that were retrieved (at most 8), never add one; none apply → no citations | `nodes/legal_rag.py` |
+| Law not in force on the transaction / complaint date is removed before the judge sees it | `rag/hybrid.py`, `rag/ingest.py` (`effective_from`) |
+| A time limit the judge reads from a clause is used only if its number and unit are in that clause; the dates are computed in code | `nodes/legal_rag.py`, `deadlines.py` |
 | Citations: anything not in the kept clauses is stripped at finalize | `nodes/legal_rag.py`, `nodes/review.py` |
 | Questions: none that re-ask a field already on the form; at most 6 | `nodes/gap_check.py` |
 | Precedents: a result must name the company (or the scheme) before the LLM judges it | `nodes/precedents.py` |
-| Safety keywords (instant, works even if the LLM is down) | `nodes/safety.py` |
 
 | Data (verified facts with a citation) | Where |
 |---|---|
-| Seed playbooks for 10 domains, statutory deadline rules, legal-aid criteria (LSA Act s.12), helplines | `playbooks.py`, `nodes/safety.py` |
+| Seed playbooks for 10 domains, statutory deadline rules, legal-aid criteria (LSA Act s.12), emergency numbers and the emergency screen's guidance | `playbooks.py`, `nodes/safety.py` |
 
 Everything else — understanding the complaint, routing, research, conditions, which law applies, questions,
 drafting, review — is the LLM, with the code above checking it.
@@ -331,18 +401,19 @@ drafting, review — is the LLM, with the code above checking it.
 config.py  app.py  cli.py  docker-compose.yml  .env.example
 saathi/
   state.py         ComplaintState (TypedDict + reducers) and the pydantic models for structured LLM output
-  graph.py         StateGraph: safety → intake → fan-out → verifier → RAG → form → drafter ⇄ critic → review
+  graph.py         StateGraph: safety (→ emergency screen, end) → intake → fan-out → verifier → RAG → form →
+                   drafter ⇄ critic → review
   playbooks.py     seed playbooks (verified routes, deadline rules, required facts, tiers)
   deadlines.py     deadline arithmetic; date and ₹ parsing (English and Hindi)
   letter.py        one-language letter layout (English / Hindi labels, language check)
   llm.py           Gemini via google-genai (generate_content, JSON schema, thinking "low" unless a call asks for more, 1 retry); AIUnavailable
   timing.py        per-node / per-call latency log in the terminal (SAATHI_TIMING)
   events.py        Live view event log (data/runs/<thread_id>.jsonl): emit, read, summarize, feed
-  nodes/           safety · intake (+ clarify) · case_research · gap_check (+ frame, reassess) · escalation ·
+  nodes/           safety (+ emergency_response) · intake (+ clarify) · case_research · gap_check (+ frame, reassess) · escalation ·
                    grievance · precedents · local_forum · verifier · legal_rag · drafter ·
                    critic · review (ask_details, human_review, finalize) · common (node wrapper)
   tools/           serp.py (disk cache, credit cap) · fetch.py · domains.py (official-domain resolution)
-  rag/             ingest.py (English-only chunks by section or outline numbering; OCR text for scans; Qdrant)
+  rag/             hybrid.py (BM25 + embeddings, section expansion, in-force filter) · ingest.py (English-only chunks by section or outline numbering; OCR text for scans; Qdrant)
                    · store.py (retrieval)
 eval/              run_eval.py · escalation_eval.py · latency.py · companies.csv · complaints.jsonl · decoys.json
 tests/             test_pipeline.py · fake_llm.py (deterministic LLM stand-in, tests only) · conftest.py
@@ -379,9 +450,11 @@ worth reading, in parallel; the safety check and the follow-up questions folded 
 condition checks and escalation planning run alongside the searches; plan and write in one drafter call;
 precedents time-boxed. Warm (cached) runs take well under a second.
 
-Added since that measurement: the law judge (one LLM call, about 2–4 s, on the main path) and medium thinking for
-the questions (about 1–2 s more, in parallel with the searches). A fresh `eval/latency.py` run will give the
-current figure.
+Added since that measurement: the law judge (one LLM call with medium thinking on the main path — about 8–12 s
+for a banking case with a full section of candidates, about 4–5 s more than on low) and medium thinking for the
+questions (about 1–2 s more, in parallel with the searches). An emergency happening now is the fastest path: the
+keyword rules end the run at the emergency screen in well under a second, with no LLM call. A fresh
+`eval/latency.py` run will give the current figure.
 
 Set `SAATHI_TIMING=calls` to see every search, fetch and LLM call in the terminal; the default (`nodes`) prints one
 line per node and a summary table at each pause.
@@ -400,7 +473,7 @@ line per node and a summary table at each pause.
 | Variable | Default | |
 |---|---|---|
 | `GEMINI_API_KEY` | — | Required |
-| `GEMINI_MODEL` | `gemini-3.5-flash-lite` | Thinking "low" for every call except question writing (`QUESTIONS_THINKING`, "medium") |
+| `GEMINI_MODEL` | `gemini-3.5-flash-lite` | Thinking "low" for every call except question writing (`QUESTIONS_THINKING`, "medium") and the law judge (`JUDGE_THINKING`, "medium": on low it rejected the zero-liability rule although no alert was received; about +4 s); intake has its own `INTAKE_THINKING` ("low": it is on the critical path, and medium measured +1.4 s median with the same routing decisions) |
 | `LLM_API` | `generate_content` | `interactions` opts into the slower Interactions API |
 | `SERPAPI_API_KEY` | — | Required for live search |
 | `SERPAPI_MAX_CREDITS` | `12` | Live calls per complaint (`0` / `none` = no cap) |
@@ -423,16 +496,35 @@ line per node and a summary table at each pause.
 - Many state government sites are JavaScript-heavy or poorly indexed, so official evidence is sometimes missing; the
   ladder then stays thin (or uses the labelled general route) rather than citing an unofficial page. In the test set
   this happened for Delhi Jal Board before official-page re-sourcing was added.
+- Some public bodies have no findable official domain: for "JVVNL" Google returns only bill-payment sites, and its
+  pages sit under `energy.rajasthan.gov.in`. Its contacts are then verified by independent sources instead.
+- Code cannot yet tell which state an official page belongs to: a Bihar complaint once cited a West Bengal page as a
+  source. A law **named** in the letter text (rather than cited as a `[C#]` clause or "Section N") is not yet checked
+  against the retrieved law.
 - The seed ladders are traceable only to the playbook, not to a clause or URL per step.
 - "Two independent sources" could be gamed by coordinated spam — phone numbers seen only on third-party sites always
   carry a warning.
-- Loan-app registry checks need the LoanLens project installed alongside.
+- The law judge is an LLM: borderline clauses can differ between runs (identical inputs are served from the cache).
+  Code guarantees it can only cite retrieved clauses, not that it picked every useful one.
+- The judge can keep a different set of borderline clauses on different runs: one run of the unauthorised-UPI
+  case kept the zero-liability paragraph (Para 67), another kept burden of proof, shadow reversal and resolution
+  time (Paras 75, 72, 73) instead.
+- The safety keyword backstop is deliberately broad and pattern-based: it is tested on English, Hinglish and Hindi
+  phrasings, but unusual wording can be missed (the LLM's assessment then has to catch it, after intake) or, more
+  rarely, over-flagged. The emergency numbers should be re-checked on the official portals before a release.
+- Airline and electricity complaints have no seed ladder: the planner finds AirSewa / the CGRF from search.
+- `CAR 3M2 Feb26.pdf` is indexed from OCR: one line of para 3(l) is illegible and marked as such. The Electricity
+  (Rights of Consumers) Rules are the 2020 text without later amendments. The 2019 RBI circular on turn-around time
+  for failed transactions is not in the corpus, so those complaints cite only the Ombudsman Scheme.
 - The agents need the AI: without a Gemini key, or if Gemini fails after its retry, nothing is drafted.
 
 ## AI tools used
 
 - **Claude Code**: built the project.
-- **Gemini (`gemini-3.1-flash-lite`) via google-genai `generate_content`**: intake, case research, condition checks,
-  escalation planning, contact extraction, precedent relevance, drafting and review — all with schema-constrained
-  JSON validated by pydantic, and checked by the code guards above.
+- **Gemini (`gemini-3.5-flash-lite`) via google-genai `generate_content`**: intake (including the company and city),
+  case research, condition checks and question writing, escalation planning, contact extraction, precedent
+  relevance, judging which law applies, drafting and review — all with schema-constrained JSON validated by
+  pydantic, and checked by the code guards above.
+- **SerpApi** (Google, Google Forums, Google News, Google Maps): every web search — see the SerpApi section.
 - **BAAI/bge-small-en-v1.5** (fastembed, local): embeds the legal corpus in Qdrant.
+- **RapidOCR** (one-time, offline): the text of the scanned DGCA refund CAR.

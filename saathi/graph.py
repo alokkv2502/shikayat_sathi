@@ -45,7 +45,7 @@ from saathi.nodes.local_forum import local_forum
 from saathi.nodes.precedents import precedents
 from saathi.nodes.registry_worker import registry
 from saathi.nodes.review import ask_details, finalize, human_review, route_after_details, route_after_review
-from saathi.nodes.safety import safety_router
+from saathi.nodes.safety import emergency_response, route_after_safety, safety_router
 from saathi.nodes.verifier import route_after_verify, verifier
 from saathi.state import ComplaintState
 
@@ -55,6 +55,7 @@ WORKERS = ["grievance", "precedents", "local_forum", "registry", "gap_check", "e
 # (a test checks), in display order; "may run" nodes run only on some paths (a loop, a question, a loan app).
 PHASES: list[tuple[str, list[tuple[str, str, bool]]]] = [
     ("Understand", [("safety_router", "Emergency check (instant, rules)", True),
+                    ("emergency_response", "Emergency screen - an emergency now ends here", False),
                     ("intake_planner", "Reads the complaint: domain, facts, translation, danger", True),
                     ("clarify", "Asks one question if the complaint is very unclear", False)]),
     ("Research", [("case_research", "Researches the named scheme / product", True),
@@ -79,6 +80,7 @@ PHASES: list[tuple[str, list[tuple[str, str, bool]]]] = [
 def build(checkpointer=None):
     g = StateGraph(ComplaintState)
     g.add_node("safety_router", safety_router)
+    g.add_node("emergency_response", emergency_response)
     g.add_node("intake_planner", intake_planner)
     g.add_node("clarify", clarify)
     g.add_node("case_research", case_research)
@@ -99,8 +101,11 @@ def build(checkpointer=None):
     g.add_node("finalize", finalize)
 
     g.add_edge(START, "safety_router")                 # rules only: instant
-    g.add_edge("safety_router", "intake_planner")      # one LLM call: domain, facts, translation, danger, questions
-    g.add_conditional_edges("intake_planner", route_after_intake, ["clarify", "case_research"])
+    # An emergency happening now ends at the emergency screen: no intake, no questions, no letter.
+    g.add_conditional_edges("safety_router", route_after_safety, ["emergency_response", "intake_planner"])
+    g.add_conditional_edges("intake_planner", route_after_intake,  # the LLM can find an emergency the rules missed
+                            ["emergency_response", "clarify", "case_research"])
+    g.add_edge("emergency_response", END)
     g.add_edge("clarify", "intake_planner")  # once: very unclear complaints get ONE question
     g.add_edge("case_research", "frame")
     g.add_conditional_edges("frame", fan_out, WORKERS)
@@ -167,10 +172,14 @@ def new_thread() -> str:
 
 
 def initial_state(complaint: str, *, company: str | None = None, city: str | None = None,
-                  complainant: dict | None = None, live: bool = True, letter_language: str | None = None) -> dict:
+                  complainant: dict | None = None, live: bool = True, letter_language: str | None = None,
+                  safety_acknowledged: bool = False) -> dict:
+    """safety_acknowledged: the person saw the emergency screen and, now safe, asked for the written complaint -
+    the run continues past the screen (the contacts stay on top)."""
     state = {"complaint": complaint, "company_hint": company or None, "city": city or None,
              "complainant": complainant or {}, "live": live, "contacts": [], "precedents": [], "pages": [],
-             "errors": [], "trace": [], "live_calls": 0, "blocked_hallucinations": 0}
+             "errors": [], "trace": [], "live_calls": 0, "blocked_hallucinations": 0,
+             "safety_acknowledged": safety_acknowledged}
     if letter_language in ("en", "hi"):  # an explicit choice; otherwise intake picks it from the complaint language
         state["letter_language"] = letter_language
     return state

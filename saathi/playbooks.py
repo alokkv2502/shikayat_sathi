@@ -320,13 +320,23 @@ def missing_facts_for(sector: str, facts: dict) -> list[dict]:
             if not (facts.get(f) or (f == "reference_id" and facts.get("order_id")))]
 
 
-def merge_missing(sector: str, facts: dict, extra: list[dict] | None) -> list[dict]:
-    """The domain's fixed minimum (the critic checks these placeholders) + the facts intake's LLM said THIS case
-    still needs. Deduplicated by fact key and by placeholder; facts the complaint already gives are not asked."""
-    def words(ph: str) -> set[str]:
-        return {w for w in re.findall(r"[A-Z]{4,}", ph.upper()) if w not in {"NUMBER", "DETAILS", "DATE"}}
+def merge_missing(sector: str, facts: dict, extra: list[dict] | None, protected_facts: list[dict] | None = None) -> list[dict]:
+    """The domain's fixed minimum (the critic checks these placeholders) + `protected_facts` (the facts the law
+    judge said the kept clauses turn on - e.g. whether a bank alert was received; never overwritten or duplicated)
+    + the facts intake's LLM said THIS case still needs. Deduplicated by fact key and by placeholder; facts the
+    complaint already gives are not asked."""
+    def words(ph: str) -> set[str]:  # word stems, so NOTIFY ~ NOTIFIED and COMPLAINT ~ COMPLAINED
+        return {w[:5] for w in re.findall(r"[A-Z]{4,}", ph.upper())
+                if w not in {"NUMBER", "DETAILS", "DATE", "WHEN", "WHAT", "ABOUT", "FROM", "WITH", "THIS", "THAT",
+                             "YOUR", "HAVE", "DID", "YOU"}}
 
     base = missing_facts_for(sector, facts)
+    protected: set[int] = set()  # the judge's deciding facts keep their exact wording
+    for m in protected_facts or []:
+        f, ph = m["fact"], m["placeholder"]
+        if not facts.get(f) and all(b["fact"] != f for b in base):
+            protected.add(len(base))
+            base.append({"fact": f, "placeholder": ph})
     out = [dict(m) for m in base]
     upgraded: set[int] = set()
     for m in extra or []:
@@ -336,8 +346,11 @@ def merge_missing(sector: str, facts: dict, extra: list[dict] | None) -> list[di
         ph = ph if ph.startswith("[") else f"[{ph.strip('[]').upper()}]"
         if any(o["fact"] == f or o["placeholder"].upper() == ph.upper() for o in out[len(base):]):
             continue  # already added
-        same = next((i for i, o in enumerate(base) if o["fact"] == f or (words(o["placeholder"]) & words(ph))
-                     or ("DATE" in o["placeholder"].upper() and "DATE" in ph.upper())), None)
+        if any(base[i]["fact"] == f or len(words(base[i]["placeholder"]) & words(ph)) >= 2 for i in protected):
+            continue  # a deciding fact already asks for this - never overwrite or duplicate it
+        same = next((i for i, o in enumerate(base) if i not in protected and (
+            o["fact"] == f or (words(o["placeholder"]) & words(ph))
+            or ("DATE" in o["placeholder"].upper() and "DATE" in ph.upper()))), None)
         if same is None:
             out.append({"fact": f, "placeholder": ph})
         elif same not in upgraded:

@@ -54,6 +54,12 @@ def add(d: date, rule: dict) -> date:
         return d + timedelta(days=-(-n // 24))  # round up to whole days
     if unit == "days":
         return d + timedelta(days=n)
+    if unit == "working_days":  # Monday-Friday (bank holidays are not known here, so the letter says "about")
+        while n > 0:
+            d += timedelta(days=1)
+            if d.weekday() < 5:
+                n -= 1
+        return d
     if unit == "months":
         return add_months(d, n)
     if unit == "years":
@@ -141,12 +147,13 @@ def annotate(steps: list[dict], *, start: date | None = None, incident: date | N
     start = start or date.today()
     first_reply = None
     for i, s in enumerate(steps):
-        for k in ("reply_by", "from_date", "file_by", "ack_by"):
+        for k in ("reply_by", "from_date", "file_by", "ack_by", "reply_from", "reply_passed"):
             s.pop(k, None)
         rw = s.get("reply_within")
         if i == 0 and rw:
             first_reply = add(start, rw)
             s["reply_by"] = fmt(first_reply)
+            s["reply_from"], s["reply_passed"] = fmt(start), first_reply < date.today()
             if s.get("ack_within"):
                 s["ack_by"] = fmt(add(start, s["ack_within"]))
         if i > 0 and first_reply:
@@ -160,7 +167,25 @@ def annotate(steps: list[dict], *, start: date | None = None, incident: date | N
     if not (rw and first_reply):
         return {}
     return {"date": fmt(first_reply), "basis": rw["basis"], "source": rw.get("source", ""),
-            "kind": rw.get("kind", "statutory")}
+            "kind": rw.get("kind", "statutory"), "from_date": fmt(start), "passed": first_reply < date.today()}
+
+
+def case_dates(rules: list[dict], facts: dict, today: date | None = None) -> list[dict]:
+    """Dates a case's own rules set, counted from the case's own events - e.g. the bank's shadow reversal: 10
+    working days from the day the complainant reported the debit (RBI directions, Para 72). Each rule:
+    {label, n, unit, from: <fact key>, basis, source}. Returns {label, date, basis, source, passed, from_date}
+    for every rule whose start fact is known; `passed` tells the letter to say it was missed."""
+    today = today or date.today()
+    out = []
+    for r in rules:
+        start = to_date(str(facts.get(r["from"]) or ""), today)
+        if not start:
+            continue
+        due = add(start, r)
+        out.append({"label": r["label"], "date": fmt(due), "basis": r["basis"], "source": r.get("source", ""),
+                    "from_date": fmt(start), "passed": due < today,
+                    "approx": r["unit"] == "working_days"})
+    return out
 
 
 def step_dates(s: dict) -> str:

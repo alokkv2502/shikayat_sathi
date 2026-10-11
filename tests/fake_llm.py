@@ -61,7 +61,7 @@ def intake(prompt: str) -> dict:
             "facts": {"issue": re.sub(r"\s+", " ", text)[:200], "amount": amt.group(1).replace(",", "") if amt else "",
                       "order_id": oid.group(1) if oid else "", "date": date.group(0) if date else "",
                       "police_station": ps.group(1) if ps else ""},
-            "follow_up_questions": [], "danger": [], "legal_query": f"{' '.join(issues)} consumer complaint",
+            "follow_up_questions": [], "safety": {"tier": "normal"}, "legal_query": f"{' '.join(issues)} consumer complaint",
             "missing_facts": []}
 
 
@@ -102,7 +102,7 @@ def extract(prompt: str) -> dict:
 
 def draft(prompt: str) -> dict:
     complaint = _between(prompt, "COMPLAINT (consumer's words):\n", "\n\nFACTS:")
-    facts = _literal(_between(prompt, "FACTS: ", "\nCOMPANY:"), {}) or {}
+    facts = _literal(_between(prompt, "FACTS: ", "\nWHAT THE FACT KEYS MEAN:"), {}) or {}
     brief = _literal(_between(prompt, "CASE BRIEF: ", "\nELIGIBILITY CHECKS:"), {}) or {}
     checks = _literal(_between(prompt, "ELIGIBILITY CHECKS: ", "\nGAP QUESTIONS:"), []) or []
     answers = _literal(_between(prompt, "COMPLAINANT'S ANSWERS TO REVIEW QUESTIONS: ", "\n"), {}) or {}
@@ -163,7 +163,8 @@ def answer(system: str, prompt: str, schema: dict, **_) -> dict:
         from saathi.rag.ingest import DOCS
         titles = {DOCS[d]["title"] for d in allowed}
         heads = re.findall(r"^\[(\d+)\] (.+?), (?:Section|Rule|Regulation|Clause|Para)", prompt, re.M)
-        return {"results": [{"index": int(i), "applies": t in titles, "why": "fake judge"} for i, t in heads]}
+        return {"results": [{"index": int(i), "applies": t in titles, "role": "right_or_duty", "why": "fake judge"}
+                            for i, t in heads]}
     if system == RELEVANCE_SYSTEM:
         n = len(re.findall(r"^\[\d+\]", prompt, re.M))
         return {"results": [{"index": i, "relevant": True, "how_resolved": ""} for i in range(n)]}

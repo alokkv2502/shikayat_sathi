@@ -82,6 +82,16 @@ st.markdown("""
     margin:4px 0 12px; font-size:.92rem; }
 .livebar .now { font-weight:700; }
 .livebar a { margin-left:auto; font-weight:700; color:var(--green); text-decoration:none; white-space:nowrap; }
+.emergency { background:var(--red-soft); border:2px solid #E8B8B3; border-left:8px solid var(--red);
+    border-radius:10px; padding:20px 22px; margin:6px 0 16px; color:#4A1A17; }
+.emergency .em-head { font-size:1.45rem; font-weight:800; color:var(--red); margin-bottom:8px; line-height:1.3; }
+.emergency .em-steps { margin:6px 0 12px; font-size:1.02rem; }
+.emergency .em-calls { display:grid; grid-template-columns:repeat(auto-fit, minmax(190px, 1fr)); gap:8px; }
+.emergency .em-call { background:#fff; border:1px solid #E8B8B3; border-radius:8px; padding:10px 12px; }
+.emergency .em-call a { display:block; font-size:1.6rem; font-weight:800; color:var(--red); text-decoration:none; }
+.emergency .em-call span { font-size:.88rem; }
+.emergency .em-after { margin-top:14px; border-top:1px solid #E8B8B3; padding-top:10px; font-size:.95rem; }
+.emergency .em-after p { margin:4px 0; }
 .livelink { font-size:.86rem; font-weight:700; color:var(--green); text-decoration:none; }
 .sendcard { border-radius:8px; padding:18px 20px; margin:6px 0 14px; color:#fff;
         background:var(--green); border-left:6px solid #8BC5A6; }
@@ -273,13 +283,39 @@ def resume_or_fail(graph_module, edits: dict) -> None:
 
 
 def safety_banner(safety: dict) -> None:
-    """Emergency numbers first, whenever the safety router saw immediate danger."""
-    if (safety or {}).get("level") != "emergency":
+    """Urgent (or acknowledged-emergency) cases: the numbers this situation needs, above everything else."""
+    if (safety or {}).get("tier") not in ("emergency_now", "urgent"):
         return
-    msgs = " ".join(safety.get("messages") or [])
-    nums = "".join(f"<li>{E(h)}</li>" for h in safety.get("helplines") or [])
-    st.markdown(f"<div class='urgent'>🆘 <b>If anyone is in danger right now, call for help first.</b> {E(msgs)}"
+    nums = "".join(f"<li><a href='tel:{E(n)}'><b>{E(n)}</b></a>: {E(label)}</li>"
+                   for n, label in safety.get("contacts") or [])
+    st.markdown(f"<div class='urgent'>🆘 <b>If anyone is in danger right now, call for help first.</b>"
                 f"<ul style='margin:6px 0 0'>{nums}</ul></div>", unsafe_allow_html=True)
+
+
+def emergency_view(s: dict) -> None:
+    """The emergency screen: what to do now and who to call - no steps, no form, no language picker. Writing a
+    complaint is offered as a button, never started automatically."""
+    e = s["emergency"]
+    contacts = "".join(f"<div class='em-call'><a href='tel:{E(n)}'>{E(n)}</a><span>{E(label)}</span></div>"
+                       for n, label in e.get("contacts") or [])
+    steps = "".join(f"<li>{E(x)}</li>" for x in e.get("steps") or [])
+    after = "".join(f"<p>{E(x)}</p>" for x in e.get("after") or [])
+    st.markdown(f"""<div class="emergency"><div class="em-head">🆘 {E(e['headline'])}</div>
+{f'<ul class="em-steps">{steps}</ul>' if steps else ''}<div class="em-calls">{contacts}</div>
+{f'<div class="em-after"><b>Once you are safe</b>{after}</div>' if after else ''}</div>""", unsafe_allow_html=True)
+    c1, c2 = st.columns(2)
+    if c1.button(e.get("offer") or "Help me write a complaint", width="stretch"):
+        from saathi import graph as G
+        thread = G.new_thread()
+        start_job(thread, G.run, G.initial_state(s.get("complaint") or "", company=s.get("company_hint"),
+                                                 city=s.get("city"), complainant=s.get("complainant"),
+                                                 live=bool(s.get("live", True)), safety_acknowledged=True), thread)
+        st.session_state.pop("state", None)
+        st.rerun()
+    if c2.button("Start over", width="stretch"):
+        for key in ("state", "thread", "running", "workflow_failed", "complaint_input"):
+            st.session_state.pop(key, None)
+        st.rerun()
 
 
 def brief_expander(brief: dict) -> None:
@@ -341,26 +377,30 @@ def details_dialog(s: dict, graph_module) -> None:
     brief_expander(payload.get("case_brief") or {})
     eligibility_box(payload, show_checks=True)
     me0 = payload.get("complainant") or s.get("complainant") or {}
-    with st.form("details_form"):
+    # Inputs are keyed by complaint: Streamlit keeps a widget's value under its key for the whole session, so
+    # fixed keys carried one complaint's answers (a scheme UAN) into the next complaint's form.
+    form_id = st.session_state.get("thread") or "new"
+    with st.form(f"details_form_{form_id}"):
         fills, answers = {}, {}
         if payload.get("missing_facts"):
             st.markdown("**Details for the letter**")
             cols = st.columns(min(3, len(payload["missing_facts"])))
             for i, m in enumerate(payload["missing_facts"]):
                 fills[m["placeholder"]] = cols[i % len(cols)].text_input(
-                    m["fact"].replace("_", " ").title(), "", placeholder=m["placeholder"])
+                    m["fact"].replace("_", " ").title(), "", placeholder=m["placeholder"],
+                    key=f"details_{form_id}_fill_{i}")
         conds = [q for q in payload.get("questions") or [] if q.get("condition")]
         extra = [q for q in payload.get("questions") or [] if not q.get("condition")]
         if conds:
             st.markdown("**Do you meet the published conditions?**")
             st.caption("Unknown does not mean ineligible - answer the ones you can.")
             for i, q in enumerate(conds):
-                answers[q["key"]] = st.text_input(q["question"], key=f"details_cond_{i}",
+                answers[q["key"]] = st.text_input(q["question"], key=f"details_{form_id}_cond_{i}",
                                                   placeholder="Your answer, or leave blank if unsure")
         if extra:
             st.markdown("**A few more details make the letter stronger**")
             for i, q in enumerate(extra):
-                answers[q["key"]] = st.text_input(q["question"], key=f"details_extra_{i}", placeholder="Optional")
+                answers[q["key"]] = st.text_input(q["question"], key=f"details_{form_id}_extra_{i}", placeholder="Optional")
         langs = {"en": "English", "hi": "हिन्दी (Hindi)"}
         letter_lang = st.radio("Letter language - the whole letter is written in one language", list(langs),
                                index=list(langs).index(payload.get("letter_language") or "en"),
@@ -528,7 +568,7 @@ def collect_job() -> None:
     st.session_state.pop("running", None)
     _jobs().pop(thread, None)
     state = (job or {}).get("state")
-    if state and ("__interrupt__" in state or state.get("final")):
+    if state and ("__interrupt__" in state or state.get("final") or state.get("emergency")):
         st.session_state.update(thread=thread, state=state)
     else:  # an error, the AI unavailable, or the server restarted mid-run
         st.session_state.pop("state", None)
@@ -724,6 +764,8 @@ if page == "New complaint":
                     unsafe_allow_html=True)
         st.caption("This usually takes under a minute. You can watch each step live in a new tab.")
         progress_strip(st.session_state["running"])
+    elif s and s.get("emergency"):  # an emergency happening now: the run ended at the emergency screen
+        emergency_view(s)
     elif s and s.get("final"):
         journey_step(3)
         safety_banner(s.get("safety") or {})

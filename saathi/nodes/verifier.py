@@ -19,6 +19,31 @@ ROLE_RANK = {"grievance_officer": 0, "principal_nodal_officer": 1, "nodal_office
 EMERGENCY = {"1915", "14448", "155255", "1930", "198", "112", "100"}  # public helplines, never "company" contacts
 
 
+DIRECTORY_PAGE = 25  # a page listing more contact values than this is a directory / listing, not a contact page
+
+
+def is_identified(company: str, obs: list[dict], official: set[str], page_size: dict[str, int]) -> bool:
+    """Is this value a grievance CONTACT at all, rather than just a number on a page? Rules list every value on a
+    page as evidence, so a staff directory or a listing site yields thousands. A value is a contact only if
+      - the LLM identified it on some page: as the company's own, or with a real role (grievance officer, nodal
+        officer, customer care…); or
+      - it is on the official domain on a page the LLM did not read (e.g. Google's excerpt of an official page); or
+      - it is an email on the company's own domain, found on an official page that is not a directory.
+    Every other observation can only CONFIRM an identified contact, never create one."""
+    for o in obs:
+        if o.get("owner") == "company" or (o.get("role") or "other") != "other":
+            return True
+        if o.get("source_domain") in official:
+            if o.get("owner") is None:
+                return True
+            dom = o["value"].split("@")[-1] if o["type"] == "email" else ""
+            on_brand = dom and (dom in official or any(dom.endswith("." + d) for d in official)
+                                or brand_match(company, registrable(dom)))
+            if on_brand and page_size.get(o.get("source_url"), 0) <= DIRECTORY_PAGE:
+                return True
+    return False
+
+
 def verify(company: str, observations: list[dict], official_domains: list[str]) -> list[dict]:
     official = set(official_domains)
     groups: dict[tuple, list[dict]] = {}
@@ -26,6 +51,11 @@ def verify(company: str, observations: list[dict], official_domains: list[str]) 
         if o["type"] == "phone" and (o["value"] in EMERGENCY or not 8 <= len(o["value"]) <= 13):
             continue  # too short, or two numbers run together by the page text (no Indian number has > 13 digits)
         groups.setdefault((o["type"], o["value"]), []).append(o)
+    page_size: dict[str, int] = {}
+    for (kind, value), obs in groups.items():
+        for url in {o.get("source_url") for o in obs}:
+            page_size[url] = page_size.get(url, 0) + 1
+    groups = {k: obs for k, obs in groups.items() if is_identified(company, obs, official, page_size)}
 
     out = []
     for (kind, value), obs in groups.items():

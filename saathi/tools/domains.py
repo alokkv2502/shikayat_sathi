@@ -54,8 +54,14 @@ def brand_match(company: str, domain: str) -> bool:
     comp = _compact(re.sub(r"\b(ltd|limited|pvt|private|india|inc|co|company|the)\b", "", company.lower()))
     first = _compact(company.split()[0]) if company.split() else ""
     lab = _compact(label)
+    # an acronym domain: 'jvvnl.org' ~ 'Jaipur Vidyut Vitran Nigam Limited', 'sbi.co.in' ~ 'State Bank of India'
+    words = [w for w in re.findall(r"[a-z0-9]+", re.sub(r"\(.*?\)", "", company.lower()))
+             if w not in ("of", "and", "the", "for", "&")]
+    initials = {"".join(w[0] for w in words),
+                "".join(w[0] for w in words if w not in ("ltd", "limited", "pvt", "private", "india", "co"))}
     return bool(lab) and (lab == comp or lab in comp and len(lab) >= 3 or comp.startswith(lab) and len(lab) >= 3
-                          or (len(first) >= 3 and lab.startswith(first)))
+                          or (len(first) >= 3 and lab.startswith(first))
+                          or (len(lab) >= 3 and lab in initials))
 
 
 def lookalike_domain(company: str, domain: str, official: set[str]) -> bool:
@@ -67,25 +73,49 @@ def lookalike_domain(company: str, domain: str, official: set[str]) -> bool:
     return len(first) >= 3 and first in _compact(label) and bool(HELPLINE_WORDS.search(label) or "-" in label)
 
 
+def names_in_title(company: str, title: str) -> bool:
+    """The page title names the organisation: its full name (without the bracketed short form) or that short form
+    as a whole word ('... BMC's Website' for 'Brihanmumbai Municipal Corporation (BMC)')."""
+    t = (title or "").lower()
+    full = re.sub(r"\s*\(.*?\)", "", company).strip().lower()
+    shorts = re.findall(r"\(([^)]+)\)", company)
+    return (len(full) >= 6 and full in t) or any(len(s) >= 2 and re.search(rf"\b{re.escape(s.lower())}\b", t)
+                                                 for s in shorts)
+
+
 def resolve_official(serp: SerpClient, company: str, *, hint_urls: list[str] | None = None, live: bool = True) -> dict:
-    """Official domain(s) of a company with the basis for believing it."""
-    data = serp.search({"engine": "google", "q": f"{company} official website", **GOOGLE}, live=live)
-    kg = data.get("knowledge_graph") or {}
-    candidates = []
-    for r in (data.get("organic_results") or [])[:8]:
-        d = registrable(r.get("link"))
-        if d and d not in NOT_OFFICIAL:
-            candidates.append({"domain": d, "position": r.get("position"), "title": r.get("title"),
-                               "brand_match": brand_match(company, d), "helpline_like": bool(HELPLINE_WORDS.search(d))})
-    official, basis = None, None
-    kg_site = kg.get("website") or (kg.get("profiles") or [{}])[0].get("link") if kg else None
-    if kg_site and registrable(kg_site) not in NOT_OFFICIAL:
-        official, basis = registrable(kg_site), "Google Knowledge Graph website"
-    else:
-        for c in candidates[:3]:  # top-3 organic result that carries the brand and doesn't look like a helpline site
-            if c["brand_match"] and not c["helpline_like"]:
-                official, basis = c["domain"], f"top-{c['position']} result for “{company} official website”, brand match"
-                break
+    """Official domain(s) of a company with the basis for believing it. Searches "<name> official website"; if that
+    finds nothing and the name has a short form in brackets ("... (JVVNL)"), searches the short form once more."""
+    official, basis, candidates, kg = None, None, [], {}
+    short = (re.findall(r"\(([^)]+)\)", company) or [""])[-1].strip()
+    for query in [company] + ([short] if short and short.lower() != company.lower() else []):
+        data = serp.search({"engine": "google", "q": f"{query} official website", **GOOGLE}, live=live)
+        kg = data.get("knowledge_graph") or {}
+        candidates = []
+        for r in (data.get("organic_results") or [])[:8]:
+            d = registrable(r.get("link"))
+            if d and d not in NOT_OFFICIAL:
+                candidates.append({"domain": d, "position": r.get("position"), "title": r.get("title"),
+                                   "brand_match": brand_match(company, d),
+                                   "titled": names_in_title(company, r.get("title") or ""),
+                                   "govt": d.endswith((".gov.in", ".nic.in")),
+                                   "helpline_like": bool(HELPLINE_WORDS.search(d))})
+        kg_site = kg.get("website") or (kg.get("profiles") or [{}])[0].get("link") if kg else None
+        if kg_site and registrable(kg_site) not in NOT_OFFICIAL:
+            official, basis = registrable(kg_site), "Google Knowledge Graph website"
+        else:
+            for c in candidates[:3]:  # top-3 result that carries the brand and doesn't look like a helpline site,
+                if c["helpline_like"]:  # or a government domain whose title names the organisation
+                    continue
+                if c["brand_match"]:
+                    official, basis = c["domain"], f"top-{c['position']} result for “{query} official website”, brand match"
+                    break
+                if c["govt"] and c["titled"]:
+                    official, basis = c["domain"], (f"top-{c['position']} result for “{query} official website”, "
+                                                    "a government domain whose page title names it")
+                    break
+        if official:
+            break
     for u in hint_urls or []:  # e.g. the lender website from RBI's DLA directory
         if not official and registrable(u):
             official, basis = registrable(u), "regulator registry (RBI DLA directory)"

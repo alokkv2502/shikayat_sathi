@@ -431,20 +431,44 @@ def test_gemini_schema_inlines_pydantic_refs():
 
 # --------------------------------------------------------------------------- safety router, domains and tiers
 
-@pytest.mark.parametrize("text,cats", [
-    ("My husband beats me every night and threatened to kill me", ["violence"]),
-    ("मेरा बेटा कल से लापता है", ["missing_or_abducted"]),
-    ("I want to end my life, the bank took all my money", ["self_harm"]),
-    ("pati maarpeet karta hai", ["violence"]),
-    ("Zomato gave me food poisoning, I want a refund", []),          # a consumer complaint, not an emergency
-    ("The work has begun but the builder is late", []),
-    ("Recovery agents are threatening me over a late EMI", []),      # urgent, but routed, not an emergency
+BATHROOM = ("My husband is beating me right now and trying to break the bathroom door. I have locked myself and "
+            "the kids in. Please help.")
+
+
+@pytest.mark.parametrize("text,tier,numbers", [
+    (BATHROOM, "emergency_now", ["112", "181", "1098"]),                       # no 14416: nobody mentioned self-harm
+    ("Mera pati abhi maar raha hai, darwaza tod raha hai, bachche andar hain", "emergency_now", ["112", "181", "1098"]),
+    ("My ex-husband keeps threatening to kill me on the phone", "urgent", ["112", "181"]),
+    ("मेरा बेटा कल से लापता है", "urgent", ["112", "1098"]),
+    ("I want to end my life, the bank took all my money", "emergency_now", ["14416", "112"]),
+    ("pati maarpeet karta hai", "urgent", ["112", "181"]),
+    ("My neighbour plays loud music every night", "normal", []),
+    ("Zomato gave me food poisoning, I want a refund", "normal", []),          # a consumer complaint
+    ("Recovery agents are threatening me over a late EMI", "normal", []),      # harassment, routed normally
 ])
-def test_safety_router(text, cats):
+def test_safety_tiers_and_contacts_come_from_typed_flags(text, tier, numbers):
     from saathi.nodes.safety import safety_check
     r = safety_check(text)
-    assert r["categories"] == cats and (r["level"] == "emergency") == bool(cats)
-    assert not cats or "112" in r["numbers"] or "14416" in r["numbers"]
+    assert r["tier"] == tier and r["numbers"] == numbers
+
+
+def test_an_emergency_now_ends_at_the_emergency_screen(mocked):
+    app, thread, s, nodes = run_graph(BATHROOM)
+    assert nodes == ["safety_router", "emergency_response"]                   # no intake, no questions, no letter
+    assert "__interrupt__" not in s and not s.get("final") and not s.get("draft")
+    e = s["emergency"]
+    assert e["headline"].startswith("This sounds like an emergency. Call 112 now")
+    assert [n for n, _ in e["contacts"]] == ["112", "181", "1098"]
+    assert any("locked room" in x for x in e["steps"]) and any("Domestic Violence Act, 2005" in x for x in e["after"])
+    assert "police complaint" in e["offer"]
+
+
+def test_after_the_emergency_screen_the_complaint_can_be_written_on_request(mocked):
+    app = G.build(InMemorySaver())
+    t = G.new_thread()
+    s = G.run(G.initial_state(BATHROOM, safety_acknowledged=True), t, app=app)
+    assert not s.get("emergency") and s["safety"]["tier"] == "emergency_now"  # contacts stay on top
+    assert "__interrupt__" in s
 
 
 def test_tiers_follow_the_playbook():
@@ -483,10 +507,10 @@ def test_tier_c_is_an_explainer_with_legal_aid_questions(mocked):
     assert f["tier"] == "C" and "Dear Sir" not in f["letter"] and "not legal advice" in f["letter"]
 
 
-def test_emergency_numbers_come_first(mocked):
+def test_urgent_cases_get_the_numbers_first_then_the_normal_flow(mocked):
     app, thread, s, nodes = run_graph("My husband beats me and threatened to kill me. Police did not register my "
                                       "complaint.")
-    assert nodes.index("safety_router") < nodes.index("case_research") and s["safety"]["level"] == "emergency"
+    assert nodes.index("safety_router") < nodes.index("case_research") and s["safety"]["tier"] == "urgent"
     assert s["__interrupt__"]["safety"]["numbers"][:2] == ["112", "181"]
     f = G.resume(thread, {}, app=app)["final"]
     assert f["markdown"].startswith("## ⚠️ If anyone is in danger right now") and "112" in f["markdown"]
@@ -634,8 +658,24 @@ def test_contacts_the_llm_did_not_attribute_are_not_verified(monkeypatch):
     out = {c["value"]: c for c in V.verify("Kartify", ext["observations"], ["kartify.example"])}
     assert out["grievance@kartify.example"]["status"] == "verified"
     assert out["legal@kartify.example"]["status"] == "verified"                  # unknown owner, but on-brand
-    assert out["help@smartcoin.co.in"]["status"] == "unverified"                 # unknown owner, off-brand
-    assert out["9380031807"]["status"] == "unverified"                           # unknown owner, bare number
+    assert "help@smartcoin.co.in" not in out    # unknown owner, off-brand: not a Kartify contact at all
+    assert "9380031807" not in out              # unknown owner, bare number: not a contact at all
+
+
+def test_a_staff_directory_does_not_become_hundreds_of_verified_contacts():
+    """A DISCOM's staff directory and a listing site both list the same 300 staff emails: none of them is a
+    grievance contact, and two directories are not "two independent sources"."""
+    staff = [f"staff{i}@jvvnl.org" for i in range(300)]
+    obs = []
+    for url, dom in (("http://103.122.36.131/directory.pdf", "103.122.36.131"),
+                     ("https://www.indiacustomercare.com/jvvnl", "indiacustomercare.com")):
+        obs += [{"type": "email", "value": v, "role": "other", "owner": "unknown", "source_url": url,
+                 "source_domain": dom, "via": "page"} for v in staff]
+    obs += [{"type": "email", "value": "helpdesk@jvvnl.org", "role": "customer_care", "owner": "company",
+             "source_url": u, "source_domain": d, "via": "page"}
+            for u, d in (("https://a.example/x", "a.example"), ("https://b.example/y", "b.example"))]
+    out = V.verify("Jaipur Vidyut Vitran Nigam Limited (JVVNL)", obs, [])
+    assert [c["value"] for c in out] == ["helpdesk@jvvnl.org"] and out[0]["status"] == "verified"
 
 
 def test_translation_happens_once_at_intake(mocked, monkeypatch):
@@ -655,8 +695,8 @@ def test_translation_happens_once_at_intake(mocked, monkeypatch):
                     "case_entities": [], "follow_up_questions": ["क्या आपने कंपनी से पहले शिकायत की थी?"]}
         return fake_llm.answer(system, prompt, schema)
     monkeypatch.setattr(llm, "json_call", fake)
-    real = rag_mod.retrieve
-    monkeypatch.setattr(rag_mod, "retrieve", lambda q, *a, **k: (queries.append(q), real(q, *a, **k))[1])
+    real = rag_mod.hybrid.search
+    monkeypatch.setattr(rag_mod.hybrid, "search", lambda q, *a, **k: (queries.append(q), real(q, *a, **k))[1])
     _, _, s, _ = run_graph("कार्टिफाई ने मेरे खराब फोन का 15,000 रुपये का रिफंड नहीं दिया। ऑर्डर KT12345678, 15 Sep 2026",
                            company="Kartify", stop_at_form=True)
     assert s["complaint_en"].startswith("Kartify did not refund")
@@ -678,14 +718,15 @@ def test_intake_call_also_catches_danger_the_rules_missed(mocked, monkeypatch):
             return {"language": "en", "complaint_en": prompt, "domain_free_text": "bank lost savings",
                     "matched_playbook": "bank", "match_confidence": 0.8, "company": "", "issue_types": ["other"],
                     "facts": {}, "urgent_fraud_or_harassment": False, "search_keywords": "lost savings",
-                    "danger": ["self_harm"]}
+                    "safety": {"tier": "emergency_now", "self_harm": True}}
         return fake_llm.answer(system, prompt, schema)
     monkeypatch.setattr(llm, "json_call", fake)
-    text = "The bank lost all my savings. I can't go on anymore and see no point in anything."
+    text = "The bank lost all my savings. I see no point in anything any more."
     from saathi.nodes.safety import safety_check
-    assert safety_check(text)["level"] == "none"                                   # the rules miss it
-    _, _, s, _ = run_graph(text, stop_at_form=True)
-    assert s["safety"]["level"] == "emergency" and "14416" in s["safety"]["numbers"]
+    assert safety_check(text)["tier"] == "normal"                                  # the rules miss it
+    _, _, s, nodes = run_graph(text, stop_at_form=True)
+    assert s["safety"]["tier"] == "emergency_now" and s["emergency"]["contacts"][0][0] == "14416"
+    assert nodes[-1] == "emergency_response" and "case_research" not in nodes      # ends before any search
     assert "rules + " in s["safety"]["method"] and calls.count(calls[0]) == 1 and calls[0] == "You triage Indian gr"
     assert not any(c.startswith("Decide whether") for c in calls)                    # no separate safety LLM call
 
@@ -965,15 +1006,16 @@ def test_clause_judge_can_only_keep_retrieved_clauses(monkeypatch):
     monkeypatch.setattr(llm, "json_call", lambda *a, **k: {"results": [
         {"index": 0, "applies": False, "why": "different kind of transaction"},
         {"index": 1, "applies": True, "why": "governs this"}, {"index": 7, "applies": True, "why": "made up"}]})
-    kept, rejected = L.judge_clauses({"complaint": "x", "sector": "bank"}, cands)
+    kept, rejected, _ = L.judge_clauses({"complaint": "x", "sector": "bank"}, cands)
     assert [c["citation"] for c in kept] == ["Act B, Section 2"] and kept[0]["tag"] == "C1"
     assert rejected == [{"citation": "Act A, Section 1", "why": "different kind of transaction"}]
 
 
 def test_no_applicable_law_means_no_citations(monkeypatch):
     from saathi.nodes import legal_rag as L
-    monkeypatch.setattr(L, "retrieve", lambda q, docs=(), k=3: ({"citation": "DGCA CAR, Para 3.3", "ref": "Para 3.3",
-                                                                  "text": "airline cancellation", "score": 0.7},))
+    monkeypatch.setattr(L.hybrid, "search", lambda q, k=8: [{"citation": "DGCA CAR, Para 3.3", "ref": "Para 3.3",
+                                                             "text": "airline cancellation", "score": 0.7}])
+    monkeypatch.setattr(L.hybrid, "section_of", lambda c: [])
     monkeypatch.setattr(llm, "json_call", lambda *a, **k: {"results": [
         {"index": 0, "applies": False, "why": "airline rules do not apply to a bus operator"}]})
     out = L.legal_rag({"complaint": "bus cancelled, no refund", "sector": "other", "facts": {}})
@@ -989,3 +1031,189 @@ def test_questions_never_re_ask_a_form_field():
     assert asks_for_placeholder("Kya aapke paas UPI transaction ID hai?", phs)
     assert not asks_for_placeholder("Which UPI app did you use to make this payment?", phs)
     assert not asks_for_placeholder("Did the merchant confirm that they did not receive the payment?", phs)
+
+
+def test_intake_decides_city_from_the_complaint_when_the_form_is_empty(mocked, monkeypatch):
+    from saathi.nodes import intake as intake_mod
+    base = fake_llm.answer
+
+    def fake(system, prompt, schema, **kw):
+        out = base(system, prompt, schema, **kw)
+        if system == intake_mod.INTAKE_SYSTEM:
+            out["facts"]["city"] = "Pune"   # the model read it from "Main Pune mein rehta hoon"
+        return out
+    monkeypatch.setattr(llm, "json_call", fake)
+    _, _, s, _ = run_graph("Kartify ne damaged phone ka refund reject kar diya. Main Pune mein rehta hoon.",
+                           stop_at_form=True)
+    assert s["company"] == "Kartify" and s["city"] == "Pune" and s["city_source"] == "the complaint"
+    assert s["local_forum"]["name"].endswith("Pune")          # the Maps search used the city from the text
+    _, _, s, _ = run_graph("Kartify refused my refund.", city="Pune", stop_at_form=True)
+    assert s["city"] == "Pune" and s["city_source"] == "your details"
+
+
+def test_acronym_domains_are_the_brand():
+    from saathi.tools.domains import brand_match
+    assert brand_match("Jaipur Vidyut Vitran Nigam Limited (JVVNL)", "jvvnl.org")
+    assert brand_match("State Bank of India", "sbi.co.in")
+    assert not brand_match("Airtel", "jio.com")
+
+
+def test_no_identifiable_organisation_is_asked_before_any_search(mocked):
+    app = G.build(InMemorySaver())
+    t = G.new_thread()
+    s = G.run(G.initial_state("The online store refused a refund for my damaged phone, order KT12345678."), t, app=app)
+    assert s["__interrupt__"]["stage"] == "clarify" and "company or organisation" in s["__interrupt__"]["question"]
+    assert not s.get("search_plan")                             # nothing searched without a name
+    s = G.resume(t, {"answer": "It was Kartify."}, app=app)     # intake runs again with the answer
+    assert s["company"] == "Kartify" and s["company_domain"] == "kartify.example"
+
+
+def test_law_not_in_force_for_the_transaction_is_dropped_before_the_judge():
+    from datetime import date
+    from saathi.rag import hybrid
+    amend = {"doc_id": "rbc26", "effective_from": "2027-01-01", "effective_for": "event"}
+    ios = {"doc_id": "ios", "effective_from": "2026-07-01", "effective_for": "complaint"}
+    today = date(2026, 10, 11)
+    assert not hybrid.in_force(amend, date(2026, 9, 20), today)   # a Sept 2026 transaction: the 2027 rules don't apply
+    assert not hybrid.in_force(amend, None, today)                # date unknown: not before it exists
+    assert hybrid.in_force(amend, date(2027, 2, 1), date(2027, 3, 1))
+    assert hybrid.in_force(ios, date(2026, 5, 1), today)          # a complaint made today: the 2026 scheme applies
+    assert hybrid.in_force({"doc_id": "cpa"}, date(2020, 1, 1), today)
+
+
+def test_hybrid_keyword_search_and_fusion():
+    from saathi.rag import hybrid
+    idx = hybrid.BM25([hybrid.tokens(t) for t in ["the bank shall credit (shadow reversal) within ten working days",
+                                                  "definitions of terms used in these directions",
+                                                  "customer liability where reported within three working days"]])
+    s = idx.scores(hybrid.tokens("shadow reversal ten working days"))
+    assert s[0] > s[2] > s[1] == 0
+    a = [{"citation": "X"}, {"citation": "Y"}]
+    b = [{"citation": "Y"}, {"citation": "Z"}]
+    assert [c["citation"] for c in hybrid.fuse([a, b])][0] == "Y"           # found by both searches ranks first
+
+
+def test_judge_keeps_the_legal_basis_first():
+    from saathi.nodes import legal_rag as L
+    cands = [{"citation": "Scheme, Clause 9", "ref": "Clause 9", "text": "grounds"},
+             {"citation": "Directions, Para 72", "ref": "Para 72", "text": "shadow reversal"},
+             {"citation": "Directions, Para 67", "ref": "Para 67", "text": "zero liability"}]
+    import saathi.llm as llm_mod
+    orig = llm_mod.json_call
+    llm_mod.json_call = lambda *a, **k: {"results": [
+        {"index": 0, "applies": True, "role": "escalation", "why": "where to go next"},
+        {"index": 1, "applies": True, "role": "deadline", "why": "10 working days"},
+        {"index": 2, "applies": True, "role": "right_or_duty", "why": "zero liability"}]}
+    try:
+        kept, _, _ = L.judge_clauses({"complaint": "x", "sector": "bank"}, cands)
+    finally:
+        llm_mod.json_call = orig
+    assert [c["ref"] for c in kept] == ["Para 67", "Para 72", "Clause 9"] and kept[0]["tag"] == "C1"
+
+
+def test_deadlines_run_from_the_complaint_date_and_clause_time_limits_are_computed():
+    from datetime import date
+    from saathi import deadlines
+    from saathi.nodes.drafter import clause_time_limits, escalation_for, reply_deadline
+    assert deadlines.add(date(2026, 9, 21), {"n": 10, "unit": "working_days"}) == date(2026, 10, 5)
+    facts = {"date": "8 September 2026", "complained_on": "21 September 2026", "amount": "18500"}
+    esc = escalation_for({"sector": "bank", "facts": facts, "complaint": "x", "company": "State Bank of India",
+                          "route": {}})
+    dl = reply_deadline(esc)
+    assert dl["date"] == "21 October 2026" and dl["from_date"] == "21 September 2026"   # 30 days from the complaint
+    clause = {"citation": "RBI Directions, 2025, Para 72", "deadline": {"n": 10, "unit": "working_days",
+                                                                        "counted_from": "complained_on",
+                                                                        "what": "shadow reversal credit"}}
+    shadow = deadlines.case_dates(clause_time_limits([clause]), facts, today=date(2026, 10, 11))[0]
+    assert shadow["date"] == "5 October 2026" and shadow["passed"] and shadow["source"].endswith("Para 72")
+
+
+def test_a_time_limit_is_kept_only_if_the_clause_states_it():
+    from saathi.nodes.legal_rag import checked_deadline
+    from saathi.state import ClauseDeadline
+    text = "On being notified by the customer, the bank shall credit (shadow reversal) the amount within 10 working days"
+    ok = ClauseDeadline(n=10, unit="working_days", counted_from="complained_on", what="shadow reversal")
+    assert checked_deadline(text, ok)["n"] == 10
+    assert checked_deadline(text, ClauseDeadline(n=7, unit="working_days", counted_from="complained_on", what="x")) is None
+    assert checked_deadline(text, ClauseDeadline(n=10, unit="days", counted_from="complained_on", what="x")) is None
+    assert checked_deadline("reported within three working days", ClauseDeadline(
+        n=3, unit="working_days", counted_from="first_learned_on", what="report"))
+
+
+def test_the_judges_deciding_facts_join_the_form_and_are_never_overwritten():
+    from saathi.playbooks import merge_missing
+    needed = [{"fact": "alert_received", "placeholder": "[DID YOU GET AN SMS / EMAIL ALERT? (YES / NO)]"}]
+    extra = [{"fact": "alert_date", "placeholder": "[DATE OF THE SMS ALERT]"}]
+    out = merge_missing("bank", {"amount": "18500"}, extra, needed)
+    assert {"fact": "alert_received", "placeholder": "[DID YOU GET AN SMS / EMAIL ALERT? (YES / NO)]"} in out
+    assert not any(m["fact"] == "alert_date" for m in out)              # overlaps a deciding field: not duplicated
+
+
+def test_critic_flags_a_payment_network_the_complainant_never_mentioned():
+    from saathi.nodes.critic import instrument_issues
+    st = {"complaint": "Rs 18,500 was debited by UPI from my SBI account", "facts": {}}
+    assert instrument_issues(st, "The debit, shown as VISA, was not authorised by me.")
+    assert not instrument_issues(st, "The UPI debit was not authorised by me.")
+
+
+def test_final_letter_cites_rules_in_words_and_has_one_salutation():
+    from saathi.nodes.review import cite_in_words, strip_opening
+    by_tag = {"C1": {"ref": "Para 67", "doc_title": "RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025"},
+              "C2": {"ref": "Para 72", "doc_title": "RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025"}}
+    body = "Under paragraph 67 of the RBI Directions, 2025 [C1], my liability is zero. The bank must reverse it [C2]."
+    out = cite_in_words(body, by_tag)
+    assert "[C" not in out and "paragraph 67 of the RBI Directions, 2025, my" in out
+    assert "reverse it (RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025, Para 72)." in out
+    assert strip_opening("Dear Sir/Madam,\nTo the Principal Nodal Officer\nSBI\n\nI write about…") == "I write about…"
+    assert strip_opening("Dear Sir/Madam, I write about…") == "I write about…"
+
+
+def test_critic_flags_an_invented_learned_of_date():
+    from saathi.nodes.critic import learned_issues
+    st = {"facts": {"date": "8 September 2026"}, "case_answers": {}}
+    assert learned_issues(st, "I first learned of this on 8 September 2026.")
+    st = {"facts": {"first_learned_on": "20 September 2026, account statement"}, "case_answers": {}}
+    assert not learned_issues(st, "I first learned of this on 20 September 2026 from my statement.")
+    assert learned_issues(st, "I noticed the debit on 8 September 2026.")
+
+
+def test_a_cyber_portal_number_is_not_the_banks_complaint_number():
+    from saathi.nodes.critic import complaint_no_issues
+    from saathi.nodes.review import unsupported_complaint_no
+    st = {"facts": {"complaint_no": ""}, "company": "State Bank of India"}
+    bad = "I reported it to the bank on 21 September 2026 and was given complaint number 3453322."
+    assert complaint_no_issues(st, bad)
+    assert "[COMPLAINT NUMBER]" in unsupported_complaint_no(st, bad)
+    ok = "I also filed a complaint on the cyber crime portal, acknowledgement number 3453322."
+    assert not complaint_no_issues(st, ok)
+    assert not complaint_no_issues(st, "The UPI transaction reference number is 612345678901.")
+    st = {"facts": {"complaint_no": "SBI-778812"}, "company": "State Bank of India"}
+    assert not complaint_no_issues(st, "My complaint number is SBI-778812.")
+
+
+def test_intake_facts_are_checked_for_misread_numbers_and_assumed_dates():
+    from saathi.nodes.intake import check_extracted_facts
+    text = ("Rs 18,500 was debited from my SBI account on 8 September 2026 through a UPI transaction I did not make. "
+            "I have filed a complaint on the cyber crime portal, acknowledgement number 3453322.")
+    facts = {"complaint_no": "3453322", "reference_id": "3453322", "first_learned_on": "8 September 2026",
+             "details": {}}
+    check_extracted_facts(facts, text)
+    assert facts["complaint_no"] == "" and facts["reference_id"] == "" and facts["details"]["cyber_ack"] == "3453322"
+    assert facts["first_learned_on"] == ""                          # never said when they learned of it
+    facts = {"complaint_no": "SBI-778812", "first_learned_on": "20 Sep", "details": {}}
+    check_extracted_facts(facts, "I saw it in my statement on 20 Sep and the bank gave complaint no SBI-778812.")
+    assert facts["complaint_no"] == "SBI-778812" and facts["first_learned_on"] == "20 Sep"
+
+
+def test_hindi_emergency_gets_the_womens_and_childrens_lines():
+    from saathi.nodes.safety import safety_check
+    r = safety_check("मेरा पति अभी मुझे मार रहा है, मैं बच्चों के साथ बाथरूम में बंद हूँ, वो दरवाज़ा तोड़ रहा है।")
+    assert r["tier"] == "emergency_now" and r["numbers"] == ["112", "181", "1098"]
+    assert safety_check("I work with children at a school and my salary is late")["tier"] == "normal"
+
+
+def test_ongoing_violence_is_recognised_in_plain_words():
+    from saathi.nodes.safety import safety_check
+    r = safety_check("My husband is drunk and beating me. I have locked myself and my two children in the bathroom")
+    assert r["tier"] == "emergency_now" and r["numbers"] == ["112", "181", "1098"]
+    assert safety_check("The shop is locked in the evening so I could not return the phone")["tier"] == "normal"

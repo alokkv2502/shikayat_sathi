@@ -1,0 +1,32 @@
+{
+ "steps": [
+  {
+   "name": "State Bank of India",
+   "level": "company",
+   "channel": "Branch Manager, State Bank of India",
+   "url": null,
+   "phone": null,
+   "when_to_use": "For reporting fraudulent electronic banking transactions and applying for compensation.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "RBI (Commercial Banks - Responsible Business Conduct) Third Amendment Directions, 2026, Para 4 (contd.)"
+  },
+  {
+   "name": "CPGRAMS",
+   "level": "central_portal",
+   "channel": "Central Public Grievance Redress And Monitoring System portal",
+   "url": null,
+   "phone": null,
+   "when_to_use": "For public grievances against central government bodies like SBI after approaching the bank.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "RBI (Commercial Banks - Responsible Business Conduct) Third Amendment Directions, 2026, Para 4 (contd.)"
+  }
+ ],
+ "fallback": false,
+ "note": "Ensure you provide the National Cyber Crime Reporting Portal acknowledgement number when filing your complaint with the bank.",
+ "notes": [],
+ "sources": [
+  "RBI (Commercial Banks - Responsible Business Conduct) Third Amendment Directions, 2026, Para 4 (contd.)"
+ ]
+}

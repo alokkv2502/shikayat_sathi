@@ -17,16 +17,20 @@ class ComplaintState(TypedDict, total=False):
     # input
     complaint: str
     company_hint: str | None
-    city: str | None
+    city: str | None                                 # the user's field, else the city intake read from the complaint
+    city_source: str                                 # "your details" | "the complaint"
     complainant: dict | None
     live: bool
     thread_id: str                                   # set by graph.run; tags the Live view's event log
+    safety_acknowledged: bool                        # saw the emergency screen, now asks for the complaint
+    emergency: dict                                  # the emergency screen (emergency_response) - the run ended there
     # intake_planner
     language: str                                    # "en" | "hi" | "hinglish"
     complaint_en: str                                # the complaint in English - translated ONCE, at intake
     letter_language: str                             # en | hi - the WHOLE letter is in this one language
     addressee_lines: list[str]                       # the drafter's addressee block, in the letter's language
     legal_query: str                                 # intake's English search query for the applicable law
+    legal_queries: list[str]                         # intake's 3-6 searches, one per rule that could decide it
     extra_missing: list[dict]                        # intake's case-specific missing facts (beyond the domain minimum)
     sector: str                                      # the domain: a key of playbooks.SECTORS
     tier: str                                        # A draft & escalate · B route urgently · C explain & refer
@@ -66,6 +70,7 @@ class ComplaintState(TypedDict, total=False):
     grievance_attempts: int
     # legal_rag / drafter / critic
     clauses: list[dict]
+    case_dates: list[dict]                           # dates the case's rules set, computed (deadlines.case_dates)
     clauses_rejected: list[dict]                     # retrieved but judged not to apply: {citation, why}
     draft: str
     subject: str
@@ -99,11 +104,22 @@ class Facts(BaseModel):
     issue: str = Field("", description="One neutral English sentence describing what went wrong")
     what_user_wants: str = Field("", description="Remedy wanted, in English: refund, replacement, reversal…")
     order_id: str = Field("", description="Order ID exactly as written, else ''")
-    reference_id: str = Field("", description="Transaction / policy / claim / complaint / account ref, else ''")
+    reference_id: str = Field("", description="Transaction / policy / claim / account ref, else ''. Not a police "
+                                              "FIR or cyber-crime portal acknowledgement (put that in details)")
     amount: str = Field("", description="Amount in rupees, digits only, else ''")
     date: str = Field("", description="Date as written, else ''")
-    city: str = ""
+    city: str = Field("", description="The complainant's city or district (or where it happened) if stated or "
+                                      "clear from the complaint, in English; else ''")
     place: str = Field("", description="Where it happened (for a crime / incident), else ''")
+    complained_on: str = Field("", description="Date the complainant FIRST complained to the company / bank about "
+                                               "this, as written, if stated; else ''")
+    complaint_no: str = Field("", description="Complaint / ticket number the company or bank ITSELF gave, exactly "
+                                              "as written, if stated; else ''. Never a police FIR or cyber-crime "
+                                              "portal acknowledgement number (put that in details as cyber_ack)")
+    first_learned_on: str = Field("", description="The date and way the complainant first learned of the problem "
+                                                  "(e.g. '20 September 2026, account statement') ONLY if they say "
+                                                  "when they learned / noticed it; else ''. Never assume it is the "
+                                                  "date it happened")
     police_station: str = Field("", description="Police station named by the complainant, else ''")
     details: dict[str, str] = Field(default_factory=dict,
                                     description="Additional case-specific facts stated by the complainant")
@@ -113,6 +129,22 @@ class MissingFact(BaseModel):
     fact: str = Field(description="snake_case key, e.g. booking_reference, meter_number, ticket_number")
     placeholder: str = Field(description="What the letter shows until it is filled, in capitals and brackets, "
                                          "e.g. [PNR / BOOKING NUMBER]")
+
+
+class SafetyAssessment(BaseModel):
+    tier: Literal["emergency_now", "urgent", "normal"] = Field(
+        "normal", description="emergency_now: violence happening now, an immediate threat to life, a medical "
+                              "emergency or self-harm risk; urgent: a serious threat that is not happening this "
+                              "minute (threats to kill, past domestic or sexual violence, a missing person); normal: "
+                              "everything else, including ordinary fraud, harassment and disputes")
+    violence_ongoing: bool = False
+    threat_to_life: bool = False
+    children_at_risk: bool = False
+    self_harm: bool = Field(False, description="Only if suicide or self-harm is actually mentioned or clearly implied")
+    domestic_violence: bool = False
+    sexual_violence: bool = False
+    missing_person: bool = False
+    medical: bool = False
 
 
 class IntakeOut(BaseModel):
@@ -130,7 +162,9 @@ class IntakeOut(BaseModel):
                                                          "complaint is about")
     clarifying_question: str = Field("", description="If needs_clarification: ONE short question, in the "
                                                      "complainant's language")
-    company: str = Field(description="Company / app / bank / insurer / department the complaint is against")
+    company: str = Field(description="The organisation the complaint is against: its official name as on its own "
+                                     "website, with its short form in brackets if any (e.g. 'Jaipur Vidyut Vitran "
+                                     "Nigam Limited (JVVNL)'); never a description; '' if it cannot be identified")
     issue_types: list[IssueT]
     facts: Facts
     urgent_fraud_or_harassment: bool
@@ -139,14 +173,20 @@ class IntakeOut(BaseModel):
     case_entities: list[str] = Field(default_factory=list,
                                      description="Named schemes, plans, policies or services (including acronyms, "
                                                  "spelled as written) whose rules or eligibility need research")
-    danger: list[Literal["self_harm", "violence", "sexual_violence", "missing_or_abducted", "medical"]] = Field(
-        default_factory=list, description="IMMEDIATE risk to someone's life or safety described in the complaint "
-                                          "(ongoing violence or a threat to kill, sexual violence, a missing or "
-                                          "abducted person, suicide or self-harm risk, a medical emergency). Past, "
-                                          "resolved events and ordinary fraud or harassment are not. Else [].")
+    safety: SafetyAssessment = Field(default_factory=lambda: SafetyAssessment(),
+                                     description="Your assessment of risk to anyone's life or safety")
     legal_query: str = Field("", description="A short English search query (8-15 words) for the Indian consumer / "
                                              "regulatory law that applies to THIS complaint, e.g. 'refund not given "
                                              "for cancelled flight deficiency in service consumer complaint'")
+    legal_queries: list[str] = Field(default_factory=list,
+                                     description="3-6 short English searches, EACH for one specific rule that could "
+                                                 "decide this case - a right, a duty of the other side, a deadline, a "
+                                                 "liability or compensation rule, or the escalation route - using "
+                                                 "the words a regulation would use. E.g. for an unauthorised UPI "
+                                                 "debit: 'zero liability third party breach reported within three "
+                                                 "working days', 'shadow reversal credit within ten working days', "
+                                                 "'customer liability reporting beyond seven working days board "
+                                                 "approved policy'")
     missing_facts: list[MissingFact] = Field(default_factory=list,
                                              description="Up to 4 facts THIS letter needs that the complaint does "
                                                          "not give (a booking / consumer / policy number, a date, "
@@ -256,14 +296,41 @@ class PrecedentsOut(BaseModel):
     results: list[PrecedentJudgement]
 
 
+class ClauseDeadline(BaseModel):
+    n: int = Field(description="The number the clause states, e.g. 10")
+    unit: Literal["hours", "days", "working_days", "months", "years"]
+    counted_from: Literal["complained_on", "first_learned_on", "incident"] = Field(
+        description="The event the clause counts from: complained_on = when the complainant notified / complained "
+                    "to the other side; first_learned_on = when they learned of it; incident = when it happened")
+    what: str = Field(description="What must happen by then, in a few words, e.g. 'shadow reversal credit'")
+
+
+class NeededFact(BaseModel):
+    fact: str = Field(description="snake_case key, e.g. alert_received, first_learned_on, complained_on, complaint_no")
+    placeholder: str = Field(description="The form field / letter placeholder in capitals and brackets, e.g. "
+                                         "'[DID YOU GET AN SMS / EMAIL ALERT? (YES / NO)]'")
+
+
 class ClauseVerdict(BaseModel):
     index: int
     applies: bool
+    role: Literal["right_or_duty", "deadline", "escalation", "definition", "context"] = Field(
+        "context", description="right_or_duty: a right of the complainant or a duty of the other side that decides "
+                               "the case (the legal basis); deadline: a time limit or reversal / reply timeline; "
+                               "escalation: where to complain next and when that body can act; definition: defines "
+                               "the wrong; context: background only")
     why: str = Field("", description="One short phrase: why it applies to this case, or why not")
+    deadline: ClauseDeadline | None = Field(None, description="Only if THIS clause's text states a time limit "
+                                                              "that applies in this case; else null")
 
 
 class ClausesOut(BaseModel):
     results: list[ClauseVerdict]
+    facts_needed: list[NeededFact] = Field(default_factory=list,
+                                           description="Up to 5 facts the kept clauses' outcome turns on that the "
+                                                       "complaint does not state (e.g. whether the bank's alert was "
+                                                       "received, when the complainant first learned of the debit, "
+                                                       "when they reported it). Not facts already given.")
 
 
 class DraftOut(BaseModel):

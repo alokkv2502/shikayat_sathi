@@ -8,12 +8,13 @@ from langchain_core.runnables import RunnableConfig
 from langgraph.types import interrupt
 
 from config import CASES_DIR
-from saathi.deadlines import localize, step_dates
+from saathi.deadlines import localize, parse_dates, step_dates
 from saathi.letter import labels, today
 from saathi.nodes.common import node
 from saathi.nodes.drafter import escalation_for, reply_deadline
 from saathi.nodes.escalation import CPGRAMS, STATE_SIDE
-from saathi.nodes.legal_rag import strip_unsupported
+from saathi.nodes.gap_check import asks_for_placeholder
+from saathi.nodes.legal_rag import split_tags, strip_unsupported
 from saathi.playbooks import tier_of
 from saathi.tools.domains import host, registrable
 
@@ -28,7 +29,9 @@ def details_payload(state: dict) -> dict:
             "eligibility_checks": checks,
             "questions": [{"key": c["condition"], "question": c["question"], "condition": c["condition"]}
                           for c in checks if c["status"] == "unknown" and c.get("question")]
-                         + [{"key": q, "question": q, "condition": ""} for q in state.get("extra_questions") or []],
+                         + [{"key": q, "question": q, "condition": ""} for q in state.get("extra_questions") or []
+                            # the law judge's deciding facts were added after gap_check wrote its questions
+                            if not asks_for_placeholder(q, [m["placeholder"] for m in state.get("missing_facts") or []])],
             "eligibility": state.get("eligibility") or {}, "case_brief": state.get("case_brief") or {},
             "tier": tier_of(state.get("sector") or "other"), "safety": state.get("safety") or {},
             "sector": state.get("sector"), "company": state.get("company"),
@@ -126,6 +129,89 @@ def addressee_block(state: dict, rec: dict | None, tier: str, L: dict) -> list[s
     return [officer or L["gro"]] + ([org_line] if org_line else [])
 
 
+SALUTATION = re.compile(r"^\s*(?:dear\s+sir(?:\s*/\s*|\s+or\s+)?(?:madam)?|dear\s+(?:sir|madam)|respected\s+"
+                        r"(?:sir|madam)(?:\s*/\s*madam)?|sir\s*/\s*madam|महोदय(?:\s*/\s*महोदया)?|प्रिय\s+महोदय)\s*[,:]?\s*",
+                        re.I)
+ADDRESSEE = re.compile(r"^\s*(?:to\s*,?\s*$|to\s+the\b|to\s*,|सेवा\s+में)", re.I)
+
+
+def strip_opening(body: str) -> str:
+    """The header (To / Date / Subject / salutation) is added by finalize; remove a salutation or an addressee block
+    the drafter repeated at the start of the body ("Dear Sir/Madam, To the Principal Nodal Officer…")."""
+    lines = body.strip().splitlines()
+    while lines:
+        first = lines[0]
+        m = SALUTATION.match(first)
+        if m:
+            rest = first[m.end():].strip()
+            lines = ([rest] if rest else []) + lines[1:]
+            continue
+        if ADDRESSEE.match(first):
+            i = 1  # the addressee block runs to the first blank line
+            while i < len(lines) and lines[i].strip():
+                i += 1
+            lines = lines[i:]
+            continue
+        if not first.strip():
+            lines = lines[1:]
+            continue
+        break
+    return "\n".join(lines).strip()
+
+
+def unsupported_learned_dates(state: dict, body: str) -> str:
+    """Last-resort guard (the critic asks the drafter first): a 'learned of / noticed … on <date>' the complainant
+    never gave becomes a placeholder for them to fill, instead of a guessed date in their letter."""
+    from saathi.nodes.critic import LEARNED, learned_issues
+    if not learned_issues(state, body):
+        return body
+    facts = state.get("facts") or {}
+    given = {(m, d) for _, m, d, _ in parse_dates(str(facts.get("first_learned_on") or ""))}
+
+    def fix(m: re.Match) -> str:
+        text = m.group(0)
+        for _, mo, d, raw in parse_dates(text):
+            if (mo, d) not in given:
+                text = text.replace(raw, "[DATE YOU FIRST LEARNED OF IT]")
+        return text
+    return LEARNED.sub(fix, body)
+
+
+def unsupported_complaint_no(state: dict, body: str) -> str:
+    """Last-resort guard: a number wrongly presented as the company's complaint number becomes a placeholder."""
+    from saathi.nodes.critic import COMPLAINT_NO, ELSEWHERE, complaint_no_issues
+    if not complaint_no_issues(state, body):
+        return body
+    own = re.sub(r"[^0-9]", "", str((state.get("facts") or {}).get("complaint_no") or ""))
+    parts = re.split(r"(?<=[.!?])(\s+)", body)
+
+    def fix(sentence: str) -> str:
+        if ELSEWHERE.search(sentence):
+            return sentence
+        return COMPLAINT_NO.sub(lambda m: m.group(0) if re.sub(r"[^0-9]", "", m.group(1)) == own
+                                else m.group(0).replace(m.group(1), "[COMPLAINT NUMBER]"), sentence)
+    return "".join(fix(p) for p in parts)
+
+
+def cite_in_words(body: str, by_tag: dict) -> str:
+    """A letter cites rules by name, not by [C#]. Where the drafter already named the rule just before its tag
+    ("paragraph 72 of the RBI … Directions, 2025 [C3]"), the tag is dropped; otherwise it becomes "(<citation>)"."""
+    def repl(m: re.Match) -> str:
+        c = by_tag.get(m.group(1))
+        if not c:
+            return ""
+        num = re.search(r"\d+[A-Z]?(?:\.\d+)?", c.get("ref") or "")
+        before = body[max(0, m.start() - 160):m.start()]
+        if num and re.search(rf"(?<![\d.]){re.escape(num.group(0))}(?![\d])", before):
+            return ""
+        ref = re.sub(r"\s*\(contd\.\)", "", c.get("ref") or "")
+        title = c.get("doc_title") or c.get("act") or ""
+        return f" ({ref})" if title and title in before else f" ({title}, {ref})"  # the document is already named
+    out = re.sub(r"\s*\[(C\d+)\]", repl, body)
+    out = re.sub(r"[ \t]+([.,;:])", r"\1", out)
+    return re.sub(r",\s*,", ",", out)
+
+
 @node("📦 Finalize")
 def finalize(state: dict, config: RunnableConfig | None = None) -> dict:
     edits = state.get("user_edits") or {}
@@ -151,9 +237,13 @@ def finalize(state: dict, config: RunnableConfig | None = None) -> dict:
     if old and deadline.get("date") and old != deadline["date"]:
         body = body.replace(localize(old, lang), localize(deadline["date"], lang))
     clauses = state.get("clauses") or []
-    body, removed = strip_unsupported(body, clauses)
+    body, removed = strip_unsupported(split_tags(body), clauses)
     by_tag = {c["tag"]: c for c in clauses}
+    body = split_tags(body)
     used = [t for t in by_tag if f"[{t}]" in body]
+    body = cite_in_words(strip_opening(body), by_tag)
+    body = unsupported_learned_dates(state, body)
+    body = unsupported_complaint_no(state, body)
     tier = tier_of(state.get("sector") or "other")
     rec = state.get("recommended") if tier == "A" else None
     if rec and not (rec.get("verified") and rec.get("source_url")):  # guard: no source, no recipient
@@ -171,7 +261,7 @@ def finalize(state: dict, config: RunnableConfig | None = None) -> dict:
         to_name = ""
         header = f"{subject}\n{today(lang)}\n\n"
         footer = f"\n\n{L['not_advice']}"
-    basis = "\n".join(f"[{t}] {by_tag[t]['citation']} — {by_tag[t]['title']}" for t in used)
+    basis = "\n".join(f"- {by_tag[t]['citation']} — {by_tag[t]['title']}" for t in used)
     brief = state.get("case_brief") or {}
     own = {registrable(d) for d in [state.get("company_domain"), *(state.get("official_domains") or [])] if d}
     sources = [u for u in brief.get("sources") or []  # a letter cites official pages only
@@ -195,7 +285,7 @@ def finalize(state: dict, config: RunnableConfig | None = None) -> dict:
                 "B": " (submit at the police station or on your state police portal)", "C": ""}[tier]
     safety = state.get("safety") or {}
     alert = ("## ⚠️ If anyone is in danger right now\n" + "\n".join(f"- {h}" for h in safety.get("helplines") or [])
-             + "\n\n") if safety.get("level") == "emergency" else ""
+             + "\n\n") if safety.get("tier") in ("emergency_now", "urgent") else ""
     next_steps = {"A": "## If there's no reply", "B": "## Where to report, and if the police don't act",
                   "C": "## Where to get help"}[tier]
     to_line = "" if tier == "C" else (f"\n\n**To:** {to_name.replace(chr(10), ', ')}"

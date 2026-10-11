@@ -85,6 +85,7 @@ def consistency_issues(state: dict, body: str, today: date | None = None) -> lis
                       " ".join(c.get("text", "") for c in state.get("clauses") or []),
                       json.dumps(state.get("escalation") or [], ensure_ascii=False),
                       json.dumps(state.get("deadline") or {}, ensure_ascii=False),
+                      json.dumps(state.get("case_dates") or [], ensure_ascii=False),
                       deadlines.fmt(today)])
     issues = []
     ok_amounts = {v for v, _ in deadlines.amounts(known)}
@@ -106,6 +107,67 @@ def consistency_issues(state: dict, body: str, today: date | None = None) -> lis
     if by and tier_of(state.get("sector") or "other") == "A" and by not in body:
         issues.append(f"State the reply deadline computed from the rules: {by} ({dl['basis']}).")
     return issues
+
+
+# Payment instruments and networks: naming one the complainant never mentioned (a "VISA" debit in a UPI case) is
+# an invented fact that changes which rules apply.
+INSTRUMENTS = {"visa": r"\bvisa\b", "mastercard": r"master\s?card", "rupay": r"\brupay\b", "amex": r"\bamex\b|american express",
+               "credit card": r"credit\s?card", "debit card": r"debit\s?card|\batm card", "upi": r"\bupi\b",
+               "neft": r"\bneft\b", "rtgs": r"\brtgs\b", "imps": r"\bimps\b", "net banking": r"net\s?banking|internet banking",
+               "wallet": r"\bwallet\b", "cheque": r"\bcheque\b|\bcheck\b(?= (?:no|number|bounce))", "cash": r"\bin cash\b|\bcash payment"}
+
+
+LEARNED = re.compile(r"\b(?:first\s+)?(?:learn(?:ed|t)|notic(?:ed|e)|came\s+to\s+know|became\s+aware|discover(?:ed)?|"
+                     r"found\s+out)\b[^.]{0,80}", re.I)
+
+
+def learned_issues(state: dict, body: str) -> list[str]:
+    """When the complainant learned of the problem decides reporting windows; it must come from them. A date in a
+    'learned of / noticed / came to know … on <date>' sentence must be the date they gave for it."""
+    facts = state.get("facts") or {}
+    given = " ".join([str(facts.get("first_learned_on") or ""),
+                      " ".join(str(v) for k, v in (state.get("case_answers") or {}).items() if re.search(
+                          r"learn|notic|know|aware|discover|found", k, re.I))])
+    given_dates = {(m, d) for _, m, d, _ in deadlines.parse_dates(given)}
+    out = []
+    for m in LEARNED.finditer(body):
+        for _, mo, d, raw in deadlines.parse_dates(m.group(0)):
+            if (mo, d) not in given_dates:
+                out.append(f"The letter says the complainant learned of / noticed it on '{raw}', but they never gave "
+                           f"that date - use the placeholder or leave it out.")
+    return out
+
+
+COMPLAINT_NO = re.compile(r"(?:complaint|ticket|grievance|docket)\s*(?:number|no\.?|id|ref(?:erence)?(?:\s*(?:number|no\.?))?)?"
+                          r"\s*(?:is|was|:|of|-)?\s*#?\s*([A-Z]{0,4}[-/]?\d[\dA-Z/-]{3,})", re.I)
+ELSEWHERE = re.compile(r"cyber|portal|police|\bFIR\b|acknowledg|1930|ombudsman|helpline", re.I)
+
+
+def complaint_no_issues(state: dict, body: str) -> list[str]:
+    """A number the letter calls the company's own complaint / ticket number must be the one the complainant gave
+    for it - not, say, the cyber-crime portal's acknowledgement number."""
+    own = re.sub(r"\D", "", str((state.get("facts") or {}).get("complaint_no") or ""))
+    out = []
+    for sentence in re.split(r"(?<=[.!?])\s+", body):
+        if ELSEWHERE.search(sentence):
+            continue
+        for m in COMPLAINT_NO.finditer(sentence):
+            if re.sub(r"\D", "", m.group(1)) != own:
+                out.append(f"'{m.group(1)}' is presented as the {state.get('company') or 'company'}'s complaint "
+                           f"number, but the complainant did not give it as that - use their complaint number or the "
+                           f"placeholder.")
+    return out
+
+
+def instrument_issues(state: dict, body: str) -> list[str]:
+    """Every payment instrument the letter names must appear in what the complainant said."""
+    said = " ".join([state.get("complaint") or "", state.get("complaint_en") or "",
+                     json.dumps(state.get("facts") or {}, ensure_ascii=False),
+                     " ".join(f"{k} {v}" for k, v in (state.get("case_answers") or {}).items()),
+                     " ".join(str(v) for v in (state.get("fills") or {}).values())])
+    return [f"The letter mentions '{name}', but the complainant never did - do not add payment details they did "
+            f"not give." for name, pat in INSTRUMENTS.items()
+            if re.search(pat, body, re.I) and not re.search(pat, said, re.I)]
 
 
 def tier_issues(state: dict, body: str) -> list[str]:
@@ -209,6 +271,9 @@ def rule_issues(state: dict) -> list[str]:
     issues.extend(eligibility_issues(state, body))
     issues.extend(tier_issues(state, body))
     issues.extend(consistency_issues(state, body))
+    issues.extend(instrument_issues(state, body))
+    issues.extend(learned_issues(state, body))
+    issues.extend(complaint_no_issues(state, body))
     from saathi.nodes.escalation import CPGRAMS, STATE_SIDE
     if (state.get("route") or {}).get("authority_type") in STATE_SIDE and CPGRAMS.search(body):
         issues.append("CPGRAMS is for central-government bodies; this is a state matter - name the state's own "
