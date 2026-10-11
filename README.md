@@ -13,6 +13,13 @@ diya") and returns:
   for whether each one governs *this* case (never invented; none rather than a wrong one);
 - a ready-to-send letter in **one language** (English or Hindi), checked before you see it.
 
+> **🔎 Built on SerpApi.** Four SerpApi engines find what no dataset or model memory has today: **Google** for
+> official domains, grievance-officer pages, escalation routes and scheme rules; **Google Forums** and **Google
+> News** for how similar complaints were resolved; **Google Maps** for the nearest consumer commission, cyber-crime
+> police station or legal-aid office. Every search is cached and capped at **12 live searches per complaint**
+> (typically 8–12), and nothing from a search is trusted until the page itself is fetched and checked.
+> [How and why →](#serpapi-how-and-why-it-is-used)
+
 **ChatGPT is smart; Shikayat Saathi is accountable.** The LLM understands the complaint and proposes; code checks
 every contact, route step, citation, amount, date and deadline before it reaches a letter.
 
@@ -22,6 +29,67 @@ in SQLite. Search uses SerpApi (Google, Forums, News, Maps); the law is retrieve
 works in the background, and a **Live view** tab shows every step, call and output as it happens.
 
 _Information, not legal advice. Nothing is ever sent automatically._
+
+## SerpApi: how and why it is used
+
+### Why a search API
+
+A grievance letter is only useful if it reaches the right desk, and the facts that decide that are not in any
+dataset or in the model's memory:
+
+- **Grievance officers change.** E-commerce, banking and telecom rules require companies to publish a grievance
+  or nodal officer, but on their own websites, in their own format, and the names change often. An LLM recalling
+  them from training data gives stale or invented contacts. We need the page as it is today.
+- **Routes differ by state and by body.** Which portal, forum or ombudsman handles a water bill in Bengaluru or a
+  scheme in Bihar is published on government sites, not in the law.
+- **Schemes and products are named, not described.** "PM-VBRY" or a specific insurance plan has conditions that
+  only its official pages state.
+- **Proof matters more than fluency.** Every contact, ladder step and scheme condition must point to a page we
+  actually fetched, so it can be checked.
+
+SerpApi gives Google's results for India (`gl=in`, `google.co.in`) as structured JSON: organic results, the
+knowledge graph's official website, news, forum threads and Maps listings. That's one API for four kinds of
+search, with no HTML scraping of Google. SerpApi finds the pages; the app then fetches and reads the pages
+themselves, and code decides what counts as official.
+
+### Where each search happens
+
+| Step | Engine | What it searches for | What the result is used for |
+|---|---|---|---|
+| intake (domain resolution) | `google` | `<company> official website` | The official domain (knowledge graph first, then top results that carry the brand and don't look like a helpline site). Everything "official" is judged against it. |
+| 🔎 case_research | `google` | `site:<official domain> "<scheme>"`, then `"<scheme>" eligibility … site:gov.in`, then the open web | Up to 6 official pages (+2 others only to fill gaps) for the case brief: conditions, entitlement, grievance channel. |
+| 🔎 grievance | `google` | `site:<official domain> grievance officer` (and the sector's officer terms), plus one open-web query | Pages to fetch; contacts are extracted from the fetched page, then verified. One retry with other wording if nothing is verified. |
+| 🪜 escalation_planner | `google` | Intake's 2–4 route queries (e.g. `JVVNL consumer grievance redressal forum`), plus one `<authority> official` check per unsourced step | Official pages the ladder steps must cite. |
+| 📰 precedents | `google_forums`, `google_news` | `<company or scheme> <issue> complaint resolved` / `… consumer court` (`… grievance redressal` for schemes) | How similar complaints were resolved; kept only if the result names the subject, then judged by the LLM. 40 s budget. |
+| 📍 local_forum | `google_maps` | `District Consumer Disputes Redressal Commission <city>`, `Cyber Crime Police Station <city>`, `District Legal Services Authority <city>` … | Name, address, phone and a Maps link for the local office. Only when you give a city. |
+
+In 30 saved runs, a fresh complaint made **8–12 live calls** (median 8.5). The escalation planner uses the most,
+then case research, precedents, the grievance search and domain resolution.
+
+### How it is kept cheap, fast and safe
+
+- **Cache first.** Every response is stored in `data/cache/serp/<sha1 of the parameters>.json`. The same search
+  costs nothing the second time: re-running a complaint, the evaluation or a demo is free and instant.
+  Fetched pages are cached too (`data/cache/web/`).
+- **A credit cap per complaint.** `SERPAPI_MAX_CREDITS` (default 12) live calls per complaint. Past it, the
+  remaining searches are skipped and the step says so in its log; the run goes on with what it has.
+- **Failed requests aren't counted.** SerpApi doesn't bill a failed request, so it doesn't use up the complaint's
+  budget either.
+- **Fail fast, never hang.** 5 s to connect, 25 s to read, two retries. A search that still fails is recorded as
+  an error on that step and the graph carries on. Precedents (the slowest engine) and the escalation planner have
+  their own time budgets (40 s and 25 s).
+- **Parallel.** The search steps run at the same time (LangGraph `Send` fan-out), and the grievance step
+  fetches its pages in parallel.
+- **No key, no problem for cached cases.** Without `SERPAPI_API_KEY`, cached searches still work; an uncached one
+  is skipped with a note.
+- **Visible.** Every search shows in the terminal (`SAATHI_TIMING=calls`) and in the Live view, with its time and
+  whether it came from cache; a running count of live calls is kept in `data/cache/serp/_ledger.json`.
+
+### What a search result is never trusted for
+
+A search snippet is never used as a contact or a source by itself. Contacts come from the fetched page and are
+verified (official domain, or two independent sources). Ladder steps and scheme conditions must cite an official
+page that was fetched. Third-party "customer care number" sites are recognised and never verified.
 
 ## Quick start and Installation Steps
 
@@ -302,67 +370,6 @@ translated once at intake). Add a PDF to `raw/legal/`, add an entry to `DOCS` in
 | `car_dbc` | DGCA CAR Section 3, Series M, Part IV — denied boarding, cancellations and delays |
 | `car_refund` | DGCA CAR Section 3, Series M, Part II — refund of airline tickets (Rev. 3, 2026; from OCR) |
 | `elec` | Electricity (Rights of Consumers) Rules, 2020 |
-
-## SerpApi: how and why it is used
-
-### Why a search API
-
-A grievance letter is only useful if it reaches the right desk, and the facts that decide that are not in any
-dataset or in the model's memory:
-
-- **Grievance officers change.** E-commerce, banking and telecom rules require companies to publish a grievance
-  or nodal officer, but on their own websites, in their own format, and the names change often. An LLM recalling
-  them from training data gives stale or invented contacts. We need the page as it is today.
-- **Routes differ by state and by body.** Which portal, forum or ombudsman handles a water bill in Bengaluru or a
-  scheme in Bihar is published on government sites, not in the law.
-- **Schemes and products are named, not described.** "PM-VBRY" or a specific insurance plan has conditions that
-  only its official pages state.
-- **Proof matters more than fluency.** Every contact, ladder step and scheme condition must point to a page we
-  actually fetched, so it can be checked.
-
-SerpApi gives Google's results for India (`gl=in`, `google.co.in`) as structured JSON: organic results, the
-knowledge graph's official website, news, forum threads and Maps listings. That's one API for four kinds of
-search, with no HTML scraping of Google. SerpApi finds the pages; the app then fetches and reads the pages
-themselves, and code decides what counts as official.
-
-### Where each search happens
-
-| Step | Engine | What it searches for | What the result is used for |
-|---|---|---|---|
-| intake (domain resolution) | `google` | `<company> official website` | The official domain (knowledge graph first, then top results that carry the brand and don't look like a helpline site). Everything "official" is judged against it. |
-| 🔎 case_research | `google` | `site:<official domain> "<scheme>"`, then `"<scheme>" eligibility … site:gov.in`, then the open web | Up to 6 official pages (+2 others only to fill gaps) for the case brief: conditions, entitlement, grievance channel. |
-| 🔎 grievance | `google` | `site:<official domain> grievance officer` (and the sector's officer terms), plus one open-web query | Pages to fetch; contacts are extracted from the fetched page, then verified. One retry with other wording if nothing is verified. |
-| 🪜 escalation_planner | `google` | Intake's 2–4 route queries (e.g. `JVVNL consumer grievance redressal forum`), plus one `<authority> official` check per unsourced step | Official pages the ladder steps must cite. |
-| 📰 precedents | `google_forums`, `google_news` | `<company or scheme> <issue> complaint resolved` / `… consumer court` (`… grievance redressal` for schemes) | How similar complaints were resolved; kept only if the result names the subject, then judged by the LLM. 40 s budget. |
-| 📍 local_forum | `google_maps` | `District Consumer Disputes Redressal Commission <city>`, `Cyber Crime Police Station <city>`, `District Legal Services Authority <city>` … | Name, address, phone and a Maps link for the local office. Only when you give a city. |
-
-In 30 saved runs, a fresh complaint made **8–12 live calls** (median 8.5). The escalation planner uses the most,
-then case research, precedents, the grievance search and domain resolution.
-
-### How it is kept cheap, fast and safe
-
-- **Cache first.** Every response is stored in `data/cache/serp/<sha1 of the parameters>.json`. The same search
-  costs nothing the second time: re-running a complaint, the evaluation or a demo is free and instant.
-  Fetched pages are cached too (`data/cache/web/`).
-- **A credit cap per complaint.** `SERPAPI_MAX_CREDITS` (default 12) live calls per complaint. Past it, the
-  remaining searches are skipped and the step says so in its log; the run goes on with what it has.
-- **Failed requests aren't counted.** SerpApi doesn't bill a failed request, so it doesn't use up the complaint's
-  budget either.
-- **Fail fast, never hang.** 5 s to connect, 25 s to read, two retries. A search that still fails is recorded as
-  an error on that step and the graph carries on. Precedents (the slowest engine) and the escalation planner have
-  their own time budgets (40 s and 25 s).
-- **Parallel.** The search steps run at the same time (LangGraph `Send` fan-out), and the grievance step
-  fetches its pages in parallel.
-- **No key, no problem for cached cases.** Without `SERPAPI_API_KEY`, cached searches still work; an uncached one
-  is skipped with a note.
-- **Visible.** Every search shows in the terminal (`SAATHI_TIMING=calls`) and in the Live view, with its time and
-  whether it came from cache; a running count of live calls is kept in `data/cache/serp/_ledger.json`.
-
-### What a search result is never trusted for
-
-A search snippet is never used as a contact or a source by itself. Contacts come from the fetched page and are
-verified (official domain, or two independent sources). Ladder steps and scheme conditions must cite an official
-page that was fetched. Third-party "customer care number" sites are recognised and never verified.
 
 ## Speed
 
