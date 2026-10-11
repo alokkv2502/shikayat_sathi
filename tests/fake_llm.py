@@ -66,7 +66,7 @@ def intake(prompt: str) -> dict:
 
 
 def gap(prompt: str) -> dict:
-    conditions = _literal(_between(prompt, "CASE CONDITIONS:\n", "\n\nCOMPLAINT:"), [])
+    conditions = _literal(_between(prompt, "CASE CONDITIONS:\n", "\n\nKIND OF COMPLAINT:"), [])
     answers = _literal(_between(prompt, "COMPLAINANT'S ANSWERS:\n", "\n\nPLACEHOLDERS"), {}) or {}
     out = []
     for c in conditions:
@@ -155,6 +155,15 @@ def answer(system: str, prompt: str, schema: dict, **_) -> dict:
     from saathi.nodes.escalation import PLAN_SYSTEM
     if system == PLAN_SYSTEM:  # no route found by default: the seed / labelled general route is used
         return {"steps": [], "notes": ""}
+    from saathi.nodes.legal_rag import JUDGE_SYSTEM
+    if system == JUDGE_SYSTEM:  # a clause applies when it comes from the documents expected for this sector
+        from saathi.playbooks import SECTORS
+        kind = re.search(r"^KIND OF COMPLAINT: (\w*)", prompt, re.M)
+        allowed = SECTORS.get(kind.group(1) if kind else "other", SECTORS["other"])["law_docs"]
+        from saathi.rag.ingest import DOCS
+        titles = {DOCS[d]["title"] for d in allowed}
+        heads = re.findall(r"^\[(\d+)\] (.+?), (?:Section|Rule|Regulation|Clause|Para)", prompt, re.M)
+        return {"results": [{"index": int(i), "applies": t in titles, "why": "fake judge"} for i, t in heads]}
     if system == RELEVANCE_SYSTEM:
         n = len(re.findall(r"^\[\d+\]", prompt, re.M))
         return {"results": [{"index": i, "relevant": True, "how_resolved": ""} for i in range(n)]}

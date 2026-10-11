@@ -11,6 +11,8 @@ Nothing here is specific to a scheme, and nothing stands in for the LLM: conditi
 unknown."""
 from __future__ import annotations
 
+import re
+
 from saathi import llm
 from saathi.nodes.common import node
 from saathi.playbooks import SECTORS, merge_missing, tier_of
@@ -22,12 +24,35 @@ GAP_SYSTEM = (
     "the complainant's answers. Use met only for direct supporting evidence, not_met only for direct contradicting "
     "evidence, otherwise unknown. Do not infer facts, eligibility, or dates. Put the supporting words in evidence. "
     "For every unknown condition, write one specific, plain question the complainant can answer (ask for the date or "
-    "value where the condition needs one). Preserve the condition wording exactly in `condition`. Then list up to 3 "
-    "other_questions about facts a strong letter needs that are still missing; never repeat a condition question, a "
-    "listed placeholder or anything already answered."
+    "value where the condition needs one). Preserve the condition wording exactly in `condition` (there may be no "
+    "conditions). Then write other_questions: up to 6 questions PERSONAL to this case - what the officer deciding "
+    "THIS complaint would need to see. Think about the identifiers and proof this kind of transaction or service "
+    "produces (e.g. for a failed UPI payment: the UTR / transaction ID, the UPI app, whether the merchant confirmed "
+    "non-receipt, whether a dispute was raised in the app or with the bank and its reference number), the exact "
+    "timeline, what the other side said or did, what was already tried and its reference number, any loss caused, "
+    "and the outcome the complainant wants. The DRAFT QUESTIONS were written quickly at intake: keep the good ones, "
+    "sharpen vague ones, drop generic ones. Write 4-6 questions whenever the complaint leaves that much open (fewer "
+    "only if it already states nearly everything). Ask in the complainant's language, one fact per question, most "
+    "important first, no two questions about the same fact. The PLACEHOLDERS are already separate fields on the "
+    "same form - never ask for them again in any wording; never repeat a condition question, a fact the complaint "
+    "already states, or anything already answered."
 )
+QUESTIONS_THINKING = "medium"  # the one call that plans questions thinks harder; it runs in parallel with searches
+MAX_QUESTIONS = 6
 TYPE_SECTOR = {"govt_scheme": "govt_scheme", "banking": "bank", "insurance": "insurance", "telecom": "telecom",
                "loan_app": "loan_app"}
+
+
+def asks_for_placeholder(question: str, placeholders: list[str]) -> bool:
+    """True when a question asks for something the form already has a field for: any alternative named in a
+    placeholder ("[UPI TRANSACTION ID / UTR]" -> "UPI TRANSACTION ID", "UTR") appears in the question."""
+    q = question.lower()
+    for ph in placeholders:
+        for alt in re.split(r"\s*/\s*", ph.strip("[] ")):
+            alt = re.sub(r"\s+(number|no\.?)$", "", alt.strip().lower())
+            if len(alt) >= 3 and re.search(rf"\b{re.escape(alt)}\b", q):
+                return True
+    return False
 
 
 def generic_question(condition: str) -> str:
@@ -71,18 +96,24 @@ def eligibility_of(checks: list[dict], mode: str = "all", label: str = "this") -
                                                  "found. The office may still check its own records."}
 
 
-def assess(state: dict, conditions: list[str], answers: dict) -> dict:
-    """{checks, extra_questions, method}. The follow-up questions come from intake's single LLM call; an LLM call
-    here is needed only to assess published conditions (none -> no call)."""
+def assess(state: dict, conditions: list[str], answers: dict, *, write_questions: bool = False) -> dict:
+    """{checks, extra_questions, method}. write_questions=True (gap_check, before the form): one LLM call with medium
+    thinking assesses any conditions AND writes the case's questions, starting from intake's draft questions.
+    Otherwise (reassess, after the form) the call is made only to re-check published conditions."""
     facts = state.get("facts") or {}
     placeholders = [m["placeholder"] for m in state.get("missing_facts") or []]
     asked = [q for q in state.get("extra_questions") or []]
-    if not conditions:
+    if not conditions and not write_questions:
         return {"checks": [], "extra_questions": [q for q in asked if q not in answers], "method": "no conditions"}
-    prompt = (f"CASE CONDITIONS:\n{conditions}\n\nCOMPLAINT:\n{state.get('complaint_en') or state.get('complaint', '')}\n\n"
+    lang = {"hi": "Hindi", "hinglish": "Hinglish (Hindi in Latin script)"}.get(state.get("language"), "English")
+    prompt = (f"CASE CONDITIONS:\n{conditions or 'none'}\n\nKIND OF COMPLAINT: {state.get('sector') or ''} · "
+              f"against {state.get('company') or ''}\nCOMPLAINANT'S LANGUAGE: {lang}\n\n"
+              f"COMPLAINT:\n{state.get('complaint_en') or state.get('complaint', '')}\n\n"
               f"FACTS EXPLICITLY EXTRACTED:\n{facts}\n\nCOMPLAINANT'S ANSWERS:\n{answers or 'none yet'}\n\n"
-              f"PLACEHOLDERS ALREADY ASKED FOR: {placeholders}\nQUESTIONS ALREADY ASKED: {asked}")
-    parsed = llm.validated(GapCheckOut, llm.json_call(GAP_SYSTEM, prompt, schema(GapCheckOut)))
+              f"PLACEHOLDERS ALREADY ASKED FOR: {placeholders}\n"
+              + (f"DRAFT QUESTIONS: {asked}" if write_questions else f"QUESTIONS ALREADY ASKED: {asked}"))
+    parsed = llm.validated(GapCheckOut, llm.json_call(GAP_SYSTEM, prompt, schema(GapCheckOut),
+                                                      thinking=QUESTIONS_THINKING if write_questions else None))
     by_condition = {a.condition: a.model_dump() for a in parsed.assessments}
     unknown = {"status": "unknown", "evidence": ""}  # a condition the model skipped is simply not settled
     checks = [by_condition.get(c) or {"condition": c, **unknown} for c in conditions]
@@ -91,8 +122,13 @@ def assess(state: dict, conditions: list[str], answers: dict) -> dict:
             item["question"] = generic_question(item["condition"])
         if item["status"] != "unknown":
             item["question"] = ""
-    extra = list(dict.fromkeys(q for q in asked + parsed.other_questions if q.strip() and q not in answers))
-    return {"checks": checks, "extra_questions": extra[:4], "method": llm.label()}
+    if write_questions:  # the improved set replaces intake's draft (falls back to it if the model wrote none)
+        pool = [q for q in parsed.other_questions if q.strip()] or asked
+    else:
+        pool = asked + parsed.other_questions
+    extra = list(dict.fromkeys(q.strip() for q in pool if q.strip() and q not in answers
+                               and not asks_for_placeholder(q, placeholders)))
+    return {"checks": checks, "extra_questions": extra[:MAX_QUESTIONS], "method": llm.label()}
 
 
 def framed_sector(state: dict, brief: dict) -> str:
@@ -145,7 +181,7 @@ def frame(state: dict) -> dict:
 def gap_check(state: dict) -> dict:
     """Runs in parallel with the search workers (it doesn't change what they search)."""
     conditions, mode, label = conditions_for(state)
-    res = assess(state, conditions, {})
+    res = assess(state, conditions, {}, write_questions=True)
     checks = res["checks"]
     return {"eligibility_checks": checks, "extra_questions": res["extra_questions"],
             "gap_questions": [c["question"] for c in checks if c["status"] == "unknown"],

@@ -66,7 +66,7 @@ PHASES: list[tuple[str, list[tuple[str, str, bool]]]] = [
                      ("escalation_planner", "Plans the escalation ladder from official sources", False),
                      ("registry", "Checks the RBI lending-app registry", False)]),
     ("Verify", [("verifier", "Keeps only contacts proven on official pages", True)]),
-    ("Law", [("legal_rag", "Retrieves the applicable law clauses", True)]),
+    ("Law", [("legal_rag", "Searches all the law, then checks which clauses apply", True)]),
     ("Your details", [("ask_details", "One form with every missing detail", True),
                       ("reassess", "Re-checks the case with your answers", False)]),
     ("Draft & check", [("drafter", "Writes the letter", True),

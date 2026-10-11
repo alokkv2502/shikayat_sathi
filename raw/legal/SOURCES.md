@@ -14,6 +14,9 @@
 | Consumer_liability.pdf | RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025 (updated as on 1 Oct 2026): customer service, grievance redressal, customer liability in unauthorised electronic banking (indexed as `rbc`) | added 2026-10-09 |
 | Commercial_bank_conduct.pdf | RBI (Commercial Banks - Responsible Business Conduct) Third Amendment Directions, 2026: revised customer-liability rules for unauthorised electronic banking transactions from 1 Jan 2027 (indexed as `rbc26`) | added 2026-10-09 |
 | Consumer Protection (E-Commerce) Rules, 2020.pdf | Scanned copy with no text layer; not indexed (ecommerce_rules_2020.html covers the same rules) | added 2026-10-09 |
+| D3M-M4-1.pdf | DGCA CAR Section 3, Series M, Part IV (Rev. 3, 27 Feb 2019): facilities to passengers on denied boarding, cancellations and delays; cited by paragraph, e.g. Para 3.3 (indexed as `car_dbc`) | added 2026-10-11 |
+| CAR 3M2 Feb26.pdf | DGCA CAR Section 3, Series M, Part II (Rev. 3, 24 Feb 2026, effective 26 Mar 2026): refund of airline tickets. A scan with no text layer: indexed from `CAR 3M2 Feb26.ocr.txt` (one-time OCR; one line in para 3(l) is illegible and marked; OCR letter fixes noted in the file) (indexed as `car_refund`) | added 2026-10-11 |
+| Gazette_Electricity-Rights-of-Consumers-Rules-2020.pdf | Electricity (Rights of Consumers) Rules, 2020 (G.S.R. 818(E), 31 Dec 2020); bilingual gazette, English text indexed. Later amendments are not included (indexed as `elec`) | added 2026-10-11 |
 
 Mirrors were used where the official host was unreachable; replace them with official copies before relying on
 them for anything formal.

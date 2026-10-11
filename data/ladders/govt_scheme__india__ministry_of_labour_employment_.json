@@ -1,0 +1,34 @@
+{
+ "steps": [
+  {
+   "name": "Public Grievance Cell, Directorate General of Employment (DGE), Ministry of Labour and Employment",
+   "level": "company",
+   "channel": "Email: Pgcell.dge@gmail.com | Address: Room No.6, Shram Shakti Bhawan, Rafi Marg, New Delhi-110001",
+   "url": "https://dge.gov.in/public_grievances",
+   "phone": null,
+   "when_to_use": "If the complaint regarding central employment schemes or Ministry services is unresolved.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "https://dge.gov.in/public_grievances"
+  },
+  {
+   "name": "CPGRAMS (Centralized Public Grievance Redress And Monitoring System)",
+   "level": "central_portal",
+   "channel": "Online Portal",
+   "url": "https://pgportal.gov.in/",
+   "phone": null,
+   "when_to_use": "If the grievance remains unresolved by EPFO or the Ministry of Labour & Employment within a reasonable time.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "https://pgportal.gov.in/"
+  }
+ ],
+ "fallback": false,
+ "note": "Ensure that your UAN is active and that your employer has properly credited month-on-month PF contributions, as eligibility for scheme benefit transfers relies on correct EPFO registration details.",
+ "notes": [
+  "dropped “EPFiGMS (EPF Grievance Management System) / EPFO Regional Office”: its source is stated only by a non-official page (jainam.in)"
+ ],
+ "sources": [
+  "https://pgportal.gov.in/"
+ ]
+}

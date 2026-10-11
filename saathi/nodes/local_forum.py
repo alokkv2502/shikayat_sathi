@@ -21,7 +21,10 @@ def local_forum(state: dict) -> dict:
     query, pattern, label = q
     data = serp.search({"engine": "google_maps", "type": "search", "q": query, "gl": "in", "hl": "en"},
                        live=live(state))
-    for r in data.get("local_results") or []:
+    # A list of places, or - when Maps finds one exact match - a single `place_results` object.
+    places = data.get("local_results") or ([data["place_results"]] if isinstance(data.get("place_results"), dict)
+                                           else [])
+    for r in places:
         if re.search(pattern, r.get("title", ""), re.I):
             gps = r.get("gps_coordinates") or {}
             link = (f"https://www.google.com/maps/search/?api=1&query={gps['latitude']},{gps['longitude']}"

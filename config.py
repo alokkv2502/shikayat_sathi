@@ -23,8 +23,8 @@ SERPAPI_MAX_CREDITS: int | None = None if _cap in ("", "0", "none") else int(_ca
 # LLM: Gemini via the google-genai SDK (Interactions API). Without a key, or with LLM_PROVIDER=none, the agents run
 # their rule-based fallbacks.
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "").lower()
-GEMINI_API_KEY = "AQ.Ab8RN6IEdnQoE_gljLZoE9NAEInybgpNbZge0KWx5p_4vnX98Q"
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AQ.Ab8RN6JIb1QpSko1kBRiItPbkfbYWR84Zp-2VRNN0UFW9Q8ihQ")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
 LLM_API = os.getenv("LLM_API", "generate_content").lower()  # or "interactions" (~3x slower per call, measured)
 
 # Qdrant: local server (docker compose up -d). If unreachable, embedded on-disk mode is used (data/qdrant/).

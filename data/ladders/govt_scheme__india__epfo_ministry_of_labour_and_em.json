@@ -1,0 +1,33 @@
+{
+ "steps": [
+  {
+   "name": "The organisation's own grievance cell",
+   "level": "company",
+   "channel": "email / grievance page",
+   "url": null,
+   "phone": null,
+   "timeline": null,
+   "source": "verified contact search (see contacts)",
+   "when_to_use": "First. Complain in writing and keep the complaint / docket number."
+  },
+  {
+   "name": "CPGRAMS",
+   "level": "central_portal",
+   "channel": "Website https://pgportal.gov.in",
+   "url": "https://pgportal.gov.in",
+   "phone": null,
+   "when_to_use": "If the grievance remains unresolved by EPFO, lodge a public grievance on the central government portal.",
+   "timeline": null,
+   "typical_wait": "",
+   "source": "https://www.ncw.gov.in/ncw-cells/cpgrams-cell/"
+  }
+ ],
+ "fallback": false,
+ "note": "First lodge your complaint directly with EPFO through the EPFiGMS portal or by visiting/contacting the EPFO office. If it is not resolved, escalate the issue via CPGRAMS.",
+ "notes": [
+  "dropped “EPF i Grievance Management System (EPFiGMS) / EPFO”: its source is stated only by a non-official page (stablemoney.in)"
+ ],
+ "sources": [
+  "https://www.ncw.gov.in/ncw-cells/cpgrams-cell/"
+ ]
+}

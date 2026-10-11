@@ -1,0 +1,37 @@
+{
+ "steps": [
+  {
+   "name": "EPF i Grievance Management System (EPFiGMS)",
+   "level": "company",
+   "channel": "Online portal EPFiGMS or registration number at 1800 118 005",
+   "url": null,
+   "phone": null,
+   "when_to_use": "When you have complaints, queries or concerns related to your EPF accounts, such as issues concerning contributions towards EPF.",
+   "timeline": "check the timeline in https://www.india.gov.in/services/details/epf-i-grievance-management-system",
+   "typical_wait": "check the timeline in https://www.india.gov.in/services/details/epf-i-grievance-management-system",
+   "source": "https://www.india.gov.in/services/details/epf-i-grievance-management-system"
+  },
+  {
+   "name": "Centralized Public Grievances Redress And Monitoring System (CPGRAMS)",
+   "level": "central_portal",
+   "channel": "https://pgportal.gov.in/",
+   "url": "https://pgportal.gov.in/Home/ProcessFlow",
+   "phone": null,
+   "when_to_use": "To lodge public grievances to public authorities in Central Ministries/Departments.",
+   "timeline": "check the timeline in https://pgportal.gov.in/Home/ProcessFlow",
+   "typical_wait": "check the timeline in https://pgportal.gov.in/Home/ProcessFlow",
+   "source": "https://pgportal.gov.in/Home/ProcessFlow"
+  }
+ ],
+ "fallback": false,
+ "note": "Ensure you keep your acknowledgement number handy for tracking the status of your grievance.",
+ "notes": [
+  "re-sourced “EPF i Grievance Management System (EPFiGMS)” to the official page india.gov.in that names it",
+  "replaced timeline “A month” of “EPF i Grievance Management System (EPFiGMS)”: its source does not state it",
+  "dropped “EPFO office”: its source is stated only by a non-official page (stablemoney.in)",
+  "replaced timeline “45 days” of “Centralized Public Grievances Redress And Monitoring System (CPGRAMS)”: its source does not state it"
+ ],
+ "sources": [
+  "https://pgportal.gov.in/Home/ProcessFlow"
+ ]
+}

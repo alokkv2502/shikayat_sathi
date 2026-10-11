@@ -31,7 +31,7 @@ from saathi import timing
 LLM_CACHE = CACHE_DIR / "llm"
 LLM_CACHE.mkdir(parents=True, exist_ok=True)
 ATTEMPTS = 2  # 1 retry
-THINKING_LEVEL = "low"  # every Gemini call, every agent - one setting, no per-call overrides
+THINKING_LEVEL = "low"  # the default for every call; a call may ask for more (gap_check's questions: "medium")
 # JSON-Schema keywords pydantic emits that Gemini's response schema doesn't need / may reject.
 _DROP = {"$defs", "$schema", "title", "default", "additionalProperties", "examples"}
 
@@ -91,7 +91,7 @@ def api() -> str:
     return "generate_content"
 
 
-def _create(system: str, prompt: str, schema: dict | None):
+def _create(system: str, prompt: str, schema: dict | None, thinking: str = THINKING_LEVEL):
     if api() == "interactions":
         fmt = {"type": "text", "mime_type": "application/json"}
         if schema is not None:
@@ -101,24 +101,24 @@ def _create(system: str, prompt: str, schema: dict | None):
             input=prompt,
             system_instruction=system,
             response_format=fmt,
-            generation_config={"temperature": 0.1, "thinking_level": THINKING_LEVEL},
+            generation_config={"temperature": 0.1, "thinking_level": thinking},
         )
     config = {"system_instruction": system, "response_mime_type": "application/json", "temperature": 0.1,
-              "thinking_config": {"thinking_level": THINKING_LEVEL}}
+              "thinking_config": {"thinking_level": thinking}}
     if schema is not None:
         config["response_json_schema"] = schema
     resp = client().models.generate_content(model=GEMINI_MODEL, contents=prompt, config=config)
     return types.SimpleNamespace(status="completed", output_text=resp.text)
 
 
-def call_gemini(system: str, prompt: str, schema: dict) -> dict:
+def call_gemini(system: str, prompt: str, schema: dict, thinking: str = THINKING_LEVEL) -> dict:
     """One structured call with a retry. If Gemini rejects the schema itself, retry in plain JSON mode with the
     schema spelled out in the instruction."""
     g_schema = gemini_schema(schema)
     last: Exception | None = None
     for attempt in range(1, ATTEMPTS + 1):
         try:
-            interaction = _create(system, prompt, g_schema)
+            interaction = _create(system, prompt, g_schema, thinking)
             if getattr(interaction, "status", "completed") not in ("completed", None):
                 raise RuntimeError(f"interaction status {interaction.status}")
             out = _parse(interaction.output_text)
@@ -138,11 +138,13 @@ def call_gemini(system: str, prompt: str, schema: dict) -> dict:
     raise last or RuntimeError("Gemini call failed")
 
 
-def json_call(system: str, prompt: str, schema: dict) -> dict:
-    """A dict matching `schema`. Raises AIUnavailable when Gemini isn't configured or the call fails."""
+def json_call(system: str, prompt: str, schema: dict, thinking: str | None = None) -> dict:
+    """A dict matching `schema`. Raises AIUnavailable when Gemini isn't configured or the call fails. `thinking`
+    (low | medium | high) overrides THINKING_LEVEL for this call only."""
+    thinking = thinking or THINKING_LEVEL
     if not enabled():
         raise AIUnavailable("the AI service is not configured (set GEMINI_API_KEY)")
-    key = hashlib.sha1(json.dumps([GEMINI_MODEL, THINKING_LEVEL, system, prompt, schema], sort_keys=True).encode()).hexdigest()
+    key = hashlib.sha1(json.dumps([GEMINI_MODEL, thinking, system, prompt, schema], sort_keys=True).encode()).hexdigest()
     path = LLM_CACHE / f"{key}.json"
     if path.exists():
         try:
@@ -151,8 +153,8 @@ def json_call(system: str, prompt: str, schema: dict) -> dict:
         except (json.JSONDecodeError, UnicodeDecodeError):
             pass
     try:
-        with timing.span("llm", f"{system[:60]} · {len(prompt)} chars in"):
-            out = call_gemini(system, prompt, schema)
+        with timing.span("llm", f"{system[:60]} · {len(prompt)} chars in" + (f" · thinking {thinking}" if thinking != THINKING_LEVEL else "")):
+            out = call_gemini(system, prompt, schema, thinking)
     except Exception as e:
         print(f"  [llm] {GEMINI_MODEL} failed after {ATTEMPTS} attempts: {type(e).__name__}: {str(e)[:200]}",
               file=sys.stderr)

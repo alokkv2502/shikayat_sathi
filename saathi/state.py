@@ -66,6 +66,7 @@ class ComplaintState(TypedDict, total=False):
     grievance_attempts: int
     # legal_rag / drafter / critic
     clauses: list[dict]
+    clauses_rejected: list[dict]                     # retrieved but judged not to apply: {citation, why}
     draft: str
     subject: str
     summary: str                                     # plain-language summary in the user's language
@@ -221,7 +222,7 @@ class ConditionAssessment(BaseModel):
 class GapCheckOut(BaseModel):
     assessments: list[ConditionAssessment] = Field(default_factory=list)
     other_questions: list[str] = Field(default_factory=list,
-                                       description="Up to 3 questions about facts the letter needs that the complaint "
+                                       description="Up to 6 questions personal to this case about facts the letter needs that the complaint "
                                                    "doesn't state (dates, reference numbers, what was already tried, "
                                                    "replies received). Not about the listed conditions or placeholders.")
 
@@ -253,6 +254,16 @@ class PrecedentJudgement(BaseModel):
 
 class PrecedentsOut(BaseModel):
     results: list[PrecedentJudgement]
+
+
+class ClauseVerdict(BaseModel):
+    index: int
+    applies: bool
+    why: str = Field("", description="One short phrase: why it applies to this case, or why not")
+
+
+class ClausesOut(BaseModel):
+    results: list[ClauseVerdict]
 
 
 class DraftOut(BaseModel):

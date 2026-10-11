@@ -662,8 +662,9 @@ def test_translation_happens_once_at_intake(mocked, monkeypatch):
     assert s["complaint_en"].startswith("Kartify did not refund")
     assert s["__interrupt__"]["questions"][0]["question"] == "क्या आपने कंपनी से पहले शिकायत की थी?"
     assert sum(c.startswith("You triage") for c in calls) == 1                   # the one translation
-    assert not any(c.startswith("Translate") or c.startswith("Compare every") for c in calls)  # no re-translation,
-    assert queries and all("Refund refused for a damaged phone" in q or not re.search("[ऀ-ॿ]", q)  # no gap LLM
+    assert not any(c.startswith("Translate") for c in calls)                        # no re-translation
+    assert sum(c.startswith("Compare every") for c in calls) == 1                  # one question-writing call
+    assert queries and all("Refund refused for a damaged phone" in q or not re.search("[ऀ-ॿ]", q)
                            for q in queries)
 
 
@@ -929,3 +930,62 @@ def test_live_events_never_break_a_run(monkeypatch):
     monkeypatch.setattr(events, "RUNS_DIR", events.RUNS_DIR / "missing" / "dir")  # writes fail
     events.emit("abc123", "run_start")  # must not raise
     assert events.read("abc123") == []
+
+
+def test_local_forum_reads_a_single_exact_maps_match(monkeypatch):
+    """Google Maps returns one exact match as `place_results`, not `local_results`."""
+    from saathi.nodes.local_forum import local_forum
+    monkeypatch.setattr(serp, "search", lambda params, live=True, **_: {"place_results": {
+        "title": "Cyber Crime Police Station", "address": "Sector 36, Noida", "phone": "078398 76650",
+        "gps_coordinates": {"latitude": 28.5, "longitude": 77.3}}})
+    out = local_forum({"sector": "police", "city": "Noida", "issue_types": ["cyber_fraud"], "live": True})
+    assert out["local_forum"]["name"] == "Cyber Crime Police Station" and out["local_forum"]["maps_link"]
+
+
+def test_precedents_search_the_scheme_not_the_ministry_or_employer():
+    from saathi.nodes.precedents import mentions, search_subject
+    st = {"sector": "govt_scheme", "company": "IndiaMART INTERMESH Ltd.",
+          "case_brief": {"subject": "PM Viksit Bharat Rozgar Yojana", "aliases": ["PM-VBRY"]}}
+    subject, names, scheme = search_subject(st)
+    assert subject == "PM Viksit Bharat Rozgar Yojana" and scheme
+    assert mentions("Viksit Bharat Rozgar Yojana: first instalment credited after EPFO grievance", names, scheme)
+    assert mentions("PM-VBRY incentive delayed for new joiners", names, scheme)
+    assert not mentions("Centre announces PM scheme for farmers", names, scheme)  # generic words only
+    assert search_subject({"sector": "ecommerce", "company": "Flipkart"})[:2] == ("Flipkart", ["Flipkart"])
+    assert mentions("Flipkart told to refund damaged phone", ["Flipkart"], False)
+    assert search_subject({"sector": "police", "company": ""})[1] == []           # nothing to search: skipped
+    assert search_subject({"sector": "govt_scheme", "company": "Centre"})[1] == []  # no scheme, no real name
+
+
+def test_clause_judge_can_only_keep_retrieved_clauses(monkeypatch):
+    from saathi.nodes import legal_rag as L
+    cands = [{"citation": "Act A, Section 1", "ref": "Section 1", "text": "a", "score": 0.7},
+             {"citation": "Act B, Section 2", "ref": "Section 2", "text": "b", "score": 0.6}]
+    # the judge says index 1 applies, and invents an index 7 that was never retrieved
+    monkeypatch.setattr(llm, "json_call", lambda *a, **k: {"results": [
+        {"index": 0, "applies": False, "why": "different kind of transaction"},
+        {"index": 1, "applies": True, "why": "governs this"}, {"index": 7, "applies": True, "why": "made up"}]})
+    kept, rejected = L.judge_clauses({"complaint": "x", "sector": "bank"}, cands)
+    assert [c["citation"] for c in kept] == ["Act B, Section 2"] and kept[0]["tag"] == "C1"
+    assert rejected == [{"citation": "Act A, Section 1", "why": "different kind of transaction"}]
+
+
+def test_no_applicable_law_means_no_citations(monkeypatch):
+    from saathi.nodes import legal_rag as L
+    monkeypatch.setattr(L, "retrieve", lambda q, docs=(), k=3: ({"citation": "DGCA CAR, Para 3.3", "ref": "Para 3.3",
+                                                                  "text": "airline cancellation", "score": 0.7},))
+    monkeypatch.setattr(llm, "json_call", lambda *a, **k: {"results": [
+        {"index": 0, "applies": False, "why": "airline rules do not apply to a bus operator"}]})
+    out = L.legal_rag({"complaint": "bus cancelled, no refund", "sector": "other", "facts": {}})
+    assert out["clauses"] == [] and "no citations will be made" in out["trace"][0]
+    assert out["clauses_rejected"][0]["why"].startswith("airline rules")
+
+
+def test_questions_never_re_ask_a_form_field():
+    from saathi.nodes.gap_check import asks_for_placeholder
+    phs = ["[UPI TRANSACTION ID / UTR]", "[PNR NUMBER]"]
+    assert asks_for_placeholder("Do you have the UTR number for this payment?", phs)
+    assert asks_for_placeholder("What is the PNR for your flight?", phs)
+    assert asks_for_placeholder("Kya aapke paas UPI transaction ID hai?", phs)
+    assert not asks_for_placeholder("Which UPI app did you use to make this payment?", phs)
+    assert not asks_for_placeholder("Did the merchant confirm that they did not receive the payment?", phs)

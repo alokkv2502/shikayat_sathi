@@ -13,6 +13,9 @@ Corpus (raw/legal/):
   ins23  Insurance Ombudsman (Amendment) Rules, 2023                     (Rule)
   rbc    RBI (Commercial Banks - Responsible Business Conduct) Directions, 2025   (Para)
   rbc26  RBI (Commercial Banks - Responsible Business Conduct) Third Amendment Directions, 2026   (Para)
+  car_dbc    DGCA CAR 3-M-IV: denied boarding, cancellations, delays            (Para 3.3 - outline numbering)
+  car_refund DGCA CAR 3-M-II: refund of airline tickets, Rev. 3, 2026      (Para 3(a) - from its OCR text)
+  elec   Electricity (Rights of Consumers) Rules, 2020                   (Rule)
 
 Only English text is indexed: the gazette PDFs are bilingual, so each document starts at its English notification
 and any line containing Devanagari is dropped. (Hindi complaints are translated once, at intake - see store.py.)
@@ -89,7 +92,30 @@ DOCS: dict[str, dict] = {
     "rbc26": {"title": "RBI (Commercial Banks - Responsible Business Conduct) Third Amendment Directions, 2026",
               "file": "Commercial_bank_conduct.pdf", "unit": "Para", "subrefs": False,
               "source_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx"},
+    # DGCA Civil Aviation Requirements are numbered as an outline (3.2, 3.2.1 ...): chunk_outline cites "Para 3.2".
+    "car_dbc": {"title": "DGCA CAR Section 3, Series M, Part IV (Facilities to passengers on denied boarding, "
+                         "cancellation and delays)",
+                "file": "D3M-M4-1.pdf", "unit": "Para", "outline": True, "start": "1. INTRODUCTION",
+                "end": "(B.S. Bhullar)", "fix": lambda t: _drop_car_headers(t),
+                "source_url": "https://www.dgca.gov.in"},
+    # A scan with no text layer: indexed from its one-time OCR (CAR 3M2 Feb26.ocr.txt; one line in para 3(l) is
+    # illegible and marked so). Lettered requirements are cited "Para 3(a)".
+    "car_refund": {"title": "DGCA CAR Section 3, Series M, Part II (Refund of airline tickets), Rev. 3, 2026",
+                   "file": "CAR 3M2 Feb26.ocr.txt", "unit": "Para", "outline": True, "letters": True,
+                   "start": "1. Introduction", "end": "(Faiz", "fix": lambda t: _drop_car_headers(t),
+                   "source_url": "https://www.dgca.gov.in"},
+    "elec": {"title": "Electricity (Rights of Consumers) Rules, 2020",
+             "file": "Gazette_Electricity-Rights-of-Consumers-Rules-2020.pdf", "unit": "Rule",
+             "start": "G.S.R. 818(E)", "end": "[F. No. 23/05/2020", "fix": lambda t: t.replace("Provisio ns", "Provisions"),
+             "source_url": "https://powermin.gov.in"},
 }
+
+
+def _drop_car_headers(text: str) -> str:
+    """CAR page headers and footers repeat on every page (also OCR'd without spaces)."""
+    junk = re.compile(r"(?i)^(rev\.?\s*\d|civil\s*aviation\s*requirements|series\s*.m.\s*part|section\s*3\s*[-–]\s*air"
+                      r"|\d{1,2}\s*(st|nd|rd|th)?\s*feb|issue\s*i,|dated\s*\d)")
+    return "\n".join(ln for ln in text.splitlines() if not junk.match(ln.replace(" ", "")) and not junk.match(ln))
 
 _DEVANAGARI = re.compile(r"[\u0900-\u097F]")
 
@@ -125,6 +151,8 @@ def doc_text(doc_id: str) -> str:
         from pypdf import PdfReader
 
         text = "\n".join(p.extract_text() or "" for p in PdfReader(path).pages)
+    elif path.suffix == ".txt":  # an OCR'd scan, extracted once
+        text = path.read_text(encoding="utf-8")
     else:
         from bs4 import BeautifulSoup
 
@@ -172,9 +200,58 @@ def _split_long(text: str, max_chars: int) -> list[str]:
     return out + [text] if text else out
 
 
+def chunk_outline(doc_id: str, max_chars: int = 1800) -> list[dict]:
+    """Documents numbered as an outline - "3.", "3.2", and (with letters=True) "a)" items under a paragraph - as in
+    DGCA's Civil Aviation Requirements. Cited as "Para 3.2" / "Para 3(a)". Numbering must move forward, so a wrapped
+    line that happens to start with "1.5" inside para 3.4 is not taken as a heading."""
+    d = DOCS[doc_id]
+    unit, sections, cur, last, tops = d["unit"], [], None, (0, 0, ""), {}
+    for ln in doc_text(doc_id).splitlines():
+        m2 = re.match(r"^(\d{1,2})\.(\d{1,2})\.?\s+(.*)$", ln)
+        m1 = None if m2 else re.match(r"^(\d{1,2})\.\s+(.*)$", ln)
+        # lettered items are paragraphs of their own only under a bare heading ("3. Requirements"), not a list
+        # inside a sentence ("1.1 ... the following categories: (a) ... (b) ...")
+        ml = re.match(r"^\(?([a-z])\)\s*(.*)$", ln) if d.get("letters") and cur and (
+            last[2] or len(" ".join(cur["lines"])) < 40) else None
+        key = rest = None
+        if m2:
+            key, rest = (int(m2[1]), int(m2[2]), ""), m2[3]
+        elif m1:
+            key, rest = (int(m1[1]), 0, ""), m1[2]
+        elif ml:
+            want = "a" if not last[2] else chr(ord(last[2]) + 1)
+            if ml[1] == want:
+                key, rest = (last[0], last[1], ml[1]), ml[2]
+        ok = key and key > last and (key[0] == last[0] or (key[0] == last[0] + 1 and key[1] <= 1)) \
+            and (key[0] != last[0] or key[2] or key[1] <= last[1] + 2)
+        if ok:
+            if key[1] == 0 and not key[2]:
+                tops[key[0]] = rest.strip(" .")[:90].title() if rest.isupper() else _title(rest)
+            ref = f"{key[0]}" + (f".{key[1]}" if key[1] else "") + (f"({key[2]})" if key[2] else "")
+            short = len(rest) < 60 and not rest.rstrip().endswith((".", ",", ";"))
+            cur = {"ref": f"{unit} {ref}", "title": rest.strip(" .") if short and not key[2] and rest else
+                   tops.get(key[0], ""), "lines": [ln]}
+            sections.append(cur)
+            last = key
+        elif cur:
+            cur["lines"].append(ln)
+    chunks = []
+    for s in sections:
+        body = re.sub(r"\s+", " ", " ".join(s["lines"])).strip()
+        if len(body) < 40:  # a bare heading ("3. REQUIREMENTS"): its title is carried by its paragraphs
+            continue
+        for i, piece in enumerate(_split_long(body, max_chars)):
+            ref = s["ref"] + (" (contd.)" if i else "")
+            chunks.append({"doc_id": doc_id, "doc_title": d["title"], "ref": ref, "title": s["title"],
+                           "citation": f"{d['title']}, {ref}", "text": piece, "source_url": d["source_url"]})
+    return chunks
+
+
 def chunk_doc(doc_id: str, max_chars: int = 1800) -> list[dict]:
     """Split a document by its numbered sections (monotonic numbering), then by sub-sections if long."""
     d = DOCS[doc_id]
+    if d.get("outline"):
+        return chunk_outline(doc_id, max_chars)
     parts = d.get("parts", [d["unit"]])
     sections: list[dict] = []
     part, last = 0, 0
@@ -271,7 +348,7 @@ def build_index() -> dict:
     from qdrant_client.models import Distance, PayloadSchemaType, PointStruct, VectorParams
 
     chunks = [c for doc_id in DOCS if (LEGAL_DIR / DOCS[doc_id]["file"]).exists() for c in chunk_doc(doc_id)]
-    vecs = [list(map(float, v)) for v in embedder().passage_embed([f"{c['citation']}: {c['text']}" for c in chunks])]
+    vecs = [list(map(float, v)) for v in embedder().passage_embed([f"{c['citation']}: {c['text']}" for c in chunks], batch_size=32)]
     c = client()
     if c.collection_exists(QDRANT_COLLECTION):
         c.delete_collection(QDRANT_COLLECTION)
@@ -280,9 +357,10 @@ def build_index() -> dict:
         c.create_payload_index(QDRANT_COLLECTION, "doc_id", PayloadSchemaType.KEYWORD)
     except Exception:
         pass  # embedded mode ignores payload indexes
-    c.upsert(QDRANT_COLLECTION, points=[
-        PointStruct(id=str(uuid.uuid5(uuid.NAMESPACE_URL, f"{ch['citation']}|{i}")), vector=v, payload=ch)
-        for i, (ch, v) in enumerate(zip(chunks, vecs))])
+    points = [PointStruct(id=str(uuid.uuid5(uuid.NAMESPACE_URL, f"{ch['citation']}|{i}")), vector=v, payload=ch)
+              for i, (ch, v) in enumerate(zip(chunks, vecs))]
+    for start in range(0, len(points), 128):  # small requests: the client's 3 s timeout is sized for searches
+        c.upsert(QDRANT_COLLECTION, points=points[start:start + 128])
     retrieve.cache_clear()
     per_doc = {d: sum(ch["doc_id"] == d for ch in chunks) for d in DOCS}
     return {"chunks": len(chunks), "per_doc": per_doc, "collection": QDRANT_COLLECTION, "qdrant": client.mode}
