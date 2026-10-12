@@ -120,47 +120,6 @@ A search snippet is never used as a contact or a source by itself. Contacts come
 verified (official domain, or two independent sources). Ladder steps and scheme conditions must cite an official
 page that was fetched. Third-party "customer care number" sites are recognised and never verified.
 
-
-## Architecture
-
-```mermaid
-flowchart LR
-  U([You]) --> APP[Streamlit app<br/>app.py]
-  U -.-> CLI[CLI<br/>cli.py]
-  APP -- "background thread" --> LG
-  CLI --> LG
-  subgraph LG[LangGraph StateGraph · saathi/graph.py]
-    direction TB
-    N[understand → research in parallel →<br/>verify → law → one form → draft ⇄ critic → review]
-  end
-  LG <--> CK[(SQLite checkpoints<br/>data/checkpoints.db)]
-  LG --> GEM[Gemini<br/>google-genai, JSON schema]
-  LG --> SERP[SerpApi<br/>Google · Forums · News · Maps]
-  LG --> WEB[Official pages<br/>fetch + parse]
-  LG --> QD[(Qdrant<br/>15 legal documents<br/>934 chunks)]
-  LG -- events --> EV[(data/runs/&lt;thread&gt;.jsonl)]
-  EV --> LV[Live view tab<br/>?view=live]
-  LG --> CS[(data/cases<br/>finished complaints)]
-  SERP & WEB & GEM -.-> CA[(disk caches<br/>data/cache)]
-```
-
-**The rule everywhere: the LLM decides, code checks.** Gemini understands the complaint, routes it, researches
-it, judges which law applies, writes the questions and the letter. Code checks each of those before it reaches you:
-contacts must be proven on official pages, ladder steps need an official source, citations must be retrieved
-clauses, amounts and dates must match what you said, deadlines are computed, and the letter is in one language.
-If Gemini is unavailable, the run stops and says so — there is no rule-based stand-in.
-
-| Layer | What | Where |
-|---|---|---|
-| UI | Streamlit: one complaint form, one details form, one review; a Live view tab; past complaints with a replay | `app.py` |
-| Orchestration | LangGraph `StateGraph`: `Send` fan-out, reducers for fan-in, `interrupt()` for the two pauses, `SqliteSaver` | `saathi/graph.py`, `saathi/state.py` |
-| Agents | One node per step, each wrapped so a failing search records an error and the graph carries on | `saathi/nodes/` |
-| LLM | Gemini `generate_content`, schema-constrained JSON validated by pydantic; thinking "low", "medium" for question writing; cached per prompt | `saathi/llm.py` |
-| Search | SerpApi with a disk cache and a per-complaint credit cap; page fetching with e-mail de-obfuscation | `saathi/tools/` |
-| Law | English-only chunks of 15 documents in Qdrant (fastembed `bge-small-en-v1.5`), retrieved across the whole corpus | `saathi/rag/` |
-| Verified data | Seed playbooks (routes and statutory deadlines), deadline arithmetic, letter layout in English / Hindi | `saathi/playbooks.py`, `deadlines.py`, `letter.py` |
-| Observability | Per-node / per-call timing in the terminal; the Live view's event log | `saathi/timing.py`, `saathi/events.py` |
-
 ## What happens to a complaint
 
 ```mermaid
@@ -286,6 +245,46 @@ flowchart TD
 
 If the AI is unavailable at any step, the run stops and the app / CLI say so plainly — there is no rule-based
 stand-in that would quietly write a worse letter.
+## Architecture
+
+```mermaid
+flowchart LR
+  U([You]) --> APP[Streamlit app<br/>app.py]
+  U -.-> CLI[CLI<br/>cli.py]
+  APP -- "background thread" --> LG
+  CLI --> LG
+  subgraph LG[LangGraph StateGraph · saathi/graph.py]
+    direction TB
+    N[understand → research in parallel →<br/>verify → law → one form → draft ⇄ critic → review]
+  end
+  LG <--> CK[(SQLite checkpoints<br/>data/checkpoints.db)]
+  LG --> GEM[Gemini<br/>google-genai, JSON schema]
+  LG --> SERP[SerpApi<br/>Google · Forums · News · Maps]
+  LG --> WEB[Official pages<br/>fetch + parse]
+  LG --> QD[(Qdrant<br/>15 legal documents<br/>934 chunks)]
+  LG -- events --> EV[(data/runs/&lt;thread&gt;.jsonl)]
+  EV --> LV[Live view tab<br/>?view=live]
+  LG --> CS[(data/cases<br/>finished complaints)]
+  SERP & WEB & GEM -.-> CA[(disk caches<br/>data/cache)]
+```
+
+**The rule everywhere: the LLM decides, code checks.** Gemini understands the complaint, routes it, researches
+it, judges which law applies, writes the questions and the letter. Code checks each of those before it reaches you:
+contacts must be proven on official pages, ladder steps need an official source, citations must be retrieved
+clauses, amounts and dates must match what you said, deadlines are computed, and the letter is in one language.
+If Gemini is unavailable, the run stops and says so — there is no rule-based stand-in.
+
+| Layer | What | Where |
+|---|---|---|
+| UI | Streamlit: one complaint form, one details form, one review; a Live view tab; past complaints with a replay | `app.py` |
+| Orchestration | LangGraph `StateGraph`: `Send` fan-out, reducers for fan-in, `interrupt()` for the two pauses, `SqliteSaver` | `saathi/graph.py`, `saathi/state.py` |
+| Agents | One node per step, each wrapped so a failing search records an error and the graph carries on | `saathi/nodes/` |
+| LLM | Gemini `generate_content`, schema-constrained JSON validated by pydantic; thinking "low", "medium" for question writing; cached per prompt | `saathi/llm.py` |
+| Search | SerpApi with a disk cache and a per-complaint credit cap; page fetching with e-mail de-obfuscation | `saathi/tools/` |
+| Law | English-only chunks of 15 documents in Qdrant (fastembed `bge-small-en-v1.5`), retrieved across the whole corpus | `saathi/rag/` |
+| Verified data | Seed playbooks (routes and statutory deadlines), deadline arithmetic, letter layout in English / Hindi | `saathi/playbooks.py`, `deadlines.py`, `letter.py` |
+| Observability | Per-node / per-call timing in the terminal; the Live view's event log | `saathi/timing.py`, `saathi/events.py` |
+
 
 ### Three tiers
 
@@ -487,24 +486,15 @@ data/              cache/ · cases/ · runs/ (Live view logs) · ladders/ · che
   this happened for Delhi Jal Board before official-page re-sourcing was added.
 - Some public bodies have no findable official domain: for "JVVNL" Google returns only bill-payment sites, and its
   pages sit under `energy.rajasthan.gov.in`. Its contacts are then verified by independent sources instead.
-- Code cannot yet tell which state an official page belongs to: a Bihar complaint once cited a West Bengal page as a
-  source. A law **named** in the letter text (rather than cited as a `[C#]` clause or "Section N") is not yet checked
   against the retrieved law.
 - The seed ladders are traceable only to the playbook, not to a clause or URL per step.
 - "Two independent sources" could be gamed by coordinated spam — phone numbers seen only on third-party sites always
   carry a warning.
 - The law judge is an LLM: borderline clauses can differ between runs (identical inputs are served from the cache).
   Code guarantees it can only cite retrieved clauses, not that it picked every useful one.
-- The judge can keep a different set of borderline clauses on different runs: one run of the unauthorised-UPI
-  case kept the zero-liability paragraph (Para 67), another kept burden of proof, shadow reversal and resolution
-  time (Paras 75, 72, 73) instead.
 - The safety keyword backstop is deliberately broad and pattern-based: it is tested on English, Hinglish and Hindi
   phrasings, but unusual wording can be missed (the LLM's assessment then has to catch it, after intake) or, more
   rarely, over-flagged. The emergency numbers should be re-checked on the official portals before a release.
-- Airline and electricity complaints have no seed ladder: the planner finds AirSewa / the CGRF from search.
-- `CAR 3M2 Feb26.pdf` is indexed from OCR: one line of para 3(l) is illegible and marked as such. The Electricity
-  (Rights of Consumers) Rules are the 2020 text without later amendments. The 2019 RBI circular on turn-around time
-  for failed transactions is not in the corpus, so those complaints cite only the Ombudsman Scheme.
 - The agents need the AI: without a Gemini key, or if Gemini fails after its retry, nothing is drafted.
 
 ## AI tools used
