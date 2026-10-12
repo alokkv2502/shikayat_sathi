@@ -70,9 +70,6 @@ then case research, precedents, the grievance search and domain resolution.
 
 ### How it is kept cheap, fast and safe
 
-- **Cache first.** Every response is stored in `data/cache/serp/<sha1 of the parameters>.json`. The same search
-  costs nothing the second time: re-running a complaint, the evaluation or a demo is free and instant.
-  Fetched pages are cached too (`data/cache/web/`).
 - **A credit cap per complaint.** `SERPAPI_MAX_CREDITS` (default 12) live calls per complaint. Past it, the
   remaining searches are skipped and the step says so in its log; the run goes on with what it has.
 - **Failed requests aren't counted.** SerpApi doesn't bill a failed request, so it doesn't use up the complaint's
