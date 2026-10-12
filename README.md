@@ -343,6 +343,27 @@ Verified ladders are cached in `data/ladders/` by sector + state (+ company).
 - **Citations read like a letter**: rules are named in words ("paragraph 72 of the RBI … Directions, 2025"); the
   internal [C#] tags used for checking are removed at finalize, and a repeated salutation or addressee is stripped.
 
+## Legal corpus
+
+Indexed in Qdrant (934 English chunks from 15 documents; Hindi halves of bilingual gazettes are dropped — a Hindi complaint is
+translated once at intake). Add a PDF to `raw/legal/`, add an entry to `DOCS` in `rag/ingest.py`, then run
+`python cli.py index`. Decimal-numbered texts (DGCA CARs) use `outline: True` and are cited "Para 3.3" / "Para
+3(a)". A scan with no text layer is OCR'd once to a `.ocr.txt` next to it (proofread it) and indexed from that.
+
+| Key | Document |
+|---|---|
+| `cpa` | Consumer Protection Act, 2019 |
+| `ecom`, `ecom26` | Consumer Protection (E-Commerce) Rules, 2020; (Amendment) Rules, 2026 |
+| `ccr`, `gen` | Consumer Protection (Consumer Disputes Redressal Commissions) Rules, 2020; (General) Rules, 2020 |
+| `ios` | Reserve Bank – Integrated Ombudsman Scheme, 2026 |
+| `rbc`, `rbc26` | RBI (Commercial Banks – Responsible Business Conduct) Directions, 2025; Third Amendment Directions, 2026 (customer liability for unauthorised e-banking transactions from 1 Jan 2027) |
+| `dl` | RBI (Digital Lending) Directions, 2025 |
+| `trai` | Telecom Consumers Complaint Redressal Regulations, 2012 |
+| `ins`, `ins23` | Insurance Ombudsman Rules, 2017; (Amendment) Rules, 2023 |
+| `car_dbc` | DGCA CAR Section 3, Series M, Part IV — denied boarding, cancellations and delays |
+| `car_refund` | DGCA CAR Section 3, Series M, Part II — refund of airline tickets (Rev. 3, 2026; from OCR) |
+| `elec` | Electricity (Rights of Consumers) Rules, 2020 |
+
 ### Letters: one language, professional layout
 
 The whole letter is in **English or Hindi** — chosen in the form (default: Hindi for Hindi complaints). The drafter
@@ -373,6 +394,7 @@ How it works: the run executes on a background thread. The node wrapper (`nodes/
 external call, including pool threads) and `graph.run` append events to `data/runs/<thread_id>.jsonl`
 (`saathi/events.py`). The Live view only reads that file once a second. A failed write is ignored, so a complaint is
 never affected. The log contains the complaint text and stays local, like `data/cases/`.
+
 
 ## Guardrails: what is code, and why
 
@@ -423,43 +445,6 @@ tests/             test_pipeline.py · fake_llm.py (deterministic LLM stand-in, 
 raw/legal/         the legal corpus (SOURCES.md); CAR 3M2 Feb26.ocr.txt is the OCR of a scanned PDF
 data/              cache/ · cases/ · runs/ (Live view logs) · ladders/ · checkpoints.db · qdrant/ (embedded)
 ```
-
-## Legal corpus
-
-Indexed in Qdrant (934 English chunks from 15 documents; Hindi halves of bilingual gazettes are dropped — a Hindi complaint is
-translated once at intake). Add a PDF to `raw/legal/`, add an entry to `DOCS` in `rag/ingest.py`, then run
-`python cli.py index`. Decimal-numbered texts (DGCA CARs) use `outline: True` and are cited "Para 3.3" / "Para
-3(a)". A scan with no text layer is OCR'd once to a `.ocr.txt` next to it (proofread it) and indexed from that.
-
-| Key | Document |
-|---|---|
-| `cpa` | Consumer Protection Act, 2019 |
-| `ecom`, `ecom26` | Consumer Protection (E-Commerce) Rules, 2020; (Amendment) Rules, 2026 |
-| `ccr`, `gen` | Consumer Protection (Consumer Disputes Redressal Commissions) Rules, 2020; (General) Rules, 2020 |
-| `ios` | Reserve Bank – Integrated Ombudsman Scheme, 2026 |
-| `rbc`, `rbc26` | RBI (Commercial Banks – Responsible Business Conduct) Directions, 2025; Third Amendment Directions, 2026 (customer liability for unauthorised e-banking transactions from 1 Jan 2027) |
-| `dl` | RBI (Digital Lending) Directions, 2025 |
-| `trai` | Telecom Consumers Complaint Redressal Regulations, 2012 |
-| `ins`, `ins23` | Insurance Ombudsman Rules, 2017; (Amendment) Rules, 2023 |
-| `car_dbc` | DGCA CAR Section 3, Series M, Part IV — denied boarding, cancellations and delays |
-| `car_refund` | DGCA CAR Section 3, Series M, Part II — refund of airline tickets (Rev. 3, 2026; from OCR) |
-| `elec` | Electricity (Rights of Consumers) Rules, 2020 |
-
-## Speed
-
-Measured with `eval/latency.py` on a real, uncached complaint: **100.5 s → 26.1 s**. What changed: Gemini through
-`generate_content` (≈1.5 s per call vs ≈4.5 s through the Interactions API); grievance extraction only on pages
-worth reading, in parallel; the safety check and the follow-up questions folded into intake's single LLM call;
-condition checks and escalation planning run alongside the searches; plan and write in one drafter call;
-precedents time-boxed. Warm (cached) runs take well under a second.
-
-Added since that measurement: the law judge (one LLM call with medium thinking on the main path — about 8–12 s
-for a banking case with a full section of candidates, about 4–5 s more than on low) and medium thinking for the
-questions (about 1–2 s more, in parallel with the searches). An emergency happening now is the fastest path: the
-keyword rules end the run at the emergency screen in well under a second, with no LLM call.
-
-Set `SAATHI_TIMING=calls` to see every search, fetch and LLM call in the terminal; the default (`nodes`) prints one
-line per node and a summary table at each pause.
 
 ## Evaluation
 
