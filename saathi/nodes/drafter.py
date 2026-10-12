@@ -239,10 +239,11 @@ def drafter(state: dict) -> dict:
                              f" ({d['basis']}; counted from {deadlines.localize(d['from_date'], lang)}; "
                              f"{d['source']})" + (" - ALREADY MISSED: say so plainly" if d["passed"] else "")
                              for d in cdates) + "\n" if cdates else "")
-              + "REQUESTS: ask for what the cited clauses entitle the complainant to, for a written answer on any "
-                "liability or decision against them, and for the records the other side holds that would prove the "
-                "facts (e.g. transaction and authentication logs, or why an alert was not sent) - only what fits "
-                "this case.\n"
+              + "REQUESTS: ask for what the cited clauses entitle the complainant to (e.g. a refund within the "
+                "stated time, a replacement, compensation). Only where the other side has decided against the "
+                "complainant or disputes the facts (e.g. a bank holding them liable for a debit), also ask for a "
+                "written decision and the records that would settle it (e.g. transaction and authentication logs); "
+                "do not add those requests to a plain refund or service complaint.\n"
               + "KEY FACTS TO STATE when the complainant gave them: whether an alert was received, when and how they "
                 "first learned of the problem, when they reported it and the complaint number - these decide "
                 "liability and deadlines. NEVER state when the complainant learned of, noticed or reported something "

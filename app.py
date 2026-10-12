@@ -166,11 +166,17 @@ ROLE_LABEL = {"grievance_officer": "Grievance Officer", "principal_nodal_officer
 EXAMPLES = {
     "🛒 Flipkart refund (Hinglish)": ("Flipkart ne damaged phone ka refund reject kar diya, order 15 Sep ko kiya "
                                      "tha", "Flipkart", "Bengaluru"),
-    "📵 Loan app harassment": ("Recovery agents of the KreditBee app are calling my relatives and threatening me "
-                              "though my EMI is only 3 days late.", "KreditBee", "Hyderabad"),
-    "🏦 Unauthorised UPI debit": ("₹12,500 was debited from my ICICI Bank account through a UPI transaction I did "
-                                 "not make. I complained 35 days ago and got no reply.", "ICICI Bank", "Mumbai"),
-    "🩺 Claim rejected (हिंदी)": ("स्टार हेल्थ ने मेरा 85,000 रुपये का क्लेम रिजेक्ट कर दिया।", "Star Health", "Chennai"),
+    "✈️ Flight cancelled, no refund": ("IndiGo cancelled my Delhi to Pune flight 6E 2134 two hours before departure "
+                                      "on 4 October 2026. No alternative flight was offered and my ₹7,800 fare has "
+                                      "not been refunded after 10 days.", "IndiGo", "Delhi"),
+    "🚨 'Digital arrest' scam": ("A caller pretending to be from FedEx and then the Mumbai police said a parcel in my "
+                               "name had drugs, kept me on a video call for hours and made me transfer ₹45,000 for "
+                               "'verification' on 9 October 2026. I realised it was a scam the next day.", "", "Pune"),
+    # Company and city left empty on purpose: the scheme is researched from official sources, and an employer or
+    # city in those fields pulls the research towards the wrong pages.
+    "🌾 PM-KISAN instalment stopped (हिंदी)": ("मैं किसान हूँ, पिछले दो साल से पीएम किसान सम्मान निधि की किस्त आ रही "
+                                              "थी, लेकिन पिछली दो किस्तें नहीं आईं। स्टेटस में कुछ साफ़ नहीं दिखता।",
+                                              "", ""),
 }
 
 

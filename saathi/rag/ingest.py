@@ -33,6 +33,7 @@ import argparse
 import atexit
 import re
 import sys
+import threading
 import uuid
 from functools import lru_cache
 
@@ -315,24 +316,39 @@ def chunk_doc(doc_id: str, max_chars: int = 1800) -> list[dict]:
 
 # --------------------------------------------------------------------------- Qdrant
 
-@lru_cache(maxsize=1)
+# The parallel graph workers can all reach for the index on first use at the same moment. lru_cache does not lock,
+# so two threads could each build a client - harmless for the Qdrant server, but the embedded (on-disk) index allows
+# ONE client per folder ("Storage folder … is already accessed by another instance"). Built once, under a lock.
+_INIT_LOCK = threading.Lock()
+_ONCE: dict[str, object] = {}
+
+
+def _once(key: str, build):
+    if key not in _ONCE:
+        with _INIT_LOCK:
+            if key not in _ONCE:
+                _ONCE[key] = build()
+    return _ONCE[key]
+
+
 def embedder():
-    from fastembed import TextEmbedding
+    def build():
+        from fastembed import TextEmbedding
 
-    from saathi import timing
+        from saathi import timing
+        with timing.span("init", f"load embedding model {EMBED_MODEL} (once per process)"):
+            return TextEmbedding(EMBED_MODEL)
+    return _once("embedder", build)
 
-    with timing.span("init", f"load embedding model {EMBED_MODEL} (once per process)"):
-        return TextEmbedding(EMBED_MODEL)
 
-
-@lru_cache(maxsize=1)
 def client():
-    from saathi import timing
-
-    with timing.span("init", "connect to Qdrant (once per process)") as rec:
-        c = _client()
-        rec["label"] += f" → {client.mode}"
-        return c
+    def build():
+        from saathi import timing
+        with timing.span("init", "connect to Qdrant (once per process)") as rec:
+            c = _client()
+            rec["label"] += f" → {client.mode}"
+            return c
+    return _once("client", build)
 
 
 def _client():

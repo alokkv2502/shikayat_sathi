@@ -1217,3 +1217,39 @@ def test_ongoing_violence_is_recognised_in_plain_words():
     r = safety_check("My husband is drunk and beating me. I have locked myself and my two children in the bathroom")
     assert r["tier"] == "emergency_now" and r["numbers"] == ["112", "181", "1098"]
     assert safety_check("The shop is locked in the evening so I could not return the phone")["tier"] == "normal"
+
+
+def test_a_documents_name_is_not_mistaken_for_a_citation():
+    from saathi.nodes.legal_rag import strip_unsupported, unsupported_refs
+    clauses = [{"tag": "C1", "ref": "Para 3.3", "citation": "x",
+                "doc_title": "DGCA CAR Section 3, Series M, Part IV (Facilities to passengers on denied boarding, "
+                             "cancellation and delays)"},
+               {"tag": "C2", "ref": "Para 3(d)", "citation": "y",
+                "doc_title": "DGCA CAR Section 3, Series M, Part II (Refund of airline tickets), Rev. 3, 2026"}]
+    body = ("Under DGCA CAR Section 3, Series M, Part IV (Facilities to passengers on denied boarding, cancellation "
+            "and delays), Para 3.3 [C1], and CAR Section 3 Series M Part II, Para 3(d) [C2], the fare must be refunded.")
+    assert unsupported_refs(body, clauses) == ([], [])
+    assert "citation removed" not in strip_unsupported(body, clauses)[0]
+    assert unsupported_refs("Under Section 17 of the Act [C1] …", clauses)[1] == ["Section 17"]   # still caught
+
+
+def test_parallel_workers_share_one_embedded_index_client():
+    """Embedded Qdrant allows one client per folder: parallel first use must not open a second one."""
+    import threading
+    from saathi.rag import ingest
+    old = ingest._ONCE.pop("client", None)
+    if old is not None:
+        old.close()  # earlier tests opened the folder in this process; start from no client at all
+    got, errors = [], []
+
+    def use():
+        try:
+            got.append(ingest.client())
+        except Exception as e:  # pragma: no cover - the bug this guards against
+            errors.append(e)
+    threads = [threading.Thread(target=use) for _ in range(8)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert not errors and len({id(c) for c in got}) == 1

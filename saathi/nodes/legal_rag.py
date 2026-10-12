@@ -200,9 +200,24 @@ def unsupported_refs(body: str, clauses: list[dict]) -> tuple[list[str], list[st
     tags = {c["tag"] for c in clauses}
     bad_tags = [f"[{t}]" for t in re.findall(r"\[(C\d+)\]", body) if t not in tags]
     allowed = allowed_refs(clauses)
+    names = name_spans(body, clauses)
     bad_refs = [m.group(0) for m in REF_RE.finditer(body)
-                if (UNIT_ALIASES.get(m.group(1).lower(), m.group(1).lower()), m.group(2).upper()) not in allowed]
+                if not any(a <= m.start() < b for a, b in names)
+                and (UNIT_ALIASES.get(m.group(1).lower(), m.group(1).lower()), m.group(2).upper()) not in allowed]
     return bad_tags, bad_refs
+
+
+def name_spans(body: str, clauses: list[dict]) -> list[tuple[int, int]]:
+    """Where the letter writes a document's NAME, whose own words can look like a citation: "DGCA CAR Section 3,
+    Series M, Part IV" is a document, not Section 3 of anything. These spans are not checked as citations."""
+    spans = []
+    titles = {t for c in clauses for t in (c.get("doc_title") or c.get("act") or "",) if t}
+    for t in titles | {t.split(" (")[0] for t in titles}:
+        if len(t) >= 12:
+            spans += [(m.start(), m.end()) for m in re.finditer(re.escape(t), body, re.I)]
+    # A Civil Aviation Requirement is named by section and series: "CAR Section 3, Series M, Part II"
+    spans += [(m.start(), m.end()) for m in re.finditer(r"\bCAR\s+Section\s+\d+(?:\s*,?\s*Series\s+\w+)?", body, re.I)]
+    return spans
 
 
 def strip_unsupported(body: str, clauses: list[dict]) -> tuple[str, list[str]]:
