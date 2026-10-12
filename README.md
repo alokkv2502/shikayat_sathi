@@ -32,6 +32,36 @@ works in the background, and a **Live view** tab shows every step, call and outp
 
 _Information, not legal advice. Nothing is ever sent automatically._
 
+## Quick start and Installation Steps
+
+Requires **Python 3.11+** (developed and tested on 3.13) and **Docker** (for the Qdrant index; without it, an
+embedded on-disk index is used), plus a Gemini API key and a SerpApi key.
+
+```bash
+git clone https://github.com/alokkv2502/shikayat_sathi.git
+cd shikayat_sathi
+python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+cp .env.example .env                                   # GEMINI_API_KEY and SERPAPI_API_KEY (see Configuration)
+docker compose up -d                                   # local Qdrant (lets the app and the CLI share the index)
+python cli.py index                                    # index the legal corpus (first time, and after adding PDFs)
+streamlit run app.py
+```
+
+From the CLI:
+
+```bash
+python cli.py "Flipkart ne damaged phone ka refund reject kar diya, order 15 Sep ko kiya tha" --city Pune
+python cli.py "…" --letter-language hi    # the whole letter in Hindi (default: Hindi for Hindi complaints)
+python cli.py "…" --yes                   # skip the questions and approve the letter without prompting
+python cli.py --resume <thread_id>        # resume a paused complaint from data/checkpoints.db
+python cli.py "…" --safe-now              # after an emergency screen: you are safe and want the police complaint
+python eval/run_eval.py                   # contacts / complaints / decoys → eval/REPORT.md (needs the AI)
+python eval/escalation_eval.py            # escalation planner test set → eval/ESCALATION_REPORT.md
+python eval/latency.py "<complaint>" --company X --city Y --warm   # per-node latency profile
+pytest -q tests/                          # 85 tests, offline (a deterministic stand-in for the LLM)
+```
+
 ## SerpApi: how and why it is used
 
 ### Why a search API
@@ -90,35 +120,6 @@ A search snippet is never used as a contact or a source by itself. Contacts come
 verified (official domain, or two independent sources). Ladder steps and scheme conditions must cite an official
 page that was fetched. Third-party "customer care number" sites are recognised and never verified.
 
-## Quick start and Installation Steps
-
-Requires **Python 3.11+** (developed and tested on 3.13) and **Docker** (for the Qdrant index; without it, an
-embedded on-disk index is used), plus a Gemini API key and a SerpApi key.
-
-```bash
-git clone https://github.com/alokkv2502/shikayat_sathi.git
-cd shikayat_sathi
-python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-cp .env.example .env                                   # GEMINI_API_KEY and SERPAPI_API_KEY (see Configuration)
-docker compose up -d                                   # local Qdrant (lets the app and the CLI share the index)
-python cli.py index                                    # index the legal corpus (first time, and after adding PDFs)
-streamlit run app.py
-```
-
-From the CLI:
-
-```bash
-python cli.py "Flipkart ne damaged phone ka refund reject kar diya, order 15 Sep ko kiya tha" --city Pune
-python cli.py "…" --letter-language hi    # the whole letter in Hindi (default: Hindi for Hindi complaints)
-python cli.py "…" --yes                   # skip the questions and approve the letter without prompting
-python cli.py --resume <thread_id>        # resume a paused complaint from data/checkpoints.db
-python cli.py "…" --safe-now              # after an emergency screen: you are safe and want the police complaint
-python eval/run_eval.py                   # contacts / complaints / decoys → eval/REPORT.md (needs the AI)
-python eval/escalation_eval.py            # escalation planner test set → eval/ESCALATION_REPORT.md
-python eval/latency.py "<complaint>" --company X --city Y --warm   # per-node latency profile
-pytest -q tests/                          # 85 tests, offline (a deterministic stand-in for the LLM)
-```
 
 ## Architecture
 
