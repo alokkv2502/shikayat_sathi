@@ -1,6 +1,0 @@
-{"t": 1791694706.927, "kind": "run_start", "resumed": false}
-{"t": 1791694706.954, "kind": "node_start", "node": "safety_router", "label": "🛟 Safety"}
-{"t": 1791694706.957, "kind": "node_end", "node": "safety_router", "ms": 0, "trace": ["🛟 Safety: no immediate danger detected"], "errors": [], "output": {"safety": {"level": "none", "categories": [], "method": "rules", "helplines": [], "numbers": [], "messages": []}}}
-{"t": 1791694706.964, "kind": "node_start", "node": "intake_planner", "label": "🧭 Intake"}
-{"t": 1791694707.066, "kind": "node_failed", "node": "intake_planner", "ms": 6, "error": "the AI service is not configured (set GEMINI_API_KEY)"}
-{"t": 1791694707.086, "kind": "run_failed", "error": "AIUnavailable: the AI service is not configured (set GEMINI_API_KEY)", "s": 0.2}

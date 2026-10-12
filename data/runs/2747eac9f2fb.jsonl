@@ -1,7 +1,0 @@
-{"t": 1791709208.719, "kind": "run_start", "resumed": false}
-{"t": 1791709208.742, "kind": "node_start", "node": "safety_router", "label": "🛟 Safety"}
-{"t": 1791709208.745, "kind": "node_end", "node": "safety_router", "ms": 1, "trace": ["🛟 Safety: no immediate danger detected"], "errors": [], "output": {"safety": {"level": "none", "categories": [], "method": "rules", "helplines": [], "numbers": [], "messages": []}}}
-{"t": 1791709208.748, "kind": "node_start", "node": "intake_planner", "label": "🧭 Intake"}
-{"t": 1791709212.47, "kind": "call", "call": "llm", "label": "You triage Indian grievances written in English, Hindi or Hi · 1574 chars in", "node": "intake_planner", "ms": 3709, "cached": false}
-{"t": 1791709212.471, "kind": "node_failed", "node": "intake_planner", "ms": 3722, "error": "the AI service failed (ClientError: 401 UNAUTHENTICATED. {'error': {'code': 401, 'message': 'Request had invalid authentication credentials. Expected OAuth )"}
-{"t": 1791709212.476, "kind": "run_failed", "error": "AIUnavailable: the AI service failed (ClientError: 401 UNAUTHENTICATED. {'error': {'code': 401, 'message': 'Request had invalid authentication credentials. Expected OAuth )", "s": 3.8}
