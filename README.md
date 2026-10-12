@@ -43,7 +43,8 @@ cd shikayat_sathi
 python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env                                   # GEMINI_API_KEY and SERPAPI_API_KEY (see Configuration)
-docker compose up -d                                   # local Qdrant (lets the app and the CLI share the index)
+mkdir -p data                                          # yours, not root's (Windows PowerShell: mkdir data -Force)
+docker compose up -d                                   # local Qdrant in a named Docker volume (never writes to ./data)
 python cli.py index                                    # index the legal corpus (first time, and after adding PDFs)
 streamlit run app.py
 ```

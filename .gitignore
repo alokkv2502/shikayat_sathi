@@ -3,8 +3,17 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# Runtime data (created by the app on first use)
 data/cache/
-data/qdrant/
-data/qdrant_storage/
 data/cases/
+data/runs/
+data/ladders/
 data/checkpoints.db*
+data/index_build.log
+
+# The offline legal index (data/qdrant) IS committed, so a clone works without Docker or indexing - but not its lock
+data/qdrant/.lock
+
+# Docker's Qdrant storage now lives in a named Docker volume (docker-compose.yml); never commit an old bind-mount copy
+data/qdrant_storage/
