@@ -1,6 +1,6 @@
 # Shikayat Saathi (शिकायत साथी)
 
-![Shikayat Saathi](docs/screenshot.png)
+![Shikayat Saathi](docs/image.png)
 
 **One front door for every grievance in India — with depth in consumer, banking, government-scheme, police and
 court matters.**
