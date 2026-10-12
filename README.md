@@ -11,7 +11,7 @@ diya") and returns:
 
 - a **verified** grievance contact for the organisation, with the page it was found on;
 - the **escalation ladder**, every step traceable to an official source, with **deadlines computed in code**;
-- the **legal clauses** that back the complaint — searched across the whole indexed law, then checked by the AI
+- the **legal clauses** that back the complaint — searched across the whole indexed official law documents embedded in Qdrant, then checked by the AI
   for whether each one governs *this* case (never invented; none rather than a wrong one);
 - a ready-to-send letter in **one language** (English or Hindi), checked before you see it.
 
