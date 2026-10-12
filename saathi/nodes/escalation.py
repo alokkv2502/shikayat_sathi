@@ -311,7 +311,7 @@ def plan_escalation(state: dict) -> dict:
 
 
 GENERIC = {"other", "public_service"}  # placeholder routes, not hand-checked sector ladders
-PLANNER_BUDGET_S = 25                  # past this, the seed (or the labelled general route) is used
+PLANNER_BUDGET_S = 60                # past this, the seed (or the labelled general route) is used
 
 
 def needs_planner(state: dict) -> bool:

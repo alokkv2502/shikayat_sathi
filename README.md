@@ -106,7 +106,7 @@ then case research, precedents, the grievance search and domain resolution.
   budget either.
 - **Fail fast, never hang.** 5 s to connect, 25 s to read, two retries. A search that still fails is recorded as
   an error on that step and the graph carries on. Precedents (the slowest engine) and the escalation planner have
-  their own time budgets (40 s and 25 s).
+  their own time budgets (40 s and 60 s).
 - **Parallel.** The search steps run at the same time (LangGraph `Send` fan-out), and the grievance step
   fetches its pages in parallel.
 - **No key, no problem for cached cases.** Without `SERPAPI_API_KEY`, cached searches still work; an uncached one
@@ -296,7 +296,7 @@ If Gemini is unavailable, the run stops and says so — there is no rule-based s
 
 ### Escalation: the LLM proposes, code validates
 
-`escalation_planner` runs for every tier-A complaint, alongside the contact search (25 s budget). It searches with
+`escalation_planner` runs for every tier-A complaint, alongside the contact search (60 s budget). It searches with
 the queries intake wrote, fetches pages, retrieves the law, and the LLM proposes an ordered ladder where every step
 names its source. Code then:
 
